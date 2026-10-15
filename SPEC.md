@@ -96,8 +96,10 @@ Lain is a **macOS-native** Raindrop.io desktop client built for power users who 
 
 ### 2.2 File Structure (Current + Planned)
 
+The repo is a pnpm workspace. The tree below is the Electron app, now at `apps/desktop/`. The landing page is `apps/website/` (package `lain-web`). `SPEC.md` stays at the repository root.
+
 ```
-lain/
+apps/desktop/
 ├── electron/
 │   ├── main.ts                    # App lifecycle, IPC handlers
 │   ├── preload.ts                 # contextBridge (auth, shell, token)
@@ -185,8 +187,7 @@ lain/
 ├── rtk-codegen.config.ts          # NEW: P1
 ├── vitest.config.ts               # NEW: P1
 ├── playwright.config.ts           # NEW: P1
-├── SPEC.md                        # This file
-└── package.json
+└── package.json                   # package name: lain
 ```
 
 ### 2.3 Security Model
@@ -1753,12 +1754,12 @@ iconutil --convert icns build/icons/icon.iconset
 
 ### 9.1 Overview
 
-| Property   | Value                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------- |
-| Repository | [`laststance/lain-web`](https://github.com/laststance/lain-web) (separate)                     |
-| Framework  | Next.js (App Router) + Tailwind CSS v4                                                         |
-| Hosting    | Vercel (Laststance org)                                                                        |
-| Domain     | [lain-web.vercel.app](https://lain-web.vercel.app) — custom domain TBD (`lain.app` or similar) |
+| Property   | Value                                                                                                     |
+| ---------- | --------------------------------------------------------------------------------------------------------- |
+| Repository | This repo, `apps/website` (imported from [`laststance/lain-web`](https://github.com/laststance/lain-web)) |
+| Framework  | Next.js (App Router) + Tailwind CSS v4                                                                    |
+| Hosting    | Vercel (Laststance org)                                                                                   |
+| Domain     | [lain-web.vercel.app](https://lain-web.vercel.app) — custom domain TBD (`lain.app` or similar)            |
 
 ### 9.2 Page Structure
 

@@ -7,12 +7,13 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - electron-builder.yml
-      - build/**
-      - electron/**
+      - apps/desktop/electron-builder.yml
+      - apps/desktop/build/**
+      - apps/desktop/electron/**
+      - apps/desktop/package.json
+      - apps/desktop/scripts/finalize-mac-release-artifacts.ts
       - package.json
       - pnpm-lock.yaml
-      - scripts/finalize-mac-release-artifacts.ts
       - .github/workflows/package-check.yml
 
 permissions:

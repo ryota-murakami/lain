@@ -40,7 +40,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: unit-coverage
-          path: coverage/lcov.info
+          path: apps/desktop/coverage/lcov.info
 
   build:
     runs-on: macos-latest

@@ -69,6 +69,7 @@ const config: KnipConfig = {
 
   ignoreDependencies: [
     // CSS-only imports (not statically detectable by JS analysis)
+    'tailwindcss',
     'tw-animate-css',
     '@fontsource-variable/geist',
 
@@ -87,6 +88,10 @@ const config: KnipConfig = {
     // DevDeps: CLI/build tools not imported in source
     '@faker-js/faker',
     'esbuild-runner',
+
+    // Loaded by the repo-root .prettierrc, not by an import in this package
+    'prettier-plugin-tailwindcss',
+    'prettier-plugin-tailwindcss-canonical-classes',
 
     // DevDeps: peer deps of eslint-config-ts-prefixer
     'globals',

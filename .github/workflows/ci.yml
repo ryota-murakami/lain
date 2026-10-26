@@ -9,6 +9,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   knip:
     runs-on: macos-latest
@@ -40,7 +43,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: unit-coverage
-          path: coverage/lcov.info
+          path: apps/desktop/coverage/lcov.info
 
   build:
     runs-on: macos-latest
@@ -62,8 +65,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/prepare
-      - run: pnpm --silent coverage:e2e-spec > docs/e2e-coverage.md
+      - run: pnpm --silent coverage:e2e-spec > apps/desktop/docs/e2e-coverage.md
       - uses: actions/upload-artifact@v7
         with:
           name: e2e-spec-coverage
-          path: docs/e2e-coverage.md
+          path: apps/desktop/docs/e2e-coverage.md
+
+  website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/prepare
+      - run: pnpm validate:web

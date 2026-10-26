@@ -1,6 +1,6 @@
 # electron-builder configuration — macOS only (SPEC.md §8.2)
 # Build locally:  pnpm electron:build            (unsigned unless CSC_* / APPLE_* env vars are set)
-# CI:             .github/workflows/release.yml  (tag push v* → draft GitHub Release)
+# CI:             ../../.github/workflows/package-check.yml (unsigned directory build)
 appId: io.laststance.lain
 productName: Lain
 copyright: Copyright © 2026 Laststance.io

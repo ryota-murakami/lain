@@ -26,7 +26,8 @@ const config: KnipConfig = {
     'electron/test-auth.ts',
   ],
 
-  project: ['src/**/*.{ts,tsx}', 'electron/**/*.ts', 'scripts/**/*.ts'],
+  // Include stylesheet imports after formatting tools move to the workspace root.
+  project: ['src/**/*.{ts,tsx,css}', 'electron/**/*.ts', 'scripts/**/*.ts'],
 
   ignore: [
     // Build artifacts
@@ -68,13 +69,6 @@ const config: KnipConfig = {
   exclude: ['exports', 'types', 'nsExports', 'nsTypes'],
 
   ignoreDependencies: [
-    // CSS-only imports (not statically detectable by JS analysis)
-    'tw-animate-css',
-    '@fontsource-variable/geist',
-
-    // CLI-only tool (npx shadcn add ...)
-    'shadcn',
-
     // Future-phase runtime dependencies (listed in SPEC.md, not imported yet)
     'date-fns',
     'motion',

@@ -37,25 +37,25 @@ reviews:
   # Path Filters — exclude generated/build artifacts
   # ---------------------------------------------------------------------------
   path_filters:
-    - '!dist/**'
-    - '!dist-electron/**'
-    - '!build/**'
-    - '!coverage/**'
-    - '!node_modules/**'
+    - '!**/dist/**'
+    - '!**/dist-electron/**'
+    - '!**/build/**'
+    - '!**/coverage/**'
+    - '!**/node_modules/**'
     - '!pnpm-lock.yaml'
     - '!*.min.js'
     - '!*.min.css'
     - '!**/*.snap'
     - '!**/*.icns'
-    - '!src/store/api/raindropApi.ts'
-    - '!src/components/ui/**'
+    - '!apps/desktop/src/store/api/raindropApi.ts'
+    - '!apps/desktop/src/components/ui/**'
 
   # ---------------------------------------------------------------------------
   # Path Instructions — domain-specific review guidance
   # ---------------------------------------------------------------------------
   path_instructions:
     # React / TypeScript Components
-    - path: 'src/components/**/*.tsx'
+    - path: 'apps/desktop/src/components/**/*.tsx'
       instructions: |
         Review React 19 components for:
         - Rules of Hooks (NEVER suggest hooks inside .map(), conditionals, or callbacks)
@@ -72,7 +72,7 @@ reviews:
         Do NOT suggest useReducer — this project uses Redux Toolkit.
 
     # Redux Store & RTK Query
-    - path: 'src/store/**/*.ts'
+    - path: 'apps/desktop/src/store/**/*.ts'
       instructions: |
         Review Redux Toolkit code for:
         - RTK Query cache invalidation tags (Raindrop, Collection, Tag, User, Filter, Backup)
@@ -81,7 +81,7 @@ reviews:
         - axiosBaseQuery error handling (errors handled by axios interceptors)
 
     # Hooks
-    - path: 'src/hooks/**/*.ts'
+    - path: 'apps/desktop/src/hooks/**/*.ts'
       instructions: |
         Review custom hooks for:
         - Proper RTK Query hook composition
@@ -89,7 +89,7 @@ reviews:
         - Error handling pattern: check 'data' in result (interceptor handles errors)
 
     # Axios & API utilities
-    - path: 'src/lib/**/*.ts'
+    - path: 'apps/desktop/src/lib/**/*.ts'
       instructions: |
         Review for:
         - Axios interceptor patterns (centralized error handling)
@@ -98,7 +98,7 @@ reviews:
         - No leaked credentials or tokens in renderer
 
     # Electron Main Process
-    - path: 'electron/**/*.ts'
+    - path: 'apps/desktop/electron/**/*.ts'
       instructions: |
         SECURITY CRITICAL — Review for:
         - IPC validation (validateSender on ALL handlers)
@@ -117,7 +117,7 @@ reviews:
         - No implementation details testing (test behavior, not internals)
 
     # E2E Tests
-    - path: 'e2e/**/*.{ts,spec.ts}'
+    - path: 'apps/desktop/e2e/**/*.{ts,spec.ts}'
       instructions: |
         Review Playwright E2E tests for:
         - Resilient selectors (role, data-slot, data-testid)
@@ -152,7 +152,7 @@ knowledge_base:
     file_patterns:
       - 'CLAUDE.md'
       - '.claude/rules/*.md'
-      - 'SPEC.md'
+      - 'apps/desktop/SPEC.md'
 
 # =============================================================================
 # CHAT

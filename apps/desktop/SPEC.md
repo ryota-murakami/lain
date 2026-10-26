@@ -6,6 +6,8 @@
 **Date:** 2026-09-23
 **Status:** Alpha (v0.1.0 released 2026-09-23 — phases P1–P7 delivered)
 
+Desktop file paths in this specification are relative to `apps/desktop/` unless stated otherwise. See the [repository README](../../README.md) for current workspace commands and CI configuration.
+
 ---
 
 ## Table of Contents
@@ -1753,12 +1755,12 @@ iconutil --convert icns build/icons/icon.iconset
 
 ### 9.1 Overview
 
-| Property   | Value                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------- |
-| Repository | [`laststance/lain-web`](https://github.com/laststance/lain-web) (separate)                     |
-| Framework  | Next.js (App Router) + Tailwind CSS v4                                                         |
-| Hosting    | Vercel (Laststance org)                                                                        |
-| Domain     | [lain-web.vercel.app](https://lain-web.vercel.app) — custom domain TBD (`lain.app` or similar) |
+| Property   | Value                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------- |
+| Repository | [`ryota-murakami/lain`](https://github.com/ryota-murakami/lain), [`apps/website`](../website/README.md) |
+| Framework  | Next.js (App Router) + Tailwind CSS v4                                                                  |
+| Hosting    | Vercel (Laststance org)                                                                                 |
+| Domain     | [lain-web.vercel.app](https://lain-web.vercel.app) — custom domain TBD (`lain.app` or similar)          |
 
 ### 9.2 Page Structure
 
@@ -1802,7 +1804,7 @@ Landing Page
 | **P4: Organization + Tests**    | DnD group/collection editing (F6), auto-icons (F4). DnD interaction tests, icon fallback tests                                                                                                              | P2           | ~10 files          |
 | **P5: Polish + Tests**          | View modes persistence (F3), readability enhancements (F7), keyboard shortcuts + shortcut editor (F8), settings UI. Keyboard E2E tests                                                                      | P2           | ~12 files          |
 | **P6: CI/CD**                   | GitHub Actions pipeline (lint → typecheck → test → build), coverage gates, badge                                                                                                                            | P1-P5        | ~3 files           |
-| **P7: Release**                 | electron-builder (macOS `.dmg`), app icon (`.icns`), code signing + notarization, auto-update, landing page (separate repo)                                                                                 | P6           | ~10 files          |
+| **P7: Release**                 | electron-builder (macOS `.dmg`), app icon (`.icns`), code signing + notarization, auto-update, landing page (now in `apps/website`)                                                                         | P6           | ~10 files          |
 
 **Testing Principle:** Each phase includes tests for its features. P6 is CI integration only, not new tests.
 

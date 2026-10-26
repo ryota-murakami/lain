@@ -4,6 +4,9 @@ coverage
 
 .husky
 dist
+dist-electron
+release
+test-results
 build
 .next
 

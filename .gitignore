@@ -4,6 +4,10 @@ node_modules
 # Build output
 dist/
 dist-electron/
+.next/
+.vercel/
+next-env.d.ts
+*.tsbuildinfo
 
 # Environment variables
 .env

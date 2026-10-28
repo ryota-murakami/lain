@@ -6,6 +6,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'happy-dom',
+    // Node 25+ ships a global `localStorage` that is undefined without --localstorage-file,
+    // and Vitest 4 keeps it instead of happy-dom's Storage (fixed only in Vitest 5, vitest-dev/vitest#10867).
+    execArgv: ['--no-experimental-webstorage'],
     setupFiles: ['./test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
     coverage: {

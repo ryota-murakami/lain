@@ -1,10 +1,10 @@
 # Lain
 
-[![CI](https://github.com/laststance/lain/actions/workflows/ci.yml/badge.svg)](https://github.com/laststance/lain/actions/workflows/ci.yml)
+[![CI](https://github.com/ryota-murakami/lain/actions/workflows/ci.yml/badge.svg)](https://github.com/ryota-murakami/lain/actions/workflows/ci.yml)
 
 **Lain** is a macOS-native [Raindrop.io](https://raindrop.io) desktop client for power users who manage 1,000+ bookmarks. It focuses on fast, keyboard-driven search and organization that goes beyond the Raindrop.io web app.
 
-> Status: **Alpha** — [v0.1.0](https://github.com/laststance/lain/releases/tag/v0.1.0) is available for macOS 12+ (Developer ID signed, not yet notarized); under active development.
+> Status: **Alpha** — [v0.1.1](https://github.com/ryota-murakami/lain/releases/tag/v0.1.1) is available for macOS 12+ (Developer ID signed and notarized); under active development.
 
 Landing page: [lain-web.vercel.app](https://lain-web.vercel.app) ([source](apps/website)).
 
@@ -109,7 +109,7 @@ CI runs an unsigned `--dir` package check on pull requests to `main` that touch 
 
 ## Website deployment
 
-The landing page is deployed by the existing `lain-web` Vercel project in the `laststance` team. After merging this migration, change its Git connection to the Lain repository and its Root Directory to `apps/website`. See [website deployment instructions](apps/website/README.md#vercel-deployment) for the complete settings and preview verification steps.
+The landing page is deployed by the `lain-web` Vercel project in the `laststance` team, which is Git-connected to this repository with its Root Directory set to `apps/website`. Every pull request gets a preview deployment. See [website deployment instructions](apps/website/README.md#vercel-deployment) for the complete settings and preview verification steps.
 
 ## Security model
 

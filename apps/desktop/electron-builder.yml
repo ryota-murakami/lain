@@ -59,6 +59,6 @@ dmg:
 # Releases are created as drafts so assets can be checked before users see them.
 publish:
   provider: github
-  owner: laststance
+  owner: ryota-murakami
   repo: lain
   releaseType: draft

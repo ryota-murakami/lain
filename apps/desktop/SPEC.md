@@ -4,7 +4,7 @@
 
 **Version:** 0.1.0
 **Date:** 2026-09-23
-**Status:** Alpha (v0.1.0 released 2026-09-23 — phases P1–P7 delivered)
+**Status:** Alpha (v0.1.1 released 2026-09-28, the first signed + notarized build — phases P1–P7 delivered)
 
 Desktop file paths in this specification are relative to `apps/desktop/` unless stated otherwise. See the [repository README](../../README.md) for current workspace commands and CI configuration.
 

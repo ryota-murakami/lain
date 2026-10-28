@@ -4,8 +4,8 @@ export const SITE = {
   tagline: 'Your Raindrop.io bookmarks, reimagined.',
   description:
     'Lain is a native macOS client for Raindrop.io built for power users: scoped and field-specific search, four view modes, drag & drop organization and fully customizable keyboard shortcuts.',
-  repositoryUrl: 'https://github.com/laststance/lain',
-  downloadUrl: 'https://github.com/laststance/lain/releases/latest',
+  repositoryUrl: 'https://github.com/ryota-murakami/lain',
+  downloadUrl: 'https://github.com/ryota-murakami/lain/releases/latest',
   raindropUrl: 'https://raindrop.io',
   laststanceUrl: 'https://laststance.io',
   requirements: 'macOS 12+ · Raindrop.io account required',

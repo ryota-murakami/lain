@@ -6,10 +6,10 @@
     "name": "Laststance.io",
     "url": "https://laststance.io"
   },
-  "homepage": "https://github.com/laststance/lain",
+  "homepage": "https://github.com/ryota-murakami/lain",
   "repository": {
     "type": "git",
-    "url": "https://github.com/laststance/lain.git"
+    "url": "https://github.com/ryota-murakami/lain.git"
   },
   "packageManager": "pnpm@10.29.3",
   "engines": {

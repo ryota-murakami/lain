@@ -1,6 +1,6 @@
 # lain-web
 
-Landing page for [Lain](https://github.com/laststance/lain), the macOS-native Raindrop.io desktop client. This package lives in `apps/website` alongside `apps/desktop` in the Lain pnpm workspace.
+Landing page for [Lain](https://github.com/ryota-murakami/lain), the macOS-native Raindrop.io desktop client. This package lives in `apps/website` alongside `apps/desktop` in the Lain pnpm workspace.
 
 Next.js (App Router) + Tailwind CSS v4, deployed on Vercel (Laststance).
 
@@ -19,7 +19,7 @@ Screenshots in `public/screenshots/` are captured from the app's headless E2E ha
 
 ## Vercel deployment
 
-Keep the existing `lain-web` project in the **Laststance** team so its domain and deployment history remain intact. Once the monorepo branch is merged:
+Keep the existing `lain-web` project in the **Laststance** team so its domain and deployment history remain intact. These settings are already applied; re-apply them if the project is ever recreated:
 
 1. Connect the project to the Lain repository (`ryota-murakami/lain`, the current Git remote) instead of the separate `lain-web` repository.
 2. Set **Root Directory** to `apps/website` and enable **Include source files outside of the Root Directory** so Vercel can read the workspace manifest, shared lockfile, and dependencies.

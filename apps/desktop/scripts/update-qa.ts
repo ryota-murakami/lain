@@ -273,8 +273,25 @@ async function openUpdates(application: ElectronApplication): Promise<Page> {
   await page.reload()
   await expect(page.getByRole('button', { name: 'View mode' })).toBeVisible()
   await page.keyboard.press('Meta+,')
+  await expect(page.getByRole('dialog')).toBeVisible()
   await page.getByRole('tab', { name: 'Updates', exact: true }).click()
   return page
+}
+
+/**
+ * Verify Directory selection and dismiss its menu before the next native action.
+ * {@link prepareUpdate} calls this before downloading; {@link verifyPreservedProfile}
+ * repeats it after installation to prove the saved view survived replacement.
+ * @example
+ * await verifyDirectoryView(page)
+ */
+async function verifyDirectoryView(page: Page): Promise<void> {
+  await page.getByRole('button', { name: 'View mode' }).click()
+  await expect(
+    page.getByRole('menuitemradio', { name: 'Directory', exact: true }),
+  ).toHaveAttribute('aria-checked', 'true')
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('menu')).toBeHidden()
 }
 
 /** Retry the real feed, persist settings, download once and prove deferring does not replace the app. @example await prepareUpdate(application, feed) */
@@ -295,7 +312,10 @@ async function prepareUpdate(
     timeout: 60_000,
   })
   await page.keyboard.press('Escape')
+  // Global shortcuts are intentionally blocked until the closing dialog leaves the document.
+  await expect(page.getByRole('dialog')).toBeHidden()
   await page.keyboard.press('Meta+4')
+  await verifyDirectoryView(page)
   await page.evaluate(async () => {
     localStorage.setItem(
       'lain-update-qa-marker',
@@ -306,6 +326,7 @@ async function prepareUpdate(
     ).desktop.selectIcon('I01')
   })
   await page.keyboard.press('Meta+,')
+  await expect(page.getByRole('dialog')).toBeVisible()
   await page.getByRole('tab', { name: 'Updates', exact: true }).click()
   await page.getByRole('button', { name: 'Download update' }).click()
   await expect(
@@ -423,11 +444,8 @@ async function verifyPreservedProfile(
     ),
   ).toBe('I01')
   await page.keyboard.press('Escape')
-  await page.getByRole('button', { name: 'View mode' }).click()
-  await expect(
-    page.getByRole('menuitemradio', { name: 'Directory', exact: true }),
-  ).toHaveAttribute('aria-checked', 'true')
-  await page.keyboard.press('Escape')
+  await expect(page.getByRole('dialog')).toBeHidden()
+  await verifyDirectoryView(page)
   await page.screenshot({
     path: path.join(evidence, 'updated-profile-preserved.png'),
   })

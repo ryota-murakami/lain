@@ -15,6 +15,7 @@ if (!/^[a-z0-9-]+$/.test(label))
 const evidence = path.resolve('test-results/package-smoke', label)
 const profile = await mkdtemp(path.join(tmpdir(), 'lain-package-smoke-'))
 const failures: string[] = []
+let stage = 'launch'
 await mkdir(evidence, { recursive: true })
 const launchOptions: Parameters<typeof electron.launch>[0] = {
   executablePath: path.resolve(executablePath),
@@ -60,7 +61,41 @@ async function mockRemoteImages(page: Page): Promise<void> {
   })
 }
 
+/**
+ * Preserve the original smoke failure even when the failed renderer cannot produce a screenshot.
+ * The runner calls this before rethrowing; failure evidence never substitutes for normal visual checks.
+ * @example
+ * await recordFailure(error)
+ */
+async function recordFailure(error: unknown): Promise<void> {
+  const page = app.windows()[0]
+  await writeFile(
+    path.join(evidence, 'failure.json'),
+    JSON.stringify(
+      { stage, error: String(error), failures, url: page?.url() },
+      null,
+      2,
+    ),
+  )
+  if (!page) return
+  // A second capture error must not hide the first timeout or assertion failure.
+  await page
+    .screenshot({ path: path.join(evidence, 'failure.png'), timeout: 5_000 })
+    .catch(async (captureError: unknown) => {
+      await writeFile(
+        path.join(evidence, 'capture-error.txt'),
+        String(captureError),
+      )
+    })
+  const body = await page
+    .locator('body')
+    .innerText({ timeout: 5_000 })
+    .catch(() => '<unavailable>')
+  await writeFile(path.join(evidence, 'failure-body.txt'), body)
+}
+
 try {
+  stage = 'initial-library'
   const page = await app.firstWindow()
   await mockRaindropApi(page)
   await mockRemoteImages(page)
@@ -77,19 +112,24 @@ try {
     ['3', 'Table'],
     ['4', 'Directory'],
   ]) {
+    stage = `view-${label.toLowerCase()}`
     await page.keyboard.press(`${modifier}+${key}`)
     await page.getByRole('button', { name: 'View mode' }).click()
     await expect(
       page.getByRole('menuitemradio', { name: label, exact: true }),
     ).toHaveAttribute('aria-checked', 'true')
     await page.keyboard.press('Escape')
+    // Wait for the menu to leave the document before dispatching another global shortcut.
+    await expect(page.getByRole('menu')).toBeHidden()
     await page.screenshot({
       path: path.join(evidence, `view-${label.toLowerCase()}.png`),
     })
   }
+  stage = 'settings'
   await page.keyboard.press(`${modifier}+,`)
   await expect(page.getByRole('dialog')).toBeVisible()
   await page.screenshot({ path: path.join(evidence, 'settings.png') })
+  stage = 'updates'
   await page.getByRole('tab', { name: 'Updates', exact: true }).click()
   await expect(
     page.getByText('Updates are available in installed release builds.'),
@@ -100,6 +140,7 @@ try {
   await page.screenshot({ path: path.join(evidence, 'updates.png') })
   await page.keyboard.press('Escape')
   await app.close()
+  stage = 'restart-profile'
   // Reuse only this temporary profile to verify settings survive an actual process restart.
   app = await electron.launch(launchOptions)
   const reopened = await app.firstWindow()
@@ -112,6 +153,7 @@ try {
     reopened.getByRole('menuitemradio', { name: 'Directory', exact: true }),
   ).toHaveAttribute('aria-checked', 'true')
   await reopened.keyboard.press('Escape')
+  await expect(reopened.getByRole('menu')).toBeHidden()
   await reopened.screenshot({ path: path.join(evidence, 'after-restart.png') })
   expect(
     failures,
@@ -136,16 +178,7 @@ try {
     ),
   )
 } catch (error) {
-  const page = await app.firstWindow()
-  await page.screenshot({ path: path.join(evidence, 'failure.png') })
-  await writeFile(
-    path.join(evidence, 'failure.json'),
-    JSON.stringify(
-      { failures, body: await page.locator('body').innerText() },
-      null,
-      2,
-    ),
-  )
+  await recordFailure(error)
   throw error
 } finally {
   await app.close()

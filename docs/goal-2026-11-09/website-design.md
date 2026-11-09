@@ -2,10 +2,10 @@
 
 ## Deliverable and publishing boundary
 
-The standalone project is `design/lain-website-candidates`. It contains twelve functional landing pages and an owner comparison room. The Sites skill was used; the owning agent registered a new owner-private Site and owns source synchronization/publication. This document does not claim deployment until the owner records a successful native Sites result.
+The standalone project is `design/lain-website-candidates`. It contains twelve functional landing pages and an owner comparison room. The Sites skill was used to register, synchronize and publish a new owner-private Site. The native deployment result is recorded below.
 
 - Site ID: `appgprj_6af1bed3904c8191bbfeca845196a4a8`
-- Expected origin, pending deployment verification: `https://lain-design-directions-20261109.raphtalia.chatgpt.site`
+- Verified private origin: `https://lain-design-directions-20261109.raphtalia.chatgpt.site`
 - Static directory: `design/lain-website-candidates/dist`
 - Comparison page: `/`
 - Stable candidate paths: `/W01/` through `/W12/`
@@ -65,11 +65,11 @@ Evidence is safe for private review or PR attachment. Full-page desktop/mobile s
 | WEB-05: honest platform/download statements         | Release-link and preview-caveat assertions on all pages                               | PASS; package availability is not asserted                     |
 | WEB-06: motion/reduced motion                       | 12 MP4s, extracted frame sheets, reduced-motion assertions                            | PASS within recorded browser interactions                      |
 | WEB-07: safe demonstration content                  | Synthetic six-bookmark fixture, no account access or external API requests            | PASS                                                           |
-| WEB-08: owner-private Sites publication             | Parent-owned native Sites workflow                                                    | Pending parent verification                                    |
+| WEB-08: owner-private Sites publication             | Parent-owned native Sites workflow                                                    | PASS; native deployment succeeded                              |
 
 ## External limitations
 
-- Publication is owned by the parent agent; local success alone is not a deployed-Site result.
+- Local browser checks and the native private-deployment result are recorded separately.
 - The synthetic demo cannot establish desktop app correctness, real-account behavior, Linux package availability or updater installation success.
 - No real user data or private screenshots were used, and no production design choice was made.
 

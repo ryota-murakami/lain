@@ -12,10 +12,16 @@ const sessionValues = new Map<string, string>()
 
 /**
  * Decide whether credentials can persist securely on this desktop session.
+ * Settings capabilities and {@link secureStore} call this before accessing native storage.
+ * Synthetic account QA stays in memory; the separately validated signed-update fixture
+ * intentionally retains native encryption to verify credentials across app versions.
  * Linux basic_text uses a fixed key and therefore falls back to memory only.
  * @example credentialStorageMode() // 'encrypted' or 'session'
  */
 export function credentialStorageMode(): 'encrypted' | 'session' {
+  // Synthetic sessions must never trigger access to a personal OS keychain.
+  if (process.env.LAIN_TEST_MODE === '1' && process.env.LAIN_UPDATE_QA !== '1')
+    return 'session'
   if (!safeStorage.isEncryptionAvailable()) return 'session'
   if (
     process.platform === 'linux' &&

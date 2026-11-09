@@ -1,6 +1,7 @@
-import { afterEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import type { ShortcutBinding, ShortcutMap } from '@/store/slices/settingsSlice'
+import { SHORTCUT_PLATFORMS } from '@test/shortcut-platforms'
 
 import {
   bindingFromKeyboardEvent,
@@ -75,7 +76,12 @@ function makeEvent(overrides: Partial<KeyboardEvent>): KeyboardEvent {
   } as KeyboardEvent
 }
 
-describe('matchesBinding', () => {
+describe.each(SHORTCUT_PLATFORMS)('matchesBinding on $name', (platform) => {
+  beforeEach(() => {
+    vi.spyOn(navigator, 'platform', 'get').mockReturnValue(
+      platform.navigatorPlatform,
+    )
+  })
   const cmdN: ShortcutBinding = {
     key: 'n',
     meta: true,
@@ -84,27 +90,31 @@ describe('matchesBinding', () => {
     ctrl: false,
   }
 
-  test('matches Cmd+N', () => {
-    const event = makeEvent({ key: 'n', metaKey: true })
+  test('the platform primary modifier activates the New Bookmark default', () => {
+    const event = makeEvent({ key: 'n', ...platform.eventModifiers })
     expect(matchesBinding(event, cmdN)).toBe(true)
   })
 
-  test('matches case-insensitively', () => {
-    const event = makeEvent({ key: 'N', metaKey: true })
+  test('an uppercase letter still activates the saved lowercase shortcut', () => {
+    const event = makeEvent({ key: 'N', ...platform.eventModifiers })
     expect(matchesBinding(event, cmdN)).toBe(true)
   })
 
-  test('rejects when meta is not pressed', () => {
+  test('plain typing does not activate a primary-modifier shortcut', () => {
     const event = makeEvent({ key: 'n', metaKey: false })
     expect(matchesBinding(event, cmdN)).toBe(false)
   })
 
   test('rejects when shift is pressed but not expected', () => {
-    const event = makeEvent({ key: 'n', metaKey: true, shiftKey: true })
+    const event = makeEvent({
+      key: 'n',
+      ...platform.eventModifiers,
+      shiftKey: true,
+    })
     expect(matchesBinding(event, cmdN)).toBe(false)
   })
 
-  test('matches Cmd+Shift+K', () => {
+  test('the platform primary modifier and Shift activate a shifted default', () => {
     const cmdShiftK: ShortcutBinding = {
       key: 'k',
       meta: true,
@@ -112,7 +122,11 @@ describe('matchesBinding', () => {
       alt: false,
       ctrl: false,
     }
-    const event = makeEvent({ key: 'k', metaKey: true, shiftKey: true })
+    const event = makeEvent({
+      key: 'k',
+      ...platform.eventModifiers,
+      shiftKey: true,
+    })
     expect(matchesBinding(event, cmdShiftK)).toBe(true)
   })
 
@@ -128,8 +142,15 @@ describe('matchesBinding', () => {
     expect(matchesBinding(event, esc)).toBe(true)
   })
 
+  test('the other platform modifier cannot activate the primary shortcut', () => {
+    // Arrange
+    const event = makeEvent({ key: 'n', ...platform.rejectedModifiers })
+    // Act / Assert
+    expect(matchesBinding(event, cmdN)).toBe(false)
+  })
+
   test('rejects wrong key', () => {
-    const event = makeEvent({ key: 'x', metaKey: true })
+    const event = makeEvent({ key: 'x', ...platform.eventModifiers })
     expect(matchesBinding(event, cmdN)).toBe(false)
   })
 })
@@ -161,8 +182,13 @@ describe('isEditableTarget', () => {
   })
 })
 
-describe('formatShortcut', () => {
-  test('formats Cmd+N', () => {
+describe.each(SHORTCUT_PLATFORMS)('formatShortcut on $name', (platform) => {
+  beforeEach(() => {
+    vi.spyOn(navigator, 'platform', 'get').mockReturnValue(
+      platform.navigatorPlatform,
+    )
+  })
+  test('New Bookmark displays the platform primary modifier', () => {
     const binding: ShortcutBinding = {
       key: 'n',
       meta: true,
@@ -170,10 +196,10 @@ describe('formatShortcut', () => {
       alt: false,
       ctrl: false,
     }
-    expect(formatShortcut(binding)).toBe('\u2318N')
+    expect(formatShortcut(binding)).toBe(platform.labels.newBookmark)
   })
 
-  test('formats Cmd+Shift+K', () => {
+  test('a shifted primary shortcut displays both modifiers', () => {
     const binding: ShortcutBinding = {
       key: 'k',
       meta: true,
@@ -181,7 +207,7 @@ describe('formatShortcut', () => {
       alt: false,
       ctrl: false,
     }
-    expect(formatShortcut(binding)).toBe('\u21E7\u2318K')
+    expect(formatShortcut(binding)).toBe(platform.labels.shiftSearch)
   })
 
   test('formats Escape', () => {
@@ -195,7 +221,7 @@ describe('formatShortcut', () => {
     expect(formatShortcut(binding)).toBe('Esc')
   })
 
-  test('formats Cmd+Backspace', () => {
+  test('Delete displays the primary modifier and Backspace', () => {
     const binding: ShortcutBinding = {
       key: 'Backspace',
       meta: true,
@@ -203,10 +229,10 @@ describe('formatShortcut', () => {
       alt: false,
       ctrl: false,
     }
-    expect(formatShortcut(binding)).toBe('\u2318\u232B')
+    expect(formatShortcut(binding)).toBe(platform.labels.delete)
   })
 
-  test('formats Cmd+, (comma)', () => {
+  test('Settings displays the primary modifier and comma', () => {
     const binding: ShortcutBinding = {
       key: ',',
       meta: true,
@@ -214,10 +240,10 @@ describe('formatShortcut', () => {
       alt: false,
       ctrl: false,
     }
-    expect(formatShortcut(binding)).toBe('\u2318,')
+    expect(formatShortcut(binding)).toBe(platform.labels.settings)
   })
 
-  test('formats Cmd+1', () => {
+  test('Grid view displays the primary modifier and numeric key', () => {
     const binding: ShortcutBinding = {
       key: '1',
       meta: true,
@@ -225,7 +251,7 @@ describe('formatShortcut', () => {
       alt: false,
       ctrl: false,
     }
-    expect(formatShortcut(binding)).toBe('\u23181')
+    expect(formatShortcut(binding)).toBe(platform.labels.grid)
   })
 })
 
@@ -307,71 +333,86 @@ describe('isSameBinding', () => {
   })
 })
 
-describe('bindingFromKeyboardEvent', () => {
-  test('ignores a modifier-only press while the user is still holding keys', () => {
-    // Arrange
-    const event = makeEvent({ key: 'Meta', metaKey: true })
-
-    // Act
-    const binding = bindingFromKeyboardEvent(event)
-
-    // Assert
-    expect(binding).toBeNull()
-  })
-
-  test('ignores a bare letter so plain typing can never become a shortcut', () => {
-    // Arrange
-    const event = makeEvent({ key: 'n' })
-
-    // Act
-    const binding = bindingFromKeyboardEvent(event)
-
-    // Assert
-    expect(binding).toBeNull()
-  })
-
-  test('captures a command combo with the key stored lower-case', () => {
-    // Arrange
-    const event = makeEvent({ key: 'N', metaKey: true, shiftKey: true })
-
-    // Act
-    const binding = bindingFromKeyboardEvent(event)
-
-    // Assert
-    expect(binding).toEqual({
-      key: 'n',
-      meta: true,
-      shift: true,
-      alt: false,
-      ctrl: false,
+describe.each(SHORTCUT_PLATFORMS)(
+  'bindingFromKeyboardEvent on $name',
+  (platform) => {
+    beforeEach(() => {
+      vi.spyOn(navigator, 'platform', 'get').mockReturnValue(
+        platform.navigatorPlatform,
+      )
     })
-  })
+    test('ignores a modifier-only press while the user is still holding keys', () => {
+      // Arrange
+      const event = makeEvent({
+        key: platform.primaryKey,
+        ...platform.eventModifiers,
+      })
 
-  test('captures navigation keys without a modifier', () => {
-    // Arrange
-    const event = makeEvent({ key: 'ArrowUp' })
+      // Act
+      const binding = bindingFromKeyboardEvent(event)
 
-    // Act
-    const binding = bindingFromKeyboardEvent(event)
-
-    // Assert
-    expect(binding).toEqual({
-      key: 'ArrowUp',
-      meta: false,
-      shift: false,
-      alt: false,
-      ctrl: false,
+      // Assert
+      expect(binding).toBeNull()
     })
-  })
 
-  test('ignores dead keys produced by option combos', () => {
-    // Arrange
-    const event = makeEvent({ key: 'Dead', altKey: true })
+    test('ignores a bare letter so plain typing can never become a shortcut', () => {
+      // Arrange
+      const event = makeEvent({ key: 'n' })
 
-    // Act
-    const binding = bindingFromKeyboardEvent(event)
+      // Act
+      const binding = bindingFromKeyboardEvent(event)
 
-    // Assert
-    expect(binding).toBeNull()
-  })
-})
+      // Assert
+      expect(binding).toBeNull()
+    })
+
+    test('capturing a primary combo stores the platform modifier and lowercase key', () => {
+      // Arrange
+      const event = makeEvent({
+        key: 'N',
+        ...platform.eventModifiers,
+        shiftKey: true,
+      })
+
+      // Act
+      const binding = bindingFromKeyboardEvent(event)
+
+      // Assert
+      expect(binding).toEqual({
+        key: 'n',
+        meta: platform.modifiers.meta,
+        shift: true,
+        alt: false,
+        ctrl: platform.modifiers.ctrl,
+      })
+    })
+
+    test('captures navigation keys without a modifier', () => {
+      // Arrange
+      const event = makeEvent({ key: 'ArrowUp' })
+
+      // Act
+      const binding = bindingFromKeyboardEvent(event)
+
+      // Assert
+      expect(binding).toEqual({
+        key: 'ArrowUp',
+        meta: false,
+        shift: false,
+        alt: false,
+        ctrl: false,
+      })
+    })
+
+    test('ignores dead keys produced by option combos', () => {
+      // Arrange
+      const event = makeEvent({ key: 'Dead', altKey: true })
+
+      // Act
+      const binding = bindingFromKeyboardEvent(event)
+
+      // Assert
+      expect(binding).toBeNull()
+    })
+  },
+)

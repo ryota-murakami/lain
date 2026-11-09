@@ -69,6 +69,8 @@ publish:
 # AppImage uses electron-updater; deb users install the next package explicitly.
 linux:
   category: Utility
+  # Debian requires attribution; use the owner's public GitHub address.
+  maintainer: 'Laststance.io <5501268+ryota-murakami@users.noreply.github.com>'
   icon: build/icons/icon.png
   executableName: lain
   artifactName: 'Lain-${version}-${arch}.${ext}'

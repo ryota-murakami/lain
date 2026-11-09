@@ -20,15 +20,22 @@ jobs:
             runner: ubuntu-24.04
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
+    env:
+      # Record real windows on macOS and inside the Linux virtual display.
+      LAIN_E2E_HEADED: '1'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # QA artifacts must embed the review commit, not GitHub's temporary merge commit.
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: ./.github/actions/prepare
       - name: Release integrity regression tests
         run: pnpm test:release
       - name: Build and verify unsigned packages
         run: pnpm package:${{ matrix.platform }}
+      - name: Install native recording dependency
+        run: pnpm --filter lain exec playwright install ffmpeg
       - name: Install Linux display dependencies
         if: matrix.platform == 'linux'
         run: sudo apt-get update && sudo apt-get install -y xvfb libgtk-3-0 libnss3 libasound2t64 libgbm1 libsecret-1-0 libfuse2t64

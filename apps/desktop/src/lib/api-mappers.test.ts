@@ -259,18 +259,24 @@ describe('toUiGroups', () => {
     expect(designCollection.children).toBeUndefined()
   })
 
-  test('handles empty groups', () => {
+  test('keeps empty groups while making ungrouped collections reachable', () => {
     const emptyUser: ApiUser = {
       _id: 1,
       groups: [{ title: 'Empty', collections: [] }],
     }
     const groups = toUiGroups(emptyUser, rootCollections, childCollections)
 
-    expect(groups).toHaveLength(1)
+    expect(groups).toHaveLength(2)
     expect(groups[0].collections).toHaveLength(0)
+    expect(groups[1].id).toBe('ungrouped')
+    expect(groups[1].collections.map((collection) => collection.id)).toEqual([
+      '100',
+      '200',
+      '101',
+    ])
   })
 
-  test('skips hidden groups', () => {
+  test('keeps collapsed groups and their collections available for safe organization updates', () => {
     const userWithHidden: ApiUser = {
       _id: 1,
       groups: [
@@ -279,8 +285,10 @@ describe('toUiGroups', () => {
       ],
     }
     const groups = toUiGroups(userWithHidden, rootCollections, childCollections)
-    expect(groups).toHaveLength(1)
+    expect(groups).toHaveLength(3)
     expect(groups[0].name).toBe('Visible')
+    expect(groups[1].hidden).toBe(true)
+    expect(groups[1].collections[0].id).toBe('101')
   })
 
   test('handles missing collections gracefully', () => {
@@ -298,10 +306,68 @@ describe('toUiGroups', () => {
     expect(groups[0].collections[0].name).toBe('Development')
   })
 
-  test('handles user with no groups', () => {
+  test('shows existing collections even when the account has no group membership', () => {
+    // Arrange
     const noGroupsUser: ApiUser = { _id: 1 }
+    // Act
     const groups = toUiGroups(noGroupsUser, rootCollections, childCollections)
-    expect(groups).toHaveLength(0)
+    // Assert
+    expect(groups).toHaveLength(1)
+    expect(groups[0].name).toBe('Other collections')
+    expect(groups[0].collections.map((collection) => collection.id)).toEqual([
+      '100',
+      '200',
+      '101',
+    ])
+    expect(
+      groups[0].collections[0].children?.map((collection) => collection.id),
+    ).toEqual(['300', '301'])
+  })
+
+  test('overlapping collection endpoints and duplicate group memberships display one tree', () => {
+    // Arrange
+    const duplicatedUser: ApiUser = {
+      groups: [
+        { title: 'First', collections: [100, 100] },
+        { title: 'Second', collections: [100] },
+      ],
+    }
+    const roots: ApiCollection[] = [{ _id: 100, title: 'Root' }]
+    const children: ApiCollection[] = [
+      { _id: 100, title: 'Root' },
+      { _id: 300, title: 'Child', parent: { $id: 100 } },
+      { _id: 300, title: 'Child', parent: { $id: 100 } },
+    ]
+    // Act
+    const groups = toUiGroups(duplicatedUser, roots, children)
+    // Assert
+    expect(groups).toHaveLength(2)
+    expect(groups[0].collections.map((collection) => collection.id)).toEqual([
+      '100',
+    ])
+    expect(
+      groups[0].collections[0].children?.map((collection) => collection.id),
+    ).toEqual(['300'])
+    expect(groups[1].collections).toEqual([])
+  })
+
+  test('malformed parent cycles and missing parents stay visible without recursive failure', () => {
+    // Arrange
+    const children: ApiCollection[] = [
+      { _id: 1, title: 'One', parent: { $id: 2 } },
+      { _id: 2, title: 'Two', parent: { $id: 1 } },
+      { _id: 3, title: 'Orphan', parent: { $id: 99 } },
+    ]
+    // Act
+    const groups = toUiGroups({}, [], children)
+    // Assert
+    expect(groups[0].collections.map((collection) => collection.id)).toEqual([
+      '3',
+      '1',
+    ])
+    expect(groups[0].collections[0].parentId).toBeUndefined()
+    expect(groups[0].collections[1].children?.[0].id).toBe('2')
+    expect(groups[0].collections[1].children?.[0].children).toBeUndefined()
   })
 
   test('sorts groups by sort field', () => {

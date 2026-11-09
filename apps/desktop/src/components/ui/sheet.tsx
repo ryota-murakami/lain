@@ -13,18 +13,6 @@ const Sheet = React.memo(function Sheet({
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
 })
 
-const SheetTrigger = React.memo(function SheetTrigger({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
-  return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
-})
-
-const SheetClose = React.memo(function SheetClose({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Close>) {
-  return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
-})
-
 const SheetPortal = React.memo(function SheetPortal({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Portal>) {
@@ -100,19 +88,6 @@ const SheetHeader = React.memo(function SheetHeader({
   )
 })
 
-const SheetFooter = React.memo(function SheetFooter({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="sheet-footer"
-      className={cn('mt-auto flex flex-col gap-2 p-4', className)}
-      {...props}
-    />
-  )
-})
-
 const SheetTitle = React.memo(function SheetTitle({
   className,
   ...props
@@ -139,13 +114,4 @@ const SheetDescription = React.memo(function SheetDescription({
   )
 })
 
-export {
-  Sheet,
-  SheetTrigger,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
-  SheetDescription,
-}
+export { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle }

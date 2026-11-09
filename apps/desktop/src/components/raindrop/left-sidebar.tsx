@@ -1,24 +1,16 @@
 import {
   DndContext,
   DragOverlay,
-  KeyboardSensor,
-  PointerSensor,
-  type DraggableAttributes,
-  type DraggableSyntheticListeners,
-  type DragEndEvent,
-  type DragOverEvent,
-  type DragStartEvent,
-  type CollisionDetection,
-  type DroppableContainer,
   closestCenter,
   pointerWithin,
   useDroppable,
-  useSensor,
-  useSensors,
+  type CollisionDetection,
+  type DraggableAttributes,
+  type DraggableSyntheticListeners,
+  type DroppableContainer,
 } from '@dnd-kit/core'
 import {
   SortableContext,
-  sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
@@ -37,13 +29,8 @@ import {
   Tag,
   Trash2,
 } from 'lucide-react'
-import React, {
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-} from 'react'
+import React, { useCallback, useMemo, useRef, type CSSProperties } from 'react'
+import { toast } from 'sonner'
 
 import { CollectionSearch } from '@/components/raindrop/collection-search'
 import { DragPreview } from '@/components/raindrop/drag-preview'
@@ -92,14 +79,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useSidebarController } from '@/hooks/useSidebarController'
+import { collectionIcons } from '@/lib/collection-icons'
 import {
   getCollectionDndId,
   getGroupDndId,
-  findRootCollectionLocation,
-  moveRootCollection,
   parseCollectionDndId,
   parseGroupDndId,
-  updateRootCollection,
 } from '@/lib/collection-organization'
 import {
   RAINDROP_LIST_DND_ID,
@@ -107,6 +93,11 @@ import {
 } from '@/lib/raindrop-organization'
 import type { Collection, Group, SystemCollection } from '@/lib/types'
 import { cn } from '@/lib/utils'
+
+import type {
+  LeftSidebarProps,
+  CollectionTreeProps,
+} from './left-sidebar.types'
 
 /**
  * Preset colors shown in collection context-menu.
@@ -126,63 +117,8 @@ const COLLECTION_COLOR_OPTIONS = [
  * Stable click handler that stops propagation.
  * @param event - Mouse event from nested actions
  */
-function stopPropagation(event: React.MouseEvent) {
+function stopPropagation(event: React.MouseEvent): void {
   event.stopPropagation()
-}
-
-/**
- * Remove one root collection from groups.
- * @param groups - Current groups
- * @param collectionId - Collection ID to remove
- * @returns Updated groups
- */
-function removeRootCollection(groups: Group[], collectionId: string): Group[] {
-  return groups.map((group) => ({
-    ...group,
-    collections: group.collections.filter(
-      (collection) => collection.id !== collectionId,
-    ),
-  }))
-}
-
-/**
- * Serialize root-order structure for optimistic/server sync checks.
- * @param groups - Groups to serialize
- * @returns Stable string for comparison
- */
-function serializeRootStructure(groups: Group[]): string {
-  return groups
-    .map(
-      (group) => `${group.id}:${group.collections.map((c) => c.id).join(',')}`,
-    )
-    .join('|')
-}
-
-/**
- * Resolve drop indicator position from the active `over` ID.
- * @param overId - Raw dnd-kit `over.id`
- * @param groups - Current groups
- * @returns Group and insertion index, or null
- */
-function resolveDropIndicator(
-  overId: unknown,
-  groups: Group[],
-): { groupId: string; index: number } | null {
-  const overCollectionId = parseCollectionDndId(overId)
-  if (overCollectionId) {
-    const location = findRootCollectionLocation(groups, overCollectionId)
-    if (!location) return null
-    return { groupId: location.groupId, index: location.index }
-  }
-
-  const overGroupId = parseGroupDndId(overId)
-  if (overGroupId) {
-    const group = groups.find((currentGroup) => currentGroup.id === overGroupId)
-    if (!group) return null
-    return { groupId: overGroupId, index: group.collections.length }
-  }
-
-  return null
 }
 
 /** Highlight for the collection row a dragged bookmark would land on. */
@@ -289,6 +225,20 @@ const SystemCollectionItem = React.memo(function SystemCollectionItem({
   const handleClick = useCallback(() => {
     onSelectCollection(collection.id)
   }, [collection.id, onSelectCollection])
+  const handleEmptyTrash = useCallback((): void => {
+    void onEmptyTrash().catch((error: unknown) => {
+      // Axios already reports transport failures; HTTP 200 rejection bodies need feedback here.
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'status' in error &&
+        error.status !== 200
+      ) {
+        return
+      }
+      toast.error('Could not empty Trash. Please retry.')
+    })
+  }, [onEmptyTrash])
 
   // Only Unsorted can receive bookmarks (All is virtual, Trash would mean delete)
   const { setNodeRef, isOver } = useDroppable({
@@ -330,7 +280,7 @@ const SystemCollectionItem = React.memo(function SystemCollectionItem({
               <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem
                   className="text-destructive"
-                  onClick={onEmptyTrash}
+                  onClick={handleEmptyTrash}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
                   Empty Trash
@@ -347,54 +297,10 @@ const SystemCollectionItem = React.memo(function SystemCollectionItem({
 /**
  * Single collection row renderer (supports inline rename and context menu).
  */
-const CollectionRow = React.memo(function CollectionRow({
-  collection,
-  depth,
-  selectedCollectionId,
-  expandedCollections,
-  onSelectCollection,
-  onToggleCollection,
-  onDeleteCollection,
-  onMoveCollectionToGroup,
-  onChangeCollectionColor,
-  onStartInlineRename,
-  onSubmitInlineRename,
-  onCancelInlineRename,
-  editingCollectionId,
-  editingName,
-  onEditingNameChange,
-  groups,
-  sidebarMenuButtonStyles,
-  sortable,
-  isRoot,
-  isRaindropDragActive,
-}: {
+interface CollectionRowProps extends CollectionTreeProps {
   collection: Collection
   depth: number
-  selectedCollectionId: string
-  expandedCollections: Set<string>
-  onSelectCollection: (id: string) => void
-  onToggleCollection: (id: string) => void
-  onDeleteCollection: (collectionId: string) => Promise<void>
-  onMoveCollectionToGroup: (
-    collectionId: string,
-    targetGroupId: string,
-  ) => Promise<void>
-  onChangeCollectionColor: (
-    collectionId: string,
-    color: string,
-  ) => Promise<void>
-  onStartInlineRename: (collection: Collection) => void
-  onSubmitInlineRename: (
-    collectionId: string,
-    nextName: string,
-  ) => Promise<void>
-  onCancelInlineRename: () => void
-  editingCollectionId: string | null
-  editingName: string
-  onEditingNameChange: (nextName: string) => void
-  groups: Group[]
-  sidebarMenuButtonStyles: Record<number, CSSProperties>
+  isRoot: boolean
   sortable?: {
     setNodeRef: (node: HTMLElement | null) => void
     attributes: DraggableAttributes
@@ -403,45 +309,59 @@ const CollectionRow = React.memo(function CollectionRow({
     isDragging: boolean
     isOver: boolean
   }
-  isRoot: boolean
-  /** A bookmark drag is in progress — this collection may become its drop target */
-  isRaindropDragActive: boolean
-}) {
-  const isSelected = selectedCollectionId === collection.id
-  const hasChildren = (collection.children?.length ?? 0) > 0
-  const isExpanded = expandedCollections.has(collection.id)
-  const isEditing = editingCollectionId === collection.id
+}
 
-  // Root rows are already droppable through useSortable; nested rows register here
-  const droppable = useDroppable({
-    id: getCollectionDndId(collection.id),
-    disabled: isRoot,
-  })
-  const isOver = isRoot ? (sortable?.isOver ?? false) : droppable.isOver
-  const isRaindropDropTarget = isRaindropDragActive && isOver
-
-  const handleSelect = useCallback(() => {
-    onSelectCollection(collection.id)
-  }, [collection.id, onSelectCollection])
-
-  function handleToggle(event: React.MouseEvent) {
-    event.stopPropagation()
-    onToggleCollection(collection.id)
-  }
-
-  function handleDoubleClick(event: React.MouseEvent) {
-    if (!isRoot) return
-    event.stopPropagation()
-    onStartInlineRename(collection)
-  }
-
-  const handleSubmitRename = useCallback(async () => {
-    await onSubmitInlineRename(collection.id, editingName)
-  }, [collection.id, editingName, onSubmitInlineRename])
+/**
+ * Keep collection actions available at every tree depth independently of drag rendering.
+ * Used by CollectionRow; moving between groups is limited to roots.
+ * @example
+ * <CollectionRowMenu {...props}>{row}</CollectionRowMenu>
+ */
+const CollectionRowMenu = React.memo(function CollectionRowMenu({
+  collection,
+  isRoot,
+  groups,
+  onEditCollection,
+  onStartInlineRename,
+  onDeleteCollection,
+  onMoveCollectionToGroup,
+  onChangeCollectionColor,
+  children,
+}: Pick<
+  CollectionTreeProps,
+  | 'groups'
+  | 'onEditCollection'
+  | 'onStartInlineRename'
+  | 'onDeleteCollection'
+  | 'onMoveCollectionToGroup'
+  | 'onChangeCollectionColor'
+> & { collection: Collection; isRoot: boolean; children: React.ReactNode }) {
+  const renameAfterCloseRef = useRef(false)
+  const handleContextSettings = useCallback(
+    (): void => onEditCollection?.(collection),
+    [collection, onEditCollection],
+  )
 
   const handleContextRename = useCallback(() => {
-    onStartInlineRename(collection)
-  }, [collection, onStartInlineRename])
+    renameAfterCloseRef.current = true
+  }, [])
+
+  /**
+   * Transfer menu focus to the inline editor after the menu's focus scope closes.
+   * Radix calls this after selection; opening the editor earlier lets the closing
+   * menu steal focus and trigger the editor's blur-save with a partial name.
+   * @example <ContextMenuContent onCloseAutoFocus={handleCloseAutoFocus} />
+   */
+  const handleCloseAutoFocus = useCallback(
+    (event: Event): void => {
+      // Other menu actions retain Radix's normal focus restoration.
+      if (!renameAfterCloseRef.current) return
+      renameAfterCloseRef.current = false
+      event.preventDefault()
+      onStartInlineRename(collection)
+    },
+    [collection, onStartInlineRename],
+  )
 
   const handleContextDelete = useCallback(() => {
     void onDeleteCollection(collection.id)
@@ -450,7 +370,7 @@ const CollectionRow = React.memo(function CollectionRow({
   const moveToGroupHandlers = useMemo(() => {
     return new Map(
       groups.map((group) => {
-        const handler = () => {
+        const handler = (): void => {
           void onMoveCollectionToGroup(collection.id, group.id)
         }
         return [group.id, handler]
@@ -461,7 +381,7 @@ const CollectionRow = React.memo(function CollectionRow({
   const colorHandlers = useMemo(() => {
     return new Map(
       COLLECTION_COLOR_OPTIONS.map(({ value }) => {
-        const handler = () => {
+        const handler = (): void => {
           void onChangeCollectionColor(collection.id, value)
         }
         return [value, handler]
@@ -469,114 +389,37 @@ const CollectionRow = React.memo(function CollectionRow({
     )
   }, [collection.id, onChangeCollectionColor])
 
-  const row = (
-    <div
-      ref={isRoot ? sortable?.setNodeRef : droppable.setNodeRef}
-      style={sortable?.style}
-      data-testid={isRoot ? `sidebar-collection-${collection.id}` : undefined}
-      data-drop-target={isRaindropDropTarget || undefined}
-      className={cn(
-        sortable?.isDragging && 'opacity-50',
-        isRaindropDropTarget && RAINDROP_DROP_TARGET_CLASS,
-      )}
-    >
-      <SidebarMenuItem>
-        <SidebarMenuButton
-          isActive={isSelected}
-          onClick={handleSelect}
-          className="group/collection h-8 w-full"
-          style={
-            sidebarMenuButtonStyles[depth] || {
-              paddingLeft: `${12 + depth * 16}px`,
-            }
-          }
-          {...(sortable?.attributes ?? {})}
-          {...(sortable?.listeners ?? {})}
-        >
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            {hasChildren ? (
-              <button
-                type="button"
-                onClick={handleToggle}
-                className="hover:bg-accent/50 shrink-0 rounded p-0.5"
-              >
-                {isExpanded ? (
-                  <ChevronDown className="text-muted-foreground h-3 w-3" />
-                ) : (
-                  <ChevronRight className="text-muted-foreground h-3 w-3" />
-                )}
-              </button>
-            ) : (
-              <span className="w-4" />
-            )}
-
-            <div
-              data-testid={`collection-color-${collection.id}`}
-              className="h-3 w-3 shrink-0 rounded-sm"
-              style={{ backgroundColor: collection.color || '#8b5cf6' }}
-            />
-
-            {isEditing ? (
-              <input
-                aria-label={`Rename collection ${collection.name}`}
-                value={editingName}
-                onChange={(event) => onEditingNameChange(event.target.value)}
-                onClick={stopPropagation}
-                onBlur={() => {
-                  void handleSubmitRename()
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    event.preventDefault()
-                    void handleSubmitRename()
-                  }
-                  if (event.key === 'Escape') {
-                    onCancelInlineRename()
-                  }
-                }}
-                autoFocus
-                className="bg-background h-6 min-w-0 flex-1 rounded border px-1.5 text-sm outline-none"
-              />
-            ) : (
-              <span
-                className="truncate text-sm"
-                onDoubleClick={handleDoubleClick}
-                title={collection.name}
-              >
-                {collection.name}
-              </span>
-            )}
-          </div>
-
-          <span className="text-muted-foreground text-xs tabular-nums opacity-0 transition-opacity group-hover/collection:opacity-100">
-            {collection.count}
-          </span>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    </div>
-  )
-
-  const maybeContextMenu = isRoot ? (
+  return (
     <ContextMenu>
-      <ContextMenuTrigger asChild>{row}</ContextMenuTrigger>
-      <ContextMenuContent className="w-56">
-        <ContextMenuItem onClick={handleContextRename}>Rename</ContextMenuItem>
+      <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+      <ContextMenuContent
+        className="w-56"
+        onCloseAutoFocus={handleCloseAutoFocus}
+      >
+        <ContextMenuItem onClick={handleContextSettings}>
+          Collection Settings
+        </ContextMenuItem>
+        <ContextMenuItem onSelect={handleContextRename}>Rename</ContextMenuItem>
         <ContextMenuItem variant="destructive" onClick={handleContextDelete}>
           Delete
         </ContextMenuItem>
         <ContextMenuSeparator />
         <ContextMenuSub>
-          <ContextMenuSubTrigger>Move to Group</ContextMenuSubTrigger>
+          <ContextMenuSubTrigger disabled={!isRoot}>
+            Move to Group
+          </ContextMenuSubTrigger>
           <ContextMenuSubContent className="w-48">
-            {groups.map((group) => (
-              <ContextMenuItem
-                key={group.id}
-                disabled={group.id === collection.groupId}
-                onClick={moveToGroupHandlers.get(group.id)}
-              >
-                {group.name}
-              </ContextMenuItem>
-            ))}
+            {groups
+              .filter((group) => group.id !== 'ungrouped')
+              .map((group) => (
+                <ContextMenuItem
+                  key={group.id}
+                  disabled={group.id === collection.groupId}
+                  onClick={moveToGroupHandlers.get(group.id)}
+                >
+                  {group.name}
+                </ContextMenuItem>
+              ))}
           </ContextMenuSubContent>
         </ContextMenuSub>
         <ContextMenuSub>
@@ -598,13 +441,314 @@ const CollectionRow = React.memo(function CollectionRow({
         </ContextMenuSub>
       </ContextMenuContent>
     </ContextMenu>
-  ) : (
-    row
+  )
+})
+
+/**
+ * Preserve inline rename keyboard and blur behavior without coupling it to row dragging.
+ * Rendered by CollectionRow; Escape cancels while Enter and blur submit the draft.
+ * @example
+ * <CollectionRowName {...props} />
+ */
+const CollectionRowName = React.memo(function CollectionRowName({
+  collection,
+  isEditing,
+  editingName,
+  onEditingNameChange,
+  onCancelInlineRename,
+  onSubmitInlineRename,
+  onStartInlineRename,
+  isRoot,
+}: Pick<
+  CollectionTreeProps,
+  | 'editingName'
+  | 'onEditingNameChange'
+  | 'onCancelInlineRename'
+  | 'onSubmitInlineRename'
+  | 'onStartInlineRename'
+> & { collection: Collection; isEditing: boolean; isRoot: boolean }) {
+  function handleDoubleClick(event: React.MouseEvent): void {
+    if (!isRoot) return
+    event.stopPropagation()
+    onStartInlineRename(collection)
+  }
+  const handleSubmitRename = async (): Promise<void> =>
+    onSubmitInlineRename(collection.id, editingName)
+  return (
+    <>
+      {' '}
+      {isEditing ? (
+        <input
+          aria-label={`Rename collection ${collection.name}`}
+          value={editingName}
+          onChange={(event) => onEditingNameChange(event.target.value)}
+          onClick={stopPropagation}
+          onBlur={() => {
+            void handleSubmitRename()
+          }}
+          onKeyDown={(event) => {
+            // Text editing keys must not activate the parent collection's keyboard drag sensor.
+            event.stopPropagation()
+            if (event.key === 'Enter') {
+              event.preventDefault()
+              void handleSubmitRename()
+            }
+            if (event.key === 'Escape') {
+              onCancelInlineRename()
+            }
+          }}
+          onKeyUp={(event) => {
+            // Space is already inserted; prevent the enclosing button's native click on release.
+            if (event.key === ' ') event.preventDefault()
+          }}
+          autoFocus
+          className="bg-background h-6 min-w-0 flex-1 rounded border px-1.5 text-sm outline-none"
+        />
+      ) : (
+        <span
+          className="truncate text-sm"
+          onDoubleClick={handleDoubleClick}
+          title={collection.name}
+        >
+          {collection.name}
+        </span>
+      )}
+    </>
+  )
+})
+
+/**
+ * Render a collection's keyboard-selectable label, disclosure, icon, and inline editor.
+ * Called by {@link CollectionRow}; dragging and recursive children remain in the outer row.
+ * @example
+ * <CollectionRowButton {...props} />
+ */
+/**
+ * Render the pointer disclosure while the parent row owns keyboard expansion.
+ * @example
+ * <CollectionDisclosure {...props} />
+ */
+const CollectionDisclosure = React.memo(function CollectionDisclosure({
+  collectionName,
+  hasChildren,
+  isExpanded,
+  onToggle,
+}: {
+  collectionName: string
+  hasChildren: boolean
+  isExpanded: boolean
+  onToggle: (event: React.MouseEvent) => void
+}) {
+  return (
+    <>
+      {' '}
+      {hasChildren ? (
+        <span
+          aria-hidden="true"
+          title={`${isExpanded ? 'Collapse' : 'Expand'} ${collectionName}`}
+          onClick={onToggle}
+          className="hover:bg-accent/50 shrink-0 rounded p-0.5"
+        >
+          {isExpanded ? (
+            <ChevronDown className="text-muted-foreground h-3 w-3" />
+          ) : (
+            <ChevronRight className="text-muted-foreground h-3 w-3" />
+          )}
+        </span>
+      ) : (
+        <span className="w-4" />
+      )}
+    </>
+  )
+})
+
+/**
+ * Recognize directional folder commands without consuming unrelated sortable keyboard keys.
+ * @example
+ * isFolderToggleKey('ArrowRight', false) // true
+ */
+function isFolderToggleKey(key: string, expanded: boolean): boolean {
+  if (key === 'ArrowRight') return !expanded
+  if (key === 'ArrowLeft') return expanded
+  return false
+}
+
+const CollectionRowButton = React.memo(function CollectionRowButton({
+  collection,
+  depth,
+  sortable,
+  isRoot,
+  treeProps,
+}: Pick<CollectionRowProps, 'collection' | 'depth' | 'sortable' | 'isRoot'> & {
+  treeProps: CollectionTreeProps
+}) {
+  const {
+    onSelectCollection,
+    onToggleCollection,
+    sidebarMenuButtonStyles,
+    editingName,
+    onEditingNameChange,
+    onCancelInlineRename,
+    onSubmitInlineRename,
+    onStartInlineRename,
+  } = treeProps
+  const isSelected = treeProps.selectedCollectionId === collection.id
+  const isEditing = treeProps.editingCollectionId === collection.id
+  const hasChildren = Boolean(collection.children?.length)
+  const isExpanded = treeProps.expandedCollections.has(collection.id)
+  const CollectionIcon =
+    collectionIcons[collection.icon] ?? collectionIcons.Folder
+  const handleSelect = useCallback(() => {
+    onSelectCollection(collection.id)
+  }, [collection.id, onSelectCollection])
+
+  const handleToggle = useCallback(
+    (event: React.MouseEvent): void => {
+      event.stopPropagation()
+      onToggleCollection(collection.id)
+    },
+    [onToggleCollection, collection.id],
+  )
+
+  const iconStyle = useMemo(
+    () => ({ color: collection.color || '#8b5cf6' }),
+    [collection.color],
+  )
+  const handleFolderKeyDown = useCallback(
+    (event: React.KeyboardEvent): void => {
+      // Folder navigation takes precedence over sortable's keyboard activator.
+      if (hasChildren && isFolderToggleKey(event.key, isExpanded)) {
+        event.preventDefault()
+        event.stopPropagation()
+        onToggleCollection(collection.id)
+        return
+      }
+      sortable?.listeners?.onKeyDown?.(event)
+    },
+    [
+      hasChildren,
+      isExpanded,
+      onToggleCollection,
+      collection.id,
+      sortable?.listeners,
+    ],
+  )
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        isActive={isSelected}
+        aria-label={collection.name}
+        aria-expanded={hasChildren ? isExpanded : undefined}
+        onClick={handleSelect}
+        className="group/collection h-8 w-full"
+        style={
+          sidebarMenuButtonStyles[depth] || {
+            paddingLeft: `${12 + depth * 16}px`,
+          }
+        }
+        {...(sortable?.attributes ?? {})}
+        {...(sortable?.listeners ?? {})}
+        onKeyDown={handleFolderKeyDown}
+      >
+        <div className="flex min-w-0 flex-1 items-center gap-2">
+          <CollectionDisclosure
+            collectionName={collection.name}
+            hasChildren={hasChildren}
+            isExpanded={isExpanded}
+            onToggle={handleToggle}
+          />
+
+          <CollectionIcon
+            data-testid={`collection-color-${collection.id}`}
+            className="h-4 w-4 shrink-0"
+            style={iconStyle}
+          />
+
+          <CollectionRowName
+            collection={collection}
+            isEditing={isEditing}
+            editingName={editingName}
+            onEditingNameChange={onEditingNameChange}
+            onCancelInlineRename={onCancelInlineRename}
+            onSubmitInlineRename={onSubmitInlineRename}
+            onStartInlineRename={onStartInlineRename}
+            isRoot={isRoot}
+          />
+        </div>
+
+        <span className="text-muted-foreground text-xs tabular-nums opacity-0 transition-opacity group-hover/collection:opacity-100">
+          {collection.count}
+        </span>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  )
+})
+
+const CollectionRow = React.memo(function CollectionRow({
+  collection,
+  depth,
+  sortable,
+  isRoot,
+  ...treeProps
+}: CollectionRowProps) {
+  const {
+    expandedCollections,
+    onDeleteCollection,
+    onMoveCollectionToGroup,
+    onChangeCollectionColor,
+    onEditCollection,
+    onStartInlineRename,
+    groups,
+    isRaindropDragActive,
+  } = treeProps
+
+  const hasChildren = (collection.children?.length ?? 0) > 0
+  const isExpanded = expandedCollections.has(collection.id)
+
+  // Root rows are already droppable through useSortable; nested rows register here
+  const droppable = useDroppable({
+    id: getCollectionDndId(collection.id),
+    disabled: isRoot,
+  })
+  const isOver = isRoot ? (sortable?.isOver ?? false) : droppable.isOver
+  const isRaindropDropTarget = isRaindropDragActive && isOver
+
+  const row = (
+    <div
+      ref={isRoot ? sortable?.setNodeRef : droppable.setNodeRef}
+      style={sortable?.style}
+      data-testid={isRoot ? `sidebar-collection-${collection.id}` : undefined}
+      data-drop-target={isRaindropDropTarget || undefined}
+      className={cn(
+        sortable?.isDragging && 'opacity-50',
+        isRaindropDropTarget && RAINDROP_DROP_TARGET_CLASS,
+      )}
+    >
+      <CollectionRowButton
+        collection={collection}
+        depth={depth}
+        sortable={sortable}
+        isRoot={isRoot}
+        treeProps={treeProps}
+      />
+    </div>
   )
 
   return (
     <div>
-      {maybeContextMenu}
+      <CollectionRowMenu
+        collection={collection}
+        isRoot={isRoot}
+        groups={groups}
+        onEditCollection={onEditCollection}
+        onStartInlineRename={onStartInlineRename}
+        onDeleteCollection={onDeleteCollection}
+        onMoveCollectionToGroup={onMoveCollectionToGroup}
+        onChangeCollectionColor={onChangeCollectionColor}
+      >
+        {row}
+      </CollectionRowMenu>
       {hasChildren && isExpanded && (
         <div>
           {collection.children?.map((childCollection) => (
@@ -612,23 +756,8 @@ const CollectionRow = React.memo(function CollectionRow({
               key={childCollection.id}
               collection={childCollection}
               depth={depth + 1}
-              selectedCollectionId={selectedCollectionId}
-              expandedCollections={expandedCollections}
-              onSelectCollection={onSelectCollection}
-              onToggleCollection={onToggleCollection}
-              onDeleteCollection={onDeleteCollection}
-              onMoveCollectionToGroup={onMoveCollectionToGroup}
-              onChangeCollectionColor={onChangeCollectionColor}
-              onStartInlineRename={onStartInlineRename}
-              onSubmitInlineRename={onSubmitInlineRename}
-              onCancelInlineRename={onCancelInlineRename}
-              editingCollectionId={editingCollectionId}
-              editingName={editingName}
-              onEditingNameChange={onEditingNameChange}
-              groups={groups}
-              sidebarMenuButtonStyles={sidebarMenuButtonStyles}
+              {...treeProps}
               isRoot={false}
-              isRaindropDragActive={isRaindropDragActive}
             />
           ))}
         </div>
@@ -643,50 +772,8 @@ const CollectionRow = React.memo(function CollectionRow({
 const SortableRootCollectionRow = React.memo(
   function SortableRootCollectionRow({
     collection,
-    selectedCollectionId,
-    expandedCollections,
-    onSelectCollection,
-    onToggleCollection,
-    onDeleteCollection,
-    onMoveCollectionToGroup,
-    onChangeCollectionColor,
-    onStartInlineRename,
-    onSubmitInlineRename,
-    onCancelInlineRename,
-    editingCollectionId,
-    editingName,
-    onEditingNameChange,
-    groups,
-    sidebarMenuButtonStyles,
-    isRaindropDragActive,
-  }: {
-    collection: Collection
-    selectedCollectionId: string
-    expandedCollections: Set<string>
-    onSelectCollection: (id: string) => void
-    onToggleCollection: (id: string) => void
-    onDeleteCollection: (collectionId: string) => Promise<void>
-    onMoveCollectionToGroup: (
-      collectionId: string,
-      targetGroupId: string,
-    ) => Promise<void>
-    onChangeCollectionColor: (
-      collectionId: string,
-      color: string,
-    ) => Promise<void>
-    onStartInlineRename: (collection: Collection) => void
-    onSubmitInlineRename: (
-      collectionId: string,
-      nextName: string,
-    ) => Promise<void>
-    onCancelInlineRename: () => void
-    editingCollectionId: string | null
-    editingName: string
-    onEditingNameChange: (nextName: string) => void
-    groups: Group[]
-    sidebarMenuButtonStyles: Record<number, CSSProperties>
-    isRaindropDragActive: boolean
-  }) {
+    ...treeProps
+  }: CollectionTreeProps & { collection: Collection }) {
     const {
       attributes,
       listeners,
@@ -698,6 +785,7 @@ const SortableRootCollectionRow = React.memo(
     } = useSortable({
       id: getCollectionDndId(collection.id),
       data: { collectionId: collection.id, groupId: collection.groupId },
+      disabled: { droppable: collection.groupId === 'ungrouped' },
     })
 
     const style = useMemo<CSSProperties>(() => {
@@ -723,24 +811,9 @@ const SortableRootCollectionRow = React.memo(
       <CollectionRow
         collection={collection}
         depth={0}
-        selectedCollectionId={selectedCollectionId}
-        expandedCollections={expandedCollections}
-        onSelectCollection={onSelectCollection}
-        onToggleCollection={onToggleCollection}
-        onDeleteCollection={onDeleteCollection}
-        onMoveCollectionToGroup={onMoveCollectionToGroup}
-        onChangeCollectionColor={onChangeCollectionColor}
-        onStartInlineRename={onStartInlineRename}
-        onSubmitInlineRename={onSubmitInlineRename}
-        onCancelInlineRename={onCancelInlineRename}
-        editingCollectionId={editingCollectionId}
-        editingName={editingName}
-        onEditingNameChange={onEditingNameChange}
-        groups={groups}
-        sidebarMenuButtonStyles={sidebarMenuButtonStyles}
+        {...treeProps}
         isRoot
         sortable={sortableProps}
-        isRaindropDragActive={isRaindropDragActive}
       />
     )
   },
@@ -751,59 +824,42 @@ const SortableRootCollectionRow = React.memo(
  */
 const GroupSection = React.memo(function GroupSection({
   group,
+  onEditGroup,
+  onDeleteGroup,
   isExpanded,
-  selectedCollectionId,
-  expandedCollections,
   onToggleGroup,
-  onSelectCollection,
-  onToggleCollection,
   onAddCollection,
-  onDeleteCollection,
-  onMoveCollectionToGroup,
-  onChangeCollectionColor,
-  onStartInlineRename,
-  onSubmitInlineRename,
-  onCancelInlineRename,
-  editingCollectionId,
-  editingName,
-  onEditingNameChange,
-  sidebarMenuButtonStyles,
-  groups,
   dropIndicator,
-  isRaindropDragActive,
-}: {
+  ...treeProps
+}: CollectionTreeProps & {
   group: Group
+  onEditGroup?: (group: Group) => void
+  onDeleteGroup?: (id: string) => Promise<void>
   isExpanded: boolean
-  selectedCollectionId: string
-  expandedCollections: Set<string>
   onToggleGroup: (groupId: string) => void
-  onSelectCollection: (collectionId: string) => void
-  onToggleCollection: (collectionId: string) => void
-  onAddCollection: () => void
-  onDeleteCollection: (collectionId: string) => Promise<void>
-  onMoveCollectionToGroup: (
-    collectionId: string,
-    targetGroupId: string,
-  ) => Promise<void>
-  onChangeCollectionColor: (
-    collectionId: string,
-    color: string,
-  ) => Promise<void>
-  onStartInlineRename: (collection: Collection) => void
-  onSubmitInlineRename: (
-    collectionId: string,
-    nextName: string,
-  ) => Promise<void>
-  onCancelInlineRename: () => void
-  editingCollectionId: string | null
-  editingName: string
-  onEditingNameChange: (nextName: string) => void
-  sidebarMenuButtonStyles: Record<number, CSSProperties>
-  groups: Group[]
+  onAddCollection: (initialGroupId?: string) => void
   dropIndicator: { groupId: string; index: number } | null
-  /** A bookmark drag is in progress — rows highlight as drop targets */
-  isRaindropDragActive: boolean
 }) {
+  const handleAddCollection = useCallback(
+    (): void => onAddCollection(group.id),
+    [group.id, onAddCollection],
+  )
+  const handleEditGroup = useCallback(
+    (): void => onEditGroup?.(group),
+    [group, onEditGroup],
+  )
+  const handleDeleteGroup = useCallback((): void => {
+    if (
+      window.confirm(
+        'Delete this group? Its collections and bookmarks will be kept in another group.',
+      )
+    ) {
+      void onDeleteGroup?.(group.id).catch(() =>
+        toast.error('Could not delete the group. Please retry.'),
+      )
+    }
+  }, [group.id, onDeleteGroup])
+
   const handleOpenChange = useCallback(() => {
     onToggleGroup(group.id)
   }, [group.id, onToggleGroup])
@@ -817,6 +873,7 @@ const GroupSection = React.memo(function GroupSection({
   const { setNodeRef } = useDroppable({
     id: getGroupDndId(group.id),
     data: { groupId: group.id },
+    disabled: group.id === 'ungrouped',
   })
 
   return (
@@ -836,26 +893,39 @@ const GroupSection = React.memo(function GroupSection({
             </SidebarGroupLabel>
           </CollapsibleTrigger>
 
-          <div className="flex items-center gap-0.5 pr-2 opacity-0 transition-opacity group-hover/groupheader:opacity-100 group-data-[collapsible=icon]:hidden">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-5 w-5">
-                  <MoreHorizontal className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={onAddCollection}>
-                  <FolderPlus className="mr-2 h-4 w-4" />
-                  Add Collection
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive" disabled>
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Group
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {group.id !== 'ungrouped' && (
+            <div className="flex items-center gap-0.5 pr-2 opacity-0 transition-opacity group-hover/groupheader:opacity-100 group-data-[collapsible=icon]:hidden">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-5 w-5"
+                    aria-label={`Group actions for ${group.name}`}
+                  >
+                    <MoreHorizontal className="h-3 w-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={handleAddCollection}>
+                    <FolderPlus className="mr-2 h-4 w-4" />
+                    Add Collection
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleEditGroup}>
+                    Edit Group
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="text-destructive"
+                    onClick={handleDeleteGroup}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete Group
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
         </div>
 
         <CollapsibleContent>
@@ -878,22 +948,7 @@ const GroupSection = React.memo(function GroupSection({
                         )}
                       <SortableRootCollectionRow
                         collection={collection}
-                        selectedCollectionId={selectedCollectionId}
-                        expandedCollections={expandedCollections}
-                        onSelectCollection={onSelectCollection}
-                        onToggleCollection={onToggleCollection}
-                        onDeleteCollection={onDeleteCollection}
-                        onMoveCollectionToGroup={onMoveCollectionToGroup}
-                        onChangeCollectionColor={onChangeCollectionColor}
-                        onStartInlineRename={onStartInlineRename}
-                        onSubmitInlineRename={onSubmitInlineRename}
-                        onCancelInlineRename={onCancelInlineRename}
-                        editingCollectionId={editingCollectionId}
-                        editingName={editingName}
-                        onEditingNameChange={onEditingNameChange}
-                        groups={groups}
-                        sidebarMenuButtonStyles={sidebarMenuButtonStyles}
-                        isRaindropDragActive={isRaindropDragActive}
+                        {...treeProps}
                       />
                     </React.Fragment>
                   ))}
@@ -916,352 +971,119 @@ const GroupSection = React.memo(function GroupSection({
 })
 
 /**
- * Props for LeftSidebar.
+ * Render the scrollable system-library and collection-tree sections without sidebar chrome.
+ * Called by {@link LeftSidebar}; synthetic groups keep local expansion and expose no group actions.
+ * @example
+ * <SidebarLibrary {...props} />
  */
-interface LeftSidebarProps {
-  systemCollections: SystemCollection[]
-  groups: Group[]
-  selectedCollectionId: string
-  onSelectCollection: (id: string) => void
-  onAddBookmark: () => void
-  onAddCollection: () => void
-  onAddGroup: () => void
-  onManageTags: () => void
-  onDeleteCollection: (collectionId: string) => Promise<void>
-  onEmptyTrash: () => Promise<void>
-  onMergeCollections: () => void
-  onPersistGroups: (groups: Group[]) => Promise<void>
-  onRenameCollection: (collectionId: string, title: string) => Promise<void>
-  onChangeCollectionColor: (
-    collectionId: string,
-    color: string,
-  ) => Promise<void>
-  /**
-   * Content rendered inside the sidebar's DndContext (main content, detail panel) so
-   * bookmarks dragged out of the list can be dropped on the collections here.
-   */
-  children?: React.ReactNode
-}
+const SidebarLibrary = React.memo(function SidebarLibrary({
+  systemCollections,
+  activeDragCollection,
+  displayedGroups,
+  onEmptyTrash,
+  isUngroupedExpanded,
+  onEditGroup,
+  onDeleteGroup,
+  toggleGroup,
+  onAddCollection,
+  dropIndicator,
+  treeProps,
+}: Pick<
+  LeftSidebarProps,
+  | 'systemCollections'
+  | 'onEmptyTrash'
+  | 'onEditGroup'
+  | 'onDeleteGroup'
+  | 'onAddCollection'
+> & {
+  activeDragCollection?: Collection
+  displayedGroups: Group[]
+  isUngroupedExpanded: boolean
+  toggleGroup: (id: string) => void
+  dropIndicator: { groupId: string; index: number } | null
+  treeProps: CollectionTreeProps
+}) {
+  return (
+    <ScrollArea className="flex-1">
+      <SidebarGroup>
+        <SidebarGroupLabel className="text-muted-foreground px-3 text-xs font-medium tracking-wider uppercase">
+          Library
+        </SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {systemCollections.map((collection) => (
+              <SystemCollectionItem
+                key={collection.id}
+                collection={collection}
+                isSelected={treeProps.selectedCollectionId === collection.id}
+                onSelectCollection={treeProps.onSelectCollection}
+                onEmptyTrash={onEmptyTrash}
+                isRaindropDragActive={treeProps.isRaindropDragActive}
+              />
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+
+      <Separator className="mx-3 my-1" />
+
+      {displayedGroups.map((group) => (
+        <GroupSection
+          key={group.id}
+          group={group}
+          isExpanded={
+            group.id === 'ungrouped' ? isUngroupedExpanded : !group.hidden
+          }
+          onEditGroup={onEditGroup}
+          onDeleteGroup={onDeleteGroup}
+          {...treeProps}
+          onToggleGroup={toggleGroup}
+          onAddCollection={onAddCollection}
+          dropIndicator={dropIndicator}
+        />
+      ))}
+      <DragOverlay>
+        <DragPreview collection={activeDragCollection} />
+      </DragOverlay>
+    </ScrollArea>
+  )
+})
 
 /**
  * Left sidebar navigation with system collections, grouped collections, and DnD.
  * Owns the single DndContext shared with its children: collection reordering here,
  * bookmark moves/reorders observed by MainContent through useDndMonitor.
  */
-const LeftSidebar = React.memo(function LeftSidebar({
-  systemCollections,
-  groups,
-  selectedCollectionId,
-  onSelectCollection,
-  onAddBookmark,
-  onAddCollection,
-  onAddGroup,
-  onManageTags,
-  onDeleteCollection,
-  onEmptyTrash,
-  onMergeCollections,
-  onPersistGroups,
-  onRenameCollection,
-  onChangeCollectionColor,
-  children,
-}: LeftSidebarProps) {
-  const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(
-    new Set(),
-  )
-  const [expandedCollections, setExpandedCollections] = useState<Set<string>>(
-    new Set(),
-  )
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [optimisticGroups, setOptimisticGroups] = useState<Group[] | null>(null)
-  const [editingCollectionId, setEditingCollectionId] = useState<string | null>(
-    null,
-  )
-  const [editingName, setEditingName] = useState('')
-  const [activeDragCollectionId, setActiveDragCollectionId] = useState<
-    string | null
-  >(null)
-  const [dropIndicator, setDropIndicator] = useState<{
-    groupId: string
-    index: number
-  } | null>(null)
-  const [isRaindropDragActive, setIsRaindropDragActive] = useState(false)
-  const inlineRenameCancelledRef = useRef(false)
-
-  const displayedGroups = useMemo(() => {
-    if (!optimisticGroups) return groups
-    if (
-      serializeRootStructure(optimisticGroups) ===
-      serializeRootStructure(groups)
-    ) {
-      return groups
-    }
-    return optimisticGroups
-  }, [groups, optimisticGroups])
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: { distance: 4 },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  )
-
-  const handleOpenSearch = useCallback(() => {
-    setIsSearchOpen(true)
-  }, [])
-
-  const handleCloseSearch = useCallback(() => {
-    setIsSearchOpen(false)
-  }, [])
-
-  const handleSearchSelect = useCallback(
-    (collectionId: string) => {
-      onSelectCollection(collectionId)
-      setIsSearchOpen(false)
-    },
-    [onSelectCollection],
-  )
-
-  const toggleGroup = useCallback((groupId: string) => {
-    setCollapsedGroupIds((previous) => {
-      const next = new Set(previous)
-      if (next.has(groupId)) {
-        next.delete(groupId)
-      } else {
-        next.add(groupId)
-      }
-      return next
-    })
-  }, [])
-
-  const toggleCollection = useCallback((collectionId: string) => {
-    setExpandedCollections((previous) => {
-      const next = new Set(previous)
-      if (next.has(collectionId)) {
-        next.delete(collectionId)
-      } else {
-        next.add(collectionId)
-      }
-      return next
-    })
-  }, [])
-
-  const sidebarMenuButtonStyles = useMemo(() => {
-    const styles: Record<number, CSSProperties> = {}
-    for (let depth = 0; depth <= 5; depth += 1) {
-      styles[depth] = { paddingLeft: `${12 + depth * 16}px` }
-    }
-    return styles
-  }, [])
-
-  const activeDragCollection = useMemo(() => {
-    if (!activeDragCollectionId) return undefined
-    for (const group of displayedGroups) {
-      const found = group.collections.find(
-        (collection) => collection.id === activeDragCollectionId,
-      )
-      if (found) return found
-    }
-    return undefined
-  }, [activeDragCollectionId, displayedGroups])
-
-  const handlePersistGroups = useCallback(
-    async (nextGroups: Group[], previousGroups: Group[]) => {
-      setOptimisticGroups(nextGroups)
-      try {
-        await onPersistGroups(nextGroups)
-        setOptimisticGroups(null)
-      } catch {
-        setOptimisticGroups(previousGroups)
-      }
-    },
-    [onPersistGroups],
-  )
-
-  const handleMoveCollectionToGroup = useCallback(
-    async (collectionId: string, targetGroupId: string) => {
-      const previousGroups = displayedGroups
-      const targetGroup = previousGroups.find(
-        (group) => group.id === targetGroupId,
-      )
-      if (!targetGroup) return
-
-      const nextGroups = moveRootCollection(
-        previousGroups,
-        collectionId,
-        targetGroupId,
-        targetGroup.collections.length,
-      )
-      if (
-        serializeRootStructure(previousGroups) ===
-        serializeRootStructure(nextGroups)
-      ) {
-        return
-      }
-      await handlePersistGroups(nextGroups, previousGroups)
-    },
-    [displayedGroups, handlePersistGroups],
-  )
-
-  const handleDeleteWithOptimistic = useCallback(
-    async (collectionId: string) => {
-      const previousGroups = displayedGroups
-      const nextGroups = removeRootCollection(previousGroups, collectionId)
-      setOptimisticGroups(nextGroups)
-      try {
-        await onDeleteCollection(collectionId)
-        setOptimisticGroups(null)
-      } catch {
-        setOptimisticGroups(previousGroups)
-      }
-    },
-    [displayedGroups, onDeleteCollection],
-  )
-
-  const handleStartInlineRename = useCallback((collection: Collection) => {
-    inlineRenameCancelledRef.current = false
-    setEditingCollectionId(collection.id)
-    setEditingName(collection.name)
-  }, [])
-
-  const handleEditingNameChange = useCallback((nextName: string) => {
-    setEditingName(nextName)
-  }, [])
-
-  const handleCancelInlineRename = useCallback(() => {
-    inlineRenameCancelledRef.current = true
-    setEditingCollectionId(null)
-    setEditingName('')
-  }, [])
-
-  const handleSubmitInlineRename = useCallback(
-    async (collectionId: string, nextName: string) => {
-      if (inlineRenameCancelledRef.current) {
-        inlineRenameCancelledRef.current = false
-        return
-      }
-
-      const trimmedName = nextName.trim()
-      if (!trimmedName) {
-        handleCancelInlineRename()
-        return
-      }
-
-      const previousGroups = displayedGroups
-      const nextGroups = updateRootCollection(
-        previousGroups,
-        collectionId,
-        (item) => ({
-          ...item,
-          name: trimmedName,
-        }),
-      )
-
-      setOptimisticGroups(nextGroups)
-      setEditingCollectionId(null)
-      setEditingName('')
-
-      try {
-        await onRenameCollection(collectionId, trimmedName)
-        inlineRenameCancelledRef.current = false
-        setOptimisticGroups(null)
-      } catch {
-        setOptimisticGroups(previousGroups)
-      }
-    },
-    [displayedGroups, handleCancelInlineRename, onRenameCollection],
-  )
-
-  const handleChangeColor = useCallback(
-    async (collectionId: string, color: string) => {
-      const previousGroups = displayedGroups
-      const nextGroups = updateRootCollection(
-        previousGroups,
-        collectionId,
-        (item) => ({
-          ...item,
-          color,
-        }),
-      )
-      setOptimisticGroups(nextGroups)
-
-      try {
-        await onChangeCollectionColor(collectionId, color)
-        setOptimisticGroups(null)
-      } catch {
-        setOptimisticGroups(previousGroups)
-      }
-    },
-    [displayedGroups, onChangeCollectionColor],
-  )
-
-  const handleDragStart = useCallback((event: DragStartEvent) => {
-    setEditingCollectionId(null)
-    setEditingName('')
-    setIsRaindropDragActive(parseRaindropDndId(event.active.id) !== null)
-    setActiveDragCollectionId(parseCollectionDndId(event.active.id))
-  }, [])
-
-  const handleDragOver = useCallback(
-    (event: DragOverEvent) => {
-      // Bookmark drags highlight their target row instead of an insertion line
-      if (parseRaindropDndId(event.active.id) !== null) return
-      setDropIndicator(resolveDropIndicator(event.over?.id, displayedGroups))
-    },
-    [displayedGroups],
-  )
-
-  const handleDragEnd = useCallback(
-    async (event: DragEndEvent) => {
-      setActiveDragCollectionId(null)
-      setDropIndicator(null)
-      setIsRaindropDragActive(false)
-
-      // Bookmark drops are handled by MainContent's drag monitor
-      if (parseRaindropDndId(event.active.id) !== null) return
-
-      const activeCollectionId = parseCollectionDndId(event.active.id)
-      const dropTarget = resolveDropIndicator(event.over?.id, displayedGroups)
-      if (!activeCollectionId || !dropTarget) return
-
-      const sourceLocation = findRootCollectionLocation(
-        displayedGroups,
-        activeCollectionId,
-      )
-      if (!sourceLocation) return
-
-      let toIndex = dropTarget.index
-      if (
-        sourceLocation.groupId === dropTarget.groupId &&
-        sourceLocation.index < dropTarget.index
-      ) {
-        toIndex -= 1
-      }
-
-      const nextGroups = moveRootCollection(
-        displayedGroups,
-        activeCollectionId,
-        dropTarget.groupId,
-        toIndex,
-      )
-      if (
-        serializeRootStructure(displayedGroups) ===
-        serializeRootStructure(nextGroups)
-      ) {
-        return
-      }
-
-      await handlePersistGroups(nextGroups, displayedGroups)
-    },
-    [displayedGroups, handlePersistGroups],
-  )
-
-  const handleDragCancel = useCallback(() => {
-    setActiveDragCollectionId(null)
-    setDropIndicator(null)
-    setIsRaindropDragActive(false)
-  }, [])
+const LeftSidebar = React.memo(function LeftSidebar(props: LeftSidebarProps) {
+  const {
+    systemCollections,
+    onAddBookmark,
+    onAddCollection,
+    onAddGroup,
+    onEditGroup,
+    onDeleteGroup,
+    onManageTags,
+    onEmptyTrash,
+    onMergeCollections,
+    children,
+  } = props
+  const {
+    isSearchOpen,
+    displayedGroups,
+    sensors,
+    handleOpenSearch,
+    handleCloseSearch,
+    handleSearchSelect,
+    isUngroupedExpanded,
+    toggleGroup,
+    activeDragCollection,
+    dropIndicator,
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+    handleDragCancel,
+    treeProps,
+  } = useSidebarController(props)
 
   return (
     <DndContext
@@ -1312,6 +1134,7 @@ const LeftSidebar = React.memo(function LeftSidebar({
                     size="icon"
                     className="h-8 w-8 shrink-0"
                     onClick={handleOpenSearch}
+                    aria-label="Search collections"
                   >
                     <Search className="h-3.5 w-3.5" />
                   </Button>
@@ -1333,59 +1156,19 @@ const LeftSidebar = React.memo(function LeftSidebar({
             </div>
           )}
 
-          <ScrollArea className="flex-1">
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-muted-foreground px-3 text-xs font-medium tracking-wider uppercase">
-                Library
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {systemCollections.map((collection) => (
-                    <SystemCollectionItem
-                      key={collection.id}
-                      collection={collection}
-                      isSelected={selectedCollectionId === collection.id}
-                      onSelectCollection={onSelectCollection}
-                      onEmptyTrash={onEmptyTrash}
-                      isRaindropDragActive={isRaindropDragActive}
-                    />
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-
-            <Separator className="mx-3 my-1" />
-
-            {displayedGroups.map((group) => (
-              <GroupSection
-                key={group.id}
-                group={group}
-                isExpanded={!collapsedGroupIds.has(group.id)}
-                selectedCollectionId={selectedCollectionId}
-                expandedCollections={expandedCollections}
-                onToggleGroup={toggleGroup}
-                onSelectCollection={onSelectCollection}
-                onToggleCollection={toggleCollection}
-                onAddCollection={onAddCollection}
-                onDeleteCollection={handleDeleteWithOptimistic}
-                onMoveCollectionToGroup={handleMoveCollectionToGroup}
-                onChangeCollectionColor={handleChangeColor}
-                onStartInlineRename={handleStartInlineRename}
-                onSubmitInlineRename={handleSubmitInlineRename}
-                onCancelInlineRename={handleCancelInlineRename}
-                editingCollectionId={editingCollectionId}
-                editingName={editingName}
-                onEditingNameChange={handleEditingNameChange}
-                sidebarMenuButtonStyles={sidebarMenuButtonStyles}
-                groups={displayedGroups}
-                dropIndicator={dropIndicator}
-                isRaindropDragActive={isRaindropDragActive}
-              />
-            ))}
-            <DragOverlay>
-              <DragPreview collection={activeDragCollection} />
-            </DragOverlay>
-          </ScrollArea>
+          <SidebarLibrary
+            activeDragCollection={activeDragCollection}
+            systemCollections={systemCollections}
+            displayedGroups={displayedGroups}
+            onEmptyTrash={onEmptyTrash}
+            isUngroupedExpanded={isUngroupedExpanded}
+            onEditGroup={onEditGroup}
+            onDeleteGroup={onDeleteGroup}
+            toggleGroup={toggleGroup}
+            onAddCollection={onAddCollection}
+            dropIndicator={dropIndicator}
+            treeProps={treeProps}
+          />
         </SidebarContent>
 
         <SidebarFooter className="border-t p-2 group-data-[collapsible=icon]:hidden">
@@ -1397,6 +1180,7 @@ const LeftSidebar = React.memo(function LeftSidebar({
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8"
+                    aria-label="New Group"
                     onClick={onAddGroup}
                   >
                     <Plus className="h-4 w-4" />
@@ -1411,6 +1195,7 @@ const LeftSidebar = React.memo(function LeftSidebar({
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8"
+                    aria-label="Manage Tags"
                     onClick={onManageTags}
                   >
                     <Tag className="h-4 w-4" />
@@ -1425,6 +1210,7 @@ const LeftSidebar = React.memo(function LeftSidebar({
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8"
+                    aria-label="Merge Collections"
                     onClick={onMergeCollections}
                   >
                     <Merge className="h-4 w-4" />
@@ -1444,4 +1230,3 @@ const LeftSidebar = React.memo(function LeftSidebar({
 })
 
 export { LeftSidebar }
-export default LeftSidebar

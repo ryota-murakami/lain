@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils'
 
 /**
  * Preset color palette for collection colors.
- * 12 curated colors that work well in both light and dark themes.
+ * 13 curated colors that work well in both light and dark themes.
  */
 const PRESET_COLORS = [
   '#ef4444', // red
@@ -28,6 +28,7 @@ const PRESET_COLORS = [
   '#6366f1', // indigo
   '#8b5cf6', // violet
   '#ec4899', // pink
+  '#a855f7', // purple
 ] as const
 
 /**
@@ -40,11 +41,13 @@ interface ColorPickerProps {
   onChange: (color: string) => void
   /** Optional label text */
   label?: string
+  /** Lock interaction while the owning form is saving. */
+  disabled?: boolean
 }
 
 /**
  * Color picker with preset palette and custom hex input.
- * Shows a grid of 12 preset colors plus a text input for arbitrary hex values.
+ * Shows a grid of 13 preset colors plus a text input for arbitrary hex values.
  *
  * @param value - Current color hex string
  * @param onChange - Callback fired when color changes
@@ -61,9 +64,18 @@ const ColorPicker = React.memo(function ColorPicker({
   value,
   onChange,
   label,
+  disabled = false,
 }: ColorPickerProps) {
   const [open, setOpen] = useState(false)
   const [customColor, setCustomColor] = useState(value || '')
+  const handleOpenChange = useCallback(
+    (next: boolean) => {
+      // Reopening must reflect the current form value after a reset or remote refresh.
+      if (next) setCustomColor(value || '')
+      setOpen(next)
+    },
+    [value],
+  )
 
   const handleCustomColorChange = useCallback(
     (hex: string) => {
@@ -85,9 +97,12 @@ const ColorPicker = React.memo(function ColorPicker({
   return (
     <div className="space-y-2">
       {label && <Label className="text-sm font-medium">{label}</Label>}
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <Button
+            type="button"
+            aria-label={label || 'Collection color'}
+            disabled={disabled}
             variant="outline"
             className="w-full justify-start gap-2 font-normal"
           >
@@ -117,6 +132,7 @@ const ColorPicker = React.memo(function ColorPicker({
                     setCustomColor(color)
                   }}
                   aria-label={`Select color ${color}`}
+                  aria-pressed={value === color}
                 >
                   {value === color && (
                     <Check className="mx-auto h-3.5 w-3.5 text-white drop-shadow-sm" />
@@ -134,6 +150,7 @@ const ColorPicker = React.memo(function ColorPicker({
                 }}
               />
               <Input
+                aria-label="Custom color hex"
                 value={customColor}
                 onChange={handleCustomColorInputChange}
                 placeholder="#000000"
@@ -148,4 +165,3 @@ const ColorPicker = React.memo(function ColorPicker({
   )
 })
 export { ColorPicker }
-export default ColorPicker

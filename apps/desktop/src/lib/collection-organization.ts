@@ -3,12 +3,12 @@ import type { Group, Collection } from '@/lib/types'
 /**
  * Prefix used for group container IDs in dnd-kit.
  */
-export const GROUP_DND_ID_PREFIX = 'group:'
+const GROUP_DND_ID_PREFIX = 'group:'
 
 /**
  * Prefix used for collection item IDs in dnd-kit.
  */
-export const COLLECTION_DND_ID_PREFIX = 'collection:'
+const COLLECTION_DND_ID_PREFIX = 'collection:'
 
 /**
  * Shape of a persisted user group for `PUT /user` updates.
@@ -240,10 +240,33 @@ export function updateRootCollection(
 export function toUserGroupPayload(groups: Group[]): UserGroupPayload[] {
   return groups.map((group, index) => ({
     title: group.name,
-    hidden: false,
+    hidden: group.hidden ?? false,
     sort: index,
     collections: group.collections
       .map((collection) => parseCollectionId(collection.id))
       .filter((id): id is number => id !== null),
+  }))
+}
+
+/**
+ * Apply account-local icon and color choices when {@link useSidebarData} rebuilds the remote tree.
+ * @returns A tree preserving remote metadata with local symbols and colors overlaid.
+ * @example
+ * applyCollectionAppearance(groups, { '100': 'Bookmark' }, { '100': '#06b6d4' })
+ */
+export function applyCollectionAppearance(
+  groups: Group[],
+  icons: Record<string, string>,
+  colors: Record<string, string>,
+): Group[] {
+  const mapCollection = (collection: Collection): Collection => ({
+    ...collection,
+    icon: icons[collection.id] ?? collection.icon,
+    color: colors[collection.id] ?? collection.color,
+    children: collection.children?.map(mapCollection),
+  })
+  return groups.map((group) => ({
+    ...group,
+    collections: group.collections.map(mapCollection),
   }))
 }

@@ -1,0 +1,119 @@
+{
+  "mode": "measured-istanbul",
+  "sourceFingerprint": "6088f2e9a665e8c088565eec48adce8eec91df52d5f4a0840e65863c8cb902a0",
+  "coverageSha256": "4105ca5f3f9efd701846f6511e56fb23d0a394a123f57a803eabd2971f2494d8",
+  "node": "v26.13.0",
+  "completedAt": "2026-11-09T19:42:05.165Z",
+  "tests": 584,
+  "testFiles": 59,
+  "electronE2E": {
+    "passed": 94,
+    "retries": 0,
+    "duration": "2.3 minutes"
+  },
+  "recordedTargetedElectron": {
+    "passed": 1,
+    "retries": 0,
+    "durationSeconds": 7.3
+  },
+  "rendererCoverage": {
+    "statements": {
+      "total": 4125,
+      "covered": 3584,
+      "pct": 86.88
+    },
+    "branches": {
+      "total": 2578,
+      "covered": 2058,
+      "pct": 79.83
+    },
+    "functions": {
+      "total": 1293,
+      "covered": 1048,
+      "pct": 81.05
+    },
+    "lines": {
+      "total": 3720,
+      "covered": 3323,
+      "pct": 89.33
+    }
+  },
+  "expandedCoverage": {
+    "lines": {
+      "total": 4258,
+      "covered": 3686,
+      "skipped": 0,
+      "pct": 86.56
+    },
+    "statements": {
+      "total": 4708,
+      "covered": 3977,
+      "skipped": 0,
+      "pct": 84.47
+    },
+    "functions": {
+      "total": 1445,
+      "covered": 1147,
+      "skipped": 0,
+      "pct": 79.37
+    },
+    "branches": {
+      "total": 2840,
+      "covered": 2244,
+      "skipped": 0,
+      "pct": 79.01
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "strictFindings": {
+    "deadCode": 0,
+    "duplication": 0,
+    "architecture": 0,
+    "measuredHealth": 0,
+    "staticComplexity": 0
+  },
+  "comparableHealthFindings": 3,
+  "auditVerdict": "pass",
+  "sourceState": "formatted VIS04 correction before clean commit; final hosted/package/update gates remain separate",
+  "reproduction": {
+    "oldCompiledSource": "2546534e0b0f39d641d1ee894967d1b7923bee02",
+    "viewport": {
+      "width": 1024,
+      "height": 642
+    },
+    "dialogBefore": {
+      "top": -30.5,
+      "bottom": 672.5
+    },
+    "buttonBottomBefore": 656.5,
+    "trackedElectronBefore": {
+      "failed": 1,
+      "retries": 0
+    }
+  },
+  "visualVerification": {
+    "uniqueVideos": 1,
+    "durationSeconds": 7.44,
+    "framesAt4fps": 30,
+    "contactSheets": 2,
+    "stableStates": 7,
+    "dialogAfter": {
+      "top": 16,
+      "bottom": 626
+    },
+    "buttonsAfter": {
+      "top": 578,
+      "bottom": 610
+    },
+    "allEssentialControlCentersHit": true,
+    "documentScroll": {
+      "x": 0,
+      "y": 0
+    }
+  }
+}

@@ -56,7 +56,10 @@ test.describe('View Modes (F3)', () => {
     const directoryView = page.getByTestId('directory-view')
     await expect(directoryView).toBeVisible()
     await expect(
-      directoryView.getByRole('button', { name: /Development\/ \(20\)/ }),
+      directoryView.getByRole('button', {
+        name: 'Development collection',
+        exact: true,
+      }),
     ).toBeVisible()
     await expect(
       directoryView.getByRole('button', { name: /React Documentation/ }),
@@ -89,7 +92,7 @@ test.describe('View Modes (F3)', () => {
     await waitForApp(page)
 
     // Remember Design with the grid view
-    await page.getByRole('button', { name: 'Design' }).click()
+    await page.getByRole('button', { name: 'Design', exact: true }).click()
     await expect(
       page.locator('[data-slot="breadcrumb-page"]', { hasText: 'Design' }),
     ).toBeVisible()
@@ -109,7 +112,7 @@ test.describe('View Modes (F3)', () => {
     await expect(page.getByTestId('list-view')).toBeVisible()
 
     // Coming back restores the remembered override
-    await page.getByRole('button', { name: 'Design' }).click()
+    await page.getByRole('button', { name: 'Design', exact: true }).click()
     await expect(
       page.locator('[data-slot="breadcrumb-page"]', { hasText: 'Design' }),
     ).toBeVisible()

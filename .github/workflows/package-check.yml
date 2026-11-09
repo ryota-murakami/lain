@@ -1,33 +1,77 @@
 name: Package check
-
-# Releases are built, signed and notarized locally (`pnpm electron:release:mac`, see README "Release"),
-# so CI only makes sure packaging still works: pull requests touching packaging files run an
-# unsigned `--dir` build that needs no secrets.
 on:
   pull_request:
     branches: [main]
-    paths:
-      - apps/desktop/**
-      - package.json
-      - pnpm-lock.yaml
-      - pnpm-workspace.yaml
-      - .github/actions/prepare/action.yml
-      - .github/workflows/package-check.yml
-
 permissions:
   contents: read
-
 concurrency:
   group: package-check-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   package-check:
-    runs-on: macos-latest
+    name: Package ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: mac
+            runner: macos-latest
+          - platform: linux
+            runner: ubuntu-24.04
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    env:
+      # Record real windows on macOS and inside the Linux virtual display.
+      LAIN_E2E_HEADED: '1'
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # QA artifacts must embed the review commit, not GitHub's temporary merge commit.
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: ./.github/actions/prepare
-      - name: Unsigned package check (no secrets)
-        env:
-          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-        run: pnpm electron:build:dir
+      - name: Release integrity regression tests
+        run: pnpm test:release
+      - name: Build and verify unsigned packages
+        run: pnpm package:${{ matrix.platform }}
+      - name: Install native recording dependency
+        run: pnpm --filter lain exec playwright install ffmpeg
+      - name: Install Linux display dependencies
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb libgtk-3-0 libnss3 libasound2t64 libgbm1 libsecret-1-0 libfuse2t64
+      - name: Exercise packaged Linux application
+        if: matrix.platform == 'linux'
+        run: xvfb-run -a pnpm --filter lain exec tsx scripts/smoke-package.ts release/linux-unpacked/lain linux-unpacked
+      - name: Install and exercise Debian package
+        if: matrix.platform == 'linux'
+        shell: bash
+        run: |
+          packages=(apps/desktop/release/*.deb)
+          sudo apt-get install -y "./${packages[0]}"
+          xvfb-run -a pnpm --filter lain exec tsx scripts/smoke-package.ts /usr/bin/lain linux-deb
+          sudo apt-get remove -y lain
+      - name: Exercise AppImage distribution
+        if: matrix.platform == 'linux'
+        shell: bash
+        run: |
+          packages=(apps/desktop/release/*.AppImage)
+          chmod +x "${packages[0]}"
+          APPIMAGE_EXTRACT_AND_RUN=1 xvfb-run -a pnpm --filter lain exec tsx scripts/smoke-package.ts "$GITHUB_WORKSPACE/${packages[0]}" linux-appimage
+      - name: Exercise packaged macOS application
+        if: matrix.platform == 'mac'
+        run: pnpm --filter lain exec tsx scripts/smoke-package.ts release/mac-arm64/Lain.app/Contents/MacOS/Lain mac-arm64
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: package-check-${{ matrix.platform }}
+          path: |
+            apps/desktop/release/*.dmg
+            apps/desktop/release/*.zip
+            apps/desktop/release/*.AppImage
+            apps/desktop/release/*.deb
+            apps/desktop/release/*.blockmap
+            apps/desktop/release/latest*.yml
+            apps/desktop/release/checksums-*.json
+            apps/desktop/test-results/package-smoke/
+          if-no-files-found: error
+          retention-days: 7

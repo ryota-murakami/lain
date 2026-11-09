@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
+import { usePendingWork } from '@/hooks/usePendingWork'
 import type { Group } from '@/lib/types'
 
 const groupSchema = z.object({
@@ -22,7 +23,7 @@ const groupSchema = z.object({
   collapsed: z.boolean(),
 })
 
-type GroupFormValues = z.infer<typeof groupSchema>
+export type GroupFormValues = z.infer<typeof groupSchema>
 
 /**
  * Props for GroupDialog component.
@@ -35,7 +36,7 @@ interface GroupDialogProps {
   /** Existing group to edit (undefined for create mode) */
   group?: Group
   /** Callback when user saves the group */
-  onSave: (data: GroupFormValues & { id?: string }) => void
+  onSave: (data: GroupFormValues & { id?: string }) => Promise<void> | void
 }
 
 /**
@@ -65,13 +66,13 @@ function useGroupFormReset(
   open: boolean,
   group: Group | undefined,
   reset: (values: GroupFormValues) => void,
-) {
+): void {
   useEffect(() => {
     if (open) {
       if (group) {
         reset({
           name: group.name,
-          collapsed: false,
+          collapsed: group.hidden ?? false,
         })
       } else {
         reset({
@@ -97,7 +98,9 @@ const GroupDialog = React.memo(function GroupDialog({
     reset,
     setValue,
     control,
-    formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<GroupFormValues>({
     resolver: zodResolver(groupSchema),
     defaultValues: {
@@ -109,6 +112,8 @@ const GroupDialog = React.memo(function GroupDialog({
   // useWatch (not watch()) keeps the component eligible for React Compiler memoization
   const collapsed = useWatch({ control, name: 'collapsed' })
 
+  usePendingWork(open && (isDirty || isSubmitting))
+
   useGroupFormReset(open, group, reset)
 
   const handleCollapsedChange = useCallback(
@@ -117,16 +122,28 @@ const GroupDialog = React.memo(function GroupDialog({
   )
   const handleCancel = useCallback(() => onOpenChange(false), [onOpenChange])
 
-  const onSubmit = (data: GroupFormValues) => {
-    onSave({
-      ...data,
-      id: group?.id,
-    })
-    onOpenChange(false)
+  const onSubmit = async (data: GroupFormValues): Promise<void> => {
+    clearErrors('root.server')
+    try {
+      await onSave({ ...data, id: group?.id })
+      onOpenChange(false)
+    } catch {
+      setError('root.server', {
+        message:
+          'Could not save the group. Your input is preserved; try again.',
+      })
+    }
   }
 
+  const handleDialogOpenChange = useCallback(
+    (next: boolean): void => {
+      if (!isSubmitting) onOpenChange(next)
+    },
+    [isSubmitting, onOpenChange],
+  )
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
@@ -171,6 +188,11 @@ const GroupDialog = React.memo(function GroupDialog({
             </div>
           </div>
 
+          {errors.root?.server && (
+            <p role="alert" className="text-destructive text-sm">
+              {errors.root.server.message}
+            </p>
+          )}
           <DialogFooter>
             <Button type="button" variant="outline" onClick={handleCancel}>
               Cancel
@@ -185,4 +207,3 @@ const GroupDialog = React.memo(function GroupDialog({
   )
 })
 export { GroupDialog }
-export default GroupDialog

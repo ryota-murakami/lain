@@ -1,21 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useState,
+} from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
 import { CollectionSelector } from '@/components/raindrop/collection-selector'
-import { Button } from '@/components/ui/button'
+import { ColorPicker } from '@/components/raindrop/color-picker'
+import { IconPicker } from '@/components/raindrop/icon-picker'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Select,
   SelectContent,
@@ -24,55 +29,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import type { Group, Collection } from '@/lib/types'
+import { usePendingWork } from '@/hooks/usePendingWork'
+import type { Collection, Group } from '@/lib/types'
+import { findCollectionInTree } from '@/utils/find-collection-in-tree'
 
-const PRESET_COLORS = [
-  '#8b5cf6',
-  '#6366f1',
-  '#3b82f6',
-  '#06b6d4',
-  '#10b981',
-  '#22c55e',
-  '#eab308',
-  '#f59e0b',
-  '#f97316',
-  '#ef4444',
-  '#ec4899',
-  '#a855f7',
-]
-
-const ICON_OPTIONS = [
-  'Folder',
-  'FolderOpen',
-  'Star',
-  'Heart',
-  'Bookmark',
-  'Code2',
-  'Palette',
-  'Brain',
-  'BookOpen',
-  'CookingPot',
-  'Plane',
-  'Music',
-  'Camera',
-  'GamepadIcon',
-  'Briefcase',
-  'GraduationCap',
-  'Wrench',
-  'Shield',
-  'Globe',
-  'Zap',
-  'Sparkles',
-  'Component',
-  'Layout',
-  'FileText',
-  'Image',
-  'Video',
-  'Home',
-  'ShoppingBag',
-  'Coffee',
-  'Dumbbell',
-]
+import { FormDialogActions } from './form-dialog-actions'
 
 const collectionSchema = z.object({
   name: z.string().min(1, 'Collection name is required'),
@@ -84,7 +45,7 @@ const collectionSchema = z.object({
   isPublic: z.boolean(),
 })
 
-type CollectionFormValues = z.infer<typeof collectionSchema>
+export type CollectionFormValues = z.infer<typeof collectionSchema>
 
 /**
  * Props for CollectionDialog component.
@@ -98,8 +59,119 @@ interface CollectionDialogProps {
   groups: Group[]
   /** Existing collection to edit (undefined for create mode) */
   collection?: Collection
+  /** Real group from the creation entry point; ignored when editing. */
+  initialGroupId?: string
+  /** Persisted Lain view preference supplied by the dialog owner. */
+  defaultViewMode?: CollectionFormValues['viewMode']
   /** Callback when user saves the collection */
-  onSave: (data: CollectionFormValues & { id?: string }) => void
+  onSave: (data: CollectionFormValues & { id?: string }) => Promise<void> | void
+}
+
+/**
+ * Select a real group for a new collection without persisting a synthetic destination.
+ * {@link useCollectionEditor} and {@link useCollectionFormReset} capture this at form creation.
+ * @param initialGroupId - Optional group supplied by the sidebar's Add Collection action.
+ * @returns The requested real group, the first real group, or an empty selection.
+ * @example
+ * resolveInitialCollectionGroupId(groups, 'work')
+ */
+function resolveInitialCollectionGroupId(
+  groups: Group[],
+  initialGroupId?: string,
+): string {
+  const realGroups = groups.filter((group) => group.id !== 'ungrouped')
+  return (
+    realGroups.find((group) => group.id === initialGroupId)?.id ??
+    realGroups[0]?.id ??
+    ''
+  )
+}
+
+/**
+ * Initialize a new collection editing session without reacting to background group refreshes.
+ * {@link CollectionDialog} calls this on open or edited-ID changes.
+ * @param defaultViewMode - Existing local preference captured at the session boundary.
+ * @example
+ * useCollectionFormReset(open, collection, groups, reset, defaultViewMode)
+ */
+function useCollectionFormReset(
+  open: boolean,
+  collection: Collection | undefined,
+  groups: Group[],
+  reset: (values: CollectionFormValues) => void,
+  defaultViewMode: CollectionFormValues['viewMode'],
+  initialGroupId?: string,
+): void {
+  const onSessionStart = useEffectEvent(() => {
+    // Capture current defaults at a session boundary without reacting to background refreshes.
+    if (collection) {
+      reset({
+        name: collection.name,
+        icon: collection.icon || 'Folder',
+        color: collection.color || '#8b5cf6',
+        groupId: collection.groupId,
+        parentId: collection.parentId || undefined,
+        viewMode: defaultViewMode,
+        isPublic: collection.isPublic ?? false,
+      })
+    } else {
+      reset({
+        name: '',
+        icon: 'Folder',
+        color: '#8b5cf6',
+        groupId: resolveInitialCollectionGroupId(groups, initialGroupId),
+        parentId: undefined,
+        viewMode: defaultViewMode,
+        isPublic: false,
+      })
+    }
+  })
+
+  useEffect(() => {
+    if (open) onSessionStart()
+  }, [open, collection?.id, reset])
+}
+
+/**
+ * Preserve an already-created ID when a later organization operation fails.
+ * {@link CollectionDialog} uses this to retry without creating a duplicate, then resets it on reopening.
+ * @param id - Existing collection ID when editing rather than creating.
+ * @returns The retry ID and its setter for a partial-success error.
+ * @example
+ * const [createdId, setCreatedId] = useRetainedCollectionId(open, collection?.id)
+ */
+function useRetainedCollectionId(open: boolean, id?: string) {
+  const [createdId, setCreatedId] = useState(id)
+  const [session, setSession] = useState({ open, id })
+  // Reset the retry ID at the dialog boundary before rendering a new form session.
+  if (session.open !== open || session.id !== id) {
+    setSession({ open, id })
+    if (open) setCreatedId(id)
+  }
+  return [createdId, setCreatedId] as const
+}
+
+/**
+ * Remove an edited collection's whole branch from potential parent choices.
+ * {@link CollectionDialog} uses this for every group to prevent self/descendant cycles.
+ * @param excludedId - The collection being edited; undefined leaves all choices available.
+ * @returns A copied tree that omits the forbidden branch at any nesting depth.
+ * @example
+ * excludeCollectionBranch(group.collections, editingCollection.id)
+ */
+function excludeCollectionBranch(
+  collections: Collection[],
+  excludedId?: string,
+): Collection[] {
+  // Removing the branch root also removes every descendant from the searchable tree.
+  return collections
+    .filter((item) => item.id !== excludedId)
+    .map((item) => ({
+      ...item,
+      children: item.children
+        ? excludeCollectionBranch(item.children, excludedId)
+        : undefined,
+    }))
 }
 
 /**
@@ -123,52 +195,74 @@ interface CollectionDialogProps {
  *   />
  */
 /**
- * Reset collection form when the dialog opens or the collection changes.
+ * Mark custom collection controls dirty and keep a nested collection in its parent's group.
+ * Called by {@link useCollectionEditor} for the shared color/icon/parent selectors.
+ * @example
+ * const fields = useCollectionFieldActions(setValue, groups)
  */
-function useCollectionFormReset(
-  open: boolean,
-  collection: Collection | undefined,
+function useCollectionFieldActions(
+  setValue: ReturnType<typeof useForm<CollectionFormValues>>['setValue'],
   groups: Group[],
-  reset: (values: CollectionFormValues) => void,
-  setIconSearch: (search: string) => void,
 ) {
-  useEffect(() => {
-    if (open) {
-      if (collection) {
-        reset({
-          name: collection.name,
-          icon: collection.icon || 'Folder',
-          color: collection.color || '#8b5cf6',
-          groupId: collection.groupId,
-          parentId: collection.parentId || undefined,
-          viewMode: 'list',
-          isPublic: false,
-        })
-      } else {
-        reset({
-          name: '',
-          icon: 'Folder',
-          color: '#8b5cf6',
-          groupId: groups[0]?.id || '',
-          parentId: undefined,
-          viewMode: 'list',
-          isPublic: false,
-        })
-      }
-      setIconSearch('')
-    }
-  }, [open, collection, groups, reset, setIconSearch])
+  const handleGroupChange = useCallback(
+    (val: string) => setValue('groupId', val, { shouldDirty: true }),
+    [setValue],
+  )
+  const handleParentChange = useCallback(
+    (id: string) => {
+      setValue('parentId', id || undefined, { shouldDirty: true })
+      const group = groups.find((item) =>
+        findCollectionInTree(item.collections, id),
+      )
+      if (group) setValue('groupId', group.id, { shouldDirty: true })
+    },
+    [groups, setValue],
+  )
+  const handleColorChange = useCallback(
+    (color: string) => setValue('color', color, { shouldDirty: true }),
+    [setValue],
+  )
+  const handleIconChange = useCallback(
+    (icon: string) => setValue('icon', icon, { shouldDirty: true }),
+    [setValue],
+  )
+  const handleViewModeChange = useCallback(
+    (val: string) =>
+      setValue('viewMode', val as CollectionFormValues['viewMode'], {
+        shouldDirty: true,
+      }),
+    [setValue],
+  )
+  const handlePublicChange = useCallback(
+    (checked: boolean) => setValue('isPublic', checked, { shouldDirty: true }),
+    [setValue],
+  )
+  return {
+    handleGroupChange,
+    handleParentChange,
+    handleColorChange,
+    handleIconChange,
+    handleViewModeChange,
+    handlePublicChange,
+  }
 }
 
-const CollectionDialog = React.memo(function CollectionDialog({
+/**
+ * Own one collection form session, including dirty tracking and safe retry after partial creation.
+ * Called by {@link CollectionDialog}; background group refreshes never reset a user's input.
+ * @example
+ * const editor = useCollectionEditor(props)
+ */
+function useCollectionEditor({
   open,
   onOpenChange,
   groups,
   collection,
+  initialGroupId,
+  defaultViewMode = 'list',
   onSave,
 }: CollectionDialogProps) {
   const isEditing = !!collection
-  const [iconSearch, setIconSearch] = useState('')
 
   const {
     register,
@@ -176,69 +270,180 @@ const CollectionDialog = React.memo(function CollectionDialog({
     reset,
     setValue,
     control,
-    formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<CollectionFormValues>({
     resolver: zodResolver(collectionSchema),
     defaultValues: {
       name: '',
       icon: 'Folder',
       color: '#8b5cf6',
-      groupId: groups[0]?.id || '',
+      groupId: resolveInitialCollectionGroupId(groups, initialGroupId),
       parentId: undefined,
-      viewMode: 'list',
+      viewMode: defaultViewMode,
       isPublic: false,
     },
   })
 
-  // useWatch (not watch()) keeps the component eligible for React Compiler memoization
-  const selectedColor = useWatch({ control, name: 'color' })
-  const selectedIcon = useWatch({ control, name: 'icon' })
-  const selectedGroupId = useWatch({ control, name: 'groupId' })
-  const isPublic = useWatch({ control, name: 'isPublic' })
-  const selectedParentId = useWatch({ control, name: 'parentId' })
-  const selectedViewMode = useWatch({ control, name: 'viewMode' })
+  // Subscribe to related controlled fields as one typed tuple.
+  const [
+    selectedColor,
+    selectedIcon,
+    selectedGroupId,
+    isPublic,
+    selectedParentId,
+    selectedViewMode,
+  ] = useWatch({
+    control,
+    name: [
+      'color',
+      'icon',
+      'groupId',
+      'isPublic',
+      'parentId',
+      'viewMode',
+    ] as const,
+  })
+  const parentGroup = groups.find((group) =>
+    findCollectionInTree(group.collections, selectedParentId ?? ''),
+  )
+  const parentChoices = useMemo(
+    () =>
+      groups.map((group) => ({
+        ...group,
+        collections: excludeCollectionBranch(group.collections, collection?.id),
+      })),
+    [groups, collection?.id],
+  )
 
-  useCollectionFormReset(open, collection, groups, reset, setIconSearch)
+  usePendingWork(open && (isDirty || isSubmitting))
 
-  const handleGroupChange = useCallback(
-    (val: string) => setValue('groupId', val),
-    [setValue],
+  useCollectionFormReset(
+    open,
+    collection,
+    groups,
+    reset,
+    defaultViewMode,
+    initialGroupId,
   )
-  const handleParentChange = useCallback(
-    (id: string) => setValue('parentId', id || undefined),
-    [setValue],
-  )
-  const handleIconSearchChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setIconSearch(e.target.value),
-    [],
-  )
-  const handleViewModeChange = useCallback(
-    (val: string) =>
-      setValue('viewMode', val as 'list' | 'grid' | 'table' | 'directory'),
-    [setValue],
-  )
-  const handlePublicChange = useCallback(
-    (checked: boolean) => setValue('isPublic', checked),
-    [setValue],
-  )
+
+  const {
+    handleGroupChange,
+    handleParentChange,
+    handleColorChange,
+    handleIconChange,
+    handleViewModeChange,
+    handlePublicChange,
+  } = useCollectionFieldActions(setValue, groups)
+
   const handleCancel = useCallback(() => onOpenChange(false), [onOpenChange])
 
-  const filteredIcons = useMemo(() => {
-    if (!iconSearch) return ICON_OPTIONS
-    const lower = iconSearch.toLowerCase()
-    return ICON_OPTIONS.filter((icon) => icon.toLowerCase().includes(lower))
-  }, [iconSearch])
-
-  const onSubmit = (data: CollectionFormValues) => {
-    onSave({
-      ...data,
-      id: collection?.id,
-    })
-    onOpenChange(false)
+  const [createdId, setCreatedId] = useRetainedCollectionId(
+    open,
+    collection?.id,
+  )
+  const onSubmit = async (data: CollectionFormValues): Promise<void> => {
+    clearErrors('root.server')
+    try {
+      await onSave({
+        ...data,
+        groupId: parentGroup?.id ?? data.groupId,
+        id: createdId,
+      })
+      onOpenChange(false)
+    } catch (error) {
+      // Retain a created ID when the subsequent organization step needs a retry.
+      if (
+        error instanceof Error &&
+        'collectionId' in error &&
+        typeof error.collectionId === 'string'
+      )
+        setCreatedId(error.collectionId)
+      setError('root.server', {
+        message:
+          'Could not finish saving the collection. Your input is preserved; try again.',
+      })
+    }
   }
 
+  const handleDialogOpenChange = useCallback(
+    (next: boolean): void => {
+      if (!isSubmitting) onOpenChange(next)
+    },
+    [isSubmitting, onOpenChange],
+  )
+
+  return {
+    isEditing,
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    selectedColor,
+    selectedIcon,
+    selectedGroupId,
+    isPublic,
+    selectedParentId,
+    selectedViewMode,
+    parentGroup,
+    parentChoices,
+    handleGroupChange,
+    handleParentChange,
+    handleColorChange,
+    handleIconChange,
+    handleViewModeChange,
+    handlePublicChange,
+    handleCancel,
+    onSubmit,
+    handleDialogOpenChange,
+  }
+}
+
+const CollectionDialog = React.memo(function CollectionDialog({
+  open,
+  onOpenChange,
+  groups,
+  collection,
+  initialGroupId,
+  defaultViewMode = 'list',
+  onSave,
+}: CollectionDialogProps) {
+  const {
+    isEditing,
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    selectedColor,
+    selectedIcon,
+    selectedGroupId,
+    isPublic,
+    selectedParentId,
+    selectedViewMode,
+    parentGroup,
+    parentChoices,
+    handleGroupChange,
+    handleParentChange,
+    handleColorChange,
+    handleIconChange,
+    handleViewModeChange,
+    handlePublicChange,
+    handleCancel,
+    onSubmit,
+    handleDialogOpenChange,
+  } = useCollectionEditor({
+    open,
+    onOpenChange,
+    groups,
+    collection,
+    initialGroupId,
+    defaultViewMode,
+    onSave,
+  })
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
@@ -272,18 +477,30 @@ const CollectionDialog = React.memo(function CollectionDialog({
             {/* Group Selector */}
             <div className="grid gap-2">
               <Label htmlFor="collection-group">Group</Label>
-              <Select value={selectedGroupId} onValueChange={handleGroupChange}>
+              <Select
+                value={parentGroup?.id ?? selectedGroupId}
+                onValueChange={handleGroupChange}
+                disabled={Boolean(selectedParentId)}
+              >
                 <SelectTrigger id="collection-group">
                   <SelectValue placeholder="Select a group" />
                 </SelectTrigger>
                 <SelectContent>
-                  {groups.map((group) => (
-                    <SelectItem key={group.id} value={group.id}>
-                      {group.name}
-                    </SelectItem>
-                  ))}
+                  {groups
+                    .filter((group) => group.id !== 'ungrouped')
+                    .map((group) => (
+                      <SelectItem key={group.id} value={group.id}>
+                        {group.name}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
+              {selectedParentId && (
+                <p className="text-muted-foreground text-xs">
+                  Nested collections use their parent’s group. Choose None below
+                  to move this collection to a root group.
+                </p>
+              )}
               {errors.groupId && (
                 <p className="text-destructive text-sm">
                   {errors.groupId.message}
@@ -295,7 +512,7 @@ const CollectionDialog = React.memo(function CollectionDialog({
             <div className="grid gap-2">
               <Label>Parent Collection</Label>
               <CollectionSelector
-                groups={groups}
+                groups={parentChoices}
                 value={selectedParentId}
                 onChange={handleParentChange}
                 placeholder="None (root level)"
@@ -303,62 +520,22 @@ const CollectionDialog = React.memo(function CollectionDialog({
               />
             </div>
 
-            {/* Color Picker */}
-            <div className="grid gap-2">
-              <Label>Color</Label>
-              <div className="flex flex-wrap gap-2">
-                {PRESET_COLORS.map((color) => (
-                  <button
-                    key={color}
-                    type="button"
-                    className="h-7 w-7 rounded-md border-2 transition-transform hover:scale-110"
-                    style={{
-                      backgroundColor: color,
-                      borderColor:
-                        selectedColor === color
-                          ? 'var(--color-foreground)'
-                          : 'transparent',
-                    }}
-                    onClick={() => setValue('color', color)}
-                    aria-label={`Select color ${color}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Icon Picker */}
-            <div className="grid gap-2">
-              <Label>Icon</Label>
-              <Input
-                placeholder="Search icons..."
-                value={iconSearch}
-                onChange={handleIconSearchChange}
-                className="h-8"
-              />
-              <ScrollArea className="h-[120px]">
-                <div className="grid grid-cols-6 gap-1">
-                  {filteredIcons.map((icon) => (
-                    <button
-                      key={icon}
-                      type="button"
-                      className={`hover:bg-accent flex h-10 w-full items-center justify-center rounded-md text-xs transition-colors ${
-                        selectedIcon === icon
-                          ? 'bg-accent ring-primary ring-2'
-                          : ''
-                      }`}
-                      onClick={() => setValue('icon', icon)}
-                      title={icon}
-                    >
-                      <span className="truncate px-1 text-[10px]">{icon}</span>
-                    </button>
-                  ))}
-                </div>
-              </ScrollArea>
-            </div>
+            <ColorPicker
+              value={selectedColor}
+              onChange={handleColorChange}
+              label="Color (this Lain account on this device)"
+              disabled={isSubmitting}
+            />
+            <IconPicker
+              value={selectedIcon}
+              onChange={handleIconChange}
+              label="Icon (this Lain account on this device)"
+              disabled={isSubmitting}
+            />
 
             {/* View Preference */}
             <div className="grid gap-2">
-              <Label htmlFor="collection-view">Default View</Label>
+              <Label htmlFor="collection-view">Default View (Lain only)</Label>
               <Select
                 value={selectedViewMode}
                 onValueChange={handleViewModeChange}
@@ -391,18 +568,19 @@ const CollectionDialog = React.memo(function CollectionDialog({
             </div>
           </div>
 
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isEditing ? 'Save Changes' : 'Create Collection'}
-            </Button>
-          </DialogFooter>
+          {errors.root?.server && (
+            <p role="alert" className="text-destructive text-sm">
+              {errors.root.server.message}
+            </p>
+          )}
+          <FormDialogActions
+            pending={isSubmitting}
+            onCancel={handleCancel}
+            submitLabel={isEditing ? 'Save Changes' : 'Create Collection'}
+          />
         </form>
       </DialogContent>
     </Dialog>
   )
 })
 export { CollectionDialog }
-export default CollectionDialog

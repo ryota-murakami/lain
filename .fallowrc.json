@@ -1,0 +1,60 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "entry": [
+    "apps/desktop/src/main.tsx",
+    "apps/desktop/electron/main.ts",
+    "apps/desktop/electron/preload.ts"
+  ],
+  "framework": [
+    {
+      "name": "lain-support-scripts",
+      "detection": {
+        "type": "fileExists",
+        "pattern": "apps/desktop/scripts/**"
+      },
+      "entryPoints": [
+        "apps/desktop/scripts/**/*.ts",
+        "scripts/**/*.mjs",
+        "apps/desktop/e2e/**/*.ts",
+        "apps/desktop/rtk-codegen.config.ts"
+      ],
+      "entryPointRole": "support"
+    }
+  ],
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/dist-electron/**",
+    "**/release/**",
+    "**/coverage/**",
+    "**/playwright-report/**",
+    "**/test-results/**",
+    "design/**"
+  ],
+  "ignoreFindings": ["apps/desktop/src/store/api/raindropApi.ts"],
+  "health": {
+    "maxCyclomatic": 20,
+    "maxCognitive": 15,
+    "ignore": [
+      "apps/desktop/src/store/api/raindropApi.ts",
+      "**/*.test.*",
+      "**/e2e/**",
+      "**/fixtures/**",
+      "**/test/**"
+    ]
+  },
+  "duplicates": {
+    "ignore": [
+      "apps/desktop/src/store/api/raindropApi.ts",
+      "**/*.test.*",
+      "**/e2e/**",
+      "**/fixtures/**",
+      "**/test/**"
+    ]
+  },
+  "ignoreExports": [
+    {
+      "file": "apps/desktop/src/store/api/raindropApi.ts",
+      "exports": ["Collection", "Raindrop"]
+    }
+  ]
+}

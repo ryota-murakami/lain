@@ -26,29 +26,42 @@ const MOCK_TOKEN = 'test-token-for-e2e'
  * Replaces the real registerAuthIPC() when LAIN_TEST_MODE=1.
  *
  * @param getMainWindow - Getter for the main window (for state-changed events)
+ * @param validate - The same renderer trust check used by production IPC.
  * @example
  *   // In main.ts (test mode branch)
- *   registerTestAuthIPC(() => mainWindow)
+ *   registerTestAuthIPC(() => mainWindow, validateSender)
  */
 export function registerTestAuthIPC(
   getMainWindow: () => BrowserWindow | null,
+  validate: (event: Electron.IpcMainInvokeEvent) => void,
 ): void {
-  ipcMain.handle('auth:login', async () => {
+  ipcMain.handle('auth:login', async (event) => {
+    validate(event)
     const win = getMainWindow()
     win?.webContents.send('auth:state-changed', MOCK_AUTH_STATE)
   })
 
-  ipcMain.handle('auth:logout', async () => {
+  ipcMain.handle('auth:logout', async (event) => {
+    validate(event)
     const state: AuthState = { isAuthenticated: false, user: null }
     const win = getMainWindow()
     win?.webContents.send('auth:state-changed', state)
   })
 
-  ipcMain.handle('auth:get-user', async () => MOCK_USER)
+  ipcMain.handle('auth:get-user', async (event) => {
+    validate(event)
+    return MOCK_USER
+  })
 
-  ipcMain.handle('auth:get-state', async () => MOCK_AUTH_STATE)
+  ipcMain.handle('auth:get-state', async (event) => {
+    validate(event)
+    return MOCK_AUTH_STATE
+  })
 
-  ipcMain.handle('auth:get-token', async () => MOCK_TOKEN)
+  ipcMain.handle('auth:get-token', async (event) => {
+    validate(event)
+    return MOCK_TOKEN
+  })
 }
 
 /** Global key under which test mode exposes recorded external URLs (read via app.evaluate in E2E). */
@@ -60,15 +73,18 @@ const OPENED_EXTERNAL_URLS_GLOBAL_KEY = '__LAIN_OPENED_EXTERNAL_URLS__'
  * can assert what would have opened without windows popping up.
  * @example
  *   // In main.ts (test mode branch)
- *   registerTestShellIPC()
+ *   registerTestShellIPC(validateSender)
  *   // In an E2E test
  *   await app.evaluate(() => Reflect.get(globalThis, '__LAIN_OPENED_EXTERNAL_URLS__')) // => ['https://react.dev']
  */
-export function registerTestShellIPC(): void {
+export function registerTestShellIPC(
+  validate: (event: Electron.IpcMainInvokeEvent) => void,
+): void {
   const openedExternalUrls: string[] = []
   Reflect.set(globalThis, OPENED_EXTERNAL_URLS_GLOBAL_KEY, openedExternalUrls)
 
-  ipcMain.handle('shell:open-external', async (_event, url: string) => {
+  ipcMain.handle('shell:open-external', async (event, url: string) => {
+    validate(event)
     openedExternalUrls.push(url)
   })
 }

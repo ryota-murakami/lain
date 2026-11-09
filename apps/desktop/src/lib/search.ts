@@ -296,3 +296,29 @@ export function fuzzySearchByName<T extends { name: string }>(
     }
   })
 }
+
+/**
+ * Resolve which visible text fields may highlight the current query.
+ * Used by cards, list rows, and command results to keep scope semantics identical.
+ *
+ * @param query - Optional search input; whitespace does not enable highlighting.
+ * @param scope - The selected field scope, or all searchable fields.
+ * @returns Normalized input and the three field visibility flags.
+ * @example
+ * getSearchHighlightState(' React ', 'title').shouldHighlightUrl // false
+ */
+export function getSearchHighlightState(
+  query: string | undefined,
+  scope: SearchScope,
+) {
+  const normalizedSearchQuery = query?.trim() ?? ''
+  const hasSearchQuery = normalizedSearchQuery.length > 0
+  return {
+    normalizedSearchQuery,
+    shouldHighlightTitle:
+      hasSearchQuery && (scope === 'all' || scope === 'title'),
+    shouldHighlightUrl: hasSearchQuery && (scope === 'all' || scope === 'url'),
+    shouldHighlightDescription:
+      hasSearchQuery && (scope === 'all' || scope === 'description'),
+  }
+}

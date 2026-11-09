@@ -1,0 +1,18 @@
+{
+  "buildTimeJst": "2026-11-10T00:58:36+09:00",
+  "scope": "Local built Electron; isolated synthetic accounts",
+  "suite": {
+    "passed": 85,
+    "failed": 0,
+    "output": "apps/desktop/test-results/final-desktop-20261110"
+  },
+  "recordedDragRecheck": {
+    "passed": 2,
+    "failed": 0
+  },
+  "artifactsSha256": {
+    "apps/desktop/dist-electron/main.js": "9250ef14a5511757256b4d8cc98a4769dd28288683ccf76284aa74e628a7b502",
+    "apps/desktop/dist/index.html": "323d53c3c739efde6d2d5a948d36c0dcef3855be87f13cd0eebd0dee24939ec0"
+  },
+  "ciAcceptance": false
+}

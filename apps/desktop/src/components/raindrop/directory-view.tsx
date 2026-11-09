@@ -15,6 +15,7 @@ import {
 import React, { useState, useCallback, useMemo } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Tooltip,
@@ -24,242 +25,280 @@ import {
 import type { Raindrop, Collection, ContentType } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
-/**
- * Map content type to its corresponding Lucide icon component and label.
- * @param type - Content type
- * @returns Object with icon component and display label
- * @example getTypeInfo("video") // => { icon: Video, label: "video" }
- */
-function getTypeInfo(type: ContentType) {
-  const map: Record<ContentType, { icon: typeof Globe; label: string }> = {
-    link: { icon: Globe, label: 'link' },
-    article: { icon: FileText, label: 'article' },
-    image: { icon: Image, label: 'image' },
-    video: { icon: Video, label: 'video' },
-    document: { icon: File, label: 'document' },
-    audio: { icon: Music, label: 'audio' },
-  }
-  return map[type] || map.link
+const TYPE_ICONS: Record<ContentType, typeof Globe> = {
+  link: Globe,
+  article: FileText,
+  image: Image,
+  video: Video,
+  document: File,
+  audio: Music,
 }
+const EMPTY_SELECTION = new Set<string>()
 
-/** Empty array constant to avoid re-creating on every render. */
-const EMPTY_PREFIXES: string[] = []
-
-/**
- * Wrapper for child CollectionTreeNode to memoize the childPrefixes array.
- */
-const ChildTreeNode = React.memo(function ChildTreeNode({
-  collection,
-  raindropsByCollection,
-  selectedRaindropId,
-  onSelectRaindrop,
-  onOpenUrl,
-  onSelectCollection,
-  depth,
-  isLast,
-  parentPrefixes,
-  childPrefix,
-}: {
-  collection: Collection
+interface DirectoryViewProps {
+  collections: Collection[]
   raindropsByCollection: Record<string, Raindrop[]>
+  /** Bookmark open in the detail panel, independent of the bulk selection. */
   selectedRaindropId?: string
+  /** IDs selected for bulk actions across every visible collection. */
+  selectedIds?: Set<string>
+  onToggleSelection?: (id: string) => void
   onSelectRaindrop?: (raindrop: Raindrop) => void
   onOpenUrl?: (url: string) => void
   onSelectCollection?: (collection: Collection) => void
-  depth: number
-  isLast: boolean
-  parentPrefixes: string[]
-  childPrefix: string
-}) {
-  const childPrefixes = useMemo(
-    () => [...parentPrefixes, childPrefix],
-    [parentPrefixes, childPrefix],
+}
+
+type DirectoryInteractions = Pick<
+  DirectoryViewProps,
+  | 'selectedRaindropId'
+  | 'selectedIds'
+  | 'onToggleSelection'
+  | 'onSelectRaindrop'
+  | 'onOpenUrl'
+  | 'onSelectCollection'
+>
+interface ExpansionState {
+  /** Initial mode preserves the original two-level preview; toolbar commands cover every depth. */
+  mode: 'initial' | 'expanded' | 'collapsed'
+  exceptions: Set<string>
+}
+
+/**
+ * Resolve one folder's expansion from the shared toolbar mode and local overrides.
+ * Called by {@link CollectionTreeNode}; children remount without losing their open state.
+ * @example collectionIsExpanded({ mode: 'expanded', exceptions: new Set() }, '100', 4)
+ */
+function collectionIsExpanded(
+  expansion: ExpansionState,
+  id: string,
+  depth: number,
+): boolean {
+  const base =
+    expansion.mode === 'expanded' || (expansion.mode === 'initial' && depth < 2)
+  return expansion.exceptions.has(id) ? !base : base
+}
+
+/**
+ * Render a keyboard-operable bookmark with an adjacent bulk-selection checkbox.
+ * {@link CollectionTreeNode} supplies indentation; normal clicks still open detail.
+ * @example <DirectoryBookmarkRow raindrop={bookmark} prefix="│  " onSelectRaindrop={openDetail} />
+ */
+const DirectoryBookmarkRow = React.memo(function DirectoryBookmarkRow({
+  raindrop,
+  prefix,
+  selectedRaindropId,
+  selectedIds = EMPTY_SELECTION,
+  onSelectRaindrop,
+  onToggleSelection,
+  onOpenUrl,
+}: DirectoryInteractions & { raindrop: Raindrop; prefix: string }) {
+  const Icon = TYPE_ICONS[raindrop.type] ?? Globe
+  const isSelected = selectedIds.has(raindrop.id)
+  const select = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    if ((event.metaKey || event.ctrlKey) && onToggleSelection)
+      onToggleSelection(raindrop.id)
+    else onSelectRaindrop?.(raindrop)
+  }
+  const toggleSelection = useCallback(
+    (): void => onToggleSelection?.(raindrop.id),
+    [onToggleSelection, raindrop.id],
   )
+  const open = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    if (!event.metaKey && !event.ctrlKey) onOpenUrl?.(raindrop.url)
+  }
   return (
-    <CollectionTreeNode
-      collection={collection}
-      raindropsByCollection={raindropsByCollection}
-      selectedRaindropId={selectedRaindropId}
-      onSelectRaindrop={onSelectRaindrop}
-      onOpenUrl={onOpenUrl}
-      onSelectCollection={onSelectCollection}
-      depth={depth}
-      isLast={isLast}
-      parentPrefixes={childPrefixes}
-    />
+    <div
+      data-selected={isSelected}
+      className={cn(
+        'flex items-center gap-1 rounded-sm',
+        isSelected && 'bg-accent',
+      )}
+    >
+      {onToggleSelection && (
+        <Checkbox
+          checked={isSelected}
+          onCheckedChange={toggleSelection}
+          aria-label={`Select ${raindrop.title}`}
+          className="ml-2"
+        />
+      )}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            data-raindrop-id={raindrop.id}
+            aria-current={
+              selectedRaindropId === raindrop.id ? 'true' : undefined
+            }
+            className={cn(
+              'hover:bg-accent focus-visible:ring-ring flex min-w-0 flex-1 items-center gap-1.5 rounded-sm px-2 py-1 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none',
+              selectedRaindropId === raindrop.id && 'bg-accent',
+            )}
+            onClick={select}
+            onDoubleClick={open}
+          >
+            <span
+              aria-hidden="true"
+              className="text-muted-foreground shrink-0 font-mono text-xs whitespace-pre"
+            >
+              {prefix}
+            </span>
+            <Icon className="text-muted-foreground h-4 w-4 shrink-0" />
+            <span className="truncate">{raindrop.title}</span>
+            {raindrop.type !== 'link' && (
+              <span className="text-muted-foreground shrink-0 text-xs">
+                ({raindrop.type})
+              </span>
+            )}
+            {raindrop.isImportant && (
+              <Star
+                aria-label="Important"
+                className="h-3 w-3 shrink-0 fill-amber-500 text-amber-500"
+              />
+            )}
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="right" className="max-w-xs">
+          <div className="space-y-1">
+            <p className="text-sm font-medium">{raindrop.title}</p>
+            <p className="text-muted-foreground text-xs">{raindrop.url}</p>
+            {raindrop.description && (
+              <p className="text-xs">{raindrop.description}</p>
+            )}
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </div>
+  )
+})
+
+/** Render a folder toggle independently from traversal, preserving its native keyboard and expansion semantics. */
+const DirectoryFolderButton = React.memo(function DirectoryFolderButton({
+  collection,
+  hasContent,
+  isExpanded,
+  isLast,
+  depth,
+  prefix,
+  interactions,
+  onToggle,
+}: {
+  collection: Collection
+  hasContent: boolean
+  isExpanded: boolean
+  isLast: boolean
+  depth: number
+  prefix: string
+  interactions: DirectoryInteractions
+  onToggle: (id: string) => void
+}) {
+  const folderStyle = useMemo(
+    () => ({ color: collection.color || '#8b5cf6' }),
+    [collection.color],
+  )
+  const toggleExpand = (): void => {
+    onToggle(collection.id)
+    interactions.onSelectCollection?.(collection)
+  }
+  const FolderIcon = isExpanded ? FolderOpen : Folder
+  return (
+    <button
+      type="button"
+      aria-expanded={hasContent ? isExpanded : undefined}
+      aria-label={`${collection.name} collection`}
+      className="hover:bg-accent flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-left text-sm transition-colors"
+      onClick={toggleExpand}
+    >
+      <span
+        aria-hidden="true"
+        className="text-muted-foreground shrink-0 font-mono text-xs whitespace-pre"
+      >
+        {depth > 0 ? prefix + (isLast ? '└── ' : '├── ') : ''}
+      </span>
+      {hasContent ? (
+        isExpanded ? (
+          <ChevronDown className="text-muted-foreground h-3.5 w-3.5 shrink-0" />
+        ) : (
+          <ChevronRight className="text-muted-foreground h-3.5 w-3.5 shrink-0" />
+        )
+      ) : (
+        <span className="w-3.5 shrink-0" />
+      )}
+      <FolderIcon className="h-4 w-4 shrink-0" style={folderStyle} />
+      <span className="truncate font-medium">{collection.name}/</span>
+      <span className="text-muted-foreground shrink-0 text-xs">
+        ({collection.count})
+      </span>
+    </button>
   )
 })
 
 /**
- * Props for the DirectoryView component.
- */
-interface DirectoryViewProps {
-  /** Collections to display in the tree hierarchy */
-  collections: Collection[]
-  /** Raindrops keyed by collection ID */
-  raindropsByCollection: Record<string, Raindrop[]>
-  /** Currently selected raindrop ID */
-  selectedRaindropId?: string
-  /** Callback when a raindrop is selected */
-  onSelectRaindrop?: (raindrop: Raindrop) => void
-  /** Callback when a raindrop URL is opened */
-  onOpenUrl?: (url: string) => void
-  /** Callback when a collection is clicked */
-  onSelectCollection?: (collection: Collection) => void
-}
-
-/**
- * Recursive tree node for a collection and its contents.
+ * Render a collection and its descendants using the Directory view's shared expansion state.
+ * Individual toggles preserve descendant overrides; all-folder commands replace the shared mode.
+ * @example <CollectionTreeNode collection={root} depth={0} prefix="" isLast {...treeProps} />
  */
 const CollectionTreeNode = React.memo(function CollectionTreeNode({
   collection,
   raindropsByCollection,
-  selectedRaindropId,
-  onSelectRaindrop,
-  onOpenUrl,
-  onSelectCollection,
+  interactions,
+  expansion,
+  onToggle,
   depth,
   isLast,
-  parentPrefixes,
+  prefix,
 }: {
   collection: Collection
-  raindropsByCollection: Record<string, Raindrop[]>
-  selectedRaindropId?: string
-  onSelectRaindrop?: (raindrop: Raindrop) => void
-  onOpenUrl?: (url: string) => void
-  onSelectCollection?: (collection: Collection) => void
+  raindropsByCollection: DirectoryViewProps['raindropsByCollection']
+  interactions: DirectoryInteractions
+  expansion: ExpansionState
+  onToggle: (id: string) => void
   depth: number
   isLast: boolean
-  parentPrefixes: string[]
+  prefix: string
 }) {
-  const [isExpanded, setIsExpanded] = useState(depth < 2)
-
-  const raindrops = raindropsByCollection[collection.id] || []
-  const children = collection.children || []
+  const isExpanded = collectionIsExpanded(expansion, collection.id, depth)
+  const raindrops = raindropsByCollection[collection.id] ?? []
+  const children = collection.children ?? []
   const hasContent = raindrops.length > 0 || children.length > 0
-
-  const folderColorStyle = useMemo(
-    () => ({ color: collection.color || '#8b5cf6' }),
-    [collection.color],
-  )
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded)
-    onSelectCollection?.(collection)
-  }
-
-  const prefix = parentPrefixes.join('')
-  const connector = isLast ? '\u2514\u2500\u2500 ' : '\u251C\u2500\u2500 '
-  const childPrefix = isLast ? '    ' : '\u2502   '
-
+  const childPrefix = prefix + (isLast ? '    ' : '│   ')
   return (
     <div className="select-none">
-      {/* Collection folder row */}
-      <button
-        type="button"
-        className={cn(
-          'hover:bg-accent flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-left text-sm transition-colors',
-        )}
-        onClick={toggleExpand}
-      >
-        <span className="text-muted-foreground flex-shrink-0 font-mono text-xs whitespace-pre">
-          {depth > 0 ? prefix + connector : ''}
-        </span>
-        {hasContent ? (
-          isExpanded ? (
-            <ChevronDown className="text-muted-foreground h-3.5 w-3.5 flex-shrink-0" />
-          ) : (
-            <ChevronRight className="text-muted-foreground h-3.5 w-3.5 flex-shrink-0" />
-          )
-        ) : (
-          <span className="w-3.5 flex-shrink-0" />
-        )}
-        {isExpanded ? (
-          <FolderOpen
-            className="h-4 w-4 flex-shrink-0"
-            style={folderColorStyle}
-          />
-        ) : (
-          <Folder className="h-4 w-4 flex-shrink-0" style={folderColorStyle} />
-        )}
-        <span className="truncate font-medium">{collection.name}/</span>
-        <span className="text-muted-foreground flex-shrink-0 text-xs">
-          ({collection.count})
-        </span>
-      </button>
-
-      {/* Expanded content */}
+      <DirectoryFolderButton
+        collection={collection}
+        hasContent={hasContent}
+        isExpanded={isExpanded}
+        isLast={isLast}
+        depth={depth}
+        prefix={prefix}
+        interactions={interactions}
+        onToggle={onToggle}
+      />
       {isExpanded && (
         <div>
-          {/* Child collections */}
           {children.map((child, index) => (
-            <ChildTreeNode
+            <CollectionTreeNode
               key={child.id}
               collection={child}
               raindropsByCollection={raindropsByCollection}
-              selectedRaindropId={selectedRaindropId}
-              onSelectRaindrop={onSelectRaindrop}
-              onOpenUrl={onOpenUrl}
-              onSelectCollection={onSelectCollection}
+              interactions={interactions}
+              expansion={expansion}
+              onToggle={onToggle}
               depth={depth + 1}
               isLast={index === children.length - 1 && raindrops.length === 0}
-              parentPrefixes={parentPrefixes}
-              childPrefix={childPrefix}
+              prefix={childPrefix}
             />
           ))}
-
-          {/* Raindrops within collection */}
-          {raindrops.map((raindrop, index) => {
-            const typeInfo = getTypeInfo(raindrop.type)
-            const TypeIcon = typeInfo.icon
-            const isLastItem = index === raindrops.length - 1
-            const itemConnector = isLastItem
-              ? '\u2514\u2500\u2500 '
-              : '\u251C\u2500\u2500 '
-            const itemPrefix = [...parentPrefixes, childPrefix].join('')
-
-            return (
-              <Tooltip key={raindrop.id}>
-                <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    data-raindrop-id={raindrop.id}
-                    className={cn(
-                      'hover:bg-accent focus-visible:ring-ring flex w-full items-center gap-1.5 rounded-sm px-2 py-1 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none',
-                      selectedRaindropId === raindrop.id && 'bg-accent',
-                    )}
-                    onClick={() => onSelectRaindrop?.(raindrop)}
-                    onDoubleClick={() => onOpenUrl?.(raindrop.url)}
-                  >
-                    <span className="text-muted-foreground flex-shrink-0 font-mono text-xs whitespace-pre">
-                      {itemPrefix + itemConnector}
-                    </span>
-                    <TypeIcon className="text-muted-foreground h-4 w-4 flex-shrink-0" />
-                    <span className="truncate">{raindrop.title}</span>
-                    {raindrop.type !== 'link' && (
-                      <span className="text-muted-foreground flex-shrink-0 text-xs">
-                        ({typeInfo.label})
-                      </span>
-                    )}
-                    {raindrop.isImportant && (
-                      <Star className="h-3 w-3 flex-shrink-0 fill-amber-500 text-amber-500" />
-                    )}
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="max-w-xs">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">{raindrop.title}</p>
-                    <p className="text-muted-foreground text-xs">
-                      {raindrop.url}
-                    </p>
-                    {raindrop.description && (
-                      <p className="text-xs">{raindrop.description}</p>
-                    )}
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            )
-          })}
+          {raindrops.map((raindrop, index) => (
+            <DirectoryBookmarkRow
+              key={raindrop.id}
+              raindrop={raindrop}
+              prefix={
+                childPrefix + (index === raindrops.length - 1 ? '└── ' : '├── ')
+              }
+              {...interactions}
+            />
+          ))}
         </div>
       )}
     </div>
@@ -267,59 +306,83 @@ const CollectionTreeNode = React.memo(function CollectionTreeNode({
 })
 
 /**
- * Unix filesystem-style tree view of collections and their contained raindrops.
- * Displays a hierarchical structure using tree-line characters (pipe, tee, elbow)
- * inspired by the Unix `tree` command.
- *
- * @param collections - Array of root-level collections to display
- * @param raindropsByCollection - Raindrops grouped by collection ID
- * @param selectedRaindropId - Currently selected raindrop for highlighting
- * @param onSelectRaindrop - Callback when a raindrop row is clicked
- * @param onOpenUrl - Callback when a raindrop is double-clicked to open
- * @param onSelectCollection - Callback when a collection folder is clicked
- *
- * @example
- *   <DirectoryView
- *     collections={collections}
- *     raindropsByCollection={grouped}
- *     selectedRaindropId={selectedId}
- *     onSelectRaindrop={(rd) => openDetail(rd)}
- *     onOpenUrl={(url) => window.shell.openExternal(url)}
- *   />
+ * Display loaded bookmarks in their collection hierarchy with independent detail and bulk selection.
+ * MainContent supplies scoped data; expansion commands affect descendants at every depth.
+ * @example <DirectoryView collections={collections} raindropsByCollection={grouped} selectedIds={selected} onToggleSelection={toggleSelection} />
  */
 const DirectoryView = React.memo(function DirectoryView({
   collections,
   raindropsByCollection,
   selectedRaindropId,
+  selectedIds = EMPTY_SELECTION,
   onSelectRaindrop,
+  onToggleSelection,
   onOpenUrl,
   onSelectCollection,
 }: DirectoryViewProps) {
-  const [allExpanded, setAllExpanded] = useState(true)
-
-  const handleExpandCollapseAll = useCallback(() => {
-    setAllExpanded(!allExpanded)
-    // Force re-render by toggling the key
-  }, [allExpanded])
-
+  const [expansion, setExpansion] = useState<ExpansionState>(() => ({
+    mode: 'initial',
+    exceptions: new Set(),
+  }))
+  const interactions = useMemo(
+    () => ({
+      selectedRaindropId,
+      selectedIds,
+      onSelectRaindrop,
+      onToggleSelection,
+      onOpenUrl,
+      onSelectCollection,
+    }),
+    [
+      selectedRaindropId,
+      selectedIds,
+      onSelectRaindrop,
+      onToggleSelection,
+      onOpenUrl,
+      onSelectCollection,
+    ],
+  )
+  const toggleCollection = useCallback(
+    (id: string): void =>
+      setExpansion((previous) => {
+        const exceptions = new Set(previous.exceptions)
+        if (exceptions.has(id)) exceptions.delete(id)
+        else exceptions.add(id)
+        return { ...previous, exceptions }
+      }),
+    [],
+  )
+  const toggleAll = useCallback(
+    (): void =>
+      setExpansion((previous) => ({
+        mode: previous.mode === 'collapsed' ? 'expanded' : 'collapsed',
+        exceptions: new Set(),
+      })),
+    [],
+  )
+  const loadedCount = Object.values(raindropsByCollection).reduce(
+    (count, bookmarks) => count + bookmarks.length,
+    0,
+  )
   return (
     <div className="flex h-full flex-col">
-      {/* Toolbar */}
-      <div className="flex items-center justify-end border-b px-4 py-1.5">
+      <div className="flex items-center justify-between border-b px-4 py-1.5">
+        <span className="text-muted-foreground text-xs">
+          {loadedCount} loaded
+          {selectedIds.size > 0 ? ` · ${selectedIds.size} selected` : ''}
+        </span>
         <Button
           variant="ghost"
           size="sm"
           className="h-7 gap-1 text-xs"
-          onClick={handleExpandCollapseAll}
+          onClick={toggleAll}
         >
           <ChevronsUpDown className="h-3.5 w-3.5" />
-          {allExpanded ? 'Collapse All' : 'Expand All'}
+          {expansion.mode === 'collapsed' ? 'Expand All' : 'Collapse All'}
         </Button>
       </div>
-
-      {/* Tree content */}
       <ScrollArea className="flex-1">
-        <div className="p-4 font-mono text-sm" key={String(allExpanded)}>
+        <div className="p-4 font-mono text-sm">
           {collections.length === 0 ? (
             <div className="text-muted-foreground flex flex-col items-center justify-center py-16">
               <Folder className="mb-3 h-10 w-10 opacity-40" />
@@ -331,13 +394,12 @@ const DirectoryView = React.memo(function DirectoryView({
                 key={collection.id}
                 collection={collection}
                 raindropsByCollection={raindropsByCollection}
-                selectedRaindropId={selectedRaindropId}
-                onSelectRaindrop={onSelectRaindrop}
-                onOpenUrl={onOpenUrl}
-                onSelectCollection={onSelectCollection}
+                interactions={interactions}
+                expansion={expansion}
+                onToggle={toggleCollection}
                 depth={0}
                 isLast={index === collections.length - 1}
-                parentPrefixes={EMPTY_PREFIXES}
+                prefix=""
               />
             ))
           )}
@@ -347,4 +409,3 @@ const DirectoryView = React.memo(function DirectoryView({
   )
 })
 export { DirectoryView }
-export default DirectoryView

@@ -1,8 +1,12 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { TypedStartListening } from '@reduxjs/toolkit'
 
+import { api } from './api/emptyApi'
 import { setAuthLoading, setAuthState } from './slices/authSlice'
+import { dialogSlice } from './slices/dialogSlice'
+import { searchSlice } from './slices/searchSlice'
 import { setResolvedTheme, setTheme } from './slices/settingsSlice'
+import { resetAccountUi, setUiAccountId, setViewMode } from './slices/uiSlice'
 
 import type { AppDispatch, RootState } from './index'
 
@@ -57,6 +61,23 @@ startAppListening({
   },
 })
 
+// Account changes discard private caches and per-account choices before rendering the next account.
+startAppListening({
+  actionCreator: setAuthState,
+  effect: (action, listenerApi) => {
+    const nextId = action.payload.user?._id
+    const current = listenerApi.getState()
+    if (nextId === undefined || current.ui.accountId !== nextId) {
+      listenerApi.dispatch(api.util.resetApiState())
+      listenerApi.dispatch(resetAccountUi())
+      listenerApi.dispatch(searchSlice.actions.resetSearch())
+      listenerApi.dispatch(dialogSlice.actions.resetDialogs())
+      listenerApi.dispatch(setViewMode(current.settings.defaultViewMode))
+    }
+    if (nextId !== undefined) listenerApi.dispatch(setUiAccountId(nextId))
+  },
+})
+
 // ─── Setup Functions (called once after store creation) ─────
 
 interface StoreRef {
@@ -103,6 +124,14 @@ export function setupThemeListeners(store: StoreRef): void {
  *   setupAuthListeners(store)
  */
 export function setupAuthListeners(store: StoreRef): void {
+  window.addEventListener('lain-session-expired', () => {
+    void window.auth
+      .logout()
+      .catch(() => undefined)
+      .finally(() => {
+        store.dispatch(setAuthState({ isAuthenticated: false, user: null }))
+      })
+  })
   // Check initial auth state from main process
   window.auth
     .getState()

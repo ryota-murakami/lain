@@ -52,4 +52,4 @@ const ScrollBar = React.memo(function ScrollBar({
   )
 })
 
-export { ScrollArea, ScrollBar }
+export { ScrollArea }

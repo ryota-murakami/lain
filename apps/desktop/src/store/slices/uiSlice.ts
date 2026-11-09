@@ -3,6 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import type { ViewMode } from '@/lib/types'
 
+import { setDefaultViewMode } from './settingsSlice'
+
 /**
  * UI state for layout, view modes, and selection.
  *
@@ -12,7 +14,11 @@ import type { ViewMode } from '@/lib/types'
  *   const mode = useAppSelector(state => state.ui.viewMode)
  */
 interface UiState {
+  accountId?: number
   viewMode: ViewMode
+  collectionIcons: Record<string, string>
+  collectionColors: Record<string, string>
+  expandedCollectionIds: string[]
   selectedCollectionId: string
   isDetailPanelOpen: boolean
   sidebarWidth: number
@@ -22,6 +28,9 @@ interface UiState {
 
 const initialState: UiState = {
   viewMode: 'list',
+  collectionIcons: {},
+  collectionColors: {},
+  expandedCollectionIds: [],
   selectedCollectionId: 'all',
   isDetailPanelOpen: false,
   sidebarWidth: 260,
@@ -33,6 +42,29 @@ export const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
+    resetAccountUi() {
+      return initialState
+    },
+    setUiAccountId(state, action: PayloadAction<number>) {
+      state.accountId = action.payload
+    },
+    setCollectionColor(
+      state,
+      action: PayloadAction<{ id: string; color: string }>,
+    ) {
+      state.collectionColors ??= {}
+      state.collectionColors[action.payload.id] = action.payload.color
+    },
+    setCollectionIcon(
+      state,
+      action: PayloadAction<{ id: string; icon: string }>,
+    ) {
+      state.collectionIcons ??= {}
+      state.collectionIcons[action.payload.id] = action.payload.icon
+    },
+    setExpandedCollectionIds(state, action: PayloadAction<string[]>) {
+      state.expandedCollectionIds = action.payload
+    },
     setViewMode(state, action: PayloadAction<ViewMode>) {
       state.viewMode = action.payload
     },
@@ -43,26 +75,11 @@ export const uiSlice = createSlice({
     setDetailPanelOpen(state, action: PayloadAction<boolean>) {
       state.isDetailPanelOpen = action.payload
     },
-    setSidebarWidth(state, action: PayloadAction<number>) {
-      state.sidebarWidth = action.payload
-    },
     setSelectedRaindropIds(state, action: PayloadAction<string[]>) {
       state.selectedRaindropIds = action.payload
     },
-    toggleRaindropSelection(state, action: PayloadAction<string>) {
-      const id = action.payload
-      const index = state.selectedRaindropIds.indexOf(id)
-      if (index >= 0) {
-        state.selectedRaindropIds.splice(index, 1)
-      } else {
-        state.selectedRaindropIds.push(id)
-      }
-    },
     selectAllRaindrops(state, action: PayloadAction<string[]>) {
       state.selectedRaindropIds = action.payload
-    },
-    clearSelection(state) {
-      state.selectedRaindropIds = []
     },
     setCollectionViewMode(
       state,
@@ -75,17 +92,24 @@ export const uiSlice = createSlice({
       delete state.collectionViewModes[action.payload]
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(setDefaultViewMode, (state, action) => {
+      state.viewMode = action.payload
+    })
+  },
 })
 
 export const {
+  resetAccountUi,
+  setUiAccountId,
+  setCollectionIcon,
+  setCollectionColor,
+  setExpandedCollectionIds,
   setViewMode,
   setSelectedCollectionId,
   setDetailPanelOpen,
-  setSidebarWidth,
   setSelectedRaindropIds,
-  toggleRaindropSelection,
   selectAllRaindrops,
-  clearSelection,
   setCollectionViewMode,
   clearCollectionViewMode,
 } = uiSlice.actions
@@ -113,3 +137,12 @@ export const getEffectiveViewMode = createSelector(
 export const getHasCollectionViewModeOverride = (state: {
   ui: UiState
 }): boolean => state.ui.selectedCollectionId in state.ui.collectionViewModes
+
+/** Apply this account's persisted display preferences after the sidebar refreshes remote collection metadata. */
+export const getCollectionAppearance = createSelector(
+  [
+    (state: { ui: UiState }) => state.ui.collectionIcons,
+    (state: { ui: UiState }) => state.ui.collectionColors,
+  ],
+  (icons, colors) => ({ icons: icons ?? {}, colors: colors ?? {} }),
+)

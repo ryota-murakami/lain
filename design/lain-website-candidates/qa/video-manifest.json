@@ -1,0 +1,86 @@
+[
+  {
+    "id": "W01",
+    "video": "videos/W01-walkthrough.mp4",
+    "frameSheet": "frames/W01-motion.png",
+    "durationSeconds": 6.64,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W02",
+    "video": "videos/W02-walkthrough.mp4",
+    "frameSheet": "frames/W02-motion.png",
+    "durationSeconds": 6.6,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W03",
+    "video": "videos/W03-walkthrough.mp4",
+    "frameSheet": "frames/W03-motion.png",
+    "durationSeconds": 6.52,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W04",
+    "video": "videos/W04-walkthrough.mp4",
+    "frameSheet": "frames/W04-motion.png",
+    "durationSeconds": 6.48,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W05",
+    "video": "videos/W05-walkthrough.mp4",
+    "frameSheet": "frames/W05-motion.png",
+    "durationSeconds": 7.2,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W06",
+    "video": "videos/W06-walkthrough.mp4",
+    "frameSheet": "frames/W06-motion.png",
+    "durationSeconds": 7.32,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W07",
+    "video": "videos/W07-walkthrough.mp4",
+    "frameSheet": "frames/W07-motion.png",
+    "durationSeconds": 7.32,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W08",
+    "video": "videos/W08-walkthrough.mp4",
+    "frameSheet": "frames/W08-motion.png",
+    "durationSeconds": 6.96,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W09",
+    "video": "videos/W09-walkthrough.mp4",
+    "frameSheet": "frames/W09-motion.png",
+    "durationSeconds": 6.76,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W10",
+    "video": "videos/W10-walkthrough.mp4",
+    "frameSheet": "frames/W10-motion.png",
+    "durationSeconds": 6.64,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W11",
+    "video": "videos/W11-walkthrough.mp4",
+    "frameSheet": "frames/W11-motion.png",
+    "durationSeconds": 6.6,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  },
+  {
+    "id": "W12",
+    "video": "videos/W12-walkthrough.mp4",
+    "frameSheet": "frames/W12-motion.png",
+    "durationSeconds": 7.16,
+    "sampling": "12 evenly spaced frames, left-to-right then top-to-bottom; last frame repeated only if rounding requires padding"
+  }
+]

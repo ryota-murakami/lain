@@ -1,5 +1,12 @@
 import { X } from 'lucide-react'
-import React, { useState, useRef, useCallback, type KeyboardEvent } from 'react'
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useId,
+  type KeyboardEvent,
+} from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -29,7 +36,8 @@ interface TagInputProps {
 /**
  * Multi-value tag input with autocomplete suggestions.
  * Tags can be added by pressing Enter or comma, removed by clicking X
- * or pressing Backspace on an empty input.
+ * or pressing Backspace on an empty input. Bookmark creation and detail editing
+ * both call this component so normalization and keyboard behavior stay consistent.
  *
  * @param value - Current array of tag strings
  * @param onChange - Callback when the tag array changes
@@ -47,12 +55,16 @@ interface TagInputProps {
  *     placeholder="Add tags..."
  *   />
  */
-const TagInput = React.memo(function TagInput({
+/**
+ * Share tag normalization, suggestion focus, and keyboard behavior across creation and detail forms.
+ * Called by {@link TagInput}; presentation stays controlled by the parent's tag array.
+ * @example
+ * const editor = useTagEditor(props)
+ */
+function useTagEditor({
   value,
   onChange,
   suggestions = [],
-  placeholder = 'Add tag...',
-  label,
   maxTags,
   disabled = false,
 }: TagInputProps) {
@@ -60,37 +72,53 @@ const TagInput = React.memo(function TagInput({
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1)
   const inputRef = useRef<HTMLInputElement>(null)
+  const inputId = useId()
+  const listId = `${inputId}-suggestions`
 
-  const filteredSuggestions = suggestions.filter(
-    (s) =>
-      s.toLowerCase().includes(inputValue.toLowerCase()) &&
-      !value.includes(s) &&
-      inputValue.length > 0,
-  )
+  const filteredSuggestions = useMemo(() => {
+    const query = inputValue.trim().toLowerCase()
+    if (!query) return []
+    const selected = new Set(value.map((tag) => tag.trim().toLowerCase()))
+    // Limit the keyboard list and visible list together; normalize duplicate suggestions once.
+    return [...new Set(suggestions.map((tag) => tag.trim().toLowerCase()))]
+      .filter((tag) => tag.includes(query) && !selected.has(tag))
+      .slice(0, 8)
+  }, [inputValue, suggestions, value])
+  const suggestionsOpen =
+    showSuggestions && filteredSuggestions.length > 0 && !disabled
 
   const addTag = useCallback(
     (tag: string) => {
       const trimmed = tag.trim().toLowerCase()
-      if (!trimmed) return
-      if (value.includes(trimmed)) return
-      if (maxTags && value.length >= maxTags) return
+      if (disabled || !trimmed) return
+      if (value.some((existing) => existing.trim().toLowerCase() === trimmed))
+        return
+      if (maxTags !== undefined && value.length >= maxTags) return
       onChange([...value, trimmed])
       setInputValue('')
       setShowSuggestions(false)
       setSelectedSuggestionIndex(-1)
     },
-    [value, onChange, maxTags],
+    [value, onChange, maxTags, disabled],
   )
 
-  const removeTag = (tagToRemove: string) => {
+  const removeTag = (tagToRemove: string): void => {
     onChange(value.filter((t) => t !== tagToRemove))
+  }
+  const handleSuggestionClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): void => {
+    addTag(event.currentTarget.value)
   }
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
+      // IME confirmation is text input, not a request to create a tag or submit the form.
+      if (e.nativeEvent.isComposing || disabled) return
       if (e.key === 'Enter' || e.key === ',') {
         e.preventDefault()
         if (
+          suggestionsOpen &&
           selectedSuggestionIndex >= 0 &&
           selectedSuggestionIndex < filteredSuggestions.length
         ) {
@@ -106,6 +134,7 @@ const TagInput = React.memo(function TagInput({
         onChange(value.filter((t) => t !== value[value.length - 1]))
       } else if (e.key === 'ArrowDown') {
         e.preventDefault()
+        setShowSuggestions(true)
         setSelectedSuggestionIndex((prev) =>
           Math.min(prev + 1, filteredSuggestions.length - 1),
         )
@@ -113,6 +142,8 @@ const TagInput = React.memo(function TagInput({
         e.preventDefault()
         setSelectedSuggestionIndex((prev) => Math.max(prev - 1, -1))
       } else if (e.key === 'Escape') {
+        // Dismiss the autocomplete first instead of closing the surrounding dialog.
+        if (suggestionsOpen) e.stopPropagation()
         setShowSuggestions(false)
         setSelectedSuggestionIndex(-1)
       }
@@ -124,6 +155,8 @@ const TagInput = React.memo(function TagInput({
       filteredSuggestions,
       value,
       onChange,
+      disabled,
+      suggestionsOpen,
     ],
   )
 
@@ -136,13 +169,60 @@ const TagInput = React.memo(function TagInput({
     [],
   )
   const handleInputFocus = useCallback(() => setShowSuggestions(true), [])
-  const handleInputBlur = useCallback(() => {
-    setTimeout(() => setShowSuggestions(false), 200)
-  }, [])
+  const handleInputBlur = useCallback(() => setShowSuggestions(false), [])
+
+  const isAtLimit = maxTags !== undefined && value.length >= maxTags
+  return {
+    inputValue,
+    inputRef,
+    inputId,
+    listId,
+    filteredSuggestions,
+    suggestionsOpen,
+    selectedSuggestionIndex,
+    removeTag,
+    handleSuggestionClick,
+    handleKeyDown,
+    handleInputChange,
+    handleInputFocus,
+    handleInputBlur,
+    isAtLimit,
+  }
+}
+
+const TagInput = React.memo(function TagInput({
+  value,
+  onChange,
+  suggestions = [],
+  placeholder = 'Add tag...',
+  label,
+  maxTags,
+  disabled = false,
+}: TagInputProps) {
+  const {
+    inputValue,
+    inputRef,
+    inputId,
+    listId,
+    filteredSuggestions,
+    suggestionsOpen,
+    selectedSuggestionIndex,
+    removeTag,
+    handleSuggestionClick,
+    handleKeyDown,
+    handleInputChange,
+    handleInputFocus,
+    handleInputBlur,
+    isAtLimit,
+  } = useTagEditor({ value, onChange, suggestions, maxTags, disabled })
 
   return (
     <div className="space-y-2">
-      {label && <Label className="text-sm font-medium">{label}</Label>}
+      {label && (
+        <Label htmlFor={inputId} className="text-sm font-medium">
+          {label}
+        </Label>
+      )}
       <div
         className={cn(
           'border-input bg-background ring-offset-background flex min-h-[38px] flex-wrap items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm',
@@ -174,44 +254,51 @@ const TagInput = React.memo(function TagInput({
           </Badge>
         ))}
         <Input
+          id={inputId}
           ref={inputRef}
+          role="combobox"
+          aria-label={label || 'Tags'}
+          aria-autocomplete="list"
+          aria-expanded={suggestionsOpen}
+          aria-controls={suggestionsOpen ? listId : undefined}
+          aria-activedescendant={
+            suggestionsOpen && selectedSuggestionIndex >= 0
+              ? `${listId}-${selectedSuggestionIndex}`
+              : undefined
+          }
           value={inputValue}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onKeyDown={handleKeyDown}
           placeholder={value.length === 0 ? placeholder : ''}
-          disabled={
-            disabled || (maxTags !== undefined && value.length >= maxTags)
-          }
+          disabled={disabled || isAtLimit}
           className="h-auto min-w-[80px] flex-1 border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
         />
       </div>
-      {showSuggestions && filteredSuggestions.length > 0 && (
+      {suggestionsOpen && (
         <div className="relative">
-          <div className="bg-popover absolute z-50 mt-1 w-full rounded-md border p-1 shadow-md">
-            {filteredSuggestions.slice(0, 8).map((suggestion, index) => (
+          <div
+            id={listId}
+            role="listbox"
+            aria-label="Tag suggestions"
+            className="bg-popover absolute z-50 mt-1 w-full rounded-md border p-1 shadow-md"
+          >
+            {filteredSuggestions.map((suggestion, index) => (
               <button
                 key={suggestion}
                 type="button"
+                value={suggestion}
+                id={`${listId}-${index}`}
+                role="option"
+                aria-selected={index === selectedSuggestionIndex}
+                tabIndex={-1}
                 className={cn(
                   'hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm',
                   index === selectedSuggestionIndex && 'bg-accent',
                 )}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  const trimmed = suggestion.trim().toLowerCase()
-                  if (
-                    !trimmed ||
-                    value.includes(trimmed) ||
-                    (maxTags && value.length >= maxTags)
-                  )
-                    return
-                  onChange([...value, trimmed])
-                  setInputValue('')
-                  setShowSuggestions(false)
-                  setSelectedSuggestionIndex(-1)
-                }}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={handleSuggestionClick}
               >
                 {suggestion}
               </button>
@@ -219,7 +306,7 @@ const TagInput = React.memo(function TagInput({
           </div>
         </div>
       )}
-      {maxTags && (
+      {maxTags !== undefined && (
         <p className="text-muted-foreground text-xs">
           {value.length}/{maxTags} tags
         </p>
@@ -228,4 +315,3 @@ const TagInput = React.memo(function TagInput({
   )
 })
 export { TagInput }
-export default TagInput

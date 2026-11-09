@@ -1,0 +1,86 @@
+[
+  {
+    "id": "W01",
+    "body": 12.24,
+    "secondary": 5.27,
+    "surfaceSecondary": 4.94,
+    "download": 12.07
+  },
+  {
+    "id": "W02",
+    "body": 15.31,
+    "secondary": 8.09,
+    "surfaceSecondary": 7.23,
+    "download": 11.72
+  },
+  {
+    "id": "W03",
+    "body": 11.42,
+    "secondary": 5.28,
+    "surfaceSecondary": 5.61,
+    "download": 7.81
+  },
+  {
+    "id": "W04",
+    "body": 15.98,
+    "secondary": 8.75,
+    "surfaceSecondary": 7.66,
+    "download": 9.89
+  },
+  {
+    "id": "W05",
+    "body": 9.32,
+    "secondary": 5.26,
+    "surfaceSecondary": 5,
+    "download": 10.15
+  },
+  {
+    "id": "W06",
+    "body": 13.65,
+    "secondary": 5.99,
+    "surfaceSecondary": 5.27,
+    "download": 5.62
+  },
+  {
+    "id": "W07",
+    "body": 11.65,
+    "secondary": 5.55,
+    "surfaceSecondary": 5.14,
+    "download": 9.35
+  },
+  {
+    "id": "W08",
+    "body": 14.19,
+    "secondary": 5.09,
+    "surfaceSecondary": 4.59,
+    "download": 5.04
+  },
+  {
+    "id": "W09",
+    "body": 9.62,
+    "secondary": 5.56,
+    "surfaceSecondary": 4.87,
+    "download": 6.51
+  },
+  {
+    "id": "W10",
+    "body": 11.13,
+    "secondary": 7.26,
+    "surfaceSecondary": 5.85,
+    "download": 7.95
+  },
+  {
+    "id": "W11",
+    "body": 12.21,
+    "secondary": 4.9,
+    "surfaceSecondary": 4.52,
+    "download": 10.47
+  },
+  {
+    "id": "W12",
+    "body": 13.94,
+    "secondary": 5.18,
+    "surfaceSecondary": 4.83,
+    "download": 11.98
+  }
+]

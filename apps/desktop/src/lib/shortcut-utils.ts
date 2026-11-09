@@ -36,6 +36,18 @@ const BARE_BINDABLE_KEYS: ReadonlySet<string> = new Set([
 ])
 
 /**
+ * Choose platform key labels and translate default Command shortcuts on Linux.
+ * Called by {@link matchesBinding} and {@link formatShortcut}.
+ * @example
+ * isMacPlatform() // true on macOS
+ */
+function isMacPlatform(): boolean {
+  return (
+    typeof navigator === 'undefined' || !/Linux|Win/.test(navigator.platform)
+  )
+}
+
+/**
  * Check if a keyboard event matches a shortcut binding.
  *
  * @param event - The keyboard event to check
@@ -51,10 +63,10 @@ export function matchesBinding(
 ): boolean {
   return (
     event.key.toLowerCase() === binding.key.toLowerCase() &&
-    event.metaKey === binding.meta &&
+    event.metaKey === (isMacPlatform() ? binding.meta : false) &&
     event.shiftKey === binding.shift &&
     event.altKey === binding.alt &&
-    event.ctrlKey === binding.ctrl
+    event.ctrlKey === (binding.ctrl || (!isMacPlatform() && binding.meta))
   )
 }
 
@@ -70,7 +82,8 @@ export function matchesBinding(
 export function isEditableTarget(target: EventTarget | null): boolean {
   if (!target || !(target instanceof HTMLElement)) return false
   const tagName = target.tagName
-  if (tagName === 'INPUT' || tagName === 'TEXTAREA') return true
+  if (tagName === 'INPUT' || tagName === 'TEXTAREA' || tagName === 'SELECT')
+    return true
   if (target.isContentEditable) return true
   return false
 }
@@ -121,10 +134,12 @@ const SYMBOL_MAP: Record<string, string> = {
  */
 export function formatShortcut(binding: ShortcutBinding): string {
   const parts: string[] = []
-  if (binding.ctrl) parts.push(SYMBOL_MAP.ctrl)
-  if (binding.alt) parts.push(SYMBOL_MAP.alt)
-  if (binding.shift) parts.push(SYMBOL_MAP.shift)
-  if (binding.meta) parts.push(SYMBOL_MAP.meta)
+  const mac = isMacPlatform()
+  if (binding.ctrl || (!mac && binding.meta))
+    parts.push(mac ? SYMBOL_MAP.ctrl : 'Ctrl+')
+  if (binding.alt) parts.push(mac ? SYMBOL_MAP.alt : 'Alt+')
+  if (binding.shift) parts.push(mac ? SYMBOL_MAP.shift : 'Shift+')
+  if (mac && binding.meta) parts.push(SYMBOL_MAP.meta)
 
   const keyDisplay = SYMBOL_MAP[binding.key] ?? binding.key.toUpperCase()
   parts.push(keyDisplay)
@@ -171,10 +186,11 @@ export function findConflict(
 export function isSameBinding(a: ShortcutBinding, b: ShortcutBinding): boolean {
   return (
     a.key.toLowerCase() === b.key.toLowerCase() &&
-    a.meta === b.meta &&
+    (isMacPlatform() ? a.meta === b.meta : true) &&
     a.shift === b.shift &&
     a.alt === b.alt &&
-    a.ctrl === b.ctrl
+    (a.ctrl || (!isMacPlatform() && a.meta)) ===
+      (b.ctrl || (!isMacPlatform() && b.meta))
   )
 }
 
@@ -199,6 +215,8 @@ export function bindingFromKeyboardEvent(
   event: KeyboardEventLike,
 ): ShortcutBinding | null {
   if (IGNORED_CAPTURE_KEYS.has(event.key)) return null
+  // Command defaults map to Control on Linux; Super would otherwise save a binding that cannot fire.
+  if (!isMacPlatform() && event.metaKey) return null
   const hasCommandModifier = event.metaKey || event.ctrlKey || event.altKey
   if (!hasCommandModifier && !BARE_BINDABLE_KEYS.has(event.key)) return null
   return {

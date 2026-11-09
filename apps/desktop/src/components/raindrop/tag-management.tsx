@@ -8,11 +8,10 @@ import {
   Check,
   X,
 } from 'lucide-react'
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useCallback } from 'react'
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -40,35 +39,10 @@ import {
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { useTagManagement } from '@/hooks/useTagManagement'
 import { cn } from '@/lib/utils'
 
-/**
- * A tag entry with its name and usage count across all raindrops.
- */
-interface TagEntry {
-  name: string
-  count: number
-}
-
-/**
- * Props for the TagManagement component.
- */
-interface TagManagementProps {
-  /** List of all tags with usage counts */
-  tags: TagEntry[]
-  /** Whether the management panel is open */
-  open: boolean
-  /** Callback to toggle panel visibility */
-  onOpenChange: (open: boolean) => void
-  /** Callback when a tag is renamed */
-  onRename?: (oldName: string, newName: string) => void
-  /** Callback when tags are merged */
-  onMerge?: (sourceNames: string[], targetName: string) => void
-  /** Callback when a tag is deleted */
-  onDelete?: (tagName: string) => void
-}
-
-type SortMode = 'name' | 'count'
+import type { TagEntry, TagManagementProps } from './tag-management.types'
 
 /**
  * Tag management panel for viewing, renaming, merging, and deleting tags.
@@ -95,33 +69,22 @@ type SortMode = 'name' | 'count'
  * A single tag row inside the tag list .map() loop.
  * Extracted as a component to allow useCallback for event handlers.
  */
-const TagRowItem = React.memo(function TagRowItem({
-  tag,
-  isSelected,
-  isEditing,
+/** Render the active tag rename draft with keyboard confirmation and cancel controls. */
+const TagRenameInput = React.memo(function TagRenameInput({
+  tagName,
   editValue,
-  onToggleTag,
+  busy,
   onEditValueChange,
   onConfirmRename,
   onCancelRename,
-  onStartRename,
-  onSetDeleteTarget,
 }: {
-  tag: TagEntry
-  isSelected: boolean
-  isEditing: boolean
+  tagName: string
   editValue: string
-  onToggleTag: (tagName: string) => void
+  busy: boolean
   onEditValueChange: (value: string) => void
   onConfirmRename: () => void
   onCancelRename: () => void
-  onStartRename: (tagName: string) => void
-  onSetDeleteTarget: (tagName: string) => void
 }) {
-  const handleCheckedChange = useCallback(
-    () => onToggleTag(tag.name),
-    [onToggleTag, tag.name],
-  )
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) =>
       onEditValueChange(e.target.value),
@@ -133,6 +96,70 @@ const TagRowItem = React.memo(function TagRowItem({
       if (e.key === 'Escape') onCancelRename()
     },
     [onConfirmRename, onCancelRename],
+  )
+  return (
+    <div className="flex flex-1 items-center gap-1">
+      <Input
+        aria-label={`New name for ${tagName}`}
+        disabled={busy}
+        value={editValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        className="h-7 text-sm"
+        autoFocus
+      />
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-7 w-7"
+        aria-label={`Save name for ${tagName}`}
+        disabled={busy || !editValue.trim() || editValue.trim() === tagName}
+        onClick={onConfirmRename}
+      >
+        <Check className="h-3.5 w-3.5" />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-7 w-7"
+        aria-label={`Cancel rename of ${tagName}`}
+        disabled={busy}
+        onClick={onCancelRename}
+      >
+        <X className="h-3.5 w-3.5" />
+      </Button>
+    </div>
+  )
+})
+
+const TagRowItem = React.memo(function TagRowItem({
+  tag,
+  controller,
+  canRename,
+  canDelete,
+}: {
+  tag: TagEntry
+  controller: ReturnType<typeof useTagManagement>
+  canRename: boolean
+  canDelete: boolean
+}) {
+  const {
+    selectedTags,
+    editingTag,
+    editValue,
+    busy,
+    toggleTag: onToggleTag,
+    handleEditValueChange: onEditValueChange,
+    confirmRename: onConfirmRename,
+    cancelRename: onCancelRename,
+    startRename: onStartRename,
+    handleSetDeleteTarget: onSetDeleteTarget,
+  } = controller
+  const isSelected = selectedTags.has(tag.name)
+  const isEditing = editingTag === tag.name
+  const handleCheckedChange = useCallback(
+    () => onToggleTag(tag.name),
+    [onToggleTag, tag.name],
   )
   const handleStartRename = useCallback(
     () => onStartRename(tag.name),
@@ -151,37 +178,21 @@ const TagRowItem = React.memo(function TagRowItem({
       )}
     >
       <Checkbox
+        disabled={busy}
         checked={isSelected}
         onCheckedChange={handleCheckedChange}
         aria-label={`Select tag ${tag.name}`}
       />
 
       {isEditing ? (
-        <div className="flex flex-1 items-center gap-1">
-          <Input
-            value={editValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="h-7 text-sm"
-            autoFocus
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7"
-            onClick={onConfirmRename}
-          >
-            <Check className="h-3.5 w-3.5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7"
-            onClick={onCancelRename}
-          >
-            <X className="h-3.5 w-3.5" />
-          </Button>
-        </div>
+        <TagRenameInput
+          tagName={tag.name}
+          editValue={editValue}
+          busy={busy}
+          onEditValueChange={onEditValueChange}
+          onConfirmRename={onConfirmRename}
+          onCancelRename={onCancelRename}
+        />
       ) : (
         <>
           <Badge variant="secondary" className="text-xs">
@@ -190,12 +201,14 @@ const TagRowItem = React.memo(function TagRowItem({
           <span className="text-muted-foreground ml-auto text-xs">
             {tag.count}
           </span>
-          <div className="flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="flex items-center gap-0.5 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100">
             <Button
               variant="ghost"
               size="icon"
               className="h-7 w-7"
               onClick={handleStartRename}
+              disabled={busy || !canRename}
+              aria-label={`Rename tag ${tag.name}`}
               title="Rename tag"
             >
               <Pencil className="h-3.5 w-3.5" />
@@ -205,6 +218,8 @@ const TagRowItem = React.memo(function TagRowItem({
               size="icon"
               className="text-destructive hover:text-destructive h-7 w-7"
               onClick={handleSetDelete}
+              disabled={busy || !canDelete}
+              aria-label={`Delete tag ${tag.name}`}
               title="Delete tag"
             >
               <Trash2 className="h-3.5 w-3.5" />
@@ -216,6 +231,124 @@ const TagRowItem = React.memo(function TagRowItem({
   )
 })
 
+/** Render merge and delete confirmations using the management controller's retained drafts and errors. */
+const TagMutationDialogs = React.memo(function TagMutationDialogs({
+  controller,
+  canMerge,
+  canDelete,
+}: {
+  controller: ReturnType<typeof useTagManagement>
+  canMerge: boolean
+  canDelete: boolean
+}) {
+  const {
+    mergeDialogOpen,
+    handleMergeOpenChange,
+    busy,
+    selectedTags,
+    mergeTargetName,
+    handleMergeTargetChange,
+    handleMergeKeyDown,
+    error,
+    handleCloseMergeDialog,
+    handleMerge,
+    deleteTarget,
+    handleDeleteDialogOpenChange,
+    handleDelete,
+  } = controller
+  return (
+    <>
+      {/* Merge dialog */}
+      <Dialog open={mergeDialogOpen} onOpenChange={handleMergeOpenChange}>
+        <DialogContent className="max-w-sm" showCloseButton={!busy}>
+          <DialogHeader>
+            <DialogTitle>Merge Tags</DialogTitle>
+            <DialogDescription>
+              Merge {selectedTags.size} selected tags into one. All bookmarks
+              will be updated.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="flex flex-wrap gap-1">
+              {Array.from(selectedTags).map((name) => (
+                <Badge key={name} variant="secondary" className="text-xs">
+                  {name}
+                </Badge>
+              ))}
+            </div>
+            <Input
+              aria-label="Merged tag name"
+              disabled={busy}
+              placeholder="New tag name..."
+              value={mergeTargetName}
+              onChange={handleMergeTargetChange}
+              onKeyDown={handleMergeKeyDown}
+            />
+          </div>
+          {error && (
+            <p role="alert" className="text-destructive text-sm">
+              {error}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              disabled={busy}
+              onClick={handleCloseMergeDialog}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleMerge}
+              disabled={
+                busy ||
+                !canMerge ||
+                selectedTags.size < 2 ||
+                !mergeTargetName.trim()
+              }
+            >
+              {busy ? 'Merging…' : 'Merge Tags'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete confirmation */}
+      <AlertDialog
+        open={deleteTarget !== null}
+        onOpenChange={handleDeleteDialogOpenChange}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Delete tag &ldquo;{deleteTarget}&rdquo;?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This tag will be removed from all bookmarks that use it. This
+              action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          {error && (
+            <p role="alert" className="text-destructive text-sm">
+              {error}
+            </p>
+          )}
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>Cancel</AlertDialogCancel>
+            <Button
+              disabled={busy || !canDelete}
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {busy ? 'Deleting…' : 'Delete'}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  )
+})
+
 const TagManagement = React.memo(function TagManagement({
   tags,
   open,
@@ -224,135 +357,38 @@ const TagManagement = React.memo(function TagManagement({
   onMerge,
   onDelete,
 }: TagManagementProps) {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [sortMode, setSortMode] = useState<SortMode>('count')
-  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set())
-  const [editingTag, setEditingTag] = useState<string | null>(null)
-  const [editValue, setEditValue] = useState('')
-  const [deleteTarget, setDeleteTarget] = useState<string | null>(null)
-  const [mergeDialogOpen, setMergeDialogOpen] = useState(false)
-  const [mergeTargetName, setMergeTargetName] = useState('')
-
-  const handleSearchChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value),
-    [],
-  )
-
-  const filteredAndSortedTags = useMemo(() => {
-    let filtered = tags
-    if (searchQuery) {
-      const lower = searchQuery.toLowerCase()
-      filtered = tags.filter((t) => t.name.toLowerCase().includes(lower))
-    }
-    return [...filtered].sort((a, b) => {
-      if (sortMode === 'name') return a.name.localeCompare(b.name)
-      return b.count - a.count
-    })
-  }, [tags, searchQuery, sortMode])
-
-  const toggleTag = useCallback((tagName: string) => {
-    setSelectedTags((prev) => {
-      const next = new Set(prev)
-      if (next.has(tagName)) {
-        next.delete(tagName)
-      } else {
-        next.add(tagName)
-      }
-      return next
-    })
-  }, [])
-
-  const toggleAll = useCallback(() => {
-    if (selectedTags.size === filteredAndSortedTags.length) {
-      setSelectedTags(new Set())
-    } else {
-      setSelectedTags(new Set(filteredAndSortedTags.map((t) => t.name)))
-    }
-  }, [selectedTags.size, filteredAndSortedTags])
-
-  const startRename = useCallback((tagName: string) => {
-    setEditingTag(tagName)
-    setEditValue(tagName)
-  }, [])
-
-  const confirmRename = useCallback(() => {
-    if (editingTag && editValue.trim() && editValue.trim() !== editingTag) {
-      onRename?.(editingTag, editValue.trim())
-    }
-    setEditingTag(null)
-    setEditValue('')
-  }, [editingTag, editValue, onRename])
-
-  const cancelRename = useCallback(() => {
-    setEditingTag(null)
-    setEditValue('')
-  }, [])
-
-  const handleMerge = useCallback(() => {
-    if (selectedTags.size >= 2 && mergeTargetName.trim()) {
-      onMerge?.(Array.from(selectedTags), mergeTargetName.trim())
-      setSelectedTags(new Set())
-      setMergeDialogOpen(false)
-      setMergeTargetName('')
-    }
-  }, [selectedTags, mergeTargetName, onMerge])
-
-  const handleDelete = useCallback(() => {
-    if (deleteTarget) {
-      onDelete?.(deleteTarget)
-      selectedTags.delete(deleteTarget)
-      setSelectedTags(new Set(selectedTags))
-      setDeleteTarget(null)
-    }
-  }, [deleteTarget, onDelete, selectedTags])
-
-  const handleSortByName = useCallback(() => setSortMode('name'), [])
-  const handleSortByCount = useCallback(() => setSortMode('count'), [])
-  const handleOpenMergeDialog = useCallback(() => {
-    setMergeTargetName('')
-    setMergeDialogOpen(true)
-  }, [])
-  const handleBulkDelete = useCallback(() => {
-    for (const name of selectedTags) {
-      onDelete?.(name)
-    }
-    setSelectedTags(new Set())
-  }, [selectedTags, onDelete])
-  const handleCloseDialog = useCallback(
-    () => onOpenChange(false),
-    [onOpenChange],
-  )
-  const handleCloseMergeDialog = useCallback(
-    () => setMergeDialogOpen(false),
-    [],
-  )
-  const handleMergeTargetChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      setMergeTargetName(e.target.value),
-    [],
-  )
-  const handleMergeKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') handleMerge()
-    },
-    [handleMerge],
-  )
-  const handleDeleteDialogOpenChange = useCallback((open: boolean) => {
-    if (!open) setDeleteTarget(null)
-  }, [])
-  const handleEditValueChange = useCallback(
-    (value: string) => setEditValue(value),
-    [],
-  )
-  const handleSetDeleteTarget = useCallback(
-    (tagName: string) => setDeleteTarget(tagName),
-    [],
-  )
+  const controller = useTagManagement({
+    tags,
+    open,
+    onOpenChange,
+    onRename,
+    onMerge,
+    onDelete,
+  })
+  const {
+    searchQuery,
+    sortMode,
+    selectedTags,
+    deleteTarget,
+    mergeDialogOpen,
+    busy,
+    error,
+    handleSearchChange,
+    filteredAndSortedTags,
+    allVisibleSelected,
+    toggleAll,
+    handleSortByName,
+    handleSortByCount,
+    handleOpenMergeDialog,
+    handleBulkDelete,
+    handlePanelOpenChange,
+    handleCloseDialog,
+  } = controller
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-lg">
+      <Dialog open={open} onOpenChange={handlePanelOpenChange}>
+        <DialogContent className="max-w-lg" showCloseButton={!busy}>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Tag className="h-5 w-5" />
@@ -369,6 +405,8 @@ const TagManagement = React.memo(function TagManagement({
               <div className="relative flex-1">
                 <Search className="text-muted-foreground absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2" />
                 <Input
+                  disabled={busy}
+                  aria-label="Search tags"
                   placeholder="Search tags..."
                   value={searchQuery}
                   onChange={handleSearchChange}
@@ -377,7 +415,12 @@ const TagManagement = React.memo(function TagManagement({
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-8 gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 gap-1"
+                    disabled={busy}
+                  >
                     <ArrowUpDown className="h-3.5 w-3.5" />
                     {sortMode === 'name' ? 'Name' : 'Count'}
                   </Button>
@@ -405,6 +448,7 @@ const TagManagement = React.memo(function TagManagement({
                     variant="ghost"
                     size="sm"
                     className="h-7 gap-1 text-xs"
+                    disabled={busy || !onMerge}
                     onClick={handleOpenMergeDialog}
                   >
                     <Merge className="h-3.5 w-3.5" />
@@ -415,6 +459,7 @@ const TagManagement = React.memo(function TagManagement({
                   variant="ghost"
                   size="sm"
                   className="text-destructive hover:text-destructive h-7 gap-1 text-xs"
+                  disabled={busy || !onDelete}
                   onClick={handleBulkDelete}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -429,10 +474,8 @@ const TagManagement = React.memo(function TagManagement({
                 {/* Select all header */}
                 <div className="flex items-center gap-3 px-2 py-1.5">
                   <Checkbox
-                    checked={
-                      filteredAndSortedTags.length > 0 &&
-                      selectedTags.size === filteredAndSortedTags.length
-                    }
+                    disabled={busy}
+                    checked={allVisibleSelected}
                     onCheckedChange={toggleAll}
                     aria-label="Select all tags"
                   />
@@ -446,15 +489,9 @@ const TagManagement = React.memo(function TagManagement({
                   <TagRowItem
                     key={tag.name}
                     tag={tag}
-                    isSelected={selectedTags.has(tag.name)}
-                    isEditing={editingTag === tag.name}
-                    editValue={editValue}
-                    onToggleTag={toggleTag}
-                    onEditValueChange={handleEditValueChange}
-                    onConfirmRename={confirmRename}
-                    onCancelRename={cancelRename}
-                    onStartRename={startRename}
-                    onSetDeleteTarget={handleSetDeleteTarget}
+                    controller={controller}
+                    canRename={Boolean(onRename)}
+                    canDelete={Boolean(onDelete)}
                   />
                 ))}
 
@@ -467,78 +504,34 @@ const TagManagement = React.memo(function TagManagement({
             </ScrollArea>
           </div>
 
+          {error && !mergeDialogOpen && !deleteTarget && (
+            <p role="alert" className="text-destructive text-sm">
+              {error}
+            </p>
+          )}
+          {busy && !mergeDialogOpen && !deleteTarget && (
+            <p role="status" className="text-muted-foreground text-sm">
+              Saving tag changes…
+            </p>
+          )}
           <DialogFooter>
-            <Button variant="outline" onClick={handleCloseDialog}>
+            <Button
+              variant="outline"
+              disabled={busy}
+              onClick={handleCloseDialog}
+            >
               Close
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Merge dialog */}
-      <Dialog open={mergeDialogOpen} onOpenChange={setMergeDialogOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Merge Tags</DialogTitle>
-            <DialogDescription>
-              Merge {selectedTags.size} selected tags into one. All bookmarks
-              will be updated.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-3">
-            <div className="flex flex-wrap gap-1">
-              {Array.from(selectedTags).map((name) => (
-                <Badge key={name} variant="secondary" className="text-xs">
-                  {name}
-                </Badge>
-              ))}
-            </div>
-            <Input
-              placeholder="New tag name..."
-              value={mergeTargetName}
-              onChange={handleMergeTargetChange}
-              onKeyDown={handleMergeKeyDown}
-            />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={handleCloseMergeDialog}>
-              Cancel
-            </Button>
-            <Button onClick={handleMerge} disabled={!mergeTargetName.trim()}>
-              Merge Tags
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete confirmation */}
-      <AlertDialog
-        open={deleteTarget !== null}
-        onOpenChange={handleDeleteDialogOpenChange}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Delete tag &ldquo;{deleteTarget}&rdquo;?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              This tag will be removed from all bookmarks that use it. This
-              action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <TagMutationDialogs
+        controller={controller}
+        canMerge={Boolean(onMerge)}
+        canDelete={Boolean(onDelete)}
+      />
     </>
   )
 })
 export { TagManagement }
-export default TagManagement

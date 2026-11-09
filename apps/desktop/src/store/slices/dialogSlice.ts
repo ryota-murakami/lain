@@ -32,6 +32,9 @@ export const dialogSlice = createSlice({
   name: 'dialog',
   initialState,
   reducers: {
+    resetDialogs() {
+      return initialState
+    },
     openAddBookmark(
       state,
       action: PayloadAction<{ defaultCollectionId?: string } | undefined>,

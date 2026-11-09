@@ -47,4 +47,3 @@ const DropIndicator = React.memo(function DropIndicator({
 })
 
 export { DropIndicator }
-export default DropIndicator

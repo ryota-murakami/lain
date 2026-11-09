@@ -1,0 +1,5283 @@
+{
+  "kind": "health",
+  "schema_version": 13,
+  "version": "3.41.0",
+  "elapsed_ms": 21,
+  "findings": [
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "name": "MainContent",
+      "line": 441,
+      "col": 31,
+      "cyclomatic": 37,
+      "cognitive": 120,
+      "line_count": 758,
+      "param_count": 1,
+      "react_hook_count": 44,
+      "react_jsx_max_depth": 8,
+      "react_prop_count": 39,
+      "react_hook_profile": {
+        "state": 5,
+        "effect": 0,
+        "memo": 4,
+        "callback": 30,
+        "custom": 5
+      },
+      "exceeded": "all",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 41.6,
+      "coverage_tier": "high",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `MainContent` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "RightDetailPanel",
+      "line": 174,
+      "col": 36,
+      "cyclomatic": 37,
+      "cognitive": 52,
+      "line_count": 448,
+      "param_count": 1,
+      "react_hook_count": 18,
+      "react_jsx_max_depth": 11,
+      "react_prop_count": 8,
+      "react_hook_profile": {
+        "state": 3,
+        "effect": 0,
+        "memo": 0,
+        "callback": 7,
+        "custom": 8
+      },
+      "exceeded": "all",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 41.6,
+      "coverage_tier": "high",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `RightDetailPanel` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "fetchBookmarkSnapshot",
+      "line": 127,
+      "col": 7,
+      "cyclomatic": 36,
+      "cognitive": 34,
+      "line_count": 57,
+      "param_count": 3,
+      "exceeded": "all",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 40.4,
+      "coverage_tier": "high",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `fetchBookmarkSnapshot` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRow",
+      "line": 354,
+      "col": 33,
+      "cyclomatic": 28,
+      "cognitive": 48,
+      "line_count": 305,
+      "param_count": 1,
+      "react_hook_count": 10,
+      "react_jsx_max_depth": 6,
+      "react_prop_count": 21,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 3,
+        "callback": 6,
+        "custom": 1
+      },
+      "exceeded": "all",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 197.3,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `CollectionRow` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `CollectionRow` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "name": "RaindropCard",
+      "line": 132,
+      "col": 32,
+      "cyclomatic": 27,
+      "cognitive": 36,
+      "line_count": 240,
+      "param_count": 1,
+      "react_hook_count": 11,
+      "react_jsx_max_depth": 7,
+      "react_prop_count": 6,
+      "react_hook_profile": {
+        "state": 2,
+        "effect": 0,
+        "memo": 0,
+        "callback": 9,
+        "custom": 0
+      },
+      "exceeded": "both",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `RaindropCard` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagManagement",
+      "line": 236,
+      "col": 33,
+      "cyclomatic": 27,
+      "cognitive": 55,
+      "line_count": 386,
+      "param_count": 1,
+      "react_hook_count": 34,
+      "react_jsx_max_depth": 9,
+      "react_prop_count": 6,
+      "react_hook_profile": {
+        "state": 10,
+        "effect": 0,
+        "memo": 1,
+        "callback": 21,
+        "custom": 2
+      },
+      "exceeded": "both",
+      "severity": "critical",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `TagManagement` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "fetchExportMetadata",
+      "line": 65,
+      "col": 0,
+      "cyclomatic": 23,
+      "cognitive": 9,
+      "line_count": 28,
+      "param_count": 1,
+      "exceeded": "cyclomatic_crap",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 137.3,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `fetchExportMetadata` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `fetchExportMetadata` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "parseUrl",
+      "line": 282,
+      "col": 4,
+      "cyclomatic": 22,
+      "cognitive": 13,
+      "line_count": 33,
+      "param_count": 1,
+      "exceeded": "cyclomatic_crap",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 126.5,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `parseUrl` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `parseUrl` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+      "name": "RaindropListItem",
+      "line": 135,
+      "col": 36,
+      "cyclomatic": 21,
+      "cognitive": 28,
+      "line_count": 216,
+      "param_count": 1,
+      "react_hook_count": 6,
+      "react_jsx_max_depth": 6,
+      "react_prop_count": 7,
+      "react_hook_profile": {
+        "state": 1,
+        "effect": 0,
+        "memo": 1,
+        "callback": 4,
+        "custom": 0
+      },
+      "exceeded": "both",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `RaindropListItem` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/main-app.tsx",
+      "name": "MainApp",
+      "line": 78,
+      "col": 34,
+      "cyclomatic": 20,
+      "cognitive": 103,
+      "line_count": 735,
+      "param_count": 0,
+      "react_hook_count": 83,
+      "react_jsx_max_depth": 6,
+      "react_hook_profile": {
+        "state": 6,
+        "effect": 0,
+        "memo": 5,
+        "callback": 46,
+        "custom": 26
+      },
+      "exceeded": "cognitive",
+      "severity": "critical",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `MainApp` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "name": "GlobalSearchCommand",
+      "line": 259,
+      "col": 39,
+      "cyclomatic": 20,
+      "cognitive": 30,
+      "line_count": 233,
+      "param_count": 1,
+      "react_hook_count": 10,
+      "react_jsx_max_depth": 7,
+      "react_prop_count": 10,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 2,
+        "callback": 3,
+        "custom": 5
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `GlobalSearchCommand` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+      "name": "IconSettings",
+      "line": 16,
+      "col": 39,
+      "cyclomatic": 20,
+      "cognitive": 16,
+      "line_count": 75,
+      "param_count": 0,
+      "react_hook_count": 4,
+      "react_jsx_max_depth": 5,
+      "react_hook_profile": {
+        "state": 1,
+        "effect": 0,
+        "memo": 0,
+        "callback": 2,
+        "custom": 1
+      },
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `IconSettings` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "serializeBookmarkHtml",
+      "line": 256,
+      "col": 0,
+      "cyclomatic": 20,
+      "cognitive": 22,
+      "line_count": 36,
+      "param_count": 1,
+      "exceeded": "cognitive_crap",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 106.4,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `serializeBookmarkHtml` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `serializeBookmarkHtml` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/file-upload.ts",
+      "name": "uploadFile",
+      "line": 33,
+      "col": 7,
+      "cyclomatic": 19,
+      "cognitive": 22,
+      "line_count": 33,
+      "param_count": 4,
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `uploadFile` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "name": "CollectionDialog",
+      "line": 160,
+      "col": 36,
+      "cyclomatic": 17,
+      "cognitive": 32,
+      "line_count": 208,
+      "param_count": 1,
+      "react_hook_count": 19,
+      "react_jsx_max_depth": 8,
+      "react_prop_count": 6,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 1,
+        "callback": 8,
+        "custom": 10
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `CollectionDialog` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "name": "SearchResultItem",
+      "line": 144,
+      "col": 36,
+      "cyclomatic": 17,
+      "cognitive": 14,
+      "line_count": 87,
+      "param_count": 1,
+      "react_hook_count": 1,
+      "react_jsx_max_depth": 4,
+      "react_prop_count": 4,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 0,
+        "callback": 1,
+        "custom": 0
+      },
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 79.4,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `SearchResultItem` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `SearchResultItem` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableRowItem",
+      "line": 231,
+      "col": 32,
+      "cyclomatic": 16,
+      "cognitive": 30,
+      "line_count": 242,
+      "param_count": 1,
+      "react_hook_count": 11,
+      "react_jsx_max_depth": 8,
+      "react_prop_count": 11,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 0,
+        "callback": 11,
+        "custom": 0
+      },
+      "exceeded": "cognitive_crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 71.3,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `TableRowItem` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `TableRowItem` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableView",
+      "line": 570,
+      "col": 29,
+      "cyclomatic": 15,
+      "cognitive": 37,
+      "line_count": 295,
+      "param_count": 1,
+      "react_hook_count": 17,
+      "react_jsx_max_depth": 7,
+      "react_prop_count": 10,
+      "react_hook_profile": {
+        "state": 3,
+        "effect": 0,
+        "memo": 2,
+        "callback": 11,
+        "custom": 1
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `TableView` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "name": "handleKeyDown",
+      "line": 100,
+      "col": 4,
+      "cyclomatic": 15,
+      "cognitive": 15,
+      "line_count": 35,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 63.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleKeyDown` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `handleKeyDown` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/utils/build-directory-tree.ts",
+      "name": "buildDirectoryTree",
+      "line": 75,
+      "col": 7,
+      "cyclomatic": 15,
+      "cognitive": 17,
+      "line_count": 23,
+      "param_count": 1,
+      "react_prop_count": 4,
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `buildDirectoryTree` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "name": "TagInput",
+      "line": 51,
+      "col": 28,
+      "cyclomatic": 14,
+      "cognitive": 26,
+      "line_count": 194,
+      "param_count": 1,
+      "react_hook_count": 11,
+      "react_jsx_max_depth": 3,
+      "react_prop_count": 7,
+      "react_hook_profile": {
+        "state": 3,
+        "effect": 0,
+        "memo": 1,
+        "callback": 5,
+        "custom": 2
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `TagInput` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarData.ts",
+      "name": "useSidebarData",
+      "line": 33,
+      "col": 7,
+      "cyclomatic": 14,
+      "cognitive": 18,
+      "line_count": 43,
+      "param_count": 0,
+      "react_hook_count": 11,
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `useSidebarData` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/scripts/e2e-coverage-report.ts",
+      "name": "generateReport",
+      "line": 117,
+      "col": 0,
+      "cyclomatic": 13,
+      "cognitive": 23,
+      "line_count": 119,
+      "param_count": 2,
+      "exceeded": "cognitive_crap",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 182.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `generateReport` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `generateReport` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+      "name": "ExportDialog",
+      "line": 27,
+      "col": 39,
+      "cyclomatic": 13,
+      "cognitive": 25,
+      "line_count": 59,
+      "param_count": 1,
+      "react_hook_count": 12,
+      "react_jsx_max_depth": 5,
+      "react_prop_count": 3,
+      "react_hook_profile": {
+        "state": 6,
+        "effect": 0,
+        "memo": 0,
+        "callback": 4,
+        "custom": 2
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `ExportDialog` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/upload-dialog.tsx",
+      "name": "UploadFileRow",
+      "line": 17,
+      "col": 33,
+      "cyclomatic": 13,
+      "cognitive": 20,
+      "line_count": 24,
+      "param_count": 1,
+      "react_hook_count": 4,
+      "react_jsx_max_depth": 3,
+      "react_prop_count": 5,
+      "react_hook_profile": {
+        "state": 1,
+        "effect": 0,
+        "memo": 0,
+        "callback": 3,
+        "custom": 0
+      },
+      "exceeded": "cognitive_crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 49.5,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `UploadFileRow` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `UploadFileRow` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+      "name": "CollectionTreeNode",
+      "line": 82,
+      "col": 38,
+      "cyclomatic": 12,
+      "cognitive": 18,
+      "line_count": 34,
+      "param_count": 1,
+      "react_hook_count": 1,
+      "react_jsx_max_depth": 3,
+      "react_prop_count": 8,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 1,
+        "callback": 0,
+        "custom": 0
+      },
+      "exceeded": "cognitive_crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 43.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `CollectionTreeNode` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `CollectionTreeNode` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/updater.ts",
+      "name": "getController",
+      "line": 50,
+      "col": 0,
+      "cyclomatic": 11,
+      "cognitive": 13,
+      "line_count": 65,
+      "param_count": 0,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `getController` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "AddBookmarkDialog",
+      "line": 215,
+      "col": 37,
+      "cyclomatic": 11,
+      "cognitive": 38,
+      "line_count": 324,
+      "param_count": 1,
+      "react_hook_count": 27,
+      "react_jsx_max_depth": 9,
+      "react_prop_count": 6,
+      "react_hook_profile": {
+        "state": 4,
+        "effect": 0,
+        "memo": 0,
+        "callback": 10,
+        "custom": 13
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `AddBookmarkDialog` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+      "name": "save",
+      "line": 39,
+      "col": 27,
+      "cyclomatic": 11,
+      "cognitive": 15,
+      "line_count": 26,
+      "param_count": 0,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `save` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "name": "handleRaindropDragEnd",
+      "line": 726,
+      "col": 4,
+      "cyclomatic": 11,
+      "cognitive": 6,
+      "line_count": 27,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleRaindropDragEnd` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+      "name": "MergeDialog",
+      "line": 54,
+      "col": 31,
+      "cyclomatic": 11,
+      "cognitive": 18,
+      "line_count": 199,
+      "param_count": 1,
+      "react_hook_count": 9,
+      "react_jsx_max_depth": 9,
+      "react_prop_count": 4,
+      "react_hook_profile": {
+        "state": 4,
+        "effect": 0,
+        "memo": 0,
+        "callback": 3,
+        "custom": 2
+      },
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `MergeDialog` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useKeyboardShortcuts.ts",
+      "name": "handleKeyDown",
+      "line": 49,
+      "col": 26,
+      "cyclomatic": 11,
+      "cognitive": 14,
+      "line_count": 24,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleKeyDown` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "exportCollectionIds",
+      "line": 101,
+      "col": 0,
+      "cyclomatic": 11,
+      "cognitive": 11,
+      "line_count": 14,
+      "param_count": 2,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `exportCollectionIds` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "name": "ipcMain.handle(\"desktop:save-export\")",
+      "line": 60,
+      "col": 40,
+      "cyclomatic": 10,
+      "cognitive": 4,
+      "line_count": 13,
+      "param_count": 2,
+      "exceeded": "crap",
+      "severity": "critical",
+      "effective_severity": "error",
+      "crap": 110.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `ipcMain.handle(\"desktop:save-export\")` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropsCrud.ts",
+      "name": "useRaindropsCrud",
+      "line": 44,
+      "col": 7,
+      "cyclomatic": 10,
+      "cognitive": 33,
+      "line_count": 191,
+      "param_count": 1,
+      "react_hook_count": 23,
+      "react_prop_count": 4,
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `useRaindropsCrud` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useUploadQueue.ts",
+      "name": "run",
+      "line": 30,
+      "col": 26,
+      "cyclomatic": 10,
+      "cognitive": 16,
+      "line_count": 27,
+      "param_count": 2,
+      "exceeded": "cognitive_crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `run` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `run` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "handleKeyDown",
+      "line": 118,
+      "col": 26,
+      "cyclomatic": 10,
+      "cognitive": 9,
+      "line_count": 71,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleKeyDown` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/api-mappers.ts",
+      "name": "toUiCollection",
+      "line": 230,
+      "col": 0,
+      "cyclomatic": 10,
+      "cognitive": 8,
+      "line_count": 22,
+      "param_count": 3,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `toUiCollection` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/axiosBaseQuery.ts",
+      "name": "<arrow>",
+      "line": 31,
+      "col": 9,
+      "cyclomatic": 10,
+      "cognitive": 9,
+      "line_count": 23,
+      "param_count": 2,
+      "react_prop_count": 5,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `<arrow>` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+      "name": "CollectionSelector",
+      "line": 132,
+      "col": 38,
+      "cyclomatic": 9,
+      "cognitive": 16,
+      "line_count": 222,
+      "param_count": 1,
+      "react_hook_count": 7,
+      "react_jsx_max_depth": 6,
+      "react_prop_count": 5,
+      "react_hook_profile": {
+        "state": 2,
+        "effect": 0,
+        "memo": 3,
+        "callback": 2,
+        "custom": 0
+      },
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `CollectionSelector` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/upload-dialog.tsx",
+      "name": "UploadDialog",
+      "line": 47,
+      "col": 39,
+      "cyclomatic": 8,
+      "cognitive": 22,
+      "line_count": 35,
+      "param_count": 1,
+      "react_hook_count": 15,
+      "react_jsx_max_depth": 6,
+      "react_prop_count": 4,
+      "react_hook_profile": {
+        "state": 4,
+        "effect": 0,
+        "memo": 2,
+        "callback": 8,
+        "custom": 1
+      },
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `UploadDialog` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/scripts/finalize-mac-release-artifacts.ts",
+      "name": "main",
+      "line": 222,
+      "col": 0,
+      "cyclomatic": 7,
+      "cognitive": 8,
+      "line_count": 35,
+      "param_count": 0,
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 56.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `main` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagRowItem",
+      "line": 98,
+      "col": 30,
+      "cyclomatic": 7,
+      "cognitive": 19,
+      "line_count": 137,
+      "param_count": 1,
+      "react_hook_count": 5,
+      "react_jsx_max_depth": 5,
+      "react_prop_count": 13,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 0,
+        "callback": 5,
+        "custom": 0
+      },
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `TagRowItem` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "name": "applySelectedIcon",
+      "line": 26,
+      "col": 7,
+      "cyclomatic": 6,
+      "cognitive": 8,
+      "line_count": 11,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 42.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `applySelectedIcon` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/scripts/spec-requirements.ts",
+      "name": "groupRequirements",
+      "line": 780,
+      "col": 7,
+      "cyclomatic": 6,
+      "cognitive": 9,
+      "line_count": 37,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 42.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `groupRequirements` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "name": "ipcMain.handle(\"desktop:select-icon\")",
+      "line": 53,
+      "col": 40,
+      "cyclomatic": 5,
+      "cognitive": 4,
+      "line_count": 7,
+      "param_count": 2,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 30.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `ipcMain.handle(\"desktop:select-icon\")` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/scripts/finalize-mac-release-artifacts.ts",
+      "name": "buildNotaryArgs",
+      "line": 70,
+      "col": 0,
+      "cyclomatic": 5,
+      "cognitive": 3,
+      "line_count": 19,
+      "param_count": 0,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 30.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated",
+      "actions": [
+        {
+          "type": "add-tests",
+          "auto_fixable": false,
+          "description": "Add test coverage for `buildNotaryArgs` to lower its CRAP score (coverage reduces risk even without refactoring)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; higher coverage is the fastest way to bring CRAP under threshold"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "GroupSection",
+      "line": 775,
+      "col": 32,
+      "cyclomatic": 5,
+      "cognitive": 27,
+      "line_count": 180,
+      "param_count": 1,
+      "react_hook_count": 5,
+      "react_jsx_max_depth": 8,
+      "react_prop_count": 24,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 1,
+        "callback": 3,
+        "custom": 1
+      },
+      "exceeded": "cognitive",
+      "severity": "high",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `GroupSection` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "LeftSidebar",
+      "line": 992,
+      "col": 31,
+      "cyclomatic": 2,
+      "cognitive": 49,
+      "line_count": 485,
+      "param_count": 1,
+      "react_hook_count": 34,
+      "react_jsx_max_depth": 9,
+      "react_prop_count": 18,
+      "react_hook_profile": {
+        "state": 7,
+        "effect": 0,
+        "memo": 4,
+        "callback": 17,
+        "custom": 6
+      },
+      "exceeded": "cognitive",
+      "severity": "critical",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `LeftSidebar` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "SortableRootCollectionRow",
+      "line": 664,
+      "col": 2,
+      "cyclomatic": 1,
+      "cognitive": 17,
+      "line_count": 106,
+      "param_count": 1,
+      "react_hook_count": 3,
+      "react_jsx_max_depth": 1,
+      "react_prop_count": 18,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 2,
+        "callback": 0,
+        "custom": 1
+      },
+      "exceeded": "cognitive",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "actions": [
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `SortableRootCollectionRow` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "files_analyzed": 141,
+    "functions_analyzed": 1360,
+    "functions_above_threshold": 50,
+    "max_cyclomatic_threshold": 20,
+    "max_cognitive_threshold": 15,
+    "max_crap_threshold": 30.0,
+    "max_unit_size_threshold": 60,
+    "files_scored": 123,
+    "average_maintainability": 91.2,
+    "coverage_model": "static_estimated",
+    "coverage_source_consistency": "uniform",
+    "severity_critical_count": 11,
+    "severity_high_count": 15,
+    "severity_moderate_count": 24
+  },
+  "sections": [
+    "complexity",
+    "vital-signs",
+    "score",
+    "file-scores",
+    "hotspots",
+    "change-coupling",
+    "targets"
+  ],
+  "vital_signs": {
+    "dead_file_pct": 0.7,
+    "dead_export_pct": 1.7,
+    "avg_cyclomatic": 2.3,
+    "critical_complexity_pct": 0.0,
+    "p90_cyclomatic": 5,
+    "cyclomatic_population": {
+      "functions": { "count": 1360, "sum": 3119, "max": 37 },
+      "modules": { "count": 9, "sum": 63, "max": 15 },
+      "templates": { "count": 0, "sum": 0, "max": null }
+    },
+    "duplication_pct": 2.5,
+    "hotspot_count": 0,
+    "hotspot_top_pct_count": 0,
+    "maintainability_avg": 91.2,
+    "maintainability_low_pct": 0.0,
+    "unused_dep_count": 0,
+    "unused_deps_per_k_files": 0.0,
+    "circular_dep_count": 0,
+    "circular_deps_per_k_files": 0.0,
+    "counts": {
+      "total_files": 141,
+      "total_exports": 363,
+      "dead_files": 1,
+      "dead_exports": 6,
+      "duplicated_lines": 570,
+      "total_lines": 22913,
+      "files_scored": 123,
+      "total_deps": 0
+    },
+    "unit_size_profile": {
+      "low_risk": 81.5,
+      "medium_risk": 10.4,
+      "high_risk": 4.7,
+      "very_high_risk": 3.3
+    },
+    "functions_over_60_loc_per_k": 33.1,
+    "unit_interfacing_profile": {
+      "low_risk": 97.6,
+      "medium_risk": 2.2,
+      "high_risk": 0.1,
+      "very_high_risk": 0.0
+    },
+    "p95_fan_in": 10,
+    "coupling_high_pct": 4.9,
+    "p95_render_fan_in": 10,
+    "render_fan_in_high_pct": 2.2,
+    "max_render_fan_in": 39,
+    "top_render_fan_in": [
+      {
+        "component": "Button",
+        "path": "apps/desktop/src/components/ui/button.tsx",
+        "render_sites": 94,
+        "distinct_parents": 39
+      },
+      {
+        "component": "Input",
+        "path": "apps/desktop/src/components/ui/input.tsx",
+        "render_sites": 21,
+        "distinct_parents": 17
+      },
+      {
+        "component": "Label",
+        "path": "apps/desktop/src/components/ui/label.tsx",
+        "render_sites": 31,
+        "distinct_parents": 11
+      },
+      {
+        "component": "Badge",
+        "path": "apps/desktop/src/components/ui/badge.tsx",
+        "render_sites": 13,
+        "distinct_parents": 11
+      },
+      {
+        "component": "Dialog",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 10
+      },
+      {
+        "component": "DialogContent",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 10
+      },
+      {
+        "component": "DialogDescription",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 10
+      },
+      {
+        "component": "DialogHeader",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 10
+      },
+      {
+        "component": "DialogTitle",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 10
+      },
+      {
+        "component": "DropdownMenu",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 9,
+        "distinct_parents": 9
+      },
+      {
+        "component": "DropdownMenuContent",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 9,
+        "distinct_parents": 9
+      },
+      {
+        "component": "DropdownMenuTrigger",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 9,
+        "distinct_parents": 9
+      },
+      {
+        "component": "DialogFooter",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 9,
+        "distinct_parents": 8
+      },
+      {
+        "component": "ScrollArea",
+        "path": "apps/desktop/src/components/ui/scroll-area.tsx",
+        "render_sites": 8,
+        "distinct_parents": 8
+      },
+      {
+        "component": "DropdownMenuItem",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 30,
+        "distinct_parents": 7
+      },
+      {
+        "component": "Checkbox",
+        "path": "apps/desktop/src/components/ui/checkbox.tsx",
+        "render_sites": 7,
+        "distinct_parents": 7
+      },
+      {
+        "component": "SelectItem",
+        "path": "apps/desktop/src/components/ui/select.tsx",
+        "render_sites": 16,
+        "distinct_parents": 5
+      },
+      {
+        "component": "Tooltip",
+        "path": "apps/desktop/src/components/ui/tooltip.tsx",
+        "render_sites": 13,
+        "distinct_parents": 5
+      },
+      {
+        "component": "TooltipContent",
+        "path": "apps/desktop/src/components/ui/tooltip.tsx",
+        "render_sites": 13,
+        "distinct_parents": 5
+      },
+      {
+        "component": "TooltipTrigger",
+        "path": "apps/desktop/src/components/ui/tooltip.tsx",
+        "render_sites": 13,
+        "distinct_parents": 5
+      }
+    ],
+    "total_loc": 22913
+  },
+  "health_score": {
+    "formula_version": 3,
+    "score": 87.1,
+    "grade": "A",
+    "penalties": {
+      "dead_files": 0.1,
+      "dead_exports": 0.3,
+      "complexity": 0.0,
+      "p90_complexity": 0.0,
+      "maintainability": 0.0,
+      "hotspots": 0.0,
+      "unused_deps": 0.0,
+      "circular_deps": 0.0,
+      "unit_size": 10.0,
+      "coupling": 2.5,
+      "duplication": 0.0
+    }
+  },
+  "file_scores": [
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "fan_in": 1,
+      "fan_out": 19,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 84.7,
+      "total_cyclomatic": 170,
+      "total_cognitive": 198,
+      "function_count": 81,
+      "lines": 1479,
+      "crap_max": 197.3,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/scripts/e2e-coverage-report.ts",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.15,
+      "maintainability_index": 92.7,
+      "total_cyclomatic": 38,
+      "total_cognitive": 37,
+      "function_count": 18,
+      "lines": 253,
+      "crap_max": 182.0,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "fan_in": 3,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.54,
+      "maintainability_index": 78.3,
+      "total_cyclomatic": 166,
+      "total_cognitive": 112,
+      "function_count": 34,
+      "lines": 308,
+      "crap_max": 137.3,
+      "crap_above_threshold": 4
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 14,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 85.6,
+      "total_cyclomatic": 64,
+      "total_cognitive": 63,
+      "function_count": 24,
+      "lines": 540,
+      "crap_max": 126.5,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.41,
+      "maintainability_index": 83.3,
+      "total_cyclomatic": 30,
+      "total_cognitive": 19,
+      "function_count": 7,
+      "lines": 74,
+      "crap_max": 110.0,
+      "crap_above_threshold": 3
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "fan_in": 1,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.15,
+      "maintainability_index": 86.3,
+      "total_cyclomatic": 74,
+      "total_cognitive": 61,
+      "function_count": 26,
+      "lines": 493,
+      "crap_max": 79.4,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "fan_in": 2,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 86.6,
+      "total_cyclomatic": 122,
+      "total_cognitive": 112,
+      "function_count": 48,
+      "lines": 866,
+      "crap_max": 71.3,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "fan_in": 3,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.24,
+      "maintainability_index": 86.4,
+      "total_cyclomatic": 58,
+      "total_cognitive": 50,
+      "function_count": 22,
+      "lines": 246,
+      "crap_max": 63.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/scripts/finalize-mac-release-artifacts.ts",
+      "fan_in": 0,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 96.4,
+      "total_cyclomatic": 30,
+      "total_cognitive": 18,
+      "function_count": 13,
+      "lines": 259,
+      "crap_max": 56.0,
+      "crap_above_threshold": 2
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/upload-dialog.tsx",
+      "fan_in": 1,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.54,
+      "maintainability_index": 74.6,
+      "total_cyclomatic": 44,
+      "total_cognitive": 46,
+      "function_count": 21,
+      "lines": 82,
+      "crap_max": 49.5,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+      "fan_in": 2,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.4,
+      "maintainability_index": 80.2,
+      "total_cyclomatic": 58,
+      "total_cognitive": 56,
+      "function_count": 19,
+      "lines": 144,
+      "crap_max": 43.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/scripts/spec-requirements.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.01,
+      "maintainability_index": 99.7,
+      "total_cyclomatic": 6,
+      "total_cognitive": 9,
+      "function_count": 1,
+      "lines": 817,
+      "crap_max": 42.0,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "fan_in": 2,
+      "fan_out": 24,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 83.2,
+      "total_cyclomatic": 153,
+      "total_cognitive": 175,
+      "function_count": 76,
+      "lines": 1200,
+      "crap_max": 41.6,
+      "crap_above_threshold": 2
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "fan_in": 2,
+      "fan_out": 16,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 84.8,
+      "total_cyclomatic": 81,
+      "total_cognitive": 77,
+      "function_count": 22,
+      "lines": 623,
+      "crap_max": 41.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.44,
+      "maintainability_index": 79.6,
+      "total_cyclomatic": 38,
+      "total_cognitive": 47,
+      "function_count": 11,
+      "lines": 86,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/electron/updater.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.24,
+      "maintainability_index": 87.3,
+      "total_cyclomatic": 40,
+      "total_cognitive": 24,
+      "function_count": 20,
+      "lines": 165,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useKeyboardShortcuts.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.21,
+      "maintainability_index": 88.2,
+      "total_cyclomatic": 16,
+      "total_cognitive": 19,
+      "function_count": 6,
+      "lines": 78,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useUploadQueue.ts",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.46,
+      "maintainability_index": 79.8,
+      "total_cyclomatic": 33,
+      "total_cognitive": 35,
+      "function_count": 19,
+      "lines": 71,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 88.5,
+      "total_cyclomatic": 39,
+      "total_cognitive": 28,
+      "function_count": 16,
+      "lines": 194,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/lib/api-mappers.ts",
+      "fan_in": 6,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.21,
+      "maintainability_index": 89.3,
+      "total_cyclomatic": 73,
+      "total_cognitive": 54,
+      "function_count": 18,
+      "lines": 349,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/lib/axiosBaseQuery.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 91.2,
+      "total_cyclomatic": 11,
+      "total_cognitive": 9,
+      "function_count": 2,
+      "lines": 55,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "fan_in": 2,
+      "fan_out": 11,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 84.7,
+      "total_cyclomatic": 111,
+      "total_cognitive": 113,
+      "function_count": 39,
+      "lines": 623,
+      "crap_max": 29.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "fan_in": 1,
+      "fan_out": 10,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 86.5,
+      "total_cyclomatic": 47,
+      "total_cognitive": 42,
+      "function_count": 15,
+      "lines": 373,
+      "crap_max": 29.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 12,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 84.6,
+      "total_cyclomatic": 61,
+      "total_cognitive": 58,
+      "function_count": 21,
+      "lines": 369,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/axios.ts",
+      "fan_in": 6,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.25,
+      "maintainability_index": 89.7,
+      "total_cyclomatic": 30,
+      "total_cognitive": 14,
+      "function_count": 7,
+      "lines": 121,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.21,
+      "maintainability_index": 93.7,
+      "total_cyclomatic": 55,
+      "total_cognitive": 41,
+      "function_count": 13,
+      "lines": 265,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+      "fan_in": 1,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 87.5,
+      "total_cyclomatic": 39,
+      "total_cognitive": 34,
+      "function_count": 13,
+      "lines": 352,
+      "crap_max": 22.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarData.ts",
+      "fan_in": 2,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.36,
+      "maintainability_index": 80.9,
+      "total_cyclomatic": 33,
+      "total_cognitive": 25,
+      "function_count": 8,
+      "lines": 92,
+      "crap_max": 21.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-search.tsx",
+      "fan_in": 1,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 89.5,
+      "total_cyclomatic": 31,
+      "total_cognitive": 23,
+      "function_count": 15,
+      "lines": 289,
+      "crap_max": 21.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/update-controller.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 42,
+      "total_cognitive": 22,
+      "function_count": 15,
+      "lines": 179,
+      "crap_max": 21.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/main-app.tsx",
+      "fan_in": 2,
+      "fan_out": 26,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 80.8,
+      "total_cyclomatic": 161,
+      "total_cognitive": 153,
+      "function_count": 98,
+      "lines": 813,
+      "crap_max": 21.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.37,
+      "maintainability_index": 84.5,
+      "total_cyclomatic": 34,
+      "total_cognitive": 20,
+      "function_count": 8,
+      "lines": 91,
+      "crap_max": 21.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/file-upload.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.48,
+      "maintainability_index": 82.8,
+      "total_cyclomatic": 32,
+      "total_cognitive": 31,
+      "function_count": 4,
+      "lines": 66,
+      "crap_max": 20.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/update-qa.ts",
+      "fan_in": 3,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.26,
+      "maintainability_index": 92.2,
+      "total_cyclomatic": 19,
+      "total_cognitive": 11,
+      "function_count": 1,
+      "lines": 72,
+      "crap_max": 20.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/main.ts",
+      "fan_in": 0,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 85.3,
+      "total_cyclomatic": 40,
+      "total_cognitive": 25,
+      "function_count": 17,
+      "lines": 173,
+      "crap_max": 20.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/update-qa.ts",
+      "fan_in": 0,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 92.0,
+      "total_cyclomatic": 52,
+      "total_cognitive": 30,
+      "function_count": 27,
+      "lines": 428,
+      "crap_max": 20.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/measure-coverage.mjs",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 94.0,
+      "total_cyclomatic": 13,
+      "total_cognitive": 12,
+      "function_count": 4,
+      "lines": 65,
+      "crap_max": 20.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useIconCandidates.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.27,
+      "maintainability_index": 89.1,
+      "total_cyclomatic": 33,
+      "total_cognitive": 22,
+      "function_count": 16,
+      "lines": 121,
+      "crap_max": 17.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/build-directory-tree.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.28,
+      "maintainability_index": 88.8,
+      "total_cyclomatic": 27,
+      "total_cognitive": 29,
+      "function_count": 5,
+      "lines": 98,
+      "crap_max": 15.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bulk-action-dialog.tsx",
+      "fan_in": 1,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.34,
+      "maintainability_index": 82.0,
+      "total_cyclomatic": 20,
+      "total_cognitive": 18,
+      "function_count": 6,
+      "lines": 58,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+      "fan_in": 4,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 87.5,
+      "total_cyclomatic": 48,
+      "total_cognitive": 41,
+      "function_count": 20,
+      "lines": 355,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropsCrud.ts",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.15,
+      "maintainability_index": 88.3,
+      "total_cyclomatic": 43,
+      "total_cognitive": 48,
+      "function_count": 19,
+      "lines": 283,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/api/accountApi.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.34,
+      "maintainability_index": 90.1,
+      "total_cyclomatic": 12,
+      "total_cognitive": 5,
+      "function_count": 5,
+      "lines": 35,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useShortcutEditor.ts",
+      "fan_in": 1,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 13,
+      "total_cognitive": 9,
+      "function_count": 7,
+      "lines": 131,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useUrlSuggest.ts",
+      "fan_in": 3,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 91.7,
+      "total_cyclomatic": 7,
+      "total_cognitive": 6,
+      "function_count": 2,
+      "lines": 56,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/update-settings.tsx",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 89.4,
+      "total_cyclomatic": 24,
+      "total_cognitive": 21,
+      "function_count": 6,
+      "lines": 169,
+      "crap_max": 13.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/App.tsx",
+      "fan_in": 1,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 4,
+      "total_cognitive": 3,
+      "function_count": 2,
+      "lines": 46,
+      "crap_max": 12.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/package-release.mjs",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 18,
+      "total_cognitive": 18,
+      "function_count": 2,
+      "lines": 97,
+      "crap_max": 12.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 89.8,
+      "total_cyclomatic": 26,
+      "total_cognitive": 25,
+      "function_count": 10,
+      "lines": 254,
+      "crap_max": 11.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/listenerMiddleware.ts",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 87.5,
+      "total_cyclomatic": 21,
+      "total_cognitive": 7,
+      "function_count": 14,
+      "lines": 151,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/raindrop-auth.ts",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 91.7,
+      "total_cyclomatic": 34,
+      "total_cognitive": 19,
+      "function_count": 16,
+      "lines": 268,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/secure-store.ts",
+      "fan_in": 3,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 94.6,
+      "total_cyclomatic": 15,
+      "total_cognitive": 8,
+      "function_count": 6,
+      "lines": 83,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/shortcut-utils.ts",
+      "fan_in": 6,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.22,
+      "maintainability_index": 90.6,
+      "total_cyclomatic": 48,
+      "total_cognitive": 36,
+      "function_count": 8,
+      "lines": 222,
+      "crap_max": 10.3,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 88.4,
+      "total_cyclomatic": 21,
+      "total_cognitive": 22,
+      "function_count": 7,
+      "lines": 198,
+      "crap_max": 9.3,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/search.ts",
+      "fan_in": 8,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 91.8,
+      "total_cyclomatic": 53,
+      "total_cognitive": 33,
+      "function_count": 25,
+      "lines": 299,
+      "crap_max": 9.3,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sidebar.tsx",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.1,
+      "total_cyclomatic": 47,
+      "total_cognitive": 33,
+      "function_count": 25,
+      "lines": 513,
+      "crap_max": 8.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCollectionsCrud.ts",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.9,
+      "total_cyclomatic": 20,
+      "total_cognitive": 28,
+      "function_count": 10,
+      "lines": 215,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useTagsCrud.ts",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 91.7,
+      "total_cyclomatic": 17,
+      "total_cognitive": 19,
+      "function_count": 7,
+      "lines": 136,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/favicon.ts",
+      "fan_in": 7,
+      "fan_out": 2,
+      "dead_code_ratio": 0.29,
+      "complexity_density": 0.17,
+      "maintainability_index": 84.7,
+      "total_cyclomatic": 19,
+      "total_cognitive": 11,
+      "function_count": 7,
+      "lines": 115,
+      "crap_max": 7.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/color-picker.tsx",
+      "fan_in": 1,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 89.8,
+      "total_cyclomatic": 17,
+      "total_cognitive": 16,
+      "function_count": 6,
+      "lines": 165,
+      "crap_max": 7.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-picker.tsx",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 88.4,
+      "total_cyclomatic": 16,
+      "total_cognitive": 12,
+      "function_count": 9,
+      "lines": 147,
+      "crap_max": 6.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/collection-organization.ts",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 92.1,
+      "total_cyclomatic": 44,
+      "total_cognitive": 19,
+      "function_count": 24,
+      "lines": 265,
+      "crap_max": 6.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/LoginScreen.tsx",
+      "fan_in": 1,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 93.3,
+      "total_cyclomatic": 2,
+      "total_cognitive": 2,
+      "function_count": 1,
+      "lines": 47,
+      "crap_max": 6.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/smoke-package.ts",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 93.9,
+      "total_cyclomatic": 13,
+      "total_cognitive": 9,
+      "function_count": 4,
+      "lines": 119,
+      "crap_max": 6.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/theme-toggle.tsx",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 8,
+      "total_cognitive": 8,
+      "function_count": 4,
+      "lines": 67,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/drop-indicator.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 94.2,
+      "total_cyclomatic": 5,
+      "total_cognitive": 4,
+      "function_count": 1,
+      "lines": 50,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/find-collection-in-tree.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 94.3,
+      "total_cyclomatic": 5,
+      "total_cognitive": 6,
+      "function_count": 1,
+      "lines": 29,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/drag-preview.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 4,
+      "function_count": 1,
+      "lines": 70,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/settings-dialog.tsx",
+      "fan_in": 1,
+      "fan_out": 12,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.08,
+      "maintainability_index": 87.3,
+      "total_cyclomatic": 11,
+      "total_cognitive": 10,
+      "function_count": 7,
+      "lines": 134,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+      "fan_in": 2,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 89.0,
+      "total_cyclomatic": 26,
+      "total_cognitive": 18,
+      "function_count": 15,
+      "lines": 302,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useAppUpdates.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 21,
+      "total_cognitive": 12,
+      "function_count": 10,
+      "lines": 92,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/preload.ts",
+      "fan_in": 0,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.26,
+      "maintainability_index": 86.7,
+      "total_cyclomatic": 19,
+      "total_cognitive": 0,
+      "function_count": 19,
+      "lines": 74,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/favicon-icon.tsx",
+      "fan_in": 4,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 92.7,
+      "total_cyclomatic": 8,
+      "total_cognitive": 8,
+      "function_count": 4,
+      "lines": 126,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/raindrop-organization.ts",
+      "fan_in": 4,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 94.9,
+      "total_cyclomatic": 17,
+      "total_cognitive": 9,
+      "function_count": 8,
+      "lines": 100,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/uiSlice.ts",
+      "fan_in": 8,
+      "fan_out": 2,
+      "dead_code_ratio": 0.12,
+      "complexity_density": 0.17,
+      "maintainability_index": 88.1,
+      "total_cyclomatic": 24,
+      "total_cognitive": 3,
+      "function_count": 21,
+      "lines": 139,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/index.ts",
+      "fan_in": 4,
+      "fan_out": 8,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 3,
+      "lines": 92,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/hooks.ts",
+      "fan_in": 13,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 10,
+      "total_cognitive": 10,
+      "function_count": 10,
+      "lines": 72,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/searchSlice.ts",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.13,
+      "complexity_density": 0.13,
+      "maintainability_index": 90.7,
+      "total_cyclomatic": 10,
+      "total_cognitive": 1,
+      "function_count": 9,
+      "lines": 76,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/select.tsx",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 9,
+      "total_cognitive": 2,
+      "function_count": 7,
+      "lines": 149,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/settingsSlice.ts",
+      "fan_in": 15,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.3,
+      "total_cyclomatic": 10,
+      "total_cognitive": 2,
+      "function_count": 8,
+      "lines": 323,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/usePendingWork.ts",
+      "fan_in": 11,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.37,
+      "maintainability_index": 93.3,
+      "total_cyclomatic": 11,
+      "total_cognitive": 4,
+      "function_count": 10,
+      "lines": 30,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/input-group.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 3,
+      "lines": 67,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/persistence.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.5,
+      "total_cyclomatic": 3,
+      "total_cognitive": 1,
+      "function_count": 2,
+      "lines": 42,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/request-budget.ts",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 97.6,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 3,
+      "lines": 29,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/app/page.tsx",
+      "fan_in": 0,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.01,
+      "maintainability_index": 93.3,
+      "total_cyclomatic": 2,
+      "total_cognitive": 0,
+      "function_count": 2,
+      "lines": 138,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/dialog.tsx",
+      "fan_in": 10,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 93.5,
+      "total_cyclomatic": 10,
+      "total_cognitive": 2,
+      "function_count": 8,
+      "lines": 150,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sheet.tsx",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 93.5,
+      "total_cyclomatic": 8,
+      "total_cognitive": 1,
+      "function_count": 7,
+      "lines": 118,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/alert-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 93.8,
+      "total_cyclomatic": 11,
+      "total_cognitive": 0,
+      "function_count": 11,
+      "lines": 179,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/test-auth.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 93.9,
+      "total_cyclomatic": 8,
+      "total_cognitive": 0,
+      "function_count": 8,
+      "lines": 75,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/breadcrumb.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 8,
+      "total_cognitive": 2,
+      "function_count": 6,
+      "lines": 110,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/authSlice.ts",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 1,
+      "function_count": 4,
+      "lines": 67,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/app/layout.tsx",
+      "fan_in": 0,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.02,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 45,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/dialogSlice.ts",
+      "fan_in": 4,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.16,
+      "maintainability_index": 95.2,
+      "total_cyclomatic": 17,
+      "total_cognitive": 0,
+      "function_count": 13,
+      "lines": 107,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/badge.tsx",
+      "fan_in": 9,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 50,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/progress.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 33,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/button.tsx",
+      "fan_in": 28,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.3,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 68,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/components/feature-card.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 15,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/components/site-header.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 34,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/components/site-footer.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.02,
+      "maintainability_index": 96.7,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 44,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/vite.config.ts",
+      "fan_in": 0,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.02,
+      "maintainability_index": 99.5,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 43,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/command.tsx",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 94.1,
+      "total_cyclomatic": 7,
+      "total_cognitive": 0,
+      "function_count": 7,
+      "lines": 134,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/check-health.mjs",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 94.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 3,
+      "function_count": 1,
+      "lines": 43,
+      "crap_max": 0.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/tooltip.tsx",
+      "fan_in": 7,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 4,
+      "total_cognitive": 0,
+      "function_count": 4,
+      "lines": 58,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/card.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 5,
+      "total_cognitive": 0,
+      "function_count": 5,
+      "lines": 82,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sonner.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 4,
+      "lines": 62,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/context-menu.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 8,
+      "total_cognitive": 0,
+      "function_count": 8,
+      "lines": 138,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/table.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 6,
+      "total_cognitive": 0,
+      "function_count": 6,
+      "lines": 98,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/popover.tsx",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.5,
+      "total_cyclomatic": 3,
+      "total_cognitive": 0,
+      "function_count": 3,
+      "lines": 41,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+      "fan_in": 7,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 95.7,
+      "total_cyclomatic": 9,
+      "total_cognitive": 0,
+      "function_count": 9,
+      "lines": 188,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/scroll-area.tsx",
+      "fan_in": 8,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 0,
+      "function_count": 2,
+      "lines": 56,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/tabs.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 4,
+      "total_cognitive": 0,
+      "function_count": 4,
+      "lines": 89,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/api/emptyApi.ts",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 20,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useNetworkStatus.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.24,
+      "maintainability_index": 97.0,
+      "total_cyclomatic": 5,
+      "total_cognitive": 1,
+      "function_count": 5,
+      "lines": 21,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/use-mobile.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 97.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 1,
+      "function_count": 5,
+      "lines": 48,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useDebouncedSearch.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.25,
+      "maintainability_index": 97.6,
+      "total_cyclomatic": 4,
+      "total_cognitive": 2,
+      "function_count": 4,
+      "lines": 16,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/checkbox.tsx",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 33,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/label.tsx",
+      "fan_in": 10,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 25,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/separator.tsx",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 27,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/switch.tsx",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 34,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/textarea.tsx",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 22,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/input.tsx",
+      "fan_in": 14,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.7,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 24,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/collapsible.tsx",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 98.1,
+      "total_cyclomatic": 3,
+      "total_cognitive": 0,
+      "function_count": 3,
+      "lines": 35,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/utils.ts",
+      "fan_in": 42,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 99.4,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 7,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    }
+  ],
+  "hotspot_summary": {
+    "since": "6 months",
+    "min_commits": 3,
+    "files_analyzed": 0,
+    "files_excluded": 99,
+    "shallow_clone": false,
+    "clock": {
+      "source": "head_commit",
+      "epoch_secs": 1793182446,
+      "reproducible": true
+    }
+  },
+  "change_coupling": {
+    "since": "12 months",
+    "commits_analyzed": 2,
+    "commits_skipped": 1,
+    "total_pairs": 0,
+    "thresholds": {
+      "max_files_per_commit": 30,
+      "min_revisions": 5,
+      "min_shared_revisions": 5,
+      "min_degree": 0.3,
+      "strong_degree": 0.5
+    },
+    "pairs": []
+  },
+  "large_functions": [
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "name": "MainContent",
+      "line": 441,
+      "line_count": 758
+    },
+    {
+      "path": "apps/desktop/src/components/main-app.tsx",
+      "name": "MainApp",
+      "line": 78,
+      "line_count": 735
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "LeftSidebar",
+      "line": 992,
+      "line_count": 485
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "RightDetailPanel",
+      "line": 174,
+      "line_count": 448
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagManagement",
+      "line": 236,
+      "line_count": 386
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "AddBookmarkDialog",
+      "line": 215,
+      "line_count": 324
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRow",
+      "line": 354,
+      "line_count": 305
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableView",
+      "line": 570,
+      "line_count": 295
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableRowItem",
+      "line": 231,
+      "line_count": 242
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "name": "RaindropCard",
+      "line": 132,
+      "line_count": 240
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "name": "GlobalSearchCommand",
+      "line": 259,
+      "line_count": 233
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+      "name": "CollectionSelector",
+      "line": 132,
+      "line_count": 222
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+      "name": "RaindropListItem",
+      "line": 135,
+      "line_count": 216
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "name": "CollectionDialog",
+      "line": 160,
+      "line_count": 208
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+      "name": "MergeDialog",
+      "line": 54,
+      "line_count": 199
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "name": "TagInput",
+      "line": 51,
+      "line_count": 194
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropsCrud.ts",
+      "name": "useRaindropsCrud",
+      "line": 44,
+      "line_count": 191
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "GroupSection",
+      "line": 775,
+      "line_count": 180
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-search.tsx",
+      "name": "CollectionSearch",
+      "line": 136,
+      "line_count": 152
+    },
+    {
+      "path": "apps/desktop/src/lib/update-controller.ts",
+      "name": "createUpdateController",
+      "line": 39,
+      "line_count": 140
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCollectionsCrud.ts",
+      "name": "useCollectionsCrud",
+      "line": 31,
+      "line_count": 139
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagRowItem",
+      "line": 98,
+      "line_count": 137
+    },
+    {
+      "path": "apps/website/src/app/page.tsx",
+      "name": "Home",
+      "line": 8,
+      "line_count": 130
+    },
+    {
+      "path": "apps/desktop/scripts/e2e-coverage-report.ts",
+      "name": "generateReport",
+      "line": 117,
+      "line_count": 119
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+      "name": "GroupDialog",
+      "line": 87,
+      "line_count": 110
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "SortableRootCollectionRow",
+      "line": 664,
+      "line_count": 106
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sidebar.tsx",
+      "name": "Sidebar",
+      "line": 152,
+      "line_count": 105
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/color-picker.tsx",
+      "name": "ColorPicker",
+      "line": 63,
+      "line_count": 101
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+      "name": "ShortcutEditor",
+      "line": 71,
+      "line_count": 98
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/settings-dialog.tsx",
+      "name": "SettingsDialog",
+      "line": 37,
+      "line_count": 97
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-picker.tsx",
+      "name": "IconPicker",
+      "line": 50,
+      "line_count": 96
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "useViewNavigation",
+      "line": 106,
+      "line_count": 88
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "name": "SearchResultItem",
+      "line": 144,
+      "line_count": 87
+    },
+    {
+      "path": "apps/desktop/src/hooks/useTagsCrud.ts",
+      "name": "useTagsCrud",
+      "line": 24,
+      "line_count": 87
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sidebar.tsx",
+      "name": "SidebarProvider",
+      "line": 69,
+      "line_count": 82
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+      "name": "ShortcutRow",
+      "line": 183,
+      "line_count": 80
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/update-settings.tsx",
+      "name": "UpdateSettings",
+      "line": 90,
+      "line_count": 79
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "<arrow>",
+      "line": 117,
+      "line_count": 76
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+      "name": "IconSettings",
+      "line": 16,
+      "line_count": 75
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "SystemCollectionItem",
+      "line": 279,
+      "line_count": 71
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "handleKeyDown",
+      "line": 118,
+      "line_count": 71
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/favicon-icon.tsx",
+      "name": "FaviconIcon",
+      "line": 55,
+      "line_count": 70
+    },
+    {
+      "path": "apps/desktop/src/hooks/useIconCandidates.ts",
+      "name": "useIconCandidates",
+      "line": 51,
+      "line_count": 70
+    },
+    {
+      "path": "apps/desktop/src/hooks/useShortcutEditor.ts",
+      "name": "useShortcutEditor",
+      "line": 63,
+      "line_count": 68
+    },
+    {
+      "path": "apps/desktop/electron/updater.ts",
+      "name": "getController",
+      "line": 50,
+      "line_count": 65
+    }
+  ],
+  "targets": [
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "priority": 18.1,
+      "efficiency": 9.1,
+      "recommendation": "Extract CollectionDialog (cognitive: 32) in 369-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "medium",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 12.0,
+          "threshold": 9.0,
+          "detail": "imports 12 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 32.0,
+          "threshold": 30.0,
+          "detail": "CollectionDialog has cognitive complexity 32"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "CollectionDialog", "line": 160, "cognitive": 32 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "CollectionDialog",
+                "local": "CollectionDialog",
+                "type_only": false
+              },
+              {
+                "imported": "CollectionFormValues",
+                "local": "CollectionFormValues",
+                "type_only": true
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "CollectionDialog",
+                "local": "CollectionDialog",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "start_line": 345,
+            "end_line": 353,
+            "fingerprint": "dup:f263a926"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "start_line": 522,
+            "end_line": 530,
+            "fingerprint": "dup:ca59e772"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+            "start_line": 131,
+            "end_line": 139,
+            "fingerprint": "dup:f263a926"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract CollectionDialog (cognitive: 32) in 369-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/usePendingWork.ts",
+      "priority": 26.1,
+      "efficiency": 8.7,
+      "recommendation": "Split high-impact file (30 LOC), 11 dependents amplify every change",
+      "category": "split_high_impact",
+      "effort": "high",
+      "confidence": "medium",
+      "factors": [
+        {
+          "metric": "complexity_density",
+          "value": 0.37,
+          "threshold": 0.3,
+          "detail": "density 0.37 exceeds 0.3"
+        },
+        {
+          "metric": "fan_in",
+          "value": 11.0,
+          "threshold": 4.0,
+          "detail": "11 files depend on this"
+        }
+      ],
+      "evidence": {
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "useHasPendingWork",
+                "local": "useHasPendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "usePendingWork",
+                "local": "usePendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "useHasPendingWork",
+                "local": "useHasPendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "usePendingWork",
+                "local": "usePendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "usePendingWork",
+                "local": "usePendingWork",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Split high-impact file (30 LOC), 11 dependents amplify every change",
+          "category": "split_high_impact"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "priority": 15.5,
+      "efficiency": 7.8,
+      "recommendation": "3 complex functions lack test coverage path, add tests before modifying",
+      "category": "add_test_coverage",
+      "effort": "medium",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "complexity_density",
+          "value": 0.41,
+          "threshold": 0.3,
+          "detail": "density 0.41 exceeds 0.3"
+        },
+        {
+          "metric": "crap_max",
+          "value": 110.0,
+          "threshold": 30.0,
+          "detail": "3 functions with untested complexity risk"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "applySelectedIcon", "line": 26, "cognitive": 8 },
+          {
+            "name": "ipcMain.handle(\"desktop:select-icon\")",
+            "line": 53,
+            "cognitive": 4
+          },
+          {
+            "name": "ipcMain.handle(\"desktop:save-export\")",
+            "line": 60,
+            "cognitive": 4
+          }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/electron/main.ts",
+            "symbols": [
+              {
+                "imported": "applySelectedIcon",
+                "local": "applySelectedIcon",
+                "type_only": false
+              },
+              {
+                "imported": "registerDesktopOperations",
+                "local": "registerDesktopOperations",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "3 complex functions lack test coverage path, add tests before modifying",
+          "category": "add_test_coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "priority": 23.2,
+      "efficiency": 7.7,
+      "recommendation": "Extract fetchBookmarkSnapshot (cognitive: 34) in 308-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "complexity_density",
+          "value": 0.54,
+          "threshold": 0.3,
+          "detail": "density 0.54 exceeds 0.3"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 34.0,
+          "threshold": 30.0,
+          "detail": "fetchBookmarkSnapshot has cognitive complexity 34"
+        },
+        {
+          "metric": "crap_max",
+          "value": 137.3,
+          "threshold": 30.0,
+          "detail": "4 functions with untested complexity risk"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "fetchBookmarkSnapshot", "line": 127, "cognitive": 34 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/raindrop/export-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "*",
+                "local": "BookmarkExportModule",
+                "type_only": true
+              },
+              {
+                "imported": "BookmarkSnapshot",
+                "local": "BookmarkSnapshot",
+                "type_only": true
+              },
+              {
+                "imported": "fetchBookmarkSnapshot",
+                "local": "fetchBookmarkSnapshot",
+                "type_only": false
+              },
+              { "imported": "side-effect", "local": "", "type_only": false }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "ExportFormat",
+                "local": "ExportFormat",
+                "type_only": true
+              },
+              {
+                "imported": "fetchBookmarkSnapshot",
+                "local": "fetchBookmarkSnapshot",
+                "type_only": false
+              },
+              {
+                "imported": "serializeBookmarkSnapshot",
+                "local": "serializeBookmarkSnapshot",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/lib/bookmark-export.test.ts",
+            "symbols": [
+              {
+                "imported": "BookmarkSnapshot",
+                "local": "BookmarkSnapshot",
+                "type_only": true
+              },
+              {
+                "imported": "fetchBookmarkSnapshot",
+                "local": "fetchBookmarkSnapshot",
+                "type_only": false
+              },
+              {
+                "imported": "serializeBookmarkSnapshot",
+                "local": "serializeBookmarkSnapshot",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract fetchBookmarkSnapshot (cognitive: 34) in 308-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "priority": 13.7,
+      "efficiency": 6.9,
+      "recommendation": "Extract RaindropCard (cognitive: 36) in 373-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "medium",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 10.0,
+          "threshold": 9.0,
+          "detail": "imports 10 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 36.0,
+          "threshold": 30.0,
+          "detail": "RaindropCard has cognitive complexity 36"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "RaindropCard", "line": 132, "cognitive": 36 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+            "symbols": [
+              {
+                "imported": "RaindropCard",
+                "local": "RaindropCard",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+            "start_line": 105,
+            "end_line": 119,
+            "fingerprint": "dup:9471482c"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+            "start_line": 159,
+            "end_line": 168,
+            "fingerprint": "dup:e4a9f893"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+            "start_line": 55,
+            "end_line": 99,
+            "fingerprint": "dup:1e79656c"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+            "start_line": 79,
+            "end_line": 93,
+            "fingerprint": "dup:9471482c"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+            "start_line": 151,
+            "end_line": 177,
+            "fingerprint": "dup:603a5425"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract RaindropCard (cognitive: 36) in 373-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "priority": 13.5,
+      "efficiency": 6.8,
+      "recommendation": "Extract GlobalSearchCommand (cognitive: 30) in 493-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "medium",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 9.0,
+          "threshold": 9.0,
+          "detail": "imports 9 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 30.0,
+          "threshold": 30.0,
+          "detail": "GlobalSearchCommand has cognitive complexity 30"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "GlobalSearchCommand", "line": 259, "cognitive": 30 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "GlobalSearchCommand",
+                "local": "GlobalSearchCommand",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "start_line": 85,
+            "end_line": 89,
+            "fingerprint": "dup:e7b4aa18"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+            "start_line": 78,
+            "end_line": 92,
+            "fingerprint": "dup:9471482c"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+            "start_line": 184,
+            "end_line": 194,
+            "fingerprint": "dup:e4a9f893"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+            "start_line": 79,
+            "end_line": 93,
+            "fingerprint": "dup:9471482c"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+            "start_line": 59,
+            "end_line": 92,
+            "fingerprint": "dup:72c54647"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract GlobalSearchCommand (cognitive: 30) in 493-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/main-app.tsx",
+      "priority": 19.0,
+      "efficiency": 6.3,
+      "recommendation": "Extract MainApp (cognitive: 103) in 813-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 26.0,
+          "threshold": 9.0,
+          "detail": "imports 26 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 103.0,
+          "threshold": 30.0,
+          "detail": "MainApp has cognitive complexity 103"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "MainApp", "line": 78, "cognitive": 103 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/App.tsx",
+            "symbols": [
+              { "imported": "MainApp", "local": "MainApp", "type_only": false }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/main-app.test.tsx",
+            "symbols": [
+              { "imported": "MainApp", "local": "MainApp", "type_only": false }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+            "start_line": 271,
+            "end_line": 275,
+            "fingerprint": "dup:e7b4aa18"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract MainApp (cognitive: 103) in 813-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "priority": 17.6,
+      "efficiency": 5.9,
+      "recommendation": "Extract TagManagement (cognitive: 55) in 623-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 11.0,
+          "threshold": 9.0,
+          "detail": "imports 11 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 55.0,
+          "threshold": 30.0,
+          "detail": "TagManagement has cognitive complexity 55"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "TagManagement", "line": 236, "cognitive": 55 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "TagManagement",
+                "local": "TagManagement",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/tag-management.test.tsx",
+            "symbols": [
+              {
+                "imported": "TagManagement",
+                "local": "TagManagement",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract TagManagement (cognitive: 55) in 623-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropsCrud.ts",
+      "priority": 11.7,
+      "efficiency": 5.9,
+      "recommendation": "Extract useRaindropsCrud (cognitive: 33) in 283-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "medium",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "cognitive_complexity",
+          "value": 33.0,
+          "threshold": 30.0,
+          "detail": "useRaindropsCrud has cognitive complexity 33"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "useRaindropsCrud", "line": 44, "cognitive": 33 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "useRaindropsCrud",
+                "local": "useRaindropsCrud",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/hooks/useRaindropsCrud.test.ts",
+            "symbols": [
+              {
+                "imported": "useRaindropsCrud",
+                "local": "useRaindropsCrud",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract useRaindropsCrud (cognitive: 33) in 283-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "priority": 16.9,
+      "efficiency": 5.6,
+      "recommendation": "Extract MainContent (cognitive: 120) in 1200-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 24.0,
+          "threshold": 9.0,
+          "detail": "imports 24 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 120.0,
+          "threshold": 30.0,
+          "detail": "MainContent has cognitive complexity 120"
+        },
+        {
+          "metric": "crap_max",
+          "value": 41.6,
+          "threshold": 30.0,
+          "detail": "2 functions with untested complexity risk"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "MainContent", "line": 441, "cognitive": 120 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "MainContent",
+                "local": "MainContent",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/main-content.test.tsx",
+            "symbols": [
+              {
+                "imported": "MainContent",
+                "local": "MainContent",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+            "start_line": 344,
+            "end_line": 353,
+            "fingerprint": "dup:b602ce59"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+            "start_line": 384,
+            "end_line": 393,
+            "fingerprint": "dup:b602ce59"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract MainContent (cognitive: 120) in 1200-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "priority": 16.9,
+      "efficiency": 5.6,
+      "recommendation": "Extract RightDetailPanel (cognitive: 52) in 623-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 16.0,
+          "threshold": 9.0,
+          "detail": "imports 16 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 52.0,
+          "threshold": 30.0,
+          "detail": "RightDetailPanel has cognitive complexity 52"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "RightDetailPanel", "line": 174, "cognitive": 52 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "RightDetailPanel",
+                "local": "RightDetailPanel",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/right-detail-panel.test.tsx",
+            "symbols": [
+              {
+                "imported": "RightDetailPanel",
+                "local": "RightDetailPanel",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "start_line": 55,
+            "end_line": 62,
+            "fingerprint": "dup:fcc4dfda"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "start_line": 329,
+            "end_line": 337,
+            "fingerprint": "dup:ce3c6f11"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "start_line": 443,
+            "end_line": 464,
+            "fingerprint": "dup:eaa668e7"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract RightDetailPanel (cognitive: 52) in 623-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "priority": 16.6,
+      "efficiency": 5.5,
+      "recommendation": "Extract AddBookmarkDialog (cognitive: 38) in 540-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 14.0,
+          "threshold": 9.0,
+          "detail": "imports 14 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 38.0,
+          "threshold": 30.0,
+          "detail": "AddBookmarkDialog has cognitive complexity 38"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "AddBookmarkDialog", "line": 215, "cognitive": 38 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "AddBookmarkDialog",
+                "local": "AddBookmarkDialog",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "AddBookmarkDialog",
+                "local": "AddBookmarkDialog",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+            "start_line": 243,
+            "end_line": 251,
+            "fingerprint": "dup:f263a926"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+            "start_line": 351,
+            "end_line": 359,
+            "fingerprint": "dup:ca59e772"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+            "start_line": 131,
+            "end_line": 139,
+            "fingerprint": "dup:f263a926"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+            "start_line": 61,
+            "end_line": 68,
+            "fingerprint": "dup:fcc4dfda"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+            "start_line": 223,
+            "end_line": 230,
+            "fingerprint": "dup:ce3c6f11"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract AddBookmarkDialog (cognitive: 38) in 540-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "priority": 14.8,
+      "efficiency": 4.9,
+      "recommendation": "Extract LeftSidebar (cognitive: 49) and CollectionRow (cognitive: 48) in 1479-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 19.0,
+          "threshold": 9.0,
+          "detail": "imports 19 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 49.0,
+          "threshold": 30.0,
+          "detail": "LeftSidebar has cognitive complexity 49"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "LeftSidebar", "line": 992, "cognitive": 49 },
+          { "name": "CollectionRow", "line": 354, "cognitive": 48 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/main-app.tsx",
+            "symbols": [
+              {
+                "imported": "LeftSidebar",
+                "local": "LeftSidebar",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+            "start_line": 378,
+            "end_line": 403,
+            "fingerprint": "dup:928602ea"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+            "start_line": 382,
+            "end_line": 401,
+            "fingerprint": "dup:26e7aecc"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+            "start_line": 684,
+            "end_line": 709,
+            "fingerprint": "dup:928602ea"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+            "start_line": 688,
+            "end_line": 707,
+            "fingerprint": "dup:26e7aecc"
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+            "start_line": 810,
+            "end_line": 829,
+            "fingerprint": "dup:26e7aecc"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract LeftSidebar (cognitive: 49) and CollectionRow (cognitive: 48) in 1479-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "priority": 14.7,
+      "efficiency": 4.9,
+      "recommendation": "Extract TableView (cognitive: 37) and TableRowItem (cognitive: 30) in 866-LOC file into smaller functions",
+      "category": "extract_complex_functions",
+      "effort": "high",
+      "confidence": "high",
+      "factors": [
+        {
+          "metric": "fan_out",
+          "value": 9.0,
+          "threshold": 9.0,
+          "detail": "imports 9 modules"
+        },
+        {
+          "metric": "cognitive_complexity",
+          "value": 37.0,
+          "threshold": 30.0,
+          "detail": "TableView has cognitive complexity 37"
+        }
+      ],
+      "evidence": {
+        "complex_functions": [
+          { "name": "TableView", "line": 570, "cognitive": 37 },
+          { "name": "TableRowItem", "line": 231, "cognitive": 30 }
+        ],
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+            "symbols": [
+              {
+                "imported": "TableView",
+                "local": "TableView",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/table-view.test.tsx",
+            "symbols": [
+              {
+                "imported": "TableView",
+                "local": "TableView",
+                "type_only": false
+              }
+            ]
+          }
+        ],
+        "clone_siblings": [
+          {
+            "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+            "start_line": 76,
+            "end_line": 105,
+            "fingerprint": "dup:72c54647"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Extract TableView (cognitive: 37) and TableRowItem (cognitive: 30) in 866-LOC file into smaller functions",
+          "category": "extract_complex_functions"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    }
+  ],
+  "target_thresholds": {
+    "fan_in_p95": 10.0,
+    "fan_in_p75": 4.0,
+    "fan_out_p95": 12.0,
+    "fan_out_p90": 9
+  },
+  "framework_health": {
+    "detected_frameworks": ["next", "react"],
+    "detectors": [
+      {
+        "id": "invalid-client-export",
+        "framework": "next",
+        "status": "active"
+      },
+      {
+        "id": "mixed-client-server-barrel",
+        "framework": "next",
+        "status": "active"
+      },
+      { "id": "misplaced-directive", "framework": "next", "status": "active" },
+      { "id": "route-collision", "framework": "next", "status": "active" },
+      {
+        "id": "dynamic-segment-name-conflict",
+        "framework": "next",
+        "status": "active"
+      },
+      { "id": "unused-server-action", "framework": "next", "status": "active" },
+      {
+        "id": "unused-component-prop",
+        "framework": "react",
+        "status": "active"
+      },
+      {
+        "id": "prop-drilling",
+        "framework": "react",
+        "status": "disabled_by_config",
+        "reason": "disabled_by_config"
+      },
+      {
+        "id": "thin-wrapper",
+        "framework": "react",
+        "status": "disabled_by_config",
+        "reason": "disabled_by_config"
+      },
+      {
+        "id": "duplicate-prop-shape",
+        "framework": "react",
+        "status": "disabled_by_config",
+        "reason": "disabled_by_config"
+      }
+    ]
+  },
+  "gate_outcomes": {
+    "health-findings": {
+      "status": "fail",
+      "enforced": true,
+      "observed": 50.0,
+      "threshold_label": "error"
+    }
+  },
+  "workspace_diagnostics": [
+    {
+      "path": ".",
+      "kind": "boundaries-not-configured",
+      "message": "No architecture boundaries are configured, so the boundary detector did not run and its violation counts are zero because nothing was measured. Add `boundaries` to the config, or set `boundary-violation` to off to state that the check is not wanted."
+    },
+    {
+      "path": ".",
+      "kind": "rule-packs-not-configured",
+      "message": "No rule packs are configured, so the policy detector did not run and its violation counts are zero because nothing was measured. Add `rulePacks` to the config, or set `policy-violation` to off to state that the check is not wanted."
+    },
+    {
+      "path": ".",
+      "kind": "change-coupling-skipped",
+      "cause": "too-few-commits",
+      "message": "Change coupling found no pairs because the history window has fewer analyzed commits than the minimum revisions of one file. Widen the window with --since, or lower health.changeCoupling.minRevisions."
+    }
+  ],
+  "next_steps": [
+    {
+      "id": "complexity-breakdown",
+      "command": "fallow health --complexity-breakdown",
+      "reason": "see per-decision-point contributions for a hotspot"
+    },
+    {
+      "id": "audit-changed",
+      "command": "fallow audit",
+      "reason": "gate only the files your branch changed (auto-detects the base)"
+    }
+  ],
+  "_meta": { "telemetry": { "analysis_run_id": "run_c53eac6437d6ed9b" } }
+}

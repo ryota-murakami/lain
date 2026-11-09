@@ -1,12 +1,15 @@
 import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, test } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { DEFAULT_SHORTCUTS, settingsSlice } from '@/store/slices/settingsSlice'
 import type { ShortcutBinding } from '@/store/slices/settingsSlice'
 import { renderWithProviders } from '@test/render-with-providers'
+import { SHORTCUT_PLATFORMS } from '@test/shortcut-platforms'
 
 import { ShortcutEditor } from './shortcut-editor'
+
+afterEach(() => vi.restoreAllMocks())
 
 const CMD_SHIFT_E: ShortcutBinding = {
   key: 'e',
@@ -24,7 +27,12 @@ function settingsWithCustomNewBookmark() {
   }
 }
 
-describe('ShortcutEditor', () => {
+describe.each(SHORTCUT_PLATFORMS)('ShortcutEditor on $name', (platform) => {
+  beforeEach(() => {
+    vi.spyOn(navigator, 'platform', 'get').mockReturnValue(
+      platform.navigatorPlatform,
+    )
+  })
   test('lists every shortcut action with its current binding', () => {
     // Arrange / Act
     renderWithProviders(<ShortcutEditor />)
@@ -32,7 +40,9 @@ describe('ShortcutEditor', () => {
     // Assert
     expect(screen.getAllByTestId(/^shortcut-row-/)).toHaveLength(20)
     expect(
-      within(screen.getByTestId('shortcut-row-newBookmark')).getByText('⌘N'),
+      within(screen.getByTestId('shortcut-row-newBookmark')).getByText(
+        platform.labels.newBookmark,
+      ),
     ).toBeVisible()
   })
 
@@ -45,12 +55,19 @@ describe('ShortcutEditor', () => {
     )
 
     // Act
-    await user.keyboard('{Meta>}{Shift>}e{/Shift}{/Meta}')
+    await user.keyboard(
+      `{${platform.primaryKey}>}{Shift>}e{/Shift}{/${platform.primaryKey}}`,
+    )
 
     // Assert
-    expect(store.getState().settings.shortcuts.newBookmark).toEqual(CMD_SHIFT_E)
+    expect(store.getState().settings.shortcuts.newBookmark).toEqual({
+      key: 'e',
+      ...platform.modifiers,
+      shift: true,
+      alt: false,
+    })
     const row = screen.getByTestId('shortcut-row-newBookmark')
-    expect(within(row).getByText('⇧⌘E')).toBeVisible()
+    expect(within(row).getByText(platform.labels.customBookmark)).toBeVisible()
     expect(within(row).getByText('Custom')).toBeVisible()
   })
 
@@ -62,12 +79,12 @@ describe('ShortcutEditor', () => {
       screen.getByRole('button', { name: 'Edit New Bookmark shortcut' }),
     )
 
-    // Act — ⌘K already belongs to Global Search
-    await user.keyboard('{Meta>}k{/Meta}')
+    // Act — the platform primary shortcut already belongs to Global Search
+    await user.keyboard(`{${platform.primaryKey}>}k{/${platform.primaryKey}}`)
 
     // Assert — warning shown, nothing changed yet
     expect(screen.getByRole('alert')).toHaveTextContent(
-      '⌘K is used by Global Search',
+      `${platform.labels.search} is used by Global Search`,
     )
     expect(store.getState().settings.shortcuts.newBookmark).toEqual(
       DEFAULT_SHORTCUTS.newBookmark,
@@ -92,7 +109,7 @@ describe('ShortcutEditor', () => {
     await user.click(
       screen.getByRole('button', { name: 'Edit New Bookmark shortcut' }),
     )
-    await user.keyboard('{Meta>}k{/Meta}')
+    await user.keyboard(`{${platform.primaryKey}>}k{/${platform.primaryKey}}`)
     expect(screen.getByRole('alert')).toBeVisible()
 
     // Act
@@ -137,7 +154,7 @@ describe('ShortcutEditor', () => {
     )
 
     // Act
-    await user.keyboard('{Meta>}{/Meta}')
+    await user.keyboard(`{${platform.primaryKey}>}{/${platform.primaryKey}}`)
 
     // Assert
     expect(
@@ -155,7 +172,9 @@ describe('ShortcutEditor', () => {
       preloadedState: { settings: settingsWithCustomNewBookmark() },
     })
     expect(
-      within(screen.getByTestId('shortcut-row-newBookmark')).getByText('⇧⌘E'),
+      within(screen.getByTestId('shortcut-row-newBookmark')).getByText(
+        platform.labels.customBookmark,
+      ),
     ).toBeVisible()
 
     // Act
@@ -165,7 +184,9 @@ describe('ShortcutEditor', () => {
     // Assert
     expect(store.getState().settings.shortcuts).toEqual(DEFAULT_SHORTCUTS)
     expect(
-      within(screen.getByTestId('shortcut-row-newBookmark')).getByText('⌘N'),
+      within(screen.getByTestId('shortcut-row-newBookmark')).getByText(
+        platform.labels.newBookmark,
+      ),
     ).toBeVisible()
     expect(screen.queryByText('Custom')).toBeNull()
   })

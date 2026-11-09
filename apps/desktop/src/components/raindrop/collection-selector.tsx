@@ -117,7 +117,12 @@ const CollectionSelector = React.memo(function CollectionSelector({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] gap-0 p-0" align="start">
+      {/* Reserve an edge margin because floating-position rounding can otherwise overflow by half a pixel. */}
+      <PopoverContent
+        className="w-[300px] gap-0 p-0"
+        align="start"
+        collisionPadding={8}
+      >
         <div className="p-2">
           <Input
             placeholder="Search collections..."

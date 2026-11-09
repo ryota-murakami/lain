@@ -63,3 +63,7 @@ The full request and appended baseline specification were reread for this matrix
 - macOS signing-only update QA and Apple notarization are separate claims. A synthetic auth fixture cannot verify production token restoration.
 - Native export tests exercise actual temporary filesystem writes. A scripted save-dialog result verifies the write path, not the operating system dialog's visual behavior.
 - A generated requirement-to-test mapping counts declarations. Only executed results linked to the final source can close acceptance items.
+
+## Settled picker boundary and hosted-service interruption
+
+The later `982cb8b` hosted E2E result was 89 passed plus one retry success. Investigation reproduced a stable 0.5px picker overflow in 20/20 trials; collision padding corrected it to 7.5px of viewport clearance in 20/20 repeats. The settled-animation regression and complete 90-case suite now pass with retries disabled, and 581 unit tests/full strict quality pass after the application change. This supersedes the earlier working-tree checkpoint for that requirement. GitHub Actions/Checks is under a publicly reported incident; new final-source CI and distribution validation remain separate pending gates, while independent local packaging/QA continues. No missing job is recorded as PASS.

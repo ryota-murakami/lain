@@ -1,5 +1,10 @@
 import { test as base, expect, _electron as electron } from '@playwright/test'
-import type { ElectronApplication, Page, TestInfo } from '@playwright/test'
+import type {
+  ElectronApplication,
+  Locator,
+  Page,
+  TestInfo,
+} from '@playwright/test'
 import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
@@ -93,6 +98,42 @@ async function capture(
   const filename = testInfo.outputPath(`${name}.png`)
   await page.screenshot({ path: filename })
   await testInfo.attach(name, { path: filename, contentType: 'image/png' })
+}
+
+/**
+ * Read final panel geometry after its entrance animation and floating placement settle.
+ * The large collection-picker regression calls this before checking strict viewport bounds.
+ * @param panel - The visible picker or collection finder whose rendered edges must be measured.
+ * @returns Stable panel edges together with the viewport dimensions used by the assertion.
+ * @throws When animation is canceled or placement does not settle within 120 rendered frames.
+ * @example const bounds = await readStablePanelBounds(picker)
+ */
+async function readStablePanelBounds(panel: Locator) {
+  return panel.evaluate(async (element) => {
+    await Promise.all(
+      element.getAnimations().map((animation) => animation.finished),
+    )
+    let previous = ''
+    // Observe matching rendered edges; a still-scaling popover can otherwise appear to fit before overflowing.
+    for (let frame = 0; frame < 120; frame++) {
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      )
+      const rect = element.getBoundingClientRect()
+      const bounds = {
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        left: rect.left,
+        viewportWidth: innerWidth,
+        viewportHeight: innerHeight,
+      }
+      const serialized = JSON.stringify(bounds)
+      if (serialized === previous) return bounds
+      previous = serialized
+    }
+    throw new Error('Panel did not reach stable viewport bounds.')
+  })
 }
 
 test('export preserves all pages through native cancellation then writes a verified JSON file', async ({
@@ -1025,6 +1066,7 @@ test.describe('large synthetic organization menus', () => {
     page,
   }, testInfo) => {
     // Arrange — open the real bookmark move dialog and its deeply populated collection picker.
+    await page.setViewportSize({ width: 1024, height: 642 })
     await page.getByText('React Documentation', { exact: true }).hover()
     await page
       .getByRole('button', {
@@ -1051,12 +1093,15 @@ test.describe('large synthetic organization menus', () => {
     }))
     expect(geometry.client).toBeGreaterThan(0)
     expect(geometry.client).toBeLessThan(geometry.scroll)
-    expect(
-      await picker.evaluate(
-        (element) =>
-          element.getBoundingClientRect().bottom <= window.innerHeight,
-      ),
-    ).toBe(true)
+    const pickerBounds = await readStablePanelBounds(picker)
+    await writeFile(
+      testInfo.outputPath('collection-picker-stable-bounds.json'),
+      JSON.stringify(pickerBounds, null, 2),
+    )
+    expect(pickerBounds.top).toBeGreaterThanOrEqual(0)
+    expect(pickerBounds.left).toBeGreaterThanOrEqual(0)
+    expect(pickerBounds.right).toBeLessThanOrEqual(pickerBounds.viewportWidth)
+    expect(pickerBounds.bottom).toBeLessThanOrEqual(pickerBounds.viewportHeight)
 
     // Act — wheel inside the fixed viewport, then choose the final collection through its visible button.
     await viewport.hover()
@@ -1098,6 +1143,15 @@ test.describe('large synthetic organization menus', () => {
     await expect(
       collectionSearch.getByPlaceholder('Find collection...'),
     ).toHaveValue('')
+    const finderBounds = await readStablePanelBounds(collectionSearch)
+    await writeFile(
+      testInfo.outputPath('collection-finder-stable-bounds.json'),
+      JSON.stringify(finderBounds, null, 2),
+    )
+    expect(finderBounds.top).toBeGreaterThanOrEqual(0)
+    expect(finderBounds.left).toBeGreaterThanOrEqual(0)
+    expect(finderBounds.right).toBeLessThanOrEqual(finderBounds.viewportWidth)
+    expect(finderBounds.bottom).toBeLessThanOrEqual(finderBounds.viewportHeight)
     const searchViewport = collectionSearch.locator(
       '[data-slot="scroll-area-viewport"]',
     )

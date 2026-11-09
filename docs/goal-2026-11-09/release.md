@@ -1,6 +1,8 @@
 # Release validation
 
-## Current acceptance state
+The latest picker-edge correction passes 581 local unit tests, all strict quality gates and 90 Electron E2E cases with retries disabled. Its final clean source and subsequent artifact/update results are tracked in PR #36. GitHub Actions/Checks is experiencing an official major outage; missing jobs are not treated as passing. An isolated local Linux x64 Docker build is being prepared alongside native macOS packaging so independent verification can continue. Those executions are not claimed complete by this document snapshot.
+
+## Earlier hosted acceptance state
 
 The clean source `fdc17c36116cec1015184abbeb15abe1f6655320` passed hosted CI, both package jobs, downloaded-artifact verification and a local Developer ID signed old-to-new update. It is now an **accepted intermediate checkpoint**, not the final candidate: recorded visual review subsequently found List clipping, a Linux shortcut label, a contradictory upload-error toast and narrow-toolbar overflow. The corrections require another clean source SHA and final validation. No QA draft, production tag, merge or public release has been created by this task.
 

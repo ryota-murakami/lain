@@ -1,0 +1,97 @@
+{
+  "mode": "measured-istanbul",
+  "sourceFingerprint": "7c37a9d7a71051ac14b6dbcc08aefa36fd9d7e23006c871744bed33f3b81ac8b",
+  "coverageSha256": "c0baabe5c48a52f119c1fd0018a7bba877566a917710aa27ed5279a0e5b86a6f",
+  "node": "v26.13.0",
+  "completedAt": "2026-11-09T20:12:21.149Z",
+  "tests": 584,
+  "testFiles": 59,
+  "electronE2E": {
+    "passed": 94,
+    "retries": 0,
+    "duration": "2.2 minutes"
+  },
+  "releaseIntegrityTests": 6,
+  "rendererCoverage": {
+    "statements": {
+      "total": 4125,
+      "covered": 3584,
+      "pct": 86.88
+    },
+    "branches": {
+      "total": 2578,
+      "covered": 2058,
+      "pct": 79.83
+    },
+    "functions": {
+      "total": 1293,
+      "covered": 1048,
+      "pct": 81.05
+    },
+    "lines": {
+      "total": 3720,
+      "covered": 3323,
+      "pct": 89.33
+    }
+  },
+  "expandedCoverage": {
+    "lines": {
+      "total": 4258,
+      "covered": 3686,
+      "skipped": 0,
+      "pct": 86.56
+    },
+    "statements": {
+      "total": 4708,
+      "covered": 3977,
+      "skipped": 0,
+      "pct": 84.47
+    },
+    "functions": {
+      "total": 1445,
+      "covered": 1147,
+      "skipped": 0,
+      "pct": 79.37
+    },
+    "branches": {
+      "total": 2840,
+      "covered": 2244,
+      "skipped": 0,
+      "pct": 79.01
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "strictFindings": {
+    "deadCode": 0,
+    "duplication": 0,
+    "architecture": 0,
+    "measuredHealth": 0,
+    "staticComplexity": 0
+  },
+  "comparableHealthFindings": 3,
+  "auditVerdict": "pass",
+  "auditBase": "origin/main",
+  "inheritedStylingAdvisories": 2,
+  "websiteChecks": "lint, typecheck, production build passed; preexisting metadataBase warning retained",
+  "sourceState": "Formatted dependency and horizontal-scroll follow-up before clean commit; hosted/package/update gates are separate",
+  "horizontalCorrection": {
+    "cause": "Switch invisible 12px click area exceeded 4px form-body padding",
+    "previousClientWidth": 516,
+    "previousScrollWidth": 523,
+    "clientWidth": 532,
+    "scrollWidth": 532,
+    "visibleInputWidth": 508,
+    "horizontalWheelScrollLeft": 0,
+    "stableStates": 7,
+    "focusedPassed": 1,
+    "focusedRetries": 0,
+    "videoSeconds": 7.56,
+    "inspected4fpsFrames": 30
+  },
+  "dependencyUpdate": "follow-redirects 1.16.2 to 1.16.3 after publication hold elapsed; release-age and integrity protection unchanged"
+}

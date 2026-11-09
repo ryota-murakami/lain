@@ -1333,9 +1333,47 @@ test('minimum-height bookmark dialog keeps actions reachable through notes, vali
       x: window.scrollX,
       y: window.scrollY,
     }))
+    const body = await fields.evaluate((element) => {
+      const rect = element.getBoundingClientRect()
+      const style = getComputedStyle(element)
+      const contentLeft =
+        rect.left + element.clientLeft + parseFloat(style.paddingLeft)
+      const contentRight =
+        rect.left +
+        element.clientLeft +
+        element.clientWidth -
+        parseFloat(style.paddingRight)
+      const items = [
+        ...Array.from(element.children),
+        ...Array.from(
+          element.querySelectorAll(
+            '[data-slot="input"], textarea, [role="combobox"], [role="switch"]',
+          ),
+        ),
+      ]
+      return {
+        clientWidth: element.clientWidth,
+        scrollWidth: element.scrollWidth,
+        scrollLeft: element.scrollLeft,
+        contentLeft,
+        contentRight,
+        children: items.map((child) => {
+          const bounds = child.getBoundingClientRect()
+          return {
+            tag: child.tagName,
+            label:
+              child.getAttribute('aria-label') ??
+              child.textContent?.slice(0, 80),
+            left: bounds.left,
+            right: bounds.right,
+            width: bounds.width,
+          }
+        }),
+      }
+    })
     await writeFile(
       testInfo.outputPath(`${checkpoint}-geometry.json`),
-      JSON.stringify({ bounds, controls, scrolling }, null, 2),
+      JSON.stringify({ bounds, controls, scrolling, body }, null, 2),
     )
     await capture(page, testInfo, checkpoint)
     expect(bounds.viewportWidth).toBe(1024)
@@ -1345,6 +1383,16 @@ test('minimum-height bookmark dialog keeps actions reachable through notes, vali
     expect(bounds.bottom).toBeLessThanOrEqual(642)
     expect(bounds.right).toBeLessThanOrEqual(1024)
     expect(scrolling).toEqual({ x: 0, y: 0 })
+    expect(body.scrollWidth).toBe(body.clientWidth)
+    expect(body.scrollLeft).toBe(0)
+    for (const child of body.children) {
+      expect(child.left, child.label ?? '').toBeGreaterThanOrEqual(
+        body.contentLeft,
+      )
+      expect(child.right, child.label ?? '').toBeLessThanOrEqual(
+        body.contentRight,
+      )
+    }
     for (const control of controls) {
       expect(control.top, control.text ?? '').toBeGreaterThanOrEqual(0)
       expect(control.bottom, control.text ?? '').toBeLessThanOrEqual(642)
@@ -1383,6 +1431,18 @@ test('minimum-height bookmark dialog keeps actions reachable through notes, vali
       fields.evaluate((element) => element.scrollHeight > element.clientHeight),
     )
     .toBe(true)
+  // The scrolling body must not move sideways, including invisible switch hit areas.
+  await fields.hover()
+  await page.mouse.wheel(400, 0)
+  await fields.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  )
+  await expect
+    .poll(() => fields.evaluate((element) => element.scrollLeft))
+    .toBe(0)
   await verifyReachable('bookmark-short-notes-expanded')
   await save.click()
 

@@ -473,8 +473,8 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
             </DialogDescription>
           </DialogHeader>
 
-          {/* Keep the title and actions reachable while long forms scroll within the viewport. */}
-          <div className="-mx-1 grid min-h-0 gap-4 overflow-y-auto overscroll-contain px-1 py-4">
+          {/* Preserve the switches’ 12px hit areas inside the scrolling body without narrowing inputs. */}
+          <div className="-mx-3 grid min-h-0 gap-4 overflow-y-auto overscroll-contain px-3 py-4">
             {/* URL Input */}
             <div className="grid gap-2">
               <Label htmlFor="bookmark-url">URL</Label>

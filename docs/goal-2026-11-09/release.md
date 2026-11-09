@@ -1,6 +1,6 @@
 # Release validation
 
-The latest picker-edge correction passes 581 local unit tests, all strict quality gates and 90 Electron E2E cases with retries disabled. Its final clean source and subsequent artifact/update results are tracked in PR #36. GitHub Actions/Checks is experiencing an official major outage; missing jobs are not treated as passing. An isolated local Linux x64 Docker build is being prepared alongside native macOS packaging so independent verification can continue. Those executions are not claimed complete by this document snapshot.
+This document preserves implementation and dated release checkpoints. Subsequent C07 and VIS-04 corrections pass 584 local unit tests, 94 Electron cases with retries disabled, and strict quality gates. Final clean-source CI, downloaded packages, signed update, visual review and unpublished Draft readback are recorded in PR #36 and the external final report after each commit. Previous ebd3d8d, 2546534 and 87fd941 evidence retains its source identity; it is not relabeled as the later dependency-update source. The earlier owned Docker fallback was canceled and its container absence verified; Linux release acceptance uses hosted native package checks.
 
 ## Earlier hosted acceptance state
 
@@ -49,7 +49,7 @@ The local Developer ID signing identity is available and has been used successfu
 
 The existing private Apple/1Password route timed out awaiting authorization on 2026-11-09 at 22:53 JST, before a notarized build. No further authentication attempts or automatic approvals were made. **Notarization, stapling and Gatekeeper acceptance remain unverified.** Resume only after that required external authorization is legitimately available; then use the existing private launcher with the updater runner's `--notarize` option and preserve the accepted-notary/stapler/Gatekeeper evidence. Signing-only success does not close this item.
 
-Fresh OAuth authorization, real token rotation/restoration and production credentials surviving an update are also unverified. Real service CRUD/export/sync/upload evidence uses the already authorized isolated session and is recorded separately in [real-account validation](real-account-qa.md). Native OS save/picker/confirmation-sheet visual interactions, Linux old-to-new AppImage updates and Intel GUI execution are separate limits; none is inferred from unit tests or synthetic package startup.
+Fresh OAuth authorization, real token rotation/restoration and production credentials surviving an update are also unverified. Real service CRUD/export/sync/upload evidence uses the already authorized isolated session and is recorded separately in [real-account validation](real-account-qa.md). Real macOS Save Cancel/Save and Open selection passed in a separate ebd3d8d package run with actual OS sheets, synthetic data and no dialog mocks. Native updater confirmation-sheet visual interaction, Linux OS file-picker interaction, Linux old-to-new AppImage updates and Intel GUI execution remain separate limits; none is inferred from unit tests or synthetic package startup.
 
 ## Failures reproduced and corrected
 

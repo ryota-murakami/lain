@@ -33,17 +33,17 @@ async function linuxFixture(t, dirty = false) {
   )
   await createPackage(input, join(resources, 'app.asar'))
   await writeFile(
-    join(directory, 'Lain-0.1.1-x64.AppImage'),
+    join(directory, 'Lain-0.1.1-x86_64.AppImage'),
     'fixture appimage',
   )
-  await writeFile(join(directory, 'Lain-0.1.1-x64.deb'), 'fixture deb')
+  await writeFile(join(directory, 'Lain-0.1.1-amd64.deb'), 'fixture deb')
   await writeFile(
     join(directory, 'latest-linux.yml'),
     stringify({
       version: '0.1.1',
       files: [
         {
-          url: 'Lain-0.1.1-x64.AppImage',
+          url: 'Lain-0.1.1-x86_64.AppImage',
           size: 16,
           sha512: createHash('sha512')
             .update('fixture appimage')
@@ -55,7 +55,7 @@ async function linuxFixture(t, dirty = false) {
   return directory
 }
 
-test('release validation preserves the verified source commit in checksums', async (t) => {
+test('Linux release validation accepts native format architecture names and preserves source identity', async (t) => {
   // Arrange
   const directory = await linuxFixture(t)
   // Act
@@ -67,7 +67,11 @@ test('release validation preserves the verified source commit in checksums', asy
   })
   // Assert
   assert.equal(result.sourceCommit, '1234567890123456789012345678901234567890')
-  assert.equal(Object.keys(result.artifacts).length, 3)
+  assert.deepEqual(Object.keys(result.artifacts), [
+    'Lain-0.1.1-amd64.deb',
+    'Lain-0.1.1-x86_64.AppImage',
+    'latest-linux.yml',
+  ])
   assert.equal(
     JSON.parse(await readFile(join(directory, 'checksums-linux.json'), 'utf8'))
       .version,
@@ -79,7 +83,7 @@ test('release publication rejects an update whose downloaded bytes changed', asy
   // Arrange
   const directory = await linuxFixture(t)
   await writeFile(
-    join(directory, 'Lain-0.1.1-x64.AppImage'),
+    join(directory, 'Lain-0.1.1-x86_64.AppImage'),
     'tampered appimage',
   )
   // Act / Assert
@@ -112,7 +116,7 @@ test('release publication rejects a package built from a different commit', asyn
 test('release publication rejects stale packages from an earlier version', async (t) => {
   // Arrange
   const directory = await linuxFixture(t)
-  await writeFile(join(directory, 'Lain-0.0.9-x64.deb'), 'stale package')
+  await writeFile(join(directory, 'Lain-0.0.9-amd64.deb'), 'stale package')
   // Act / Assert
   await assert.rejects(
     verifyReleaseDirectory(directory, {

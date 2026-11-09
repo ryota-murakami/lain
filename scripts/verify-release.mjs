@@ -26,6 +26,7 @@ async function hashFile(path, algorithm, encoding) {
  * @example expectedArtifacts('linux', '0.1.1')
  */
 function expectedArtifacts(platform, version) {
+  // Linux targets name the same x64 CPU as x86_64 (AppImage) and amd64 (Debian).
   return platform === 'mac'
     ? [
         `Lain-${version}.dmg`,
@@ -33,7 +34,7 @@ function expectedArtifacts(platform, version) {
         `Lain-${version}-mac.zip`,
         `Lain-${version}-arm64-mac.zip`,
       ]
-    : [`Lain-${version}-x64.AppImage`, `Lain-${version}-x64.deb`]
+    : [`Lain-${version}-x86_64.AppImage`, `Lain-${version}-amd64.deb`]
 }
 
 /**

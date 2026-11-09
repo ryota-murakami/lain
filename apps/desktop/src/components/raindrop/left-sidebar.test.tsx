@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from '@testing-library/react'
+import { fireEvent, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { toast } from 'sonner'
 import { afterEach, describe, expect, test, vi } from 'vitest'
@@ -138,6 +138,112 @@ describe('Empty Trash feedback', () => {
 })
 
 describe('collection sidebar', () => {
+  test('context rename receives focus after the menu closes and saves the complete name once on Enter', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderSidebar()
+
+    // Act — closing the menu must finish before the inline editor owns focus.
+    fireEvent.contextMenu(screen.getByRole('button', { name: 'Reading' }))
+    await user.click(screen.getByRole('menuitem', { name: 'Rename' }))
+    await waitFor(() => expect(screen.queryByRole('menu')).toBeNull())
+    const input = await screen.findByRole('textbox', {
+      name: 'Rename collection Reading',
+    })
+
+    // Assert — typing is not an implicit save caused by menu focus restoration.
+    expect(input).toHaveFocus()
+    await user.clear(input)
+    await user.keyboard('Complete context name')
+    await user.keyboard('{ArrowLeft}{ArrowRight}')
+    expect(input).toHaveFocus()
+    expect(input).toHaveValue('Complete context name')
+    expect(props.onSelectCollection).not.toHaveBeenCalled()
+    expect(
+      screen.queryByRole('button', { name: 'Nested collection' }),
+    ).toBeNull()
+    expect(props.onRenameCollection).not.toHaveBeenCalled()
+    await user.keyboard('{Enter}')
+    expect(props.onRenameCollection).toHaveBeenCalledExactlyOnceWith(
+      '100',
+      'Complete context name',
+    )
+  })
+
+  test('leaving a context rename input saves its full draft once', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderSidebar()
+    fireEvent.contextMenu(screen.getByRole('button', { name: 'Reading' }))
+    await user.click(screen.getByRole('menuitem', { name: 'Rename' }))
+    const input = await screen.findByRole('textbox', {
+      name: 'Rename collection Reading',
+    })
+    await waitFor(() => expect(input).toHaveFocus())
+
+    // Act
+    await user.clear(input)
+    await user.keyboard('Saved on blur')
+    await user.click(screen.getByRole('button', { name: 'Add Bookmark' }))
+
+    // Assert
+    expect(props.onRenameCollection).toHaveBeenCalledExactlyOnceWith(
+      '100',
+      'Saved on blur',
+    )
+  })
+
+  test('Escape cancels a context rename without persisting its draft', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderSidebar()
+    fireEvent.contextMenu(screen.getByRole('button', { name: 'Reading' }))
+    await user.click(screen.getByRole('menuitem', { name: 'Rename' }))
+    const input = await screen.findByRole('textbox', {
+      name: 'Rename collection Reading',
+    })
+    await waitFor(() => expect(input).toHaveFocus())
+
+    // Act
+    await user.clear(input)
+    await user.keyboard('Discard this draft')
+    expect(props.onSelectCollection).not.toHaveBeenCalled()
+    await user.keyboard('{Escape}')
+
+    // Assert
+    expect(props.onRenameCollection).not.toHaveBeenCalled()
+    expect(screen.queryByRole('textbox')).toBeNull()
+    const row = screen.getByRole('button', { name: 'Reading' })
+    expect(row).toBeVisible()
+    row.focus()
+    await user.keyboard('{ArrowRight}')
+    expect(
+      screen.getByRole('button', { name: 'Nested collection' }),
+    ).toBeVisible()
+  })
+
+  test('double-click rename still focuses the editor and saves on Enter', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderSidebar()
+
+    // Act
+    await user.dblClick(screen.getByText('Reading', { exact: true }))
+    const input = screen.getByRole('textbox', {
+      name: 'Rename collection Reading',
+    })
+    expect(input).toHaveFocus()
+    await user.clear(input)
+    await user.keyboard('Double-click name')
+    await user.keyboard('{Enter}')
+
+    // Assert
+    expect(props.onRenameCollection).toHaveBeenCalledExactlyOnceWith(
+      '100',
+      'Double-click name',
+    )
+  })
+
   test('creating from a group menu preserves that group as the initial destination', async () => {
     // Arrange
     const user = userEvent.setup()

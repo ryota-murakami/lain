@@ -1,6 +1,6 @@
 # Release validation
 
-This document preserves implementation and dated release checkpoints. Subsequent C07 and VIS-04 corrections pass 584 local unit tests, 94 Electron cases with retries disabled, and strict quality gates. Final clean-source CI, downloaded packages, signed update, visual review and unpublished Draft readback are recorded in PR #36 and the external final report after each commit. Previous ebd3d8d, 2546534 and 87fd941 evidence retains its source identity; it is not relabeled as the later dependency-update source. The earlier owned Docker fallback was canceled and its container absence verified; Linux release acceptance uses hosted native package checks.
+This document preserves implementation and dated release checkpoints. Subsequent C07, VIS-04 and collection-rename corrections pass 588 local unit tests, 95 Electron cases with retries disabled, and strict quality gates. Final clean-source CI, downloaded packages, signed update, visual review and unpublished Draft readback are recorded in PR #36 and the external final report after each commit. Previous ebd3d8d, 2546534, 87fd941 and bdacbdb evidence retains its source identity; it is not relabeled as the later corrected source. The bdacbdb hosted suite required one retry; real slow typing reproduced the rename defects, so its green status is not final acceptance. The earlier owned Docker fallback was canceled and its container absence verified; Linux release acceptance uses hosted native package checks.
 
 ## Earlier hosted acceptance state
 

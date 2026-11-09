@@ -1049,6 +1049,8 @@ const results = fuse.search(query)
 4. Right-click for context menu (Rename, Delete, Move to Group, Change Color)
 5. Drag to reorder collections within a group
 
+Context-menu rename focuses its editor after the menu closes. Typing spaces and cursor arrows must not save the draft, activate dragging or select the containing collection. Enter or deliberate blur saves the complete name once; Escape cancels without persistence.
+
 **API Calls:**
 
 - Move collection: `PUT /collection/{id}` with `{ parent: { $id: newGroupId } }`

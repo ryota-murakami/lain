@@ -29,7 +29,7 @@ import {
   Tag,
   Trash2,
 } from 'lucide-react'
-import React, { useCallback, useMemo, type CSSProperties } from 'react'
+import React, { useCallback, useMemo, useRef, type CSSProperties } from 'react'
 import { toast } from 'sonner'
 
 import { CollectionSearch } from '@/components/raindrop/collection-search'
@@ -336,14 +336,32 @@ const CollectionRowMenu = React.memo(function CollectionRowMenu({
   | 'onMoveCollectionToGroup'
   | 'onChangeCollectionColor'
 > & { collection: Collection; isRoot: boolean; children: React.ReactNode }) {
+  const renameAfterCloseRef = useRef(false)
   const handleContextSettings = useCallback(
     (): void => onEditCollection?.(collection),
     [collection, onEditCollection],
   )
 
   const handleContextRename = useCallback(() => {
-    onStartInlineRename(collection)
-  }, [collection, onStartInlineRename])
+    renameAfterCloseRef.current = true
+  }, [])
+
+  /**
+   * Transfer menu focus to the inline editor after the menu's focus scope closes.
+   * Radix calls this after selection; opening the editor earlier lets the closing
+   * menu steal focus and trigger the editor's blur-save with a partial name.
+   * @example <ContextMenuContent onCloseAutoFocus={handleCloseAutoFocus} />
+   */
+  const handleCloseAutoFocus = useCallback(
+    (event: Event): void => {
+      // Other menu actions retain Radix's normal focus restoration.
+      if (!renameAfterCloseRef.current) return
+      renameAfterCloseRef.current = false
+      event.preventDefault()
+      onStartInlineRename(collection)
+    },
+    [collection, onStartInlineRename],
+  )
 
   const handleContextDelete = useCallback(() => {
     void onDeleteCollection(collection.id)
@@ -374,11 +392,14 @@ const CollectionRowMenu = React.memo(function CollectionRowMenu({
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
-      <ContextMenuContent className="w-56">
+      <ContextMenuContent
+        className="w-56"
+        onCloseAutoFocus={handleCloseAutoFocus}
+      >
         <ContextMenuItem onClick={handleContextSettings}>
           Collection Settings
         </ContextMenuItem>
-        <ContextMenuItem onClick={handleContextRename}>Rename</ContextMenuItem>
+        <ContextMenuItem onSelect={handleContextRename}>Rename</ContextMenuItem>
         <ContextMenuItem variant="destructive" onClick={handleContextDelete}>
           Delete
         </ContextMenuItem>
@@ -466,6 +487,8 @@ const CollectionRowName = React.memo(function CollectionRowName({
             void handleSubmitRename()
           }}
           onKeyDown={(event) => {
+            // Text editing keys must not activate the parent collection's keyboard drag sensor.
+            event.stopPropagation()
             if (event.key === 'Enter') {
               event.preventDefault()
               void handleSubmitRename()
@@ -473,6 +496,10 @@ const CollectionRowName = React.memo(function CollectionRowName({
             if (event.key === 'Escape') {
               onCancelInlineRename()
             }
+          }}
+          onKeyUp={(event) => {
+            // Space is already inserted; prevent the enclosing button's native click on release.
+            if (event.key === ' ') event.preventDefault()
           }}
           autoFocus
           className="bg-background h-6 min-w-0 flex-1 rounded border px-1.5 text-sm outline-none"

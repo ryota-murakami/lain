@@ -1,0 +1,8 @@
+node_modules/
+.openai/local/
+qa/test-results/
+qa/previews/
+
+# These static files are the authored Site, not disposable application build output.
+!dist/
+!dist/**

@@ -1,5 +1,5 @@
 import { AlertTriangle, ArrowRight, FolderInput } from 'lucide-react'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -17,7 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { usePendingWork } from '@/hooks/usePendingWork'
+import { flattenSearchableCollections } from '@/lib/searchable-collections'
 import type { Collection } from '@/lib/types'
+import { findCollectionInTree } from '@/utils/find-collection-in-tree'
 
 /**
  * Props for MergeDialog component.
@@ -30,7 +33,104 @@ interface MergeDialogProps {
   /** All available collections for selection */
   collections: Collection[]
   /** Callback when user confirms the merge */
-  onConfirm: (sourceId: string, targetId: string) => void
+  onConfirm: (sourceId: string, targetId: string) => Promise<void>
+}
+
+/**
+ * Prevent deleting a merge target by choosing it or one of its ancestors as the source.
+ * {@link MergeDialog} disables unsafe choices and {@link useCollectionMerge} rechecks before submission.
+ * @returns Whether the target is the source itself or lies anywhere below it.
+ * @example isUnsafeCollectionMerge(collections, sourceId, targetId)
+ */
+function isUnsafeCollectionMerge(
+  collections: Collection[],
+  sourceId: string,
+  targetId: string,
+): boolean {
+  const source = findCollectionInTree(collections, sourceId)
+  return Boolean(source && findCollectionInTree([source], targetId))
+}
+
+/**
+ * Keep merge selection and retry state until the API confirms success.
+ * The dialog uses this controller to guard double submission and closing during a pending merge.
+ * @example const merge = useCollectionMerge({ collections, onConfirm, onOpenChange })
+ */
+function useCollectionMerge({
+  collections,
+  onConfirm,
+  onOpenChange,
+}: Omit<MergeDialogProps, 'open'>) {
+  const [sourceId, setSourceId] = useState<string>('')
+  const [targetId, setTargetId] = useState<string>('')
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const pendingRef = useRef(false)
+  usePendingWork(busy)
+
+  const sourceCollection = findCollectionInTree(collections, sourceId)
+  const targetCollection = findCollectionInTree(collections, targetId)
+
+  const canConfirm = Boolean(
+    sourceCollection &&
+    targetCollection &&
+    !isUnsafeCollectionMerge(collections, sourceId, targetId),
+  )
+
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      if (pendingRef.current) return
+      if (!nextOpen) {
+        setError('')
+        setSourceId('')
+        setTargetId('')
+      }
+      onOpenChange(nextOpen)
+    },
+    [onOpenChange],
+  )
+
+  const handleCancel = useCallback(
+    () => handleOpenChange(false),
+    [handleOpenChange],
+  )
+
+  const handleConfirm = useCallback(async (): Promise<void> => {
+    if (!canConfirm || pendingRef.current) return
+    pendingRef.current = true
+    setBusy(true)
+    setError('')
+    try {
+      await onConfirm(sourceId, targetId)
+      // Close only after the service confirms the merge; failures retain both selections.
+      pendingRef.current = false
+      handleOpenChange(false)
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : 'Could not merge collections. Your selection is preserved; try again.',
+      )
+    } finally {
+      pendingRef.current = false
+      setBusy(false)
+    }
+  }, [canConfirm, sourceId, targetId, onConfirm, handleOpenChange])
+
+  return {
+    sourceId,
+    setSourceId,
+    targetId,
+    setTargetId,
+    busy,
+    error,
+    sourceCollection,
+    targetCollection,
+    canConfirm,
+    handleOpenChange,
+    handleCancel,
+    handleConfirm,
+  }
 }
 
 /**
@@ -56,39 +156,29 @@ const MergeDialog = React.memo(function MergeDialog({
   collections,
   onConfirm,
 }: MergeDialogProps) {
-  const [sourceId, setSourceId] = useState<string>('')
-  const [targetId, setTargetId] = useState<string>('')
-
-  const sourceCollection = collections.find((c) => c.id === sourceId)
-  const targetCollection = collections.find((c) => c.id === targetId)
-
-  const canConfirm = sourceId && targetId && sourceId !== targetId
-
-  const handleOpenChange = useCallback(
-    (nextOpen: boolean) => {
-      if (!nextOpen) {
-        setSourceId('')
-        setTargetId('')
-      }
-      onOpenChange(nextOpen)
-    },
-    [onOpenChange],
+  const choices = useMemo(
+    () =>
+      flattenSearchableCollections([{ id: 'merge', name: '', collections }]),
+    [collections],
   )
-
-  const handleCancel = useCallback(
-    () => handleOpenChange(false),
-    [handleOpenChange],
-  )
-
-  const handleConfirm = useCallback(() => {
-    if (!canConfirm) return
-    onConfirm(sourceId, targetId)
-    handleOpenChange(false)
-  }, [canConfirm, sourceId, targetId, onConfirm, handleOpenChange])
+  const {
+    sourceId,
+    setSourceId,
+    targetId,
+    setTargetId,
+    busy,
+    error,
+    sourceCollection,
+    targetCollection,
+    canConfirm,
+    handleOpenChange,
+    handleCancel,
+    handleConfirm,
+  } = useCollectionMerge({ collections, onConfirm, onOpenChange })
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[440px]">
+      <DialogContent className="sm:max-w-[440px]" showCloseButton={!busy}>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FolderInput className="text-primary h-5 w-5" />
@@ -104,21 +194,31 @@ const MergeDialog = React.memo(function MergeDialog({
           {/* Collection selectors */}
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">
+              <label htmlFor="merge-source" className="text-sm font-medium">
                 Source (will be deleted)
               </label>
-              <Select value={sourceId} onValueChange={setSourceId}>
-                <SelectTrigger className="w-full">
+              <Select
+                value={sourceId}
+                onValueChange={setSourceId}
+                disabled={busy}
+              >
+                <SelectTrigger id="merge-source" className="w-full">
                   <SelectValue placeholder="Select source collection" />
                 </SelectTrigger>
                 <SelectContent>
-                  {collections
-                    .filter((c) => c.id !== targetId)
-                    .map((c) => (
-                      <SelectItem key={c.id} value={c.id}>
-                        {c.name} ({c.count})
-                      </SelectItem>
-                    ))}
+                  {choices.map((c) => (
+                    <SelectItem
+                      key={c.id}
+                      value={c.id}
+                      disabled={isUnsafeCollectionMerge(
+                        collections,
+                        c.id,
+                        targetId,
+                      )}
+                    >
+                      {c.path.join(' / ')} ({c.count})
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -128,25 +228,40 @@ const MergeDialog = React.memo(function MergeDialog({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">
+              <label htmlFor="merge-target" className="text-sm font-medium">
                 Target (receives bookmarks)
               </label>
-              <Select value={targetId} onValueChange={setTargetId}>
-                <SelectTrigger className="w-full">
+              <Select
+                value={targetId}
+                onValueChange={setTargetId}
+                disabled={busy}
+              >
+                <SelectTrigger id="merge-target" className="w-full">
                   <SelectValue placeholder="Select target collection" />
                 </SelectTrigger>
                 <SelectContent>
-                  {collections
-                    .filter((c) => c.id !== sourceId)
-                    .map((c) => (
-                      <SelectItem key={c.id} value={c.id}>
-                        {c.name} ({c.count})
-                      </SelectItem>
-                    ))}
+                  {choices.map((c) => (
+                    <SelectItem
+                      key={c.id}
+                      value={c.id}
+                      disabled={isUnsafeCollectionMerge(
+                        collections,
+                        sourceId,
+                        c.id,
+                      )}
+                    >
+                      {c.path.join(' / ')} ({c.count})
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
+
+          <p className="text-muted-foreground text-xs">
+            The target must be outside the source collection and its
+            descendants. Unavailable choices are disabled.
+          </p>
 
           {/* Preview when both selected */}
           {sourceCollection && targetCollection && (
@@ -217,16 +332,21 @@ const MergeDialog = React.memo(function MergeDialog({
           )}
         </div>
 
+        {error && (
+          <p role="alert" className="text-destructive text-sm">
+            {error}
+          </p>
+        )}
         <DialogFooter>
-          <Button variant="outline" onClick={handleCancel}>
+          <Button variant="outline" disabled={busy} onClick={handleCancel}>
             Cancel
           </Button>
           <Button
             variant="destructive"
             onClick={handleConfirm}
-            disabled={!canConfirm}
+            disabled={busy || !canConfirm}
           >
-            Confirm Merge
+            {busy ? 'Merging…' : error ? 'Retry Merge' : 'Confirm Merge'}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -234,4 +354,3 @@ const MergeDialog = React.memo(function MergeDialog({
   )
 })
 export { MergeDialog }
-export default MergeDialog

@@ -45,6 +45,14 @@ export async function launchElectronApp(
 ): Promise<ElectronApplication> {
   return electron.launch({
     args: [path.join(__dirname, '../dist-electron/main.js')],
+    // Opt-in recordings retain synthetic interaction evidence without changing the default test lifecycle.
+    recordVideo:
+      process.env.LAIN_E2E_RECORD === '1'
+        ? {
+            dir: path.join(userDataDir, 'recordings'),
+            size: { width: 1200, height: 800 },
+          }
+        : undefined,
     env: {
       ...process.env,
       NODE_ENV: 'test',
@@ -99,14 +107,23 @@ export async function getOpenedExternalUrls(
 }
 
 export const test = base.extend<ElectronFixtures>({
-  electronApp: async ({}, use) => {
+  electronApp: async ({}, use, testInfo) => {
     // Fresh userData per launch: the app persists the ui/search/settings slices
     // to localStorage, so a shared profile would carry e.g. the last selected
     // collection into the next test and break its readiness checks.
     const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lain-e2e-'))
     const app = await launchElectronApp(userDataDir)
     await use(app)
+    const video = app.windows()[0]?.video()
     await app.close()
+    if (video) {
+      const videoPath = testInfo.outputPath('flow.webm')
+      await video.saveAs(videoPath)
+      await testInfo.attach('Recorded synthetic Electron interaction', {
+        path: videoPath,
+        contentType: 'video/webm',
+      })
+    }
     fs.rmSync(userDataDir, { recursive: true, force: true })
   },
   page: async ({ electronApp }, use) => {

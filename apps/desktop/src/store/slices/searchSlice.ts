@@ -33,6 +33,9 @@ export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
+    resetSearch() {
+      return initialState
+    },
     setSearchQuery(state, action: PayloadAction<string>) {
       state.query = action.payload
     },
@@ -56,10 +59,6 @@ export const searchSlice = createSlice({
     clearRecentSearches(state) {
       state.recentSearches = []
     },
-    clearSearch(state) {
-      state.query = ''
-      state.isSearchOpen = false
-    },
   },
 })
 
@@ -70,5 +69,4 @@ export const {
   setSearchOpen,
   addRecentSearch,
   clearRecentSearches,
-  clearSearch,
 } = searchSlice.actions

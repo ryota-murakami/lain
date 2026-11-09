@@ -1,24 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Globe,
-  FileText,
-  Image as ImageIcon,
-  Video,
-  File,
-  Music,
-  ChevronDown,
-  Loader2,
-  Link,
-  X,
-  Plus,
-  Sparkles,
-} from 'lucide-react'
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
-import { useForm } from 'react-hook-form'
+import { ChevronDown, Link, Loader2, Plus, Sparkles } from 'lucide-react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
 import { CollectionSelector } from '@/components/raindrop/collection-selector'
-import { Badge } from '@/components/ui/badge'
+import { TagInput } from '@/components/raindrop/tag-input'
 import { Button } from '@/components/ui/button'
 import {
   Collapsible,
@@ -29,32 +16,25 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
-import type { Group, ContentType } from '@/lib/types'
-import { extractDomain, resolveIcon } from '@/utils/favicon'
+import { usePendingWork } from '@/hooks/usePendingWork'
+import { useUrlSuggest } from '@/hooks/useUrlSuggest'
+import { bookmarkContentSchema } from '@/lib/bookmark-form-schema'
+import type { ContentType, Group } from '@/lib/types'
+import { resolveIcon } from '@/utils/favicon'
 
-const bookmarkSchema = z.object({
-  url: z.string().url('Please enter a valid URL'),
+import { ContentTypeSelect } from './content-type-select'
+import { FormDialogActions } from './form-dialog-actions'
+
+const bookmarkSchema = bookmarkContentSchema.extend({
   title: z.string().optional(),
-  description: z.string().optional(),
   collectionId: z.string().optional(),
-  type: z.enum(['link', 'article', 'image', 'video', 'document', 'audio']),
-  notes: z.string().optional(),
-  isImportant: z.boolean(),
 })
 
 type BookmarkFormValues = z.infer<typeof bookmarkSchema>
@@ -63,18 +43,6 @@ type BookmarkFormValues = z.infer<typeof bookmarkSchema>
  * Debounce interval for URL parsing and icon resolution.
  */
 const URL_PARSE_DEBOUNCE_MS = 500
-
-/**
- * Type icon mapping for the content type selector.
- */
-const TYPE_ICONS: Record<ContentType, typeof Globe> = {
-  link: Globe,
-  article: FileText,
-  image: ImageIcon,
-  video: Video,
-  document: File,
-  audio: Music,
-}
 
 /**
  * Props for AddBookmarkDialog component.
@@ -91,28 +59,30 @@ interface AddBookmarkDialogProps {
   /** Default collection ID to pre-select */
   defaultCollectionId?: string
   /** Callback when user saves the bookmark */
-  onSave: (data: BookmarkFormValues & { tags: string[] }) => void
+  onSave: (data: BookmarkFormValues) => Promise<void> | void
 }
 
 /**
- * Reset bookmark form and tag state when the dialog opens.
+ * Reset bookmark fields and parsing state when a new creation session opens.
+ * {@link AddBookmarkDialog} calls this so prior manual-edit history cannot leak into a new bookmark.
  * @param open - Whether dialog is open
  * @param defaultCollectionId - Default collection to pre-select
  * @param reset - react-hook-form reset function
- * @param callbacks - State reset callbacks
+ * @param callbacks - Reset preview and metadata-request state together with form values.
+ * @example
+ * useBookmarkFormReset(open, defaultCollectionId, reset, callbacks)
  */
 function useBookmarkFormReset(
   open: boolean,
   defaultCollectionId: string | undefined,
   reset: (values: BookmarkFormValues) => void,
   callbacks: {
-    setTags: (tags: string[]) => void
-    setTagInput: (input: string) => void
     setParsedFavicon: (favicon: string) => void
     setIsNotesOpen: (open: boolean) => void
     setAutoIcon: (auto: boolean) => void
+    resetMetadata: () => void
   },
-) {
+): void {
   useEffect(() => {
     if (open) {
       reset({
@@ -123,33 +93,36 @@ function useBookmarkFormReset(
         type: 'link',
         notes: '',
         isImportant: false,
+        tags: [],
       })
-      callbacks.setTags([])
-      callbacks.setTagInput('')
       callbacks.setParsedFavicon('')
       callbacks.setIsNotesOpen(false)
       callbacks.setAutoIcon(true)
+      callbacks.resetMetadata()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, defaultCollectionId, reset])
 }
 
 /**
- * Debounced URL parsing effect.
+ * Schedule metadata parsing after the URL stops changing.
+ * {@link AddBookmarkDialog} calls this for its URL field; cleanup cancels an obsolete scheduled parse.
  * @param url - The URL value to parse
- * @param parseUrl - URL parsing callback
+ * @param parseUrl - URL parsing callback.
+ * @example
+ * useDebouncedUrlParsing(url, parseUrl)
  */
 function useDebouncedUrlParsing(
   url: string,
   parseUrl: (url: string) => Promise<void>,
-) {
+): void {
   useEffect(() => {
     if (!url) return
     const debounce = setTimeout(
       () => void parseUrl(url).catch(() => undefined),
       URL_PARSE_DEBOUNCE_MS,
     )
-    return () => clearTimeout(debounce)
+    return (): void => clearTimeout(debounce)
   }, [url, parseUrl])
 }
 
@@ -165,7 +138,7 @@ function useParsedFaviconReset(
   url: string,
   setParsedFavicon: React.Dispatch<React.SetStateAction<string>>,
   parseUrl: (url: string) => Promise<void>,
-) {
+): void {
   const previousAutoIconRef = useRef(autoIcon)
 
   useEffect(() => {
@@ -205,53 +178,40 @@ function useParsedFaviconReset(
  *     onSave={(data) => console.log("Save:", data)}
  *   />
  */
-const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
-  open,
-  onOpenChange,
-  groups,
-  existingTags,
-  defaultCollectionId,
-  onSave,
-}: AddBookmarkDialogProps) {
-  const [tags, setTags] = useState<string[]>([])
-  const [tagInput, setTagInput] = useState('')
+/**
+ * Debounce URL metadata while rejecting stale responses and preserving every manually edited field.
+ * Used by {@link useNewBookmarkEditor}; reopening invalidates the previous metadata generation.
+ * @example
+ * const metadata = useBookmarkMetadata({ setValue, getValues, getFieldState, url })
+ */
+function useBookmarkMetadata({
+  setValue,
+  getValues,
+  getFieldState,
+  url,
+}: Pick<
+  ReturnType<typeof useForm<BookmarkFormValues>>,
+  'setValue' | 'getValues' | 'getFieldState'
+> & { url: string }) {
   const [isParsing, setIsParsing] = useState(false)
   const [parsedFavicon, setParsedFavicon] = useState('')
-  const [isNotesOpen, setIsNotesOpen] = useState(false)
   const [autoIcon, setAutoIcon] = useState(true)
   const parseRequestIdRef = useRef(0)
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm<BookmarkFormValues>({
-    resolver: zodResolver(bookmarkSchema),
-    defaultValues: {
-      url: '',
-      title: '',
-      description: '',
-      collectionId: defaultCollectionId || '',
-      type: 'link',
-      notes: '',
-      isImportant: false,
-    },
-  })
-
-  const url = watch('url')
-  const selectedType = watch('type')
-  const isImportant = watch('isImportant')
-
-  useBookmarkFormReset(open, defaultCollectionId, reset, {
-    setTags,
-    setTagInput,
-    setParsedFavicon,
-    setIsNotesOpen,
-    setAutoIcon,
-  })
+  const manuallyEditedMetadata = useRef(
+    new Set<'title' | 'description' | 'type'>(),
+  )
+  const resetMetadata = useCallback(() => {
+    manuallyEditedMetadata.current.clear()
+    parseRequestIdRef.current += 1
+    setIsParsing(false)
+  }, [])
+  const handleTitleInput = useCallback(() => {
+    manuallyEditedMetadata.current.add('title')
+  }, [])
+  const handleDescriptionInput = useCallback(() => {
+    manuallyEditedMetadata.current.add('description')
+  }, [])
+  const { fetchSuggestion } = useUrlSuggest()
 
   // Auto-parse URL metadata and icon.
   const parseUrl = useCallback(
@@ -266,105 +226,238 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
       const requestId = parseRequestIdRef.current + 1
       parseRequestIdRef.current = requestId
       setIsParsing(true)
-      const domain = extractDomain(urlValue)
-
-      // Auto-detect type from URL.
-      if (urlValue.match(/youtube\.com|vimeo\.com|dailymotion\.com|\.mp4$/i)) {
-        setValue('type', 'video')
-      } else if (urlValue.match(/\.(png|jpg|jpeg|gif|webp|svg)$/i)) {
-        setValue('type', 'image')
-      } else if (urlValue.match(/\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$/i)) {
-        setValue('type', 'document')
-      } else if (urlValue.match(/\.(mp3|wav|ogg|flac|aac)$/i)) {
-        setValue('type', 'audio')
-      } else if (
-        urlValue.match(
-          /medium\.com|dev\.to|hashnode\.dev|substack\.com|blog\./i,
-        )
-      ) {
-        setValue('type', 'article')
-      }
-
-      // Auto-fill title from domain if empty.
-      const currentTitle = watch('title')
-      if (!currentTitle) {
-        setValue('title', domain ? `${domain} - Untitled` : '')
-      }
-
       try {
-        if (autoIcon) {
-          const resolvedIcon = await resolveIcon(urlValue)
-          if (parseRequestIdRef.current === requestId) {
-            setParsedFavicon(resolvedIcon ?? '')
-          }
+        const [metadata, icon] = await Promise.all([
+          fetchSuggestion(urlValue),
+          autoIcon
+            ? resolveIcon(urlValue).catch(() => null)
+            : Promise.resolve(null),
+        ])
+        // Retain manual-edit intent even when the user clears a field back to its default value.
+        // An old URL response must never overwrite a newer URL or manual edits.
+        if (
+          parseRequestIdRef.current !== requestId ||
+          getValues('url') !== urlValue
+        )
+          return
+        const mayPrefill = (
+          field: 'title' | 'description' | 'type',
+        ): boolean => {
+          if (
+            manuallyEditedMetadata.current.has(field) ||
+            getFieldState(field).isDirty
+          )
+            return false
+          return field === 'type' || !getValues(field)
         }
+        if (metadata?.title && mayPrefill('title'))
+          setValue('title', metadata.title)
+        if (metadata?.excerpt && mayPrefill('description'))
+          setValue('description', metadata.excerpt)
+        if (metadata?.type && mayPrefill('type'))
+          setValue('type', metadata.type)
+        setParsedFavicon(icon ?? '')
       } finally {
-        if (parseRequestIdRef.current === requestId) {
-          setIsParsing(false)
-        }
+        if (parseRequestIdRef.current === requestId) setIsParsing(false)
       }
     },
-    [autoIcon, setValue, watch],
+    [autoIcon, fetchSuggestion, getFieldState, getValues, setValue],
   )
 
   useParsedFaviconReset(autoIcon, url, setParsedFavicon, parseUrl)
 
   useDebouncedUrlParsing(url, parseUrl)
 
-  const tagSuggestions = useMemo(() => {
-    if (!tagInput) return []
-    const lower = tagInput.toLowerCase()
-    return existingTags
-      .filter((tag) => tag.toLowerCase().includes(lower) && !tags.includes(tag))
-      .slice(0, 5)
-  }, [tagInput, existingTags, tags])
-
-  const handleCollectionChange = useCallback(
-    (id: string) => setValue('collectionId', id),
+  const handleTypeChange = useCallback(
+    (val: string) => {
+      manuallyEditedMetadata.current.add('type')
+      setValue('type', val as ContentType, { shouldDirty: true })
+    },
     [setValue],
   )
-  const handleTypeChange = useCallback(
-    (val: string) => setValue('type', val as ContentType),
+  return {
+    isParsing,
+    parsedFavicon,
+    setParsedFavicon,
+    autoIcon,
+    setAutoIcon,
+    resetMetadata,
+    handleTitleInput,
+    handleDescriptionInput,
+    handleTypeChange,
+  }
+}
+
+/**
+ * Own one bookmark creation session and preserve its inputs when the server rejects a save.
+ * Called by {@link AddBookmarkDialog}; metadata and text editing remain separate concerns.
+ * @example
+ * const editor = useNewBookmarkEditor(props)
+ */
+function useNewBookmarkEditor({
+  open,
+  onOpenChange,
+  defaultCollectionId,
+  onSave,
+}: AddBookmarkDialogProps) {
+  const [isNotesOpen, setIsNotesOpen] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    getValues,
+    getFieldState,
+    setError,
+    clearErrors,
+    control,
+    formState: { errors, isDirty, isSubmitting },
+  } = useForm<BookmarkFormValues>({
+    resolver: zodResolver(bookmarkSchema),
+    defaultValues: {
+      url: '',
+      title: '',
+      description: '',
+      collectionId: defaultCollectionId || '',
+      type: 'link',
+      notes: '',
+      isImportant: false,
+      tags: [],
+    },
+  })
+
+  const [tags, selectedCollection, url, selectedType, isImportant] = useWatch({
+    control,
+    name: ['tags', 'collectionId', 'url', 'type', 'isImportant'] as const,
+  })
+  const handleTagsChange = useCallback(
+    (values: string[]) => setValue('tags', values, { shouldDirty: true }),
+    [setValue],
+  )
+
+  const {
+    isParsing,
+    parsedFavicon,
+    setParsedFavicon,
+    autoIcon,
+    setAutoIcon,
+    resetMetadata,
+    handleTitleInput,
+    handleDescriptionInput,
+    handleTypeChange,
+  } = useBookmarkMetadata({ setValue, getValues, getFieldState, url })
+
+  usePendingWork(open && (isDirty || isSubmitting))
+
+  useBookmarkFormReset(open, defaultCollectionId, reset, {
+    setParsedFavicon,
+    setIsNotesOpen,
+    setAutoIcon,
+    resetMetadata,
+  })
+
+  const handleCollectionChange = useCallback(
+    (id: string) => setValue('collectionId', id, { shouldDirty: true }),
     [setValue],
   )
   const handleImportantChange = useCallback(
-    (checked: boolean) => setValue('isImportant', checked),
+    (checked: boolean) =>
+      setValue('isImportant', checked, { shouldDirty: true }),
     [setValue],
   )
   const handleCancel = useCallback(() => onOpenChange(false), [onOpenChange])
 
-  const addTag = (tag: string) => {
-    const trimmed = tag.trim().toLowerCase()
-    if (trimmed && !tags.includes(trimmed)) {
-      setTags([...tags, trimmed])
-    }
-    setTagInput('')
-  }
-
-  const removeTag = (tag: string) => {
-    setTags(tags.filter((t) => t !== tag))
-  }
-
-  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      if (tagSuggestions.length > 0) {
-        addTag(tagSuggestions[0])
-      } else if (tagInput.trim()) {
-        addTag(tagInput)
-      }
-    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {
-      removeTag(tags[tags.length - 1])
+  const onSubmit = async (data: BookmarkFormValues): Promise<void> => {
+    clearErrors('root.server')
+    try {
+      await onSave(data)
+      onOpenChange(false)
+    } catch {
+      setError('root.server', {
+        message:
+          'Could not save the bookmark. Your input is preserved; try again.',
+      })
     }
   }
 
-  const onSubmit = (data: BookmarkFormValues) => {
-    onSave({ ...data, tags })
-    onOpenChange(false)
+  const handleDialogOpenChange = useCallback(
+    (next: boolean): void => {
+      if (!isSubmitting) onOpenChange(next)
+    },
+    [isSubmitting, onOpenChange],
+  )
+
+  return {
+    isNotesOpen,
+    setIsNotesOpen,
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    tags,
+    selectedCollection,
+    selectedType,
+    isImportant,
+    handleTagsChange,
+    isParsing,
+    parsedFavicon,
+    autoIcon,
+    setAutoIcon,
+    handleTitleInput,
+    handleDescriptionInput,
+    handleTypeChange,
+    handleCollectionChange,
+    handleImportantChange,
+    handleCancel,
+    onSubmit,
+    handleDialogOpenChange,
   }
+}
+
+const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
+  open,
+  onOpenChange,
+  groups,
+  existingTags,
+  defaultCollectionId,
+  onSave,
+}: AddBookmarkDialogProps) {
+  const {
+    isNotesOpen,
+    setIsNotesOpen,
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    tags,
+    selectedCollection,
+    selectedType,
+    isImportant,
+    handleTagsChange,
+    isParsing,
+    parsedFavicon,
+    autoIcon,
+    setAutoIcon,
+    handleTitleInput,
+    handleDescriptionInput,
+    handleTypeChange,
+    handleCollectionChange,
+    handleImportantChange,
+    handleCancel,
+    onSubmit,
+    handleDialogOpenChange,
+  } = useNewBookmarkEditor({
+    open,
+    onOpenChange,
+    defaultCollectionId,
+    onSave,
+    groups,
+    existingTags,
+  })
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="sm:max-w-135">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
@@ -419,6 +512,7 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
                   placeholder="Bookmark title"
                   className="flex-1"
                   {...register('title')}
+                  onInput={handleTitleInput}
                 />
               </div>
             </div>
@@ -432,6 +526,7 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
                 className="resize-none"
                 rows={2}
                 {...register('description')}
+                onInput={handleDescriptionInput}
               />
             </div>
 
@@ -440,77 +535,30 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
               <Label>Collection</Label>
               <CollectionSelector
                 groups={groups}
-                value={watch('collectionId')}
+                value={selectedCollection}
                 onChange={handleCollectionChange}
                 placeholder="Select collection..."
               />
             </div>
 
-            {/* Tags */}
-            <div className="grid gap-2">
-              <Label>Tags</Label>
-              <div className="flex min-h-10 flex-wrap items-center gap-1.5 rounded-md border px-3 py-2">
-                {tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="gap-1 pr-1">
-                    {tag}
-                    <button
-                      type="button"
-                      onClick={() => removeTag(tag)}
-                      className="hover:bg-muted-foreground/20 ml-0.5 rounded-sm p-0.5"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-                <input
-                  type="text"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyDown={handleTagKeyDown}
-                  placeholder={tags.length === 0 ? 'Add tags...' : ''}
-                  className="placeholder:text-muted-foreground min-w-20 flex-1 bg-transparent text-sm outline-none"
-                />
-              </div>
-              {tagSuggestions.length > 0 && (
-                <div className="bg-popover rounded-md border p-1 shadow-md">
-                  {tagSuggestions.map((suggestion) => (
-                    <button
-                      key={suggestion}
-                      type="button"
-                      className="hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm"
-                      onClick={() => addTag(suggestion)}
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <TagInput
+              value={tags}
+              onChange={handleTagsChange}
+              suggestions={existingTags}
+              label="Tags"
+              placeholder="Add tags..."
+              disabled={isSubmitting}
+            />
 
             {/* Type & Important row */}
             <div className="flex items-end gap-4">
               <div className="grid flex-1 gap-2">
                 <Label htmlFor="bookmark-type">Type</Label>
-                <Select value={selectedType} onValueChange={handleTypeChange}>
-                  <SelectTrigger id="bookmark-type">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {(
-                      Object.entries(TYPE_ICONS) as [
-                        ContentType,
-                        typeof Globe,
-                      ][]
-                    ).map(([type, Icon]) => (
-                      <SelectItem key={type} value={type}>
-                        <div className="flex items-center gap-2">
-                          <Icon className="h-4 w-4" />
-                          <span className="capitalize">{type}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <ContentTypeSelect
+                  id="bookmark-type"
+                  value={selectedType}
+                  onValueChange={handleTypeChange}
+                />
               </div>
 
               <div className="flex items-center gap-2">
@@ -574,25 +622,19 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
             </Collapsible>
           </div>
 
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting || isParsing}>
-              {isParsing ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Parsing...
-                </>
-              ) : (
-                'Save Bookmark'
-              )}
-            </Button>
-          </DialogFooter>
+          {errors.root?.server && (
+            <p role="alert" className="text-destructive text-sm">
+              {errors.root.server.message}
+            </p>
+          )}
+          <FormDialogActions
+            pending={isSubmitting}
+            onCancel={handleCancel}
+            submitLabel={isSubmitting ? 'Saving...' : 'Save Bookmark'}
+          />
         </form>
       </DialogContent>
     </Dialog>
   )
 })
 export { AddBookmarkDialog }
-export default AddBookmarkDialog

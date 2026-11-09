@@ -67,4 +67,3 @@ const DragPreview = React.memo(function DragPreview({
 })
 
 export { DragPreview }
-export default DragPreview

@@ -77,7 +77,7 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.body,
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       deleteCollections: build.mutation<
         DeleteCollectionsApiResponse,
@@ -88,7 +88,7 @@ const injectedRtkApi = api
           method: 'DELETE',
           body: queryArg.collectionsRemoveRequest,
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       getCollectionsChildrens: build.query<
         GetCollectionsChildrensApiResponse,
@@ -106,14 +106,14 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.collectionsMergeRequest,
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       putCollectionsClean: build.mutation<
         PutCollectionsCleanApiResponse,
         PutCollectionsCleanApiArg
       >({
         query: () => ({ url: `/collections/clean`, method: 'PUT' }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       postCollection: build.mutation<
         PostCollectionApiResponse,
@@ -124,7 +124,7 @@ const injectedRtkApi = api
           method: 'POST',
           body: queryArg.collectionCreate,
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       getCollectionById: build.query<
         GetCollectionByIdApiResponse,
@@ -142,7 +142,7 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.collectionUpdate,
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       deleteCollectionById: build.mutation<
         DeleteCollectionByIdApiResponse,
@@ -152,7 +152,7 @@ const injectedRtkApi = api
           url: `/collection/${queryArg.id}`,
           method: 'DELETE',
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       putCollectionByIdCover: build.mutation<
         PutCollectionByIdCoverApiResponse,
@@ -163,14 +163,14 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.body,
         }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       deleteCollection99: build.mutation<
         DeleteCollection99ApiResponse,
         DeleteCollection99ApiArg
       >({
         query: () => ({ url: `/collection/-99`, method: 'DELETE' }),
-        invalidatesTags: ['collections'],
+        invalidatesTags: ['collections', 'user', 'raindrops', 'tags'],
       }),
       postRaindrop: build.mutation<PostRaindropApiResponse, PostRaindropApiArg>(
         {
@@ -179,7 +179,7 @@ const injectedRtkApi = api
             method: 'POST',
             body: queryArg.raindropCreate,
           }),
-          invalidatesTags: ['raindrops'],
+          invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
         },
       ),
       getRaindropById: build.query<
@@ -198,7 +198,7 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.raindropUpdate,
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       deleteRaindropById: build.mutation<
         DeleteRaindropByIdApiResponse,
@@ -208,7 +208,7 @@ const injectedRtkApi = api
           url: `/raindrop/${queryArg.id}`,
           method: 'DELETE',
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       putRaindropByIdCover: build.mutation<
         PutRaindropByIdCoverApiResponse,
@@ -219,7 +219,7 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.body,
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       putRaindropFile: build.mutation<
         PutRaindropFileApiResponse,
@@ -230,7 +230,7 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.body,
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       getRaindropByIdCache: build.query<
         GetRaindropByIdCacheApiResponse,
@@ -248,7 +248,7 @@ const injectedRtkApi = api
           method: 'POST',
           body: queryArg.body,
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       getRaindropByIdSuggest: build.query<
         GetRaindropByIdSuggestApiResponse,
@@ -266,7 +266,7 @@ const injectedRtkApi = api
           method: 'POST',
           body: queryArg.body,
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       getRaindropsByCollectionId: build.query<
         GetRaindropsByCollectionIdApiResponse,
@@ -296,7 +296,7 @@ const injectedRtkApi = api
             nested: queryArg.nested,
           },
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       deleteRaindropsByCollectionId: build.mutation<
         DeleteRaindropsByCollectionIdApiResponse,
@@ -311,7 +311,7 @@ const injectedRtkApi = api
             nested: queryArg.nested,
           },
         }),
-        invalidatesTags: ['raindrops'],
+        invalidatesTags: ['raindrops', 'collections', 'tags', 'filters'],
       }),
       getTags: build.query<GetTagsApiResponse, GetTagsApiArg>({
         query: () => ({ url: `/tags` }),
@@ -333,7 +333,7 @@ const injectedRtkApi = api
           method: 'PUT',
           body: queryArg.tagsMergeRequest,
         }),
-        invalidatesTags: ['tags'],
+        invalidatesTags: ['tags', 'raindrops', 'filters'],
       }),
       deleteTagsByCollectionId: build.mutation<
         DeleteTagsByCollectionIdApiResponse,
@@ -344,7 +344,7 @@ const injectedRtkApi = api
           method: 'DELETE',
           body: queryArg.tagsRemoveRequest,
         }),
-        invalidatesTags: ['tags'],
+        invalidatesTags: ['tags', 'raindrops', 'filters'],
       }),
       getFiltersByCollectionId: build.query<
         GetFiltersByCollectionIdApiResponse,
@@ -739,7 +739,6 @@ export type CollectionUpdate = {
   view?: string
   title?: string
   sort?: number
-  color?: string
   public?: boolean
   parent?: {
     $id?: number

@@ -17,6 +17,19 @@ const NATIVE_TEXT_SHORTCUTS: ReadonlySet<string> = new Set<ShortcutActionId>([
   'delete',
 ])
 
+/** Keep modal controls and IME composition independent from background bookmark shortcuts. */
+function ownsKeyboardInput(event: KeyboardEvent): boolean {
+  return (
+    event.isComposing ||
+    (event.target instanceof HTMLElement &&
+      Boolean(
+        event.target.closest(
+          '[role="dialog"], [role="alertdialog"], [role="menu"]',
+        ),
+      ))
+  )
+}
+
 /**
  * Global keyboard shortcut hook that reads bindings from Redux settingsSlice.
  * Only handles modifier-key shortcuts (Cmd/Ctrl) — navigation keys (arrows,
@@ -46,15 +59,29 @@ export function useKeyboardShortcuts(
   })
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      // Modal controls and IME composition own their keys; background bookmark actions must not fire.
+      if (ownsKeyboardInput(e)) return
       const currentShortcuts = shortcutsRef.current
       const currentHandlers = handlersRef.current
 
       for (const [actionId, binding] of Object.entries(currentShortcuts)) {
         if (!matchesBinding(e, binding)) continue
 
-        // Only handle modifier shortcuts (Cmd/Ctrl) + Escape-display-only
-        if (!binding.meta && !binding.ctrl) continue
+        if (
+          e.defaultPrevented ||
+          [
+            'escape',
+            'navigateUp',
+            'navigateDown',
+            'openSelected',
+            'previewToggle',
+          ].includes(actionId)
+        )
+          continue
+        // Bare and Alt shortcuts work outside editable controls; typing always wins.
+        if (isEditableTarget(e.target) && !binding.meta && !binding.ctrl)
+          continue
 
         // Suppress shortcuts that conflict with native text editing in inputs
         if (isEditableTarget(e.target) && NATIVE_TEXT_SHORTCUTS.has(actionId)) {
@@ -71,6 +98,6 @@ export function useKeyboardShortcuts(
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return (): void => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 }

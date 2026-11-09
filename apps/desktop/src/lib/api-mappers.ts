@@ -137,7 +137,7 @@ export function toUiRaindrop(api: ApiRaindrop): Raindrop {
     id: String(api._id ?? 0),
     title: api.title ?? '',
     url: api.link ?? '',
-    type: (api.type ?? 'link') as ContentType,
+    type: api.type ?? 'link',
     description: api.excerpt ?? undefined,
     coverImage: api.cover ?? undefined,
     domain: safeDomain(api.link),
@@ -231,20 +231,29 @@ function toUiCollection(
   api: ApiCollection,
   groupId: string,
   childrenByParent: Map<number, ApiCollection[]>,
-): Collection {
+  visited: Set<number>,
+  parentId?: string,
+): Collection | null {
   const apiId = api._id ?? 0
+  // Overlapping endpoints, duplicate group references and malformed cycles display each collection once.
+  if (visited.has(apiId)) return null
+  visited.add(apiId)
   const children = (childrenByParent.get(apiId) ?? [])
     .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
-    .map((child) => toUiCollection(child, groupId, childrenByParent))
+    .map((child) =>
+      toUiCollection(child, groupId, childrenByParent, visited, String(apiId)),
+    )
+    .filter((child): child is Collection => child !== null)
 
   return {
     id: String(apiId),
     name: api.title ?? '',
     icon: 'Folder',
+    isPublic: api.public ?? false,
     color: api.color ?? undefined,
     count: api.count ?? 0,
     groupId,
-    parentId: api.parent?.$id ? String(api.parent.$id) : undefined,
+    parentId,
     children: children.length > 0 ? children : undefined,
   }
 }
@@ -283,7 +292,7 @@ export function toUiGroups(
 
   // Build children lookup: parentId → child collections
   const childrenByParent = new Map<number, ApiCollection[]>()
-  for (const c of childCollections) {
+  for (const c of collectionMap.values()) {
     const parentId = c.parent?.$id
     if (parentId !== undefined && parentId !== null) {
       const existing = childrenByParent.get(parentId) ?? []
@@ -297,24 +306,45 @@ export function toUiGroups(
     (a, b) => (a.sort ?? 0) - (b.sort ?? 0),
   )
 
-  return apiGroups
-    .filter((g) => !g.hidden)
-    .map((g, index) => {
-      const groupId = `group-${index}`
-      const collections = (g.collections ?? [])
-        .map((cId) => {
-          const apiCol = collectionMap.get(cId)
-          if (!apiCol) return null
-          return toUiCollection(apiCol, groupId, childrenByParent)
-        })
-        .filter((c): c is Collection => c !== null)
+  const visited = new Set<number>()
+  const groups: Group[] = apiGroups.map((g, index) => {
+    const groupId = `group-${index}`
+    const collections = (g.collections ?? [])
+      .map((cId) => {
+        const apiCol = collectionMap.get(cId)
+        if (!apiCol) return null
+        return toUiCollection(apiCol, groupId, childrenByParent, visited)
+      })
+      .filter((c): c is Collection => c !== null)
 
-      return {
-        id: groupId,
-        name: g.title ?? `Group ${index}`,
-        collections,
-      }
+    return {
+      id: groupId,
+      name: g.title ?? `Group ${index}`,
+      hidden: g.hidden ?? false,
+      collections,
+    }
+  })
+
+  // API-created roots can have no group membership; missing parents and cycles must remain reachable too.
+  const remaining = [...collectionMap.values()].sort((a, b) => {
+    const aNested = collectionMap.has(a.parent?.$id ?? 0)
+    const bNested = collectionMap.has(b.parent?.$id ?? 0)
+    return Number(aNested) - Number(bNested) || (a.sort ?? 0) - (b.sort ?? 0)
+  })
+  const ungrouped = remaining
+    .map((collection) =>
+      toUiCollection(collection, 'ungrouped', childrenByParent, visited),
+    )
+    .filter((collection): collection is Collection => collection !== null)
+  if (ungrouped.length > 0) {
+    groups.push({
+      id: 'ungrouped',
+      name: 'Other collections',
+      hidden: false,
+      collections: ungrouped,
     })
+  }
+  return groups
 }
 
 /**

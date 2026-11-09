@@ -410,7 +410,7 @@ test.describe('View Navigation (F7)', () => {
   }) => {
     await waitForApp(page)
     // Inside a collection the palette would normally be scoped to it
-    await page.getByRole('button', { name: 'Design' }).click()
+    await page.getByRole('button', { name: 'Design', exact: true }).click()
     await expect(
       page.locator('[data-slot="breadcrumb-page"]', { hasText: 'Design' }),
     ).toBeVisible()

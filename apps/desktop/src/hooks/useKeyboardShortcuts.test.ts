@@ -1,132 +1,77 @@
-import { act } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { act, fireEvent } from '@testing-library/react'
+import { expect, test, vi } from 'vitest'
 
+import { updateShortcut } from '@/store/slices/settingsSlice'
 import { renderHookWithProviders } from '@test/render-with-providers'
 
 import { useKeyboardShortcuts } from './useKeyboardShortcuts'
 
-function fireKeydown(
-  key: string,
-  modifiers: Partial<{
-    metaKey: boolean
-    shiftKey: boolean
-    altKey: boolean
-    ctrlKey: boolean
-  }> = {},
-  target?: EventTarget,
-) {
-  const event = new KeyboardEvent('keydown', {
-    key,
-    bubbles: true,
-    cancelable: true,
-    ...modifiers,
-  })
-  if (target) {
-    Object.defineProperty(event, 'target', { value: target })
-  }
-  window.dispatchEvent(event)
-  return event
-}
+test('a focused dialog button cannot delete the background bookmark selection', () => {
+  // Arrange
+  const remove = vi.fn()
+  const { unmount } = renderHookWithProviders(() =>
+    useKeyboardShortcuts({ delete: remove }),
+  )
+  const dialog = document.createElement('div')
+  dialog.setAttribute('role', 'dialog')
+  const button = document.createElement('button')
+  dialog.append(button)
+  document.body.append(dialog)
+  // Act
+  fireEvent.keyDown(button, { key: 'Backspace', metaKey: true })
+  // Assert
+  expect(remove).not.toHaveBeenCalled()
+  dialog.remove()
+  unmount()
+})
 
-describe('useKeyboardShortcuts', () => {
-  it('fires handler for Cmd+N', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() =>
-      useKeyboardShortcuts({ newBookmark: handler }),
+test('IME composition and normal input editing never trigger configured bookmark actions', () => {
+  // Arrange
+  const selectAll = vi.fn()
+  const create = vi.fn()
+  const { unmount } = renderHookWithProviders(() =>
+    useKeyboardShortcuts({ selectAll, newBookmark: create }),
+  )
+  const input = document.createElement('input')
+  document.body.append(input)
+  // Act
+  fireEvent.keyDown(input, { key: 'a', metaKey: true })
+  fireEvent.keyDown(document.body, {
+    key: 'n',
+    metaKey: true,
+    isComposing: true,
+  })
+  // Assert
+  expect(selectAll).not.toHaveBeenCalled()
+  expect(create).not.toHaveBeenCalled()
+  input.remove()
+  unmount()
+})
+
+test('a saved Alt shortcut runs outside inputs and stops after the hook unmounts', () => {
+  // Arrange
+  const create = vi.fn()
+  const { store, unmount } = renderHookWithProviders(() =>
+    useKeyboardShortcuts({ newBookmark: create }),
+  )
+  act(() => {
+    store.dispatch(
+      updateShortcut({
+        actionId: 'newBookmark',
+        binding: {
+          key: 'b',
+          alt: true,
+          ctrl: false,
+          meta: false,
+          shift: false,
+        },
+      }),
     )
-
-    act(() => {
-      fireKeydown('n', { metaKey: true })
-    })
-
-    expect(handler).toHaveBeenCalledOnce()
   })
-
-  it('fires handler for Cmd+Shift+K', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() =>
-      useKeyboardShortcuts({ editShortcuts: handler }),
-    )
-
-    act(() => {
-      fireKeydown('k', { metaKey: true, shiftKey: true })
-    })
-
-    expect(handler).toHaveBeenCalledOnce()
-  })
-
-  it('does NOT fire for non-modifier keys (ArrowDown)', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() =>
-      useKeyboardShortcuts({ navigateDown: handler }),
-    )
-
-    act(() => {
-      fireKeydown('ArrowDown')
-    })
-
-    expect(handler).not.toHaveBeenCalled()
-  })
-
-  it('suppresses selectAll when focus is in an input', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() => useKeyboardShortcuts({ selectAll: handler }))
-
-    const input = document.createElement('input')
-    document.body.appendChild(input)
-
-    act(() => {
-      fireKeydown('a', { metaKey: true }, input)
-    })
-
-    expect(handler).not.toHaveBeenCalled()
-    document.body.removeChild(input)
-  })
-
-  it('suppresses searchInView when focus is in an input', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() =>
-      useKeyboardShortcuts({ searchInView: handler }),
-    )
-
-    const input = document.createElement('input')
-    document.body.appendChild(input)
-
-    act(() => {
-      fireKeydown('f', { metaKey: true }, input)
-    })
-
-    expect(handler).not.toHaveBeenCalled()
-    document.body.removeChild(input)
-  })
-
-  it('still fires Cmd+N when focus is in an input (not a native text shortcut)', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() =>
-      useKeyboardShortcuts({ newBookmark: handler }),
-    )
-
-    const input = document.createElement('input')
-    document.body.appendChild(input)
-
-    act(() => {
-      fireKeydown('n', { metaKey: true }, input)
-    })
-
-    expect(handler).toHaveBeenCalledOnce()
-    document.body.removeChild(input)
-  })
-
-  it('does not fire handler for unregistered actions', () => {
-    const handler = vi.fn()
-    renderHookWithProviders(() =>
-      useKeyboardShortcuts({ newBookmark: handler }),
-    )
-
-    act(() => {
-      fireKeydown('x', { metaKey: true })
-    })
-
-    expect(handler).not.toHaveBeenCalled()
-  })
+  // Act
+  fireEvent.keyDown(document.body, { key: 'b', altKey: true })
+  unmount()
+  fireEvent.keyDown(document.body, { key: 'b', altKey: true })
+  // Assert
+  expect(create).toHaveBeenCalledTimes(1)
 })

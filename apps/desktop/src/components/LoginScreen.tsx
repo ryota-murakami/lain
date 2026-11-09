@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/card'
 import { useAuth } from '@/store/hooks'
 
+import { CredentialStorageNotice } from './CredentialStorageNotice'
+
 /**
  * Login screen displayed when the user is not authenticated.
  * Shows a card with app branding and a "Login with Raindrop.io" button.
@@ -31,6 +33,7 @@ export const LoginScreen = React.memo(function LoginScreen() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
+          <CredentialStorageNotice />
           <Button
             size="lg"
             className="w-full"

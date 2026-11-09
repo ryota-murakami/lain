@@ -161,7 +161,7 @@ describe('useRaindropsCrud', () => {
     const { server } = await import('@test/mocks/server')
     const { http, HttpResponse } = await import('msw')
     server.use(
-      http.put('https://api.raindrop.io/rest/v1/raindrops/0', () =>
+      http.put('https://api.raindrop.io/rest/v1/raindrops/100', () =>
         HttpResponse.json({ result: false }, { status: 500 }),
       ),
     )
@@ -182,7 +182,7 @@ describe('useRaindropsCrud', () => {
     // Assert — gone immediately, back after the API refused
     expect(result.current.raindrops.some((r) => r.id === '1')).toBe(false)
     await act(async () => {
-      await move
+      await expect(move).rejects.toMatchObject({ status: 500 })
     })
     expect(result.current.raindrops.some((r) => r.id === '1')).toBe(true)
   })
@@ -230,5 +230,155 @@ describe('useRaindropsCrud', () => {
       await reorder
     })
     expect(updates).toEqual([{ id: '2', body: { order: 0 } }])
+  })
+})
+
+describe('infinite bookmark query consistency', () => {
+  test('shows loading for a newly selected collection until that collection has data', async () => {
+    // Arrange — keep the destination request pending while the previous collection is already cached.
+    const { server } = await import('@test/mocks/server')
+    const { mockStore } = await import('@test/mocks/mock-store')
+    const { http, HttpResponse } = await import('msw')
+    let finishDestination: () => void = () => undefined
+    const destinationReady = new Promise<void>((resolve) => {
+      finishDestination = resolve
+    })
+    server.use(
+      http.get('https://api.raindrop.io/rest/v1/raindrops/101', async () => {
+        await destinationReady
+        return HttpResponse.json({
+          result: true,
+          ...mockStore.getRaindrops(101, 0, 50),
+        })
+      }),
+    )
+    const { result, rerender } = renderHookWithProviders(
+      ({ collectionId }) => useRaindropsCrud({ collectionId }),
+      { initialProps: { collectionId: '100' } },
+    )
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(20))
+
+    // Act — switching scope must not expose either old rows or a false loaded-empty state.
+    rerender({ collectionId: '101' })
+    expect(result.current.raindrops).toEqual([])
+    expect(result.current.isLoading).toBe(true)
+    expect(result.current.isFetching).toBe(true)
+    await act(async () => {
+      finishDestination()
+    })
+
+    // Assert — only the destination rows end the loading state.
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(15))
+    expect(result.current.isLoading).toBe(false)
+    expect(result.current.raindrops[0].title).toBe(
+      'Apple Human Interface Guidelines',
+    )
+    expect(
+      result.current.raindrops.some(
+        (bookmark) => bookmark.title === 'React Documentation',
+      ),
+    ).toBe(false)
+  })
+
+  test('refreshes every cached page after a mutation without losing already loaded bookmarks', async () => {
+    // Arrange
+    const { server } = await import('@test/mocks/server')
+    const { mockStore } = await import('@test/mocks/mock-store')
+    const { http, HttpResponse } = await import('msw')
+    const pages: number[] = []
+    server.use(
+      http.get('https://api.raindrop.io/rest/v1/raindrops/0', ({ request }) => {
+        const page = Number(new URL(request.url).searchParams.get('page'))
+        pages.push(page)
+        return HttpResponse.json({
+          result: true,
+          ...mockStore.getRaindrops(0, page, 50),
+        })
+      }),
+    )
+    const { result } = renderHookWithProviders(() =>
+      useRaindropsCrud({ collectionId: 'all' }),
+    )
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(50))
+    act(() => result.current.loadMore())
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(60))
+
+    // Act
+    await act(async () =>
+      result.current.updateRaindrop('1', { title: 'Changed first page' }),
+    )
+    await waitFor(() => expect(result.current.isFetching).toBe(false))
+
+    // Assert
+    expect(pages).toEqual([0, 1, 0, 1])
+    expect(result.current.raindrops).toHaveLength(60)
+    expect(
+      result.current.raindrops.find((item) => item.id === '1')?.title,
+    ).toBe('Changed first page')
+    expect(result.current.hasMore).toBe(false)
+  })
+
+  test('retry requests a failed next page while retaining the first page', async () => {
+    // Arrange
+    const { server } = await import('@test/mocks/server')
+    const { mockStore } = await import('@test/mocks/mock-store')
+    const { http, HttpResponse } = await import('msw')
+    let rejectPage = true
+    const pages: number[] = []
+    server.use(
+      http.get('https://api.raindrop.io/rest/v1/raindrops/0', ({ request }) => {
+        const page = Number(new URL(request.url).searchParams.get('page'))
+        pages.push(page)
+        if (page === 1 && rejectPage)
+          return HttpResponse.json({ result: false }, { status: 503 })
+        return HttpResponse.json({
+          result: true,
+          ...mockStore.getRaindrops(0, page, 50),
+        })
+      }),
+    )
+    const { result } = renderHookWithProviders(() =>
+      useRaindropsCrud({ collectionId: 'all' }),
+    )
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(50))
+    act(() => result.current.loadMore())
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(result.current.raindrops).toHaveLength(50)
+
+    // Act
+    rejectPage = false
+    act(() => result.current.retry())
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(60))
+
+    // Assert
+    expect(pages).toEqual([0, 1, 1])
+    expect(result.current.isError).toBe(false)
+  })
+
+  test('rolls back a failed manual reorder and exposes the failure to the drag interaction', async () => {
+    // Arrange
+    const { server } = await import('@test/mocks/server')
+    const { http, HttpResponse } = await import('msw')
+    server.use(
+      http.put('https://api.raindrop.io/rest/v1/raindrop/2', () =>
+        HttpResponse.json({ result: false }, { status: 503 }),
+      ),
+    )
+    const { result } = renderHookWithProviders(() =>
+      useRaindropsCrud({ collectionId: '100', sort: '-sort' }),
+    )
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+    // Act
+    await act(async () => {
+      await expect(
+        result.current.reorderRaindrop('2', '1'),
+      ).rejects.toMatchObject({ status: 503 })
+    })
+
+    // Assert
+    expect(result.current.raindrops.slice(0, 2).map((item) => item.id)).toEqual(
+      ['1', '2'],
+    )
   })
 })

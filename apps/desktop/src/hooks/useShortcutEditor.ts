@@ -65,15 +65,15 @@ export function useShortcutEditor(): ShortcutEditorApi {
   const shortcuts = useAppSelector((state) => state.settings.shortcuts)
   const [editorState, setEditorState] = useState<ShortcutEditorState>(IDLE)
 
-  const startCapture = (actionId: ShortcutActionId) => {
+  const startCapture = (actionId: ShortcutActionId): void => {
     setEditorState({ status: 'capturing', actionId })
   }
 
-  const cancel = () => {
+  const cancel = (): void => {
     setEditorState(IDLE)
   }
 
-  const captureKey = (event: KeyboardEventLike) => {
+  const captureKey = (event: KeyboardEventLike): void => {
     if (editorState.status !== 'capturing') return
     const binding = bindingFromKeyboardEvent(event)
     // Held modifiers / plain typing: keep waiting
@@ -102,7 +102,7 @@ export function useShortcutEditor(): ShortcutEditorApi {
     setEditorState(IDLE)
   }
 
-  const confirmSwap = () => {
+  const confirmSwap = (): void => {
     if (editorState.status !== 'conflict') return
     dispatch(
       swapShortcuts({
@@ -113,7 +113,7 @@ export function useShortcutEditor(): ShortcutEditorApi {
     setEditorState(IDLE)
   }
 
-  const resetAll = () => {
+  const resetAll = (): void => {
     dispatch(resetShortcuts())
     setEditorState(IDLE)
   }

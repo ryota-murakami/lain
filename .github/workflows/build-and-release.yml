@@ -1,0 +1,139 @@
+name: Build and release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      signed:
+        description: Sign and notarize macOS packages (requires repository secrets)
+        type: boolean
+        default: false
+      create_draft:
+        description: Create an owner-visible QA draft after verifying artifacts
+        type: boolean
+        default: true
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/prepare
+      - name: Match tag to app version
+        if: github.event_name == 'push'
+        run: node -e 'const p = require("./apps/desktop/package.json"); if (process.env.GITHUB_REF_NAME !== ("v" + p.version)) process.exit(1)'
+      - run: pnpm typecheck && pnpm lint && pnpm knip
+      - run: pnpm test:coverage && pnpm test:release && pnpm quality
+      - run: pnpm validate:web
+  package:
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: mac
+            runner: macos-latest
+          - platform: linux
+            runner: ubuntu-24.04
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/prepare
+      - name: Require production build credentials
+        if: github.event_name == 'push' || inputs.signed
+        env:
+          CLIENT_ID: ${{ secrets.VITE_RAINDROP_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.RAINDROP_CLIENT_SECRET }}
+          CERTIFICATE: ${{ secrets.APPLE_CERTIFICATES_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          node --input-type=module -e '
+            const names = ["CLIENT_ID", "CLIENT_SECRET", ...(process.platform === "darwin" ? ["CERTIFICATE", "CERTIFICATE_PASSWORD", "APPLE_ID", "APPLE_APP_SPECIFIC_PASSWORD", "APPLE_TEAM_ID"] : [])];
+            const missing = names.filter(name => !process.env[name]);
+            if (missing.length) throw new Error(("Required repository secrets are missing: " + missing.join(", ")));
+          '
+      - name: Import signing certificate
+        if: matrix.platform == 'mac' && (github.event_name == 'push' || inputs.signed)
+        uses: Apple-Actions/import-codesign-certs@77ba2a2a8f5cfc8c405ebf3159f767c323e238f9 # v7.1.0
+        with:
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
+      - name: Build and verify packages
+        env:
+          VITE_RAINDROP_CLIENT_ID: ${{ secrets.VITE_RAINDROP_CLIENT_ID }}
+          RAINDROP_CLIENT_SECRET: ${{ secrets.RAINDROP_CLIENT_SECRET }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          SIGNED: ${{ github.event_name == 'push' || inputs.signed }}
+          PLATFORM: ${{ matrix.platform }}
+        shell: bash
+        run: |
+          args=(--platform "$PLATFORM")
+          if [[ "$PLATFORM" == mac && "$SIGNED" == true ]]; then
+            export CSC_KEYCHAIN="$HOME/Library/Keychains/signing_temp.keychain-db"
+            args+=(--signed)
+          fi
+          node scripts/package-release.mjs "${args[@]}"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-${{ matrix.platform }}
+          path: |
+            apps/desktop/release/*.dmg
+            apps/desktop/release/*.zip
+            apps/desktop/release/*.AppImage
+            apps/desktop/release/*.deb
+            apps/desktop/release/*.blockmap
+            apps/desktop/release/latest*.yml
+            apps/desktop/release/checksums-*.json
+          if-no-files-found: error
+          retention-days: 30
+  release:
+    needs: package
+    if: github.event_name == 'push' || inputs.create_draft
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/prepare
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: release-*
+          path: artifacts
+      - name: Reverify downloaded bytes against build provenance
+        run: |
+          node scripts/verify-release.mjs --platform mac --source "$GITHUB_SHA" --directory artifacts/release-mac --downloaded-artifacts
+          node scripts/verify-release.mjs --platform linux --source "$GITHUB_SHA" --directory artifacts/release-linux --downloaded-artifacts
+      - name: Create release or isolated QA draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IS_TAG: ${{ github.event_name == 'push' }}
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(artifacts/release-mac/* artifacts/release-linux/*)
+          if [[ "$IS_TAG" == true ]]; then
+            gh release create "$GITHUB_REF_NAME" "${files[@]}" --verify-tag --generate-notes
+          else
+            version=$(node -p 'require("./apps/desktop/package.json").version')
+            tag="qa-v${version}-${GITHUB_RUN_ID}"
+            printf 'Private QA build for source %s. This draft is excluded from the production update feed. Unsigned builds are for isolated package testing; OAuth requires configured build credentials.\n' "$GITHUB_SHA" > "$RUNNER_TEMP/release-notes.md"
+            gh release create "$tag" "${files[@]}" --target "$GITHUB_SHA" --draft --title "QA ${version} (${GITHUB_RUN_ID})" --notes-file "$RUNNER_TEMP/release-notes.md"
+          fi

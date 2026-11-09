@@ -42,5 +42,4 @@ const App = React.memo(function App() {
   )
 })
 
-export { App }
 export default App

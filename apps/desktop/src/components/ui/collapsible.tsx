@@ -31,4 +31,4 @@ const CollapsibleContent = React.memo(function CollapsibleContent({
   )
 })
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent }
+export { Collapsible, CollapsibleContent, CollapsibleTrigger }

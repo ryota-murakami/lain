@@ -1,0 +1,7131 @@
+{
+  "kind": "health",
+  "schema_version": 13,
+  "version": "3.41.0",
+  "elapsed_ms": 24,
+  "findings": [
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "parseUrl",
+      "line": 218,
+      "col": 4,
+      "cyclomatic": 17,
+      "cognitive": 13,
+      "line_count": 46,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 79.4,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 219,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 219,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 222,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 222,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 232,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 232,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 238,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 238,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 239,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 239,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 253,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 253,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 253,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 253,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 253,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 255,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 255,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 255,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 255,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 255,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 257,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 257,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 257,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 257,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 257,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 259,
+          "col": 25,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 259,
+          "col": 25,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 261,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 261,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `parseUrl` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `parseUrl` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRow",
+      "line": 647,
+      "col": 33,
+      "cyclomatic": 17,
+      "cognitive": 11,
+      "line_count": 80,
+      "param_count": 1,
+      "react_hook_count": 1,
+      "react_jsx_max_depth": 2,
+      "react_prop_count": 4,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 0,
+        "callback": 0,
+        "custom": 1
+      },
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 79.4,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 665,
+          "col": 23,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 665,
+          "col": 23,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 665,
+          "col": 23,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 669,
+          "col": 20,
+          "metric": "cognitive",
+          "kind": "hook-density",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 673,
+          "col": 17,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 673,
+          "col": 17,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 673,
+          "col": 27,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 673,
+          "col": 27,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 673,
+          "col": 27,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 674,
+          "col": 31,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 674,
+          "col": 31,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 678,
+          "col": 11,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 678,
+          "col": 11,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 678,
+          "col": 20,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 679,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 680,
+          "col": 19,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 680,
+          "col": 19,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 681,
+          "col": 24,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 681,
+          "col": 24,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 683,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 683,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 683,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 684,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 684,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 711,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 711,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 711,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `CollectionRow` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `CollectionRow` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "name": "handleKeyDown",
+      "line": 115,
+      "col": 4,
+      "cyclomatic": 15,
+      "cognitive": 15,
+      "line_count": 36,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 63.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 117,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 117,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 117,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 117,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 118,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 118,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 118,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 118,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 120,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 120,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 121,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 121,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 121,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 126,
+          "col": 15,
+          "metric": "cognitive",
+          "kind": "else",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 129,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 129,
+          "col": 13,
+          "metric": "cognitive",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 130,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 130,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 130,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 135,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 135,
+          "col": 13,
+          "metric": "cognitive",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 141,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 141,
+          "col": 13,
+          "metric": "cognitive",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 144,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 144,
+          "col": 13,
+          "metric": "cognitive",
+          "kind": "else-if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 146,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 146,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleKeyDown` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `handleKeyDown` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "fetchExportMetadata",
+      "line": 124,
+      "col": 0,
+      "cyclomatic": 15,
+      "cognitive": 5,
+      "line_count": 43,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 63.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 139,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 139,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 141,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 142,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 150,
+          "col": 17,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 151,
+          "col": 17,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 151,
+          "col": 17,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 151,
+          "col": 17,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 152,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 152,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 153,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 153,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 153,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `fetchExportMetadata` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useKeyboardShortcuts.ts",
+      "name": "handleKeyDown",
+      "line": 49,
+      "col": 26,
+      "cyclomatic": 14,
+      "cognitive": 17,
+      "line_count": 27,
+      "param_count": 1,
+      "exceeded": "cognitive_crap",
+      "severity": "high",
+      "effective_severity": "error",
+      "crap": 56.3,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 51,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 51,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 52,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 52,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 52,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 52,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 56,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 56,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 57,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 57,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 59,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 59,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 59,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 59,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 61,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 61,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 61,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 61,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 61,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 64,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 64,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 64,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 64,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 69,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 69,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleKeyDown` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "refactor-function",
+          "auto_fixable": false,
+          "description": "Refactor `handleKeyDown` to reduce complexity (extract helper functions, simplify branching)",
+          "note": "Split into smaller functions with single responsibilities. Splitting relocates branching, so it lowers this function's score without lowering the total"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "serializeBookmarkHtml",
+      "line": 515,
+      "col": 0,
+      "cyclomatic": 13,
+      "cognitive": 11,
+      "line_count": 37,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 49.5,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 521,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 521,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 522,
+          "col": 19,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 523,
+          "col": 30,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 523,
+          "col": 30,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 525,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 525,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 526,
+          "col": 15,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 526,
+          "col": 15,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 526,
+          "col": 15,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 527,
+          "col": 25,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 527,
+          "col": 25,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 537,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 537,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 541,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 541,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 543,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 543,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 543,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 543,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 550,
+          "col": 178,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 550,
+          "col": 178,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `serializeBookmarkHtml` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "DetailBookmarkForm",
+      "line": 482,
+      "col": 38,
+      "cyclomatic": 12,
+      "cognitive": 10,
+      "line_count": 173,
+      "param_count": 1,
+      "react_jsx_max_depth": 5,
+      "react_prop_count": 4,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 43.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 514,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 514,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 540,
+          "col": 9,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 540,
+          "col": 9,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 559,
+          "col": 9,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 559,
+          "col": 9,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 622,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 622,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 622,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 632,
+          "col": 20,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 632,
+          "col": 20,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 632,
+          "col": 20,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 634,
+          "col": 11,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 634,
+          "col": 11,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 636,
+          "col": 14,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 636,
+          "col": 14,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 647,
+          "col": 18,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 647,
+          "col": 18,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 650,
+          "col": 9,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 650,
+          "col": 9,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `DetailBookmarkForm` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/updater.ts",
+      "name": "getController",
+      "line": 50,
+      "col": 0,
+      "cyclomatic": 11,
+      "cognitive": 13,
+      "line_count": 65,
+      "param_count": 0,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 51,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 51,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 53,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 53,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 60,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 60,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 60,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 60,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 62,
+          "col": 36,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 62,
+          "col": 36,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 64,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 64,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 64,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 64,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 66,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 66,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 3,
+          "nesting": 2
+        },
+        {
+          "line": 66,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 66,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 71,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 71,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `getController` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableBookmarkCells",
+      "line": 296,
+      "col": 38,
+      "cyclomatic": 11,
+      "cognitive": 8,
+      "line_count": 67,
+      "param_count": 1,
+      "react_jsx_max_depth": 4,
+      "react_prop_count": 2,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 302,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 302,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 307,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 307,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 311,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 317,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 317,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 319,
+          "col": 11,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 319,
+          "col": 11,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 322,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 322,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 334,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 342,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 342,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 347,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 347,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 352,
+          "col": 7,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 352,
+          "col": 7,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `TableBookmarkCells` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkDrag.ts",
+      "name": "handleRaindropDragEnd",
+      "line": 71,
+      "col": 4,
+      "cyclomatic": 11,
+      "cognitive": 6,
+      "line_count": 35,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 73,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 73,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 77,
+          "col": 54,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 78,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 78,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 79,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 79,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 81,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 93,
+          "col": 48,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 94,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 94,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 95,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 95,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 95,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 100,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleRaindropDragEnd` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkExport.ts",
+      "name": "save",
+      "line": 47,
+      "col": 27,
+      "cyclomatic": 11,
+      "cognitive": 15,
+      "line_count": 63,
+      "param_count": 0,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 49,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 49,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 58,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 58,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 60,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 60,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 75,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 75,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 89,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 89,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 91,
+          "col": 66,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 91,
+          "col": 66,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 93,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 93,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 94,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 94,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 94,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 94,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 96,
+          "col": 11,
+          "metric": "cognitive",
+          "kind": "else",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 99,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 99,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 3,
+          "nesting": 2
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `save` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "name": "exportCollectionIds",
+      "line": 175,
+      "col": 0,
+      "cyclomatic": 11,
+      "cognitive": 11,
+      "line_count": 23,
+      "param_count": 2,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 37.1,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 179,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 179,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 181,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 181,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 182,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 182,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 187,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 187,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 188,
+          "col": 19,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 189,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 189,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 190,
+          "col": 32,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 190,
+          "col": 32,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 194,
+          "col": 2,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 194,
+          "col": 2,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 195,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 195,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 195,
+          "col": 24,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 195,
+          "col": 24,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `exportCollectionIds` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "name": "ipcMain.handle(\"desktop:save-export\")",
+      "line": 63,
+      "col": 40,
+      "cyclomatic": 10,
+      "cognitive": 4,
+      "line_count": 13,
+      "param_count": 2,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 65,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 65,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 67,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 67,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 67,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 67,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `ipcMain.handle(\"desktop:save-export\")` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRowButton",
+      "line": 535,
+      "col": 39,
+      "cyclomatic": 10,
+      "cognitive": 10,
+      "line_count": 111,
+      "param_count": 1,
+      "react_hook_count": 4,
+      "react_jsx_max_depth": 4,
+      "react_prop_count": 5,
+      "react_hook_profile": {
+        "state": 0,
+        "effect": 0,
+        "memo": 1,
+        "callback": 3,
+        "custom": 0
+      },
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 556,
+          "col": 30,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 559,
+          "col": 4,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 559,
+          "col": 4,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 560,
+          "col": 23,
+          "metric": "cognitive",
+          "kind": "hook-density",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 564,
+          "col": 23,
+          "metric": "cognitive",
+          "kind": "hook-density",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 572,
+          "col": 20,
+          "metric": "cognitive",
+          "kind": "hook-density",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 576,
+          "col": 30,
+          "metric": "cognitive",
+          "kind": "hook-density",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 592,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 601,
+          "col": 23,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 601,
+          "col": 23,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 605,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 605,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 609,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 609,
+          "col": 13,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 609,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 610,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 610,
+          "col": 13,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 610,
+          "col": 13,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 535,
+          "col": 39,
+          "metric": "cognitive",
+          "kind": "prop-count",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `CollectionRowButton` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropBatchActions.ts",
+      "name": "run",
+      "line": 57,
+      "col": 4,
+      "cyclomatic": 10,
+      "cognitive": 11,
+      "line_count": 65,
+      "param_count": 3,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 62,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 62,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 67,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 67,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 75,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 75,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 75,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 86,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 86,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "for-of",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 89,
+          "col": 12,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 89,
+          "col": 12,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 101,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 101,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 110,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 110,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 111,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 111,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 2,
+          "nesting": 1
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `run` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarDrag.ts",
+      "name": "handleDragEnd",
+      "line": 72,
+      "col": 4,
+      "cyclomatic": 10,
+      "cognitive": 7,
+      "line_count": 46,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 78,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 78,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 81,
+          "col": 46,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 82,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 82,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 83,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 83,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 83,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 93,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 93,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 96,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 96,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 97,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 97,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 109,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 109,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleDragEnd` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "handleKeyDown",
+      "line": 118,
+      "col": 26,
+      "cyclomatic": 10,
+      "cognitive": 9,
+      "line_count": 71,
+      "param_count": 1,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 127,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 127,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 130,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 130,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 133,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 133,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 137,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 137,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "logical-or",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 138,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 138,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 138,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 138,
+          "col": 10,
+          "metric": "cognitive",
+          "kind": "logical-and",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 143,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 143,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 154,
+          "col": 27,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 154,
+          "col": 27,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 156,
+          "col": 8,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 156,
+          "col": 8,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `handleKeyDown` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/lib/axiosBaseQuery.ts",
+      "name": "<arrow>",
+      "line": 31,
+      "col": 9,
+      "cyclomatic": 10,
+      "cognitive": 9,
+      "line_count": 23,
+      "param_count": 2,
+      "react_prop_count": 5,
+      "exceeded": "crap",
+      "severity": "moderate",
+      "effective_severity": "error",
+      "crap": 31.6,
+      "coverage_tier": "partial",
+      "coverage_source": "estimated",
+      "contributions": [
+        {
+          "line": 36,
+          "col": 14,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 36,
+          "col": 14,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 41,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 41,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "if",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 41,
+          "col": 10,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 42,
+          "col": 58,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 42,
+          "col": 58,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 45,
+          "col": 6,
+          "metric": "cyclomatic",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 45,
+          "col": 6,
+          "metric": "cognitive",
+          "kind": "catch",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 49,
+          "col": 16,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 49,
+          "col": 16,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        },
+        {
+          "line": 49,
+          "col": 38,
+          "metric": "cyclomatic",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 49,
+          "col": 38,
+          "metric": "cognitive",
+          "kind": "nullish-coalescing",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 49,
+          "col": 38,
+          "metric": "cyclomatic",
+          "kind": "optional-chain",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 50,
+          "col": 17,
+          "metric": "cyclomatic",
+          "kind": "ternary",
+          "weight": 1,
+          "nesting": 0
+        },
+        {
+          "line": 50,
+          "col": 17,
+          "metric": "cognitive",
+          "kind": "ternary",
+          "weight": 2,
+          "nesting": 1
+        }
+      ],
+      "actions": [
+        {
+          "type": "increase-coverage",
+          "auto_fixable": false,
+          "description": "Increase test coverage for `<arrow>` (file is reachable from existing tests; add targeted assertions for uncovered branches)",
+          "note": "CRAP = CC^2 * (1 - cov/100)^3 + CC; targeted branch coverage is more efficient than scaffolding new test files when the file already has coverage"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the function declaration",
+          "comment": "// fallow-ignore-next-line complexity",
+          "placement": "above-function-declaration"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "files_analyzed": 190,
+    "functions_analyzed": 1475,
+    "functions_above_threshold": 18,
+    "max_cyclomatic_threshold": 20,
+    "max_cognitive_threshold": 15,
+    "max_crap_threshold": 30.0,
+    "max_unit_size_threshold": 60,
+    "files_scored": 169,
+    "average_maintainability": 91.7,
+    "coverage_model": "static_estimated",
+    "coverage_source_consistency": "uniform",
+    "severity_critical_count": 0,
+    "severity_high_count": 5,
+    "severity_moderate_count": 13
+  },
+  "sections": [
+    "complexity",
+    "vital-signs",
+    "score",
+    "file-scores",
+    "hotspots",
+    "change-coupling",
+    "targets"
+  ],
+  "vital_signs": {
+    "dead_file_pct": 0.0,
+    "dead_export_pct": 0.0,
+    "avg_cyclomatic": 2.2,
+    "critical_complexity_pct": 0.0,
+    "p90_cyclomatic": 5,
+    "cyclomatic_population": {
+      "functions": { "count": 1475, "sum": 3200, "max": 19 },
+      "modules": { "count": 11, "sum": 68, "max": 15 },
+      "templates": { "count": 0, "sum": 0, "max": null }
+    },
+    "duplication_pct": 0.0,
+    "hotspot_count": 0,
+    "hotspot_top_pct_count": 0,
+    "maintainability_avg": 91.7,
+    "maintainability_low_pct": 0.0,
+    "unused_dep_count": 0,
+    "unused_deps_per_k_files": 0.0,
+    "circular_dep_count": 0,
+    "circular_deps_per_k_files": 0.0,
+    "counts": {
+      "total_files": 190,
+      "total_exports": 418,
+      "dead_files": 0,
+      "dead_exports": 0,
+      "duplicated_lines": 0,
+      "total_lines": 27260,
+      "files_scored": 169,
+      "total_deps": 0
+    },
+    "unit_size_profile": {
+      "low_risk": 77.2,
+      "medium_risk": 10.5,
+      "high_risk": 5.6,
+      "very_high_risk": 6.8
+    },
+    "functions_over_60_loc_per_k": 67.8,
+    "unit_interfacing_profile": {
+      "low_risk": 96.7,
+      "medium_risk": 3.0,
+      "high_risk": 0.3,
+      "very_high_risk": 0.0
+    },
+    "p95_fan_in": 11,
+    "coupling_high_pct": 4.1,
+    "p95_render_fan_in": 8,
+    "render_fan_in_high_pct": 4.1,
+    "max_render_fan_in": 49,
+    "top_render_fan_in": [
+      {
+        "component": "Button",
+        "path": "apps/desktop/src/components/ui/button.tsx",
+        "render_sites": 91,
+        "distinct_parents": 49
+      },
+      {
+        "component": "Input",
+        "path": "apps/desktop/src/components/ui/input.tsx",
+        "render_sites": 21,
+        "distinct_parents": 18
+      },
+      {
+        "component": "Label",
+        "path": "apps/desktop/src/components/ui/label.tsx",
+        "render_sites": 31,
+        "distinct_parents": 12
+      },
+      {
+        "component": "Badge",
+        "path": "apps/desktop/src/components/ui/badge.tsx",
+        "render_sites": 13,
+        "distinct_parents": 12
+      },
+      {
+        "component": "Dialog",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 11
+      },
+      {
+        "component": "DialogContent",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 11
+      },
+      {
+        "component": "DialogDescription",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 11
+      },
+      {
+        "component": "DialogHeader",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 11
+      },
+      {
+        "component": "DialogTitle",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 11,
+        "distinct_parents": 11
+      },
+      {
+        "component": "DialogFooter",
+        "path": "apps/desktop/src/components/ui/dialog.tsx",
+        "render_sites": 8,
+        "distinct_parents": 8
+      },
+      {
+        "component": "DropdownMenu",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 8,
+        "distinct_parents": 8
+      },
+      {
+        "component": "DropdownMenuContent",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 8,
+        "distinct_parents": 8
+      },
+      {
+        "component": "DropdownMenuTrigger",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 8,
+        "distinct_parents": 8
+      },
+      {
+        "component": "ScrollArea",
+        "path": "apps/desktop/src/components/ui/scroll-area.tsx",
+        "render_sites": 8,
+        "distinct_parents": 8
+      },
+      {
+        "component": "Separator",
+        "path": "apps/desktop/src/components/ui/separator.tsx",
+        "render_sites": 9,
+        "distinct_parents": 7
+      },
+      {
+        "component": "Checkbox",
+        "path": "apps/desktop/src/components/ui/checkbox.tsx",
+        "render_sites": 7,
+        "distinct_parents": 7
+      },
+      {
+        "component": "DropdownMenuItem",
+        "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+        "render_sites": 23,
+        "distinct_parents": 6
+      },
+      {
+        "component": "Tooltip",
+        "path": "apps/desktop/src/components/ui/tooltip.tsx",
+        "render_sites": 11,
+        "distinct_parents": 6
+      },
+      {
+        "component": "TooltipContent",
+        "path": "apps/desktop/src/components/ui/tooltip.tsx",
+        "render_sites": 11,
+        "distinct_parents": 6
+      },
+      {
+        "component": "TooltipTrigger",
+        "path": "apps/desktop/src/components/ui/tooltip.tsx",
+        "render_sites": 11,
+        "distinct_parents": 6
+      }
+    ],
+    "total_loc": 27260
+  },
+  "health_score": {
+    "formula_version": 3,
+    "score": 87.9,
+    "grade": "A",
+    "penalties": {
+      "dead_files": 0.0,
+      "dead_exports": 0.0,
+      "complexity": 0.0,
+      "p90_complexity": 0.0,
+      "maintainability": 0.0,
+      "hotspots": 0.0,
+      "unused_deps": 0.0,
+      "circular_deps": 0.0,
+      "unit_size": 10.0,
+      "coupling": 2.1,
+      "duplication": 0.0
+    }
+  },
+  "file_scores": [
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "fan_in": 2,
+      "fan_out": 19,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 85.0,
+      "total_cyclomatic": 114,
+      "total_cognitive": 88,
+      "function_count": 52,
+      "lines": 1185,
+      "crap_max": 79.4,
+      "crap_above_threshold": 2
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 16,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 85.7,
+      "total_cyclomatic": 64,
+      "total_cognitive": 64,
+      "function_count": 26,
+      "lines": 641,
+      "crap_max": 79.4,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/lib/bookmark-export.ts",
+      "fan_in": 4,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.28,
+      "maintainability_index": 86.1,
+      "total_cyclomatic": 169,
+      "total_cognitive": 107,
+      "function_count": 41,
+      "lines": 602,
+      "crap_max": 63.6,
+      "crap_above_threshold": 3
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "fan_in": 3,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 87.9,
+      "total_cyclomatic": 59,
+      "total_cognitive": 51,
+      "function_count": 23,
+      "lines": 318,
+      "crap_max": 63.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useKeyboardShortcuts.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 87.6,
+      "total_cyclomatic": 19,
+      "total_cognitive": 22,
+      "function_count": 6,
+      "lines": 81,
+      "crap_max": 56.3,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "fan_in": 2,
+      "fan_out": 19,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 85.0,
+      "total_cyclomatic": 73,
+      "total_cognitive": 60,
+      "function_count": 24,
+      "lines": 725,
+      "crap_max": 43.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "fan_in": 2,
+      "fan_out": 10,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 87.1,
+      "total_cyclomatic": 126,
+      "total_cognitive": 118,
+      "function_count": 53,
+      "lines": 1101,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/electron/updater.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.24,
+      "maintainability_index": 87.3,
+      "total_cyclomatic": 40,
+      "total_cognitive": 24,
+      "function_count": 20,
+      "lines": 169,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkDrag.ts",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 88.5,
+      "total_cyclomatic": 22,
+      "total_cognitive": 16,
+      "function_count": 10,
+      "lines": 131,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkExport.ts",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 90.2,
+      "total_cyclomatic": 26,
+      "total_cognitive": 36,
+      "function_count": 9,
+      "lines": 143,
+      "crap_max": 37.1,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/electron/desktop-operations.ts",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.4,
+      "maintainability_index": 83.6,
+      "total_cyclomatic": 31,
+      "total_cognitive": 20,
+      "function_count": 7,
+      "lines": 77,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 88.5,
+      "total_cyclomatic": 39,
+      "total_cognitive": 28,
+      "function_count": 16,
+      "lines": 194,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarDrag.ts",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.15,
+      "maintainability_index": 89.1,
+      "total_cyclomatic": 21,
+      "total_cognitive": 20,
+      "function_count": 7,
+      "lines": 137,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropBatchActions.ts",
+      "fan_in": 4,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 89.7,
+      "total_cyclomatic": 21,
+      "total_cognitive": 24,
+      "function_count": 8,
+      "lines": 163,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/lib/axiosBaseQuery.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 91.2,
+      "total_cyclomatic": 11,
+      "total_cognitive": 9,
+      "function_count": 2,
+      "lines": 55,
+      "crap_max": 31.6,
+      "crap_above_threshold": 1
+    },
+    {
+      "path": "apps/desktop/src/lib/file-upload.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.45,
+      "maintainability_index": 83.7,
+      "total_cyclomatic": 35,
+      "total_cognitive": 26,
+      "function_count": 6,
+      "lines": 78,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "fan_in": 4,
+      "fan_out": 12,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 86.1,
+      "total_cyclomatic": 63,
+      "total_cognitive": 55,
+      "function_count": 23,
+      "lines": 546,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "fan_in": 2,
+      "fan_out": 12,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 87.6,
+      "total_cyclomatic": 40,
+      "total_cognitive": 31,
+      "function_count": 11,
+      "lines": 538,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+      "fan_in": 2,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 88.0,
+      "total_cyclomatic": 59,
+      "total_cognitive": 60,
+      "function_count": 20,
+      "lines": 412,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-results.tsx",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 88.4,
+      "total_cyclomatic": 25,
+      "total_cognitive": 20,
+      "function_count": 8,
+      "lines": 229,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/api-mappers.ts",
+      "fan_in": 9,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 88.7,
+      "total_cyclomatic": 84,
+      "total_cognitive": 60,
+      "function_count": 22,
+      "lines": 370,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/axios.ts",
+      "fan_in": 7,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.26,
+      "maintainability_index": 89.4,
+      "total_cyclomatic": 34,
+      "total_cognitive": 19,
+      "function_count": 8,
+      "lines": 133,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.21,
+      "maintainability_index": 93.7,
+      "total_cyclomatic": 55,
+      "total_cognitive": 41,
+      "function_count": 13,
+      "lines": 265,
+      "crap_max": 26.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarData.ts",
+      "fan_in": 2,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.31,
+      "maintainability_index": 82.4,
+      "total_cyclomatic": 30,
+      "total_cognitive": 25,
+      "function_count": 11,
+      "lines": 96,
+      "crap_max": 21.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-search.tsx",
+      "fan_in": 2,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 88.4,
+      "total_cyclomatic": 22,
+      "total_cognitive": 18,
+      "function_count": 10,
+      "lines": 199,
+      "crap_max": 21.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/update-controller.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 42,
+      "total_cognitive": 22,
+      "function_count": 15,
+      "lines": 179,
+      "crap_max": 21.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.15,
+      "maintainability_index": 91.1,
+      "total_cyclomatic": 35,
+      "total_cognitive": 20,
+      "function_count": 9,
+      "lines": 231,
+      "crap_max": 20.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/update-qa.ts",
+      "fan_in": 3,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.26,
+      "maintainability_index": 92.2,
+      "total_cyclomatic": 19,
+      "total_cognitive": 11,
+      "function_count": 1,
+      "lines": 72,
+      "crap_max": 20.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/main.ts",
+      "fan_in": 0,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.26,
+      "maintainability_index": 84.4,
+      "total_cyclomatic": 45,
+      "total_cognitive": 27,
+      "function_count": 19,
+      "lines": 175,
+      "crap_max": 20.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/update-qa.ts",
+      "fan_in": 0,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 92.0,
+      "total_cyclomatic": 54,
+      "total_cognitive": 31,
+      "function_count": 28,
+      "lines": 468,
+      "crap_max": 20.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/measure-coverage.mjs",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 94.9,
+      "total_cyclomatic": 13,
+      "total_cognitive": 12,
+      "function_count": 4,
+      "lines": 76,
+      "crap_max": 20.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/upload-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.4,
+      "maintainability_index": 78.8,
+      "total_cyclomatic": 48,
+      "total_cognitive": 41,
+      "function_count": 25,
+      "lines": 120,
+      "crap_max": 17.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useUploadQueue.ts",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.43,
+      "maintainability_index": 80.7,
+      "total_cyclomatic": 36,
+      "total_cognitive": 34,
+      "function_count": 21,
+      "lines": 83,
+      "crap_max": 17.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppView.ts",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.16,
+      "maintainability_index": 88.8,
+      "total_cyclomatic": 21,
+      "total_cognitive": 26,
+      "function_count": 13,
+      "lines": 135,
+      "crap_max": 17.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useIconCandidates.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.27,
+      "maintainability_index": 89.1,
+      "total_cyclomatic": 33,
+      "total_cognitive": 22,
+      "function_count": 16,
+      "lines": 121,
+      "crap_max": 17.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkInteraction.ts",
+      "fan_in": 2,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.16,
+      "maintainability_index": 89.7,
+      "total_cyclomatic": 24,
+      "total_cognitive": 21,
+      "function_count": 14,
+      "lines": 147,
+      "crap_max": 17.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/main-app.tsx",
+      "fan_in": 2,
+      "fan_out": 22,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 86.3,
+      "total_cyclomatic": 16,
+      "total_cognitive": 21,
+      "function_count": 5,
+      "lines": 375,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropsCrud.ts",
+      "fan_in": 4,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 88.0,
+      "total_cyclomatic": 17,
+      "total_cognitive": 19,
+      "function_count": 4,
+      "lines": 125,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bulk-action-dialog.tsx",
+      "fan_in": 3,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 88.6,
+      "total_cyclomatic": 23,
+      "total_cognitive": 24,
+      "function_count": 8,
+      "lines": 187,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-selector-results.tsx",
+      "fan_in": 1,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 89.2,
+      "total_cyclomatic": 20,
+      "total_cognitive": 11,
+      "function_count": 9,
+      "lines": 170,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/api/accountApi.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.34,
+      "maintainability_index": 90.1,
+      "total_cyclomatic": 12,
+      "total_cognitive": 5,
+      "function_count": 5,
+      "lines": 35,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useShortcutEditor.ts",
+      "fan_in": 1,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 13,
+      "total_cognitive": 9,
+      "function_count": 7,
+      "lines": 131,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/build-directory-tree.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 28,
+      "total_cognitive": 29,
+      "function_count": 6,
+      "lines": 150,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useUrlSuggest.ts",
+      "fan_in": 3,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 91.7,
+      "total_cyclomatic": 7,
+      "total_cognitive": 6,
+      "function_count": 2,
+      "lines": 56,
+      "crap_max": 13.8,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/update-settings.tsx",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 89.4,
+      "total_cyclomatic": 24,
+      "total_cognitive": 21,
+      "function_count": 6,
+      "lines": 169,
+      "crap_max": 13.6,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/shortcut-utils.ts",
+      "fan_in": 6,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.24,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 54,
+      "total_cognitive": 43,
+      "function_count": 8,
+      "lines": 225,
+      "crap_max": 12.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/App.tsx",
+      "fan_in": 1,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 4,
+      "total_cognitive": 3,
+      "function_count": 2,
+      "lines": 46,
+      "crap_max": 12.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/package-release.mjs",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 18,
+      "total_cognitive": 18,
+      "function_count": 2,
+      "lines": 97,
+      "crap_max": 12.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 89.8,
+      "total_cyclomatic": 13,
+      "total_cognitive": 12,
+      "function_count": 3,
+      "lines": 134,
+      "crap_max": 11.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/listenerMiddleware.ts",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 87.5,
+      "total_cyclomatic": 21,
+      "total_cognitive": 7,
+      "function_count": 14,
+      "lines": 151,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "fan_in": 1,
+      "fan_out": 11,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 88.0,
+      "total_cyclomatic": 18,
+      "total_cognitive": 15,
+      "function_count": 5,
+      "lines": 272,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppCollectionEditor.ts",
+      "fan_in": 2,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 88.0,
+      "total_cyclomatic": 24,
+      "total_cognitive": 21,
+      "function_count": 14,
+      "lines": 168,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useTagManagement.ts",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.22,
+      "maintainability_index": 89.0,
+      "total_cyclomatic": 75,
+      "total_cognitive": 75,
+      "function_count": 40,
+      "lines": 334,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.1,
+      "total_cyclomatic": 27,
+      "total_cognitive": 26,
+      "function_count": 11,
+      "lines": 316,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/raindrop-auth.ts",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 91.7,
+      "total_cyclomatic": 36,
+      "total_cognitive": 20,
+      "function_count": 17,
+      "lines": 275,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/secure-store.ts",
+      "fan_in": 5,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 94.6,
+      "total_cyclomatic": 15,
+      "total_cognitive": 8,
+      "function_count": 6,
+      "lines": 83,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useInfiniteScroll.ts",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 94.9,
+      "total_cyclomatic": 11,
+      "total_cognitive": 10,
+      "function_count": 5,
+      "lines": 66,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/finalize-mac-release-artifacts.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 96.1,
+      "total_cyclomatic": 40,
+      "total_cognitive": 22,
+      "function_count": 18,
+      "lines": 320,
+      "crap_max": 10.4,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 88.4,
+      "total_cyclomatic": 21,
+      "total_cognitive": 22,
+      "function_count": 7,
+      "lines": 198,
+      "crap_max": 9.3,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+      "fan_in": 1,
+      "fan_out": 11,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 88.6,
+      "total_cyclomatic": 11,
+      "total_cognitive": 11,
+      "function_count": 3,
+      "lines": 216,
+      "crap_max": 9.3,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/search.ts",
+      "fan_in": 12,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 61,
+      "total_cognitive": 40,
+      "function_count": 26,
+      "lines": 325,
+      "crap_max": 9.3,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+      "fan_in": 1,
+      "fan_out": 10,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 88.6,
+      "total_cyclomatic": 32,
+      "total_cognitive": 35,
+      "function_count": 14,
+      "lines": 518,
+      "crap_max": 8.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sidebar.tsx",
+      "fan_in": 3,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.1,
+      "total_cyclomatic": 47,
+      "total_cognitive": 33,
+      "function_count": 25,
+      "lines": 513,
+      "crap_max": 8.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-controls.tsx",
+      "fan_in": 1,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 11,
+      "total_cognitive": 12,
+      "function_count": 3,
+      "lines": 109,
+      "crap_max": 8.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppShortcuts.ts",
+      "fan_in": 1,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.22,
+      "maintainability_index": 85.6,
+      "total_cyclomatic": 23,
+      "total_cognitive": 9,
+      "function_count": 17,
+      "lines": 104,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppGroupEditor.ts",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 87.1,
+      "total_cyclomatic": 20,
+      "total_cognitive": 17,
+      "function_count": 11,
+      "lines": 107,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppDetail.ts",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 87.6,
+      "total_cyclomatic": 21,
+      "total_cognitive": 21,
+      "function_count": 11,
+      "lines": 105,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "fan_in": 2,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 89.3,
+      "total_cyclomatic": 10,
+      "total_cognitive": 13,
+      "function_count": 4,
+      "lines": 195,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarOrganization.ts",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 24,
+      "total_cognitive": 21,
+      "function_count": 16,
+      "lines": 201,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCollectionsCrud.ts",
+      "fan_in": 4,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.08,
+      "maintainability_index": 91.2,
+      "total_cyclomatic": 16,
+      "total_cognitive": 19,
+      "function_count": 11,
+      "lines": 208,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useTagsCrud.ts",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 91.7,
+      "total_cyclomatic": 17,
+      "total_cognitive": 19,
+      "function_count": 7,
+      "lines": 136,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/e2e-coverage-report.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.16,
+      "maintainability_index": 92.4,
+      "total_cyclomatic": 42,
+      "total_cognitive": 22,
+      "function_count": 27,
+      "lines": 261,
+      "crap_max": 7.5,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+      "fan_in": 5,
+      "fan_out": 9,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 88.1,
+      "total_cyclomatic": 14,
+      "total_cognitive": 13,
+      "function_count": 7,
+      "lines": 159,
+      "crap_max": 7.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/color-picker.tsx",
+      "fan_in": 1,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 89.8,
+      "total_cyclomatic": 17,
+      "total_cognitive": 16,
+      "function_count": 6,
+      "lines": 165,
+      "crap_max": 7.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/favicon.ts",
+      "fan_in": 8,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 90.2,
+      "total_cyclomatic": 18,
+      "total_cognitive": 11,
+      "function_count": 6,
+      "lines": 102,
+      "crap_max": 7.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-picker.tsx",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 88.4,
+      "total_cyclomatic": 16,
+      "total_cognitive": 12,
+      "function_count": 9,
+      "lines": 147,
+      "crap_max": 6.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/collection-organization.ts",
+      "fan_in": 8,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 92.1,
+      "total_cyclomatic": 44,
+      "total_cognitive": 19,
+      "function_count": 24,
+      "lines": 265,
+      "crap_max": 6.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-empty-state.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 94.2,
+      "total_cyclomatic": 6,
+      "total_cognitive": 9,
+      "function_count": 1,
+      "lines": 63,
+      "crap_max": 6.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/spec-requirements.ts",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.01,
+      "maintainability_index": 99.7,
+      "total_cyclomatic": 6,
+      "total_cognitive": 9,
+      "function_count": 1,
+      "lines": 817,
+      "crap_max": 6.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/LoginScreen.tsx",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 92.4,
+      "total_cyclomatic": 2,
+      "total_cognitive": 2,
+      "function_count": 1,
+      "lines": 50,
+      "crap_max": 6.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/smoke-package.ts",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 93.9,
+      "total_cyclomatic": 13,
+      "total_cognitive": 9,
+      "function_count": 4,
+      "lines": 119,
+      "crap_max": 6.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/theme-toggle.tsx",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 8,
+      "total_cognitive": 8,
+      "function_count": 4,
+      "lines": 67,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/sidebar-organization.ts",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 90.2,
+      "total_cyclomatic": 12,
+      "total_cognitive": 6,
+      "function_count": 8,
+      "lines": 65,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/drop-indicator.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 94.2,
+      "total_cyclomatic": 5,
+      "total_cognitive": 4,
+      "function_count": 1,
+      "lines": 50,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/find-collection-in-tree.ts",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 94.3,
+      "total_cyclomatic": 5,
+      "total_cognitive": 6,
+      "function_count": 1,
+      "lines": 29,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/drag-preview.tsx",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 4,
+      "function_count": 1,
+      "lines": 70,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/utils/format-relative-date.ts",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.21,
+      "maintainability_index": 97.0,
+      "total_cyclomatic": 5,
+      "total_cognitive": 4,
+      "function_count": 1,
+      "lines": 24,
+      "crap_max": 5.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/settings-dialog.tsx",
+      "fan_in": 1,
+      "fan_out": 13,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.08,
+      "maintainability_index": 87.0,
+      "total_cyclomatic": 11,
+      "total_cognitive": 10,
+      "function_count": 7,
+      "lines": 136,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppBookmarkActions.ts",
+      "fan_in": 2,
+      "fan_out": 5,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 87.4,
+      "total_cyclomatic": 22,
+      "total_cognitive": 16,
+      "function_count": 19,
+      "lines": 119,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropProjection.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.29,
+      "maintainability_index": 88.5,
+      "total_cyclomatic": 16,
+      "total_cognitive": 10,
+      "function_count": 11,
+      "lines": 55,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+      "fan_in": 2,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 89.0,
+      "total_cyclomatic": 26,
+      "total_cognitive": 18,
+      "function_count": 15,
+      "lines": 303,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropMutations.ts",
+      "fan_in": 1,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 89.2,
+      "total_cyclomatic": 10,
+      "total_cognitive": 12,
+      "function_count": 7,
+      "lines": 97,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkToolbar.ts",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 89.9,
+      "total_cyclomatic": 16,
+      "total_cognitive": 15,
+      "function_count": 11,
+      "lines": 84,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCommandSearch.ts",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 12,
+      "total_cognitive": 12,
+      "function_count": 8,
+      "lines": 98,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useAppUpdates.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.23,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 21,
+      "total_cognitive": 12,
+      "function_count": 10,
+      "lines": 92,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/searchable-collections.ts",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 94.3,
+      "total_cyclomatic": 5,
+      "total_cognitive": 4,
+      "function_count": 2,
+      "lines": 44,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/request-budget.ts",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 96.9,
+      "total_cyclomatic": 5,
+      "total_cognitive": 2,
+      "function_count": 3,
+      "lines": 30,
+      "crap_max": 4.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/preload.ts",
+      "fan_in": 0,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.26,
+      "maintainability_index": 86.7,
+      "total_cyclomatic": 19,
+      "total_cognitive": 0,
+      "function_count": 19,
+      "lines": 74,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "fan_in": 2,
+      "fan_out": 14,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 87.7,
+      "total_cyclomatic": 16,
+      "total_cognitive": 17,
+      "function_count": 9,
+      "lines": 307,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-item-menu.tsx",
+      "fan_in": 3,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 90.9,
+      "total_cyclomatic": 15,
+      "total_cognitive": 10,
+      "function_count": 11,
+      "lines": 176,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-operation-dialogs.tsx",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 91.8,
+      "total_cyclomatic": 4,
+      "total_cognitive": 10,
+      "function_count": 1,
+      "lines": 70,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/favicon-icon.tsx",
+      "fan_in": 5,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 92.7,
+      "total_cyclomatic": 8,
+      "total_cognitive": 8,
+      "function_count": 4,
+      "lines": 126,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/raindrop-organization.ts",
+      "fan_in": 7,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 94.9,
+      "total_cyclomatic": 17,
+      "total_cognitive": 9,
+      "function_count": 8,
+      "lines": 100,
+      "crap_max": 4.1,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarExpansion.ts",
+      "fan_in": 1,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.2,
+      "maintainability_index": 88.5,
+      "total_cyclomatic": 14,
+      "total_cognitive": 13,
+      "function_count": 9,
+      "lines": 70,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppSearch.ts",
+      "fan_in": 1,
+      "fan_out": 6,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 88.6,
+      "total_cyclomatic": 9,
+      "total_cognitive": 11,
+      "function_count": 6,
+      "lines": 73,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-grid-list.tsx",
+      "fan_in": 1,
+      "fan_out": 7,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 89.9,
+      "total_cyclomatic": 13,
+      "total_cognitive": 23,
+      "function_count": 8,
+      "lines": 206,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-content.tsx",
+      "fan_in": 1,
+      "fan_out": 8,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 7,
+      "total_cognitive": 12,
+      "function_count": 5,
+      "lines": 161,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/index.ts",
+      "fan_in": 4,
+      "fan_out": 8,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 90.0,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 3,
+      "lines": 92,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppDialogs.ts",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.18,
+      "maintainability_index": 90.2,
+      "total_cyclomatic": 15,
+      "total_cognitive": 15,
+      "function_count": 9,
+      "lines": 82,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/hooks.ts",
+      "fan_in": 21,
+      "fan_out": 3,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 90.3,
+      "total_cyclomatic": 10,
+      "total_cognitive": 10,
+      "function_count": 10,
+      "lines": 72,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/uiSlice.ts",
+      "fan_in": 13,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 90.5,
+      "total_cyclomatic": 20,
+      "total_cognitive": 1,
+      "function_count": 18,
+      "lines": 121,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-loading-state.tsx",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 93.5,
+      "total_cyclomatic": 5,
+      "total_cognitive": 3,
+      "function_count": 2,
+      "lines": 71,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/select.tsx",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 9,
+      "total_cognitive": 2,
+      "function_count": 7,
+      "lines": 149,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/settingsSlice.ts",
+      "fan_in": 16,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.3,
+      "total_cyclomatic": 10,
+      "total_cognitive": 2,
+      "function_count": 8,
+      "lines": 323,
+      "crap_max": 3.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/usePendingWork.ts",
+      "fan_in": 11,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.37,
+      "maintainability_index": 93.3,
+      "total_cyclomatic": 11,
+      "total_cognitive": 4,
+      "function_count": 10,
+      "lines": 30,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCredentialStorageMode.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.27,
+      "maintainability_index": 93.7,
+      "total_cyclomatic": 6,
+      "total_cognitive": 3,
+      "function_count": 5,
+      "lines": 22,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/search-highlight.tsx",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 94.9,
+      "total_cyclomatic": 4,
+      "total_cognitive": 2,
+      "function_count": 2,
+      "lines": 39,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/indexed-search-highlight.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 3,
+      "total_cognitive": 1,
+      "function_count": 2,
+      "lines": 34,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/input-group.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 3,
+      "lines": 67,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/persistence.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.5,
+      "total_cyclomatic": 3,
+      "total_cognitive": 1,
+      "function_count": 2,
+      "lines": 42,
+      "crap_max": 2.9,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkDialogs.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.19,
+      "maintainability_index": 91.5,
+      "total_cyclomatic": 10,
+      "total_cognitive": 12,
+      "function_count": 10,
+      "lines": 53,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/content-type-select.tsx",
+      "fan_in": 2,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 92.4,
+      "total_cyclomatic": 2,
+      "total_cognitive": 0,
+      "function_count": 2,
+      "lines": 48,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarController.ts",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 92.7,
+      "total_cyclomatic": 5,
+      "total_cognitive": 11,
+      "function_count": 5,
+      "lines": 162,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppOrganization.ts",
+      "fan_in": 1,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 92.9,
+      "total_cyclomatic": 1,
+      "total_cognitive": 3,
+      "function_count": 1,
+      "lines": 18,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/searchSlice.ts",
+      "fan_in": 6,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.13,
+      "maintainability_index": 93.3,
+      "total_cyclomatic": 9,
+      "total_cognitive": 1,
+      "function_count": 8,
+      "lines": 71,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/app/page.tsx",
+      "fan_in": 0,
+      "fan_out": 4,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.01,
+      "maintainability_index": 93.3,
+      "total_cyclomatic": 2,
+      "total_cognitive": 0,
+      "function_count": 2,
+      "lines": 138,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/dialog.tsx",
+      "fan_in": 11,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 93.5,
+      "total_cyclomatic": 10,
+      "total_cognitive": 2,
+      "function_count": 8,
+      "lines": 150,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sheet.tsx",
+      "fan_in": 1,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 93.5,
+      "total_cyclomatic": 8,
+      "total_cognitive": 1,
+      "function_count": 7,
+      "lines": 118,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/alert-dialog.tsx",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 93.8,
+      "total_cyclomatic": 11,
+      "total_cognitive": 0,
+      "function_count": 11,
+      "lines": 179,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/electron/test-auth.ts",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.11,
+      "maintainability_index": 93.9,
+      "total_cyclomatic": 8,
+      "total_cognitive": 0,
+      "function_count": 8,
+      "lines": 75,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/content-type-icon.tsx",
+      "fan_in": 5,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 94.4,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 33,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/breadcrumb.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 8,
+      "total_cognitive": 2,
+      "function_count": 6,
+      "lines": 110,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/authSlice.ts",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 1,
+      "function_count": 4,
+      "lines": 67,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/app/layout.tsx",
+      "fan_in": 0,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.02,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 45,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/slices/dialogSlice.ts",
+      "fan_in": 7,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.16,
+      "maintainability_index": 95.2,
+      "total_cyclomatic": 17,
+      "total_cognitive": 0,
+      "function_count": 13,
+      "lines": 107,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/CredentialStorageNotice.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 2,
+      "function_count": 1,
+      "lines": 17,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/badge.tsx",
+      "fan_in": 10,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 50,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/progress.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 33,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/button.tsx",
+      "fan_in": 29,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.3,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 68,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/components/feature-card.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 15,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/components/site-header.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 34,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/website/src/components/site-footer.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.02,
+      "maintainability_index": 96.7,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 44,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/vite.config.ts",
+      "fan_in": 0,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.02,
+      "maintainability_index": 99.5,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 43,
+      "crap_max": 2.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/command.tsx",
+      "fan_in": 3,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 94.1,
+      "total_cyclomatic": 7,
+      "total_cognitive": 0,
+      "function_count": 7,
+      "lines": 134,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "scripts/check-health.mjs",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.12,
+      "maintainability_index": 94.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 3,
+      "function_count": 1,
+      "lines": 43,
+      "crap_max": 0.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/form-dialog-actions.tsx",
+      "fan_in": 2,
+      "fan_out": 2,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 94.9,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 37,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/tooltip.tsx",
+      "fan_in": 7,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.1,
+      "total_cyclomatic": 4,
+      "total_cognitive": 0,
+      "function_count": 4,
+      "lines": 58,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/card.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 5,
+      "total_cognitive": 0,
+      "function_count": 5,
+      "lines": 82,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sonner.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 4,
+      "total_cognitive": 1,
+      "function_count": 4,
+      "lines": 62,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/context-menu.tsx",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 8,
+      "total_cognitive": 0,
+      "function_count": 8,
+      "lines": 138,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/table.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.06,
+      "maintainability_index": 95.4,
+      "total_cyclomatic": 6,
+      "total_cognitive": 0,
+      "function_count": 6,
+      "lines": 98,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/popover.tsx",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.07,
+      "maintainability_index": 95.5,
+      "total_cyclomatic": 3,
+      "total_cognitive": 0,
+      "function_count": 3,
+      "lines": 41,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+      "fan_in": 6,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 95.7,
+      "total_cyclomatic": 9,
+      "total_cognitive": 0,
+      "function_count": 9,
+      "lines": 188,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/scroll-area.tsx",
+      "fan_in": 8,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 0,
+      "function_count": 2,
+      "lines": 56,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSearchState.ts",
+      "fan_in": 2,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.17,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 2,
+      "lines": 12,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/tabs.tsx",
+      "fan_in": 1,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 4,
+      "total_cognitive": 0,
+      "function_count": 4,
+      "lines": 89,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/scripts/codegen-api.ts",
+      "fan_in": 0,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.22,
+      "maintainability_index": 96.0,
+      "total_cyclomatic": 2,
+      "total_cognitive": 1,
+      "function_count": 1,
+      "lines": 9,
+      "crap_max": 0.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/store/api/emptyApi.ts",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 20,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useNetworkStatus.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.24,
+      "maintainability_index": 97.0,
+      "total_cyclomatic": 5,
+      "total_cognitive": 1,
+      "function_count": 5,
+      "lines": 21,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/use-mobile.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.1,
+      "maintainability_index": 97.1,
+      "total_cyclomatic": 5,
+      "total_cognitive": 1,
+      "function_count": 5,
+      "lines": 48,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/hooks/useDebouncedSearch.ts",
+      "fan_in": 1,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.25,
+      "maintainability_index": 97.6,
+      "total_cyclomatic": 4,
+      "total_cognitive": 2,
+      "function_count": 4,
+      "lines": 16,
+      "crap_max": 1.2,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/checkbox.tsx",
+      "fan_in": 5,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 33,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/label.tsx",
+      "fan_in": 10,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 25,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/separator.tsx",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 27,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/switch.tsx",
+      "fan_in": 4,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.03,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 34,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/textarea.tsx",
+      "fan_in": 3,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.05,
+      "maintainability_index": 96.6,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 22,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/input.tsx",
+      "fan_in": 14,
+      "fan_out": 1,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.04,
+      "maintainability_index": 96.7,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 24,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/components/ui/collapsible.tsx",
+      "fan_in": 2,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.09,
+      "maintainability_index": 98.1,
+      "total_cyclomatic": 3,
+      "total_cognitive": 0,
+      "function_count": 3,
+      "lines": 35,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    },
+    {
+      "path": "apps/desktop/src/lib/utils.ts",
+      "fan_in": 43,
+      "fan_out": 0,
+      "dead_code_ratio": 0.0,
+      "complexity_density": 0.14,
+      "maintainability_index": 99.4,
+      "total_cyclomatic": 1,
+      "total_cognitive": 0,
+      "function_count": 1,
+      "lines": 7,
+      "crap_max": 1.0,
+      "crap_above_threshold": 0
+    }
+  ],
+  "hotspot_summary": {
+    "since": "6 months",
+    "min_commits": 3,
+    "files_analyzed": 0,
+    "files_excluded": 99,
+    "shallow_clone": false,
+    "clock": {
+      "source": "head_commit",
+      "epoch_secs": 1793182446,
+      "reproducible": true
+    }
+  },
+  "change_coupling": {
+    "since": "12 months",
+    "commits_analyzed": 2,
+    "commits_skipped": 1,
+    "total_pairs": 0,
+    "thresholds": {
+      "max_files_per_commit": 30,
+      "min_revisions": 5,
+      "min_shared_revisions": 5,
+      "min_degree": 0.3,
+      "strong_degree": 0.5
+    },
+    "pairs": []
+  },
+  "large_functions": [
+    {
+      "path": "apps/desktop/src/components/main-app.tsx",
+      "name": "MainApp",
+      "line": 66,
+      "line_count": 309
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+      "name": "MainContent",
+      "line": 55,
+      "line_count": 251
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "AddBookmarkDialog",
+      "line": 418,
+      "line_count": 222
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableView",
+      "line": 910,
+      "line_count": 190
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagManagement",
+      "line": 352,
+      "line_count": 185
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+      "name": "MergeDialog",
+      "line": 134,
+      "line_count": 181
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "name": "CollectionDialog",
+      "line": 366,
+      "line_count": 179
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "DetailBookmarkForm",
+      "line": 482,
+      "line_count": 173
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "LeftSidebar",
+      "line": 1012,
+      "line_count": 171
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarOrganization.ts",
+      "name": "useSidebarOrganization",
+      "line": 31,
+      "line_count": 170
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+      "name": "RaindropListItem",
+      "line": 60,
+      "line_count": 155
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-search.tsx",
+      "name": "CollectionSearch",
+      "line": 44,
+      "line_count": 154
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableRowItem",
+      "line": 368,
+      "line_count": 151
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "GroupSection",
+      "line": 784,
+      "line_count": 143
+    },
+    {
+      "path": "apps/desktop/src/lib/update-controller.ts",
+      "name": "createUpdateController",
+      "line": 39,
+      "line_count": 140
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+      "name": "useCollectionEditor",
+      "line": 227,
+      "line_count": 138
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarController.ts",
+      "name": "useSidebarController",
+      "line": 25,
+      "line_count": 137
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+      "name": "IconSettings",
+      "line": 95,
+      "line_count": 136
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCollectionsCrud.ts",
+      "name": "useCollectionsCrud",
+      "line": 31,
+      "line_count": 132
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-item-menu.tsx",
+      "name": "BookmarkItemMenu",
+      "line": 45,
+      "line_count": 131
+    },
+    {
+      "path": "apps/website/src/app/page.tsx",
+      "name": "Home",
+      "line": 8,
+      "line_count": 130
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "name": "useTagEditor",
+      "line": 64,
+      "line_count": 128
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-content.tsx",
+      "name": "BookmarkContent",
+      "line": 37,
+      "line_count": 124
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+      "name": "TagInput",
+      "line": 193,
+      "line_count": 124
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "useNewBookmarkEditor",
+      "line": 297,
+      "line_count": 120
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkInteraction.ts",
+      "name": "useBookmarkInteraction",
+      "line": 30,
+      "line_count": 117
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagMutationDialogs",
+      "line": 235,
+      "line_count": 116
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppCollectionEditor.ts",
+      "name": "useMainAppCollectionEditor",
+      "line": 52,
+      "line_count": 116
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropBatchActions.ts",
+      "name": "useRaindropBatchActions",
+      "line": 47,
+      "line_count": 116
+    },
+    {
+      "path": "apps/desktop/src/hooks/useSidebarDrag.ts",
+      "name": "useSidebarDrag",
+      "line": 22,
+      "line_count": 115
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+      "name": "ExportDialog",
+      "line": 21,
+      "line_count": 113
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkExport.ts",
+      "name": "useBookmarkExport",
+      "line": 30,
+      "line_count": 113
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRowButton",
+      "line": 535,
+      "line_count": 111
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+      "name": "GroupDialog",
+      "line": 87,
+      "line_count": 110
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "useDetailEditor",
+      "line": 167,
+      "line_count": 110
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+      "name": "BookmarkSearchControls",
+      "line": 409,
+      "line_count": 108
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+      "name": "CollectionSelector",
+      "line": 53,
+      "line_count": 105
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRowMenu",
+      "line": 306,
+      "line_count": 105
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sidebar.tsx",
+      "name": "Sidebar",
+      "line": 152,
+      "line_count": 105
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+      "name": "useBookmarkMetadata",
+      "line": 187,
+      "line_count": 103
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppBookmarkActions.ts",
+      "name": "useMainAppBookmarkActions",
+      "line": 16,
+      "line_count": 103
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/color-picker.tsx",
+      "name": "ColorPicker",
+      "line": 63,
+      "line_count": 101
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+      "name": "ShortcutEditor",
+      "line": 71,
+      "line_count": 99
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+      "name": "DirectoryView",
+      "line": 313,
+      "line_count": 98
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "name": "RaindropCard",
+      "line": 173,
+      "line_count": 98
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/settings-dialog.tsx",
+      "name": "SettingsDialog",
+      "line": 38,
+      "line_count": 98
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagRowItem",
+      "line": 135,
+      "line_count": 98
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-picker.tsx",
+      "name": "IconPicker",
+      "line": 50,
+      "line_count": 96
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-results.tsx",
+      "name": "SearchResultItem",
+      "line": 41,
+      "line_count": 94
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkDrag.ts",
+      "name": "useBookmarkDrag",
+      "line": 37,
+      "line_count": 94
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppGroupEditor.ts",
+      "name": "useMainAppGroupEditor",
+      "line": 15,
+      "line_count": 92
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppDetail.ts",
+      "name": "useMainAppDetail",
+      "line": 14,
+      "line_count": 91
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+      "name": "BookmarkCardCover",
+      "line": 83,
+      "line_count": 89
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+      "name": "DirectoryBookmarkRow",
+      "line": 86,
+      "line_count": 88
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-controls.tsx",
+      "name": "GlobalSearchControls",
+      "line": 21,
+      "line_count": 88
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "useViewNavigation",
+      "line": 106,
+      "line_count": 88
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-results.tsx",
+      "name": "SearchResultsList",
+      "line": 142,
+      "line_count": 87
+    },
+    {
+      "path": "apps/desktop/src/hooks/useTagsCrud.ts",
+      "name": "useTagsCrud",
+      "line": 24,
+      "line_count": 87
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+      "name": "GlobalSearchCommand",
+      "line": 112,
+      "line_count": 82
+    },
+    {
+      "path": "apps/desktop/src/components/ui/sidebar.tsx",
+      "name": "SidebarProvider",
+      "line": 69,
+      "line_count": 82
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppView.ts",
+      "name": "useMainAppView",
+      "line": 53,
+      "line_count": 82
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "BookmarkTableHeader",
+      "line": 743,
+      "line_count": 81
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "CollectionRow",
+      "line": 647,
+      "line_count": 80
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+      "name": "ShortcutRow",
+      "line": 184,
+      "line_count": 80
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/update-settings.tsx",
+      "name": "UpdateSettings",
+      "line": 90,
+      "line_count": 79
+    },
+    {
+      "path": "apps/desktop/src/hooks/useCommandSearch.ts",
+      "name": "useCommandSearch",
+      "line": 21,
+      "line_count": 77
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "<arrow>",
+      "line": 117,
+      "line_count": 76
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropMutations.ts",
+      "name": "useRaindropMutations",
+      "line": 22,
+      "line_count": 75
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+      "name": "useCollectionMerge",
+      "line": 42,
+      "line_count": 74
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppShortcuts.ts",
+      "name": "useMainAppShortcuts",
+      "line": 31,
+      "line_count": 73
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+      "name": "IconCandidatePreview",
+      "line": 14,
+      "line_count": 72
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "SidebarLibrary",
+      "line": 934,
+      "line_count": 72
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+      "name": "BookmarkViewControls",
+      "line": 223,
+      "line_count": 72
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "useTableRowActions",
+      "line": 222,
+      "line_count": 72
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+      "name": "SystemCollectionItem",
+      "line": 211,
+      "line_count": 71
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkToolbar.ts",
+      "name": "useBookmarkToolbar",
+      "line": 13,
+      "line_count": 71
+    },
+    {
+      "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+      "name": "handleKeyDown",
+      "line": 118,
+      "line_count": 71
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bookmark-grid-list.tsx",
+      "name": "BookmarkGridList",
+      "line": 136,
+      "line_count": 70
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/favicon-icon.tsx",
+      "name": "FaviconIcon",
+      "line": 55,
+      "line_count": 70
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "useTableSelection",
+      "line": 671,
+      "line_count": 70
+    },
+    {
+      "path": "apps/desktop/src/hooks/useIconCandidates.ts",
+      "name": "useIconCandidates",
+      "line": 51,
+      "line_count": 70
+    },
+    {
+      "path": "apps/desktop/src/hooks/useShortcutEditor.ts",
+      "name": "useShortcutEditor",
+      "line": 63,
+      "line_count": 68
+    },
+    {
+      "path": "apps/desktop/electron/raindrop-auth.ts",
+      "name": "#getAuthorizationCode",
+      "line": 188,
+      "line_count": 67
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+      "name": "TableBookmarkCells",
+      "line": 296,
+      "line_count": 67
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bulk-action-dialog.tsx",
+      "name": "useBulkActionEditor",
+      "line": 50,
+      "line_count": 66
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+      "name": "CollectionTreeNode",
+      "line": 241,
+      "line_count": 66
+    },
+    {
+      "path": "apps/desktop/electron/raindrop-auth.ts",
+      "name": "<arrow>",
+      "line": 189,
+      "line_count": 65
+    },
+    {
+      "path": "apps/desktop/electron/updater.ts",
+      "name": "getController",
+      "line": 50,
+      "line_count": 65
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "DetailUrlActions",
+      "line": 283,
+      "line_count": 65
+    },
+    {
+      "path": "apps/desktop/src/hooks/useRaindropBatchActions.ts",
+      "name": "run",
+      "line": 57,
+      "line_count": 65
+    },
+    {
+      "path": "apps/desktop/src/hooks/useTagManagement.ts",
+      "name": "useTagDelete",
+      "line": 212,
+      "line_count": 65
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/bulk-action-dialog.tsx",
+      "name": "BulkActionDialog",
+      "line": 123,
+      "line_count": 64
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+      "name": "BookmarkHeader",
+      "line": 153,
+      "line_count": 63
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+      "name": "RightDetailPanel",
+      "line": 661,
+      "line_count": 63
+    },
+    {
+      "path": "apps/desktop/src/hooks/useBookmarkExport.ts",
+      "name": "save",
+      "line": 47,
+      "line_count": 63
+    },
+    {
+      "path": "apps/desktop/src/hooks/useMainAppDialogs.ts",
+      "name": "useMainAppDialogs",
+      "line": 19,
+      "line_count": 63
+    },
+    {
+      "path": "apps/desktop/scripts/update-qa.ts",
+      "name": "buildVariant",
+      "line": 133,
+      "line_count": 62
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+      "name": "BookmarkBulkBar",
+      "line": 346,
+      "line_count": 61
+    },
+    {
+      "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+      "name": "TagRenameInput",
+      "line": 73,
+      "line_count": 61
+    },
+    {
+      "path": "apps/desktop/src/lib/api-mappers.ts",
+      "name": "toUiGroups",
+      "line": 280,
+      "line_count": 61
+    }
+  ],
+  "targets": [
+    {
+      "path": "apps/desktop/src/lib/file-upload.ts",
+      "priority": 18.5,
+      "efficiency": 9.3,
+      "recommendation": "Split high-impact file (78 LOC), 3 dependents amplify every change",
+      "category": "split_high_impact",
+      "effort": "medium",
+      "confidence": "medium",
+      "factors": [
+        {
+          "metric": "complexity_density",
+          "value": 0.45,
+          "threshold": 0.3,
+          "detail": "density 0.45 exceeds 0.3"
+        },
+        {
+          "metric": "fan_in",
+          "value": 3.0,
+          "threshold": 3.0,
+          "detail": "3 files depend on this"
+        }
+      ],
+      "evidence": {
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/raindrop/upload-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "UPLOAD_EXTENSIONS",
+                "local": "UPLOAD_EXTENSIONS",
+                "type_only": false
+              },
+              {
+                "imported": "UploadEntry",
+                "local": "UploadEntry",
+                "type_only": true
+              },
+              {
+                "imported": "UploadQuota",
+                "local": "UploadQuota",
+                "type_only": true
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/hooks/useUploadQueue.ts",
+            "symbols": [
+              {
+                "imported": "UploadEntry",
+                "local": "UploadEntry",
+                "type_only": true
+              },
+              {
+                "imported": "UploadMetadata",
+                "local": "UploadMetadata",
+                "type_only": true
+              },
+              {
+                "imported": "UploadQuota",
+                "local": "UploadQuota",
+                "type_only": true
+              },
+              {
+                "imported": "fetchUploadQuota",
+                "local": "fetchUploadQuota",
+                "type_only": false
+              },
+              {
+                "imported": "uploadFile",
+                "local": "uploadFile",
+                "type_only": false
+              },
+              {
+                "imported": "validateUpload",
+                "local": "validateUpload",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/lib/file-upload.test.ts",
+            "symbols": [
+              {
+                "imported": "UploadEntry",
+                "local": "UploadEntry",
+                "type_only": true
+              },
+              {
+                "imported": "UploadMetadata",
+                "local": "UploadMetadata",
+                "type_only": true
+              },
+              {
+                "imported": "UploadQuota",
+                "local": "UploadQuota",
+                "type_only": true
+              },
+              {
+                "imported": "uploadFile",
+                "local": "uploadFile",
+                "type_only": false
+              },
+              {
+                "imported": "validateUpload",
+                "local": "validateUpload",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Split high-impact file (78 LOC), 3 dependents amplify every change",
+          "category": "split_high_impact"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/hooks/usePendingWork.ts",
+      "priority": 26.1,
+      "efficiency": 8.7,
+      "recommendation": "Split high-impact file (30 LOC), 11 dependents amplify every change",
+      "category": "split_high_impact",
+      "effort": "high",
+      "confidence": "medium",
+      "factors": [
+        {
+          "metric": "complexity_density",
+          "value": 0.37,
+          "threshold": 0.3,
+          "detail": "density 0.37 exceeds 0.3"
+        },
+        {
+          "metric": "fan_in",
+          "value": 11.0,
+          "threshold": 3.0,
+          "detail": "11 files depend on this"
+        }
+      ],
+      "evidence": {
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "useHasPendingWork",
+                "local": "useHasPendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "usePendingWork",
+                "local": "usePendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.test.tsx",
+            "symbols": [
+              {
+                "imported": "useHasPendingWork",
+                "local": "useHasPendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "usePendingWork",
+                "local": "usePendingWork",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+            "symbols": [
+              {
+                "imported": "usePendingWork",
+                "local": "usePendingWork",
+                "type_only": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Split high-impact file (30 LOC), 11 dependents amplify every change",
+          "category": "split_high_impact"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    },
+    {
+      "path": "apps/desktop/src/store/api/accountApi.ts",
+      "priority": 15.2,
+      "efficiency": 7.6,
+      "recommendation": "Split high-impact file (35 LOC), 3 dependents amplify every change",
+      "category": "split_high_impact",
+      "effort": "medium",
+      "confidence": "medium",
+      "factors": [
+        {
+          "metric": "complexity_density",
+          "value": 0.34,
+          "threshold": 0.3,
+          "detail": "density 0.34 exceeds 0.3"
+        },
+        {
+          "metric": "fan_in",
+          "value": 3.0,
+          "threshold": 3.0,
+          "detail": "3 files depend on this"
+        }
+      ],
+      "evidence": {
+        "direct_callers": [
+          {
+            "path": "apps/desktop/src/hooks/useRaindropsCrud.ts",
+            "symbols": [
+              {
+                "imported": "useGetBookmarkPagesInfiniteQuery",
+                "local": "useGetBookmarkPagesInfiniteQuery",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/hooks/useSidebarData.ts",
+            "symbols": [
+              {
+                "imported": "useGetUserStatsQuery",
+                "local": "useGetUserStatsQuery",
+                "type_only": false
+              }
+            ]
+          },
+          {
+            "path": "apps/desktop/src/lib/bookmark-export.ts",
+            "symbols": [
+              {
+                "imported": "UserStats",
+                "local": "UserStats",
+                "type_only": true
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "apply-refactoring",
+          "auto_fixable": false,
+          "description": "Split high-impact file (35 LOC), 3 dependents amplify every change",
+          "category": "split_high_impact"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress the underlying complexity finding",
+          "comment": "// fallow-ignore-next-line complexity"
+        }
+      ]
+    }
+  ],
+  "target_thresholds": {
+    "fan_in_p95": 11.0,
+    "fan_in_p75": 3.0,
+    "fan_out_p95": 11.0,
+    "fan_out_p90": 8
+  },
+  "framework_health": {
+    "detected_frameworks": ["next", "react"],
+    "detectors": [
+      {
+        "id": "invalid-client-export",
+        "framework": "next",
+        "status": "active"
+      },
+      {
+        "id": "mixed-client-server-barrel",
+        "framework": "next",
+        "status": "active"
+      },
+      { "id": "misplaced-directive", "framework": "next", "status": "active" },
+      { "id": "route-collision", "framework": "next", "status": "active" },
+      {
+        "id": "dynamic-segment-name-conflict",
+        "framework": "next",
+        "status": "active"
+      },
+      { "id": "unused-server-action", "framework": "next", "status": "active" },
+      {
+        "id": "unused-component-prop",
+        "framework": "react",
+        "status": "active"
+      },
+      {
+        "id": "prop-drilling",
+        "framework": "react",
+        "status": "disabled_by_config",
+        "reason": "disabled_by_config"
+      },
+      {
+        "id": "thin-wrapper",
+        "framework": "react",
+        "status": "disabled_by_config",
+        "reason": "disabled_by_config"
+      },
+      {
+        "id": "duplicate-prop-shape",
+        "framework": "react",
+        "status": "disabled_by_config",
+        "reason": "disabled_by_config"
+      }
+    ]
+  },
+  "gate_outcomes": {
+    "health-findings": {
+      "status": "fail",
+      "enforced": true,
+      "observed": 18.0,
+      "threshold_label": "error"
+    }
+  },
+  "workspace_diagnostics": [
+    {
+      "path": ".",
+      "kind": "boundaries-not-configured",
+      "message": "No architecture boundaries are configured, so the boundary detector did not run and its violation counts are zero because nothing was measured. Add `boundaries` to the config, or set `boundary-violation` to off to state that the check is not wanted."
+    },
+    {
+      "path": ".",
+      "kind": "rule-packs-not-configured",
+      "message": "No rule packs are configured, so the policy detector did not run and its violation counts are zero because nothing was measured. Add `rulePacks` to the config, or set `policy-violation` to off to state that the check is not wanted."
+    },
+    {
+      "path": ".",
+      "kind": "change-coupling-skipped",
+      "cause": "too-few-commits",
+      "message": "Change coupling found no pairs because the history window has fewer analyzed commits than the minimum revisions of one file. Widen the window with --since, or lower health.changeCoupling.minRevisions."
+    }
+  ],
+  "next_steps": [
+    {
+      "id": "complexity-breakdown",
+      "command": "fallow health --complexity-breakdown",
+      "reason": "see per-decision-point contributions for a hotspot"
+    },
+    {
+      "id": "audit-changed",
+      "command": "fallow audit",
+      "reason": "gate only the files your branch changed (auto-detects the base)"
+    }
+  ],
+  "_meta": { "telemetry": { "analysis_run_id": "run_cdde094f961c9e35" } }
+}

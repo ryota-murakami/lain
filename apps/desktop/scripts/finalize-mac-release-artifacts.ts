@@ -26,6 +26,7 @@ import {
   writeFileSync,
 } from 'node:fs'
 import { basename, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 /** Mirrors `productName` in electron-builder.yml — artifact names start with it. */
 const PRODUCT_NAME = 'Lain'
@@ -67,11 +68,13 @@ function readPackageVersion(): string {
  * buildNotaryArgs() // => ['--apple-id', 'dev@example.com', '--password', '…', '--team-id', 'ABCDE12345']
  * ```
  */
-function buildNotaryArgs(): string[] {
-  const keychainProfile = process.env.APPLE_KEYCHAIN_PROFILE
+export function buildNotaryArgs(
+  env: NodeJS.ProcessEnv = process.env,
+): string[] {
+  const keychainProfile = env.APPLE_KEYCHAIN_PROFILE
   if (keychainProfile) return ['--keychain-profile', keychainProfile]
 
-  const { APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID } = process.env
+  const { APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID } = env
   if (!APPLE_ID || !APPLE_APP_SPECIFIC_PASSWORD || !APPLE_TEAM_ID) {
     throw new Error(
       'Missing notarization credentials. Set APPLE_KEYCHAIN_PROFILE or APPLE_ID / APPLE_APP_SPECIFIC_PASSWORD / APPLE_TEAM_ID.',
@@ -108,6 +111,40 @@ function hasStapledTicket(dmgPath: string): boolean {
 }
 
 /**
+ * Require Apple's accepted JSON verdict without echoing credential-bearing command errors.
+ * Called before stapling; subprocess output stays private because failed exec errors can include argv passwords.
+ * @example submitNotarization(dmgPath, buildNotaryArgs())
+ */
+function submitNotarization(dmgPath: string, notaryArgs: string[]): void {
+  try {
+    const output = execFileSync(
+      'xcrun',
+      [
+        'notarytool',
+        'submit',
+        dmgPath,
+        ...notaryArgs,
+        '--wait',
+        '--output-format',
+        'json',
+      ],
+      { encoding: 'utf8', stdio: 'pipe' },
+    )
+    const result: unknown = JSON.parse(output)
+    if (
+      !result ||
+      typeof result !== 'object' ||
+      Reflect.get(result, 'status') !== 'Accepted'
+    )
+      throw new Error('Submission was not accepted.')
+  } catch {
+    throw new Error(
+      `Notarization failed for ${basename(dmgPath)}. No ticket was stapled; inspect the submission through the authorized Apple credential route.`,
+    )
+  }
+}
+
+/**
  * Submit one DMG to Apple, wait for the verdict, then staple and validate the ticket.
  *
  * @param dmgPath - Absolute path of the DMG.
@@ -119,7 +156,10 @@ function hasStapledTicket(dmgPath: string): boolean {
  * notarizeAndStapleDmg('/repo/release/Lain-0.1.1-arm64.dmg', buildNotaryArgs())
  * ```
  */
-function notarizeAndStapleDmg(dmgPath: string, notaryArgs: string[]): void {
+export function notarizeAndStapleDmg(
+  dmgPath: string,
+  notaryArgs: string[],
+): void {
   const dmgName = basename(dmgPath)
   // Idempotent re-runs: an already stapled DMG is final
   if (hasStapledTicket(dmgPath)) {
@@ -127,11 +167,7 @@ function notarizeAndStapleDmg(dmgPath: string, notaryArgs: string[]): void {
     return
   }
   console.log(`[finalize-mac] Notarizing ${dmgName}…`)
-  execFileSync(
-    'xcrun',
-    ['notarytool', 'submit', dmgPath, ...notaryArgs, '--wait'],
-    { stdio: 'inherit' },
-  )
+  submitNotarization(dmgPath, notaryArgs)
   console.log(`[finalize-mac] Stapling ${dmgName}…`)
   execFileSync('xcrun', ['stapler', 'staple', dmgPath], { stdio: 'inherit' })
   execFileSync('xcrun', ['stapler', 'validate', dmgPath], { stdio: 'inherit' })
@@ -166,7 +202,11 @@ function hashFile(filePath: string, algorithm: 'sha512' | 'sha256'): string {
  * rewriteLatestMacYaml(['/repo/release/Lain-0.1.1-mac.zip'], '0.1.1')
  * ```
  */
-function rewriteLatestMacYaml(artifactPaths: string[], version: string): void {
+function rewriteLatestMacYaml(
+  artifactPaths: string[],
+  version: string,
+  outputDirectory: string,
+): void {
   const files = artifactPaths.map((artifactPath) => ({
     name: basename(artifactPath),
     sha512: hashFile(artifactPath, 'sha512'),
@@ -189,7 +229,7 @@ function rewriteLatestMacYaml(artifactPaths: string[], version: string): void {
     `releaseDate: '${new Date().toISOString()}'`,
     '',
   ].join('\n')
-  writeFileSync(join(OUTPUT_DIR, 'latest-mac.yml'), yaml)
+  writeFileSync(join(outputDirectory, 'latest-mac.yml'), yaml)
 }
 
 /**
@@ -203,7 +243,10 @@ function rewriteLatestMacYaml(artifactPaths: string[], version: string): void {
  * // release/checksums.json => { "Lain-0.1.1.dmg": { "sha256": "…", "size": 120861576 } }
  * ```
  */
-function writeChecksumsJson(artifactPaths: string[]): void {
+function writeChecksumsJson(
+  artifactPaths: string[],
+  outputDirectory: string,
+): void {
   const checksums = Object.fromEntries(
     artifactPaths.map((artifactPath) => [
       basename(artifactPath),
@@ -214,20 +257,39 @@ function writeChecksumsJson(artifactPaths: string[]): void {
     ]),
   )
   writeFileSync(
-    join(OUTPUT_DIR, 'checksums.json'),
+    join(outputDirectory, 'checksums.json'),
     `${JSON.stringify(checksums, null, 2)}\n`,
   )
 }
 
-function main(): void {
-  // DMG notarization only exists on macOS
-  if (process.platform !== 'darwin') {
-    console.log('[finalize-mac] Skipping: not running on macOS')
-    return
+/** Refuse incomplete architecture output before submitting anything to Apple. @example requireArtifacts(paths) */
+function requireArtifacts(paths: string[]): void {
+  for (const artifactPath of paths) {
+    if (!existsSync(artifactPath))
+      throw new Error(`Expected artifact does not exist: ${artifactPath}`)
   }
-  const version = readPackageVersion()
-  const notaryArgs = buildNotaryArgs()
-  const artifact = (fileName: string) => join(OUTPUT_DIR, fileName)
+}
+
+/** Remove only DMG sidecars invalidated by stapling; ZIP blockmaps remain valid. @example removeStaleDmgBlockmaps(dmgPaths) */
+function removeStaleDmgBlockmaps(paths: string[]): void {
+  for (const dmgPath of paths) {
+    if (existsSync(`${dmgPath}.blockmap`)) unlinkSync(`${dmgPath}.blockmap`)
+  }
+}
+
+/**
+ * Finalize both macOS architectures and recalculate metadata from the stapled bytes.
+ * The CLI invokes this after packaging; isolated tests exercise the same filesystem operations.
+ * @param outputDirectory - Directory containing all four expected ZIP/DMG artifacts.
+ * @throws When any artifact is missing, Apple rejects submission, or stapling fails.
+ * @example finalizeMacArtifacts('release', '0.1.1', buildNotaryArgs())
+ */
+export function finalizeMacArtifacts(
+  outputDirectory: string,
+  version: string,
+  notaryArgs: string[],
+): void {
+  const artifact = (fileName: string) => join(outputDirectory, fileName)
   const dmgPaths = [
     artifact(`${PRODUCT_NAME}-${version}.dmg`),
     artifact(`${PRODUCT_NAME}-${version}-arm64.dmg`),
@@ -237,22 +299,21 @@ function main(): void {
     artifact(`${PRODUCT_NAME}-${version}-arm64-mac.zip`),
     ...dmgPaths,
   ]
-
-  // Fail fast when electron-builder did not emit an expected artifact
-  for (const artifactPath of releaseArtifactPaths) {
-    if (!existsSync(artifactPath)) {
-      throw new Error(`Expected artifact does not exist: ${artifactPath}`)
-    }
-  }
+  requireArtifacts(releaseArtifactPaths)
   for (const dmgPath of dmgPaths) notarizeAndStapleDmg(dmgPath, notaryArgs)
-
-  // Stapling rewrites the DMG, so its blockmap no longer matches — drop it
-  for (const dmgPath of dmgPaths) {
-    if (existsSync(`${dmgPath}.blockmap`)) unlinkSync(`${dmgPath}.blockmap`)
-  }
-  rewriteLatestMacYaml(releaseArtifactPaths, version)
-  writeChecksumsJson(releaseArtifactPaths)
+  removeStaleDmgBlockmaps(dmgPaths)
+  rewriteLatestMacYaml(releaseArtifactPaths, version, outputDirectory)
+  writeChecksumsJson(releaseArtifactPaths, outputDirectory)
   console.log('[finalize-mac] Finalized signed + notarized macOS artifacts.')
 }
 
-main()
+/** Apply platform guards and local release configuration before native finalization. @example main() */
+function main(): void {
+  if (process.platform !== 'darwin') {
+    console.log('[finalize-mac] Skipping: not running on macOS')
+    return
+  }
+  finalizeMacArtifacts(OUTPUT_DIR, readPackageVersion(), buildNotaryArgs())
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) main()

@@ -98,17 +98,3 @@ export function getTypeIcon(type: ContentType): string {
   }
   return map[type] || 'Globe'
 }
-
-/**
- * Extract domain and generate all favicon-related data from a URL.
- * @example getFaviconFromUrl("https://react.dev") // => { domain: "react.dev", faviconUrl: "...", initial: "R", color: "oklch(...)" }
- */
-export function getFaviconFromUrl(url: string, size = 32) {
-  const domain = extractDomain(url)
-  return {
-    domain,
-    faviconUrl: getFaviconUrl(domain, size),
-    initial: getDomainInitial(domain),
-    color: getDomainColor(domain),
-  }
-}

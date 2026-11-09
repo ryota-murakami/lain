@@ -6,15 +6,18 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'happy-dom',
-    // Node 25+ ships a global `localStorage` that is undefined without --localstorage-file,
-    // and Vitest 4 keeps it instead of happy-dom's Storage (fixed only in Vitest 5, vitest-dev/vitest#10867).
-    execArgv: ['--no-experimental-webstorage'],
     setupFiles: ['./test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html', 'lcov'],
-      include: ['src/**/*.{ts,tsx}'],
+      reporter: ['text', 'html', 'lcov', 'json', 'json-summary'],
+      include: [
+        'src/**/*.{ts,tsx}',
+        'electron/**/*.ts',
+        'scripts/e2e-coverage-report.ts',
+        'scripts/spec-requirements.ts',
+        'scripts/finalize-mac-release-artifacts.ts',
+      ],
       exclude: ['test/**', 'src/**/*.test.*', 'src/store/api/raindropApi.ts'],
       // Gate: fail `pnpm test:coverage` when coverage regresses below these floors.
       // Baseline 2026-09-22: 50.0% stmts / 35.0% branches / 38.0% funcs / 51.1% lines.
@@ -29,9 +32,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@test': path.resolve(__dirname, './test'),
-      '@fixtures': path.resolve(__dirname, './fixtures'),
+      '@': path.resolve(import.meta.dirname, './src'),
+      '@test': path.resolve(import.meta.dirname, './test'),
+      '@fixtures': path.resolve(import.meta.dirname, './fixtures'),
     },
   },
 })

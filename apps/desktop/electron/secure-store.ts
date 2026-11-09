@@ -1,9 +1,29 @@
 import { safeStorage } from 'electron'
 import Store from 'electron-store'
 
-const store = new Store<Record<string, string>>({
-  name: 'lain-auth',
-})
+let store: Store<Record<string, string>> | undefined
+
+/** Open credential storage only after the main process configures its userData directory. */
+function getStore() {
+  return (store ??= new Store<Record<string, string>>({ name: 'lain-auth' }))
+}
+
+const sessionValues = new Map<string, string>()
+
+/**
+ * Decide whether credentials can persist securely on this desktop session.
+ * Linux basic_text uses a fixed key and therefore falls back to memory only.
+ * @example credentialStorageMode() // 'encrypted' or 'session'
+ */
+export function credentialStorageMode(): 'encrypted' | 'session' {
+  if (!safeStorage.isEncryptionAvailable()) return 'session'
+  if (
+    process.platform === 'linux' &&
+    ['basic_text', 'unknown'].includes(safeStorage.getSelectedStorageBackend())
+  )
+    return 'session'
+  return 'encrypted'
+}
 
 /**
  * Encrypted token storage using Electron safeStorage + electron-store.
@@ -23,11 +43,12 @@ export const secureStore = {
    * @param value - Plain text value to encrypt
    */
   set(key: string, value: string): void {
-    if (!safeStorage.isEncryptionAvailable()) {
-      throw new Error('Encryption not available on this platform')
+    if (credentialStorageMode() === 'session') {
+      sessionValues.set(key, value)
+      return
     }
     const encrypted = safeStorage.encryptString(value)
-    store.set(key, encrypted.toString('latin1'))
+    getStore().set(key, encrypted.toString('latin1'))
   },
 
   /**
@@ -36,13 +57,15 @@ export const secureStore = {
    * @returns Decrypted value or null if not found / decryption fails
    */
   get(key: string): string | null {
-    const encrypted = store.get(key)
+    if (credentialStorageMode() === 'session')
+      return sessionValues.get(key) ?? null
+    const encrypted = getStore().get(key)
     if (!encrypted) return null
 
     try {
       return safeStorage.decryptString(Buffer.from(encrypted, 'latin1'))
     } catch {
-      store.delete(key)
+      getStore().delete(key)
       return null
     }
   },
@@ -52,11 +75,13 @@ export const secureStore = {
    * @param key - Storage key to delete
    */
   delete(key: string): void {
-    store.delete(key)
+    sessionValues.delete(key)
+    getStore().delete(key)
   },
 
   /** Remove all stored tokens and auth data. */
   clear(): void {
-    store.clear()
+    sessionValues.clear()
+    getStore().clear()
   },
 }

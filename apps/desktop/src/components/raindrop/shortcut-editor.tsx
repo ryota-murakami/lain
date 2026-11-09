@@ -124,6 +124,11 @@ export const ShortcutEditor = React.memo(function ShortcutEditor() {
         </AlertDialog>
       </div>
 
+      <p className="text-muted-foreground text-xs">
+        Escape stays fixed so dialogs can always close and key capture can be
+        canceled. On Linux, use Control instead of Command; Super is reserved
+        for the desktop.
+      </p>
       <div className="max-h-[400px] overflow-y-auto">
         {visibleDefinitions.length === 0 && (
           <p className="text-muted-foreground py-6 text-center text-sm">
@@ -214,7 +219,10 @@ const ShortcutRow = React.memo(function ShortcutRow({
               </kbd>
             )}
             {isFixed ? (
-              <span className="text-muted-foreground w-12 text-center text-xs">
+              <span
+                title="Escape is reserved for closing dialogs and cancelling key capture."
+                className="text-muted-foreground w-12 text-center text-xs"
+              >
                 Fixed
               </span>
             ) : (

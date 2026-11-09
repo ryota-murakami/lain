@@ -1,44 +1,78 @@
 import type { Collection, Raindrop } from '@/lib/types'
 
-import { findCollectionInTree } from './find-collection-in-tree'
-
-/** Folder names for raindrops whose API collection id has no node in the user's tree. */
-const SYSTEM_COLLECTION_NAMES: Record<string, string> = {
-  '-1': 'Unsorted',
-  '-99': 'Trash',
-}
-
-/** Group id given to synthetic folders that belong to no user group. */
+const SYSTEM_COLLECTION_NAMES = new Map([
+  ['-1', 'Unsorted'],
+  ['-99', 'Trash'],
+  ['unsorted', 'Unsorted'],
+  ['trash', 'Trash'],
+])
 const SYSTEM_GROUP_ID = 'system'
 
 export interface DirectoryTree {
-  /** Root nodes the Directory view renders (nested via `children`) */
+  /** Root nodes rendered by DirectoryView, with bounded nested children. */
   collections: Collection[]
-  /** Loaded raindrops keyed by the collection id they belong to */
+  /** Loaded bookmarks, preserving API order within each collection. */
   raindropsByCollection: Record<string, Raindrop[]>
 }
 
 export interface BuildDirectoryTreeArgs {
-  /** Root collections of every group, with nested `children` */
   collections: Collection[]
-  /** Raindrops currently loaded for the selected scope */
   raindrops: Raindrop[]
-  /** Sidebar selection: 'all' | 'unsorted' | 'trash' | collection id */
   selectedCollectionId: string
-  /** Display name of the selection, used to label synthetic system folders */
   currentCollectionName: string
 }
 
 /**
- * Create a flat stand-in folder for raindrops that live outside the rendered subtree.
- * @param id - Collection id the raindrops carry
- * @param name - Folder label
- * @param count - Number of loaded raindrops in the folder
- * @returns Collection without children or group membership
- * @example
- * createSyntheticCollection('-1', 'Unsorted', 3) // => { id: '-1', name: 'Unsorted', count: 3, ... }
+ * Copy and index the hierarchy without repeating nodes or following malformed cycles.
+ * {@link buildDirectoryTree} uses the index for selected-scope and orphan-name lookups.
+ * @returns Safe roots and all reachable nodes; the caller's collection objects are unchanged.
+ * @example const tree = indexDirectoryCollections(collections)
  */
-function createSyntheticCollection(
+function indexDirectoryCollections(collections: Collection[]) {
+  const roots: Collection[] = []
+  const byId = new Map<string, Collection>()
+  const pending = [...collections]
+    .reverse()
+    .map((node) => ({ node, destination: roots }))
+  while (pending.length) {
+    const { node, destination } = pending.pop()!
+    // The first occurrence owns a collection ID; cycles and duplicate edges are omitted.
+    if (byId.has(node.id)) continue
+    const clone: Collection = {
+      ...node,
+      ...(node.children ? { children: [] } : {}),
+    }
+    byId.set(node.id, clone)
+    destination.push(clone)
+    for (const child of [...(node.children ?? [])].reverse())
+      pending.push({ node: child, destination: clone.children! })
+  }
+  return { roots, byId }
+}
+
+/**
+ * Gather descendants when a selected subtree needs orphan bookmark folders appended.
+ * Input comes from {@link indexDirectoryCollections}, which removes malformed cycles.
+ * @example const ids = collectDirectoryIds([selectedCollection])
+ */
+function collectDirectoryIds(collections: Collection[]): Set<string> {
+  const ids = new Set<string>()
+  const pending = [...collections]
+  while (pending.length) {
+    const collection = pending.pop()!
+    if (ids.has(collection.id)) continue
+    ids.add(collection.id)
+    pending.push(...(collection.children ?? []))
+  }
+  return ids
+}
+
+/**
+ * Represent loaded bookmarks that have no visible collection node, without inventing hierarchy.
+ * Called by {@link buildDirectoryTree} for system scopes and out-of-scope search hits.
+ * @example syntheticDirectoryFolder('-1', 'Unsorted', 3)
+ */
+function syntheticDirectoryFolder(
   id: string,
   name: string,
   count: number,
@@ -46,85 +80,37 @@ function createSyntheticCollection(
   return { id, name, icon: 'Folder', count, groupId: SYSTEM_GROUP_ID }
 }
 
-/**
- * Bucket raindrops by `collectionId`, preserving the incoming (API-sorted) order.
- * @param raindrops - Loaded raindrops
- * @returns Map of collection id → raindrops in that collection
- * @example
- * groupRaindropsByCollection([{ id: '1', collectionId: '100' }]) // => { '100': [{ id: '1', ... }] }
- */
-function groupRaindropsByCollection(
+/** Bucket loaded bookmarks by their actual owner, normalizing only the selected system folder alias. */
+function groupDirectoryBookmarks(
   raindrops: Raindrop[],
-): Record<string, Raindrop[]> {
-  const grouped: Record<string, Raindrop[]> = {}
-  for (const raindrop of raindrops) {
-    ;(grouped[raindrop.collectionId] ??= []).push(raindrop)
+  selectedCollectionId: string,
+): Map<string, Raindrop[]> {
+  const grouped = new Map<string, Raindrop[]>()
+  const systemId =
+    selectedCollectionId === 'unsorted'
+      ? '-1'
+      : selectedCollectionId === 'trash'
+        ? '-99'
+        : undefined
+  for (const bookmark of raindrops) {
+    // Normalize only the selected system folder; other global-search hits keep their owner.
+    const id =
+      bookmark.collectionId === systemId
+        ? selectedCollectionId
+        : bookmark.collectionId
+    const bucket = grouped.get(id)
+    if (bucket) bucket.push(bookmark)
+    else grouped.set(id, [bookmark])
   }
   return grouped
 }
 
 /**
- * Collect every collection id reachable in a tree, including nested children.
- * @param collections - Root collections
- * @returns Set of all ids in the tree
- * @example
- * collectTreeIds([{ id: '100', children: [{ id: '200' }] }]) // => Set { '100', '200' }
- */
-function collectTreeIds(collections: Collection[]): Set<string> {
-  const ids = new Set<string>()
-  const visit = (nodes: Collection[]) => {
-    for (const node of nodes) {
-      ids.add(node.id)
-      visit(node.children ?? [])
-    }
-  }
-  visit(collections)
-  return ids
-}
-
-/**
- * Stand-in folders for raindrops whose collection is not in the rendered subtree
- * (global search hits from other collections, Unsorted, Trash).
- * @param allCollections - Full tree, used to label folders with the real collection name
- * @param visibleIds - Ids already rendered
- * @param raindropsByCollection - Grouped raindrops
- * @returns One synthetic folder per out-of-tree collection id, in first-seen order
- * @example
- * createOrphanFolders(roots, new Set(['101']), { '100': [dev], '101': [design] })
- * // => [{ id: '100', name: 'Development', count: 1, ... }]
- */
-function createOrphanFolders(
-  allCollections: Collection[],
-  visibleIds: Set<string>,
-  raindropsByCollection: Record<string, Raindrop[]>,
-): Collection[] {
-  return Object.entries(raindropsByCollection)
-    .filter(([collectionId]) => !visibleIds.has(collectionId))
-    .map(([collectionId, orphanRaindrops]) => {
-      const knownCollection = findCollectionInTree(allCollections, collectionId)
-      const name =
-        knownCollection?.name ??
-        SYSTEM_COLLECTION_NAMES[collectionId] ??
-        'Other'
-      return createSyntheticCollection(
-        collectionId,
-        name,
-        orphanRaindrops.length,
-      )
-    })
-}
-
-/**
- * Shape the Directory view's input for the current sidebar scope so every loaded raindrop
- * hangs off a folder; MainContent recomputes it whenever raindrops or the selection change.
- * @param args - See {@link BuildDirectoryTreeArgs}
- * @returns
- * - 'all': every root collection, plus a synthetic folder per out-of-tree collection id
- * - a user collection: that subtree, plus synthetic folders for out-of-scope search hits
- * - a system collection (Unsorted / Trash): one synthetic folder holding all loaded raindrops
- * @example
- * buildDirectoryTree({ collections: roots, raindrops, selectedCollectionId: '101', currentCollectionName: 'Design' })
- * // => { collections: [designCollection], raindropsByCollection: { '101': [...] } }
+ * Group loaded bookmarks under the selected collection subtree while preserving API row order.
+ * MainContent calls this for Directory mode; empty descendants remain visible and global search
+ * hits retain their actual collection names, including searches initiated from a system folder.
+ * @returns Safe collection roots plus loaded bookmark buckets; no records are discarded.
+ * @example buildDirectoryTree({ collections: roots, raindrops, selectedCollectionId: '101', currentCollectionName: 'Design' })
  */
 export function buildDirectoryTree({
   collections,
@@ -132,34 +118,32 @@ export function buildDirectoryTree({
   selectedCollectionId,
   currentCollectionName,
 }: BuildDirectoryTreeArgs): DirectoryTree {
-  const raindropsByCollection = groupRaindropsByCollection(raindrops)
-  const scopedCollection =
+  const indexed = indexDirectoryCollections(collections)
+  const grouped = groupDirectoryBookmarks(raindrops, selectedCollectionId)
+  const scoped = indexed.byId.get(selectedCollectionId)
+  const visibleRoots =
     selectedCollectionId === 'all'
-      ? undefined
-      : findCollectionInTree(collections, selectedCollectionId)
-
-  // Unsorted / Trash are not part of the user tree: show a single folder with everything loaded
-  if (selectedCollectionId !== 'all' && !scopedCollection) {
-    return {
-      collections: [
-        createSyntheticCollection(
-          selectedCollectionId,
-          currentCollectionName,
-          raindrops.length,
-        ),
-      ],
-      raindropsByCollection: { [selectedCollectionId]: raindrops },
-    }
+      ? indexed.roots
+      : scoped
+        ? [scoped]
+        : [
+            syntheticDirectoryFolder(
+              selectedCollectionId,
+              currentCollectionName,
+              grouped.get(selectedCollectionId)?.length ?? 0,
+            ),
+          ]
+  const visibleIds = collectDirectoryIds(visibleRoots)
+  const orphanFolders: Collection[] = []
+  // Map iteration preserves first-seen folder order even for integer-looking IDs.
+  for (const [id, bookmarks] of grouped) {
+    if (visibleIds.has(id)) continue
+    const name =
+      indexed.byId.get(id)?.name ?? SYSTEM_COLLECTION_NAMES.get(id) ?? 'Other'
+    orphanFolders.push(syntheticDirectoryFolder(id, name, bookmarks.length))
   }
-
-  const visibleRoots = scopedCollection ? [scopedCollection] : collections
-  const orphanFolders = createOrphanFolders(
-    collections,
-    collectTreeIds(visibleRoots),
-    raindropsByCollection,
-  )
   return {
     collections: [...visibleRoots, ...orphanFolders],
-    raindropsByCollection,
+    raindropsByCollection: Object.fromEntries(grouped),
   }
 }

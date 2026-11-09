@@ -1,0 +1,62 @@
+# Release validation
+
+## Implemented workflow
+
+- PR packages: macOS arm64+x64 DMG/ZIP and Linux x64 AppImage/deb, always unsigned, no secrets; package smoke starts native Electron against synthetic API fixtures under macOS or Ubuntu 24.04/Xvfb.
+- Tag release: exact `v` + package version, quality gates, signed/notarized macOS builds, stapled DMGs, fresh metadata and verified artifact provenance, then public release. No tag has been pushed by this task.
+- Manual execution: unpublished artifacts and optional QA draft tagged `qa-v<version>-<run id>`, excluded from the production feed. Signing is opt-in and fails clearly when required repository secrets are absent.
+- Package output is deleted and rebuilt before every packaging run. The app's ASAR package contains the source SHA. Final checks validate expected packages, version, ASAR source identity, SHA-512 update metadata, SHA-256 checksums and both macOS ZIP blockmaps. Downloaded CI artifacts are checked again before release creation.
+- AppImage supports in-app updates; deb requires explicit installation of a downloaded new package. No claim that these are the same mechanism.
+
+## Evidence and limits
+
+- Six release-integrity regression tests pass: valid manifest, tampered bytes, wrong packaged source, stale package, traversal in metadata, and rejection of dirty local QA manifests.
+- The frozen-source desktop typecheck, lint, Knip, 531 unit tests, six release-integrity tests, strict fallow gates, website checks and workflow actionlint passed. The latest intermediate desktop build also passed all 86 Electron E2E tests. Clean-commit CI/package checks remain required.
+- `gh secret list --repo ryota-murakami/lain` returned no repository secrets on 2026-11-09. OAuth and signing credentials must be configured through the existing authorized credential route before signed CI can succeed. The parent agent verified an existing valid local Developer ID identity and existing Apple credential reference; local signing/notarization remains a separate executable validation route. No CoreLive secrets were copied.
+- Local unsigned macOS arm64/x64 DMG and ZIP packaging succeeded; all nine artifacts/feed/blockmaps passed checksum and embedded source verification. This is an intermediate uncommitted build (`sourceDirty: true`), not final-commit release evidence. The default Dock icon was verified inside ASAR (302,799 bytes).
+- Initial packaged arm64 smoke failed with a white renderer. The recorded video and page error identified an absent `/user/stats` E2E fixture (`changedBookmarksDate` access). The fixture and defensive read were corrected. Repeat packaged arm64 startup passed, with all four native view shortcuts, Settings, Updates test-mode controls and a real process restart preserving Directory view in the same temporary profile. Video frames were extracted and inspected; evidence is under `apps/desktop/test-results/package-smoke/`.
+- The package runner now fails on collected renderer exceptions and console errors in both process lifetimes. Validation first exposed nondeterministic external favicon 404 responses; remote images belonging to the synthetic fixtures now receive a fixed SVG response, while bundled assets and application logic remain real. Repeating the runner against the earlier arm64 package passed with zero runtime errors. This validates the strengthened runner, not the final application snapshot.
+- Twenty-six updater controller/UI/native-adapter/fixture-guard tests pass: explicit download/restart consent, failure and retry, duplicate request suppression, ready-state preservation, progress normalization, manual distribution behavior, test-mode network isolation, and native sender validation. These tests use fixtures/mocks; they do not prove a signed old-to-new installer execution.
+- A Developer ID signed arm64 old-to-new update passed locally on 2026-11-09 at 23:30 JST. QA version `0.1.2-qa.1794233818174.1` was replaced by `.2`; the signed replacement started with the same synthetic-account profile, Directory view, Dock icon I01 and localStorage marker. The loopback feed outage/retry, explicit download and Later confirmation were exercised first. Recorded transition frames were inspected. This used an intermediate dirty runtime snapshot, so final-commit revalidation remains required.
+- No successful notarization, CI run URL or draft release is claimed yet. Those remain pending execution.
+- Fifteen support-script tests pass. They verify specification-tag accounting and post-stapling hashes, ZIP blockmap retention, repeat-run idempotency, missing-artifact rejection, accepted-notary verdict enforcement and removal of credential-bearing subprocess errors from failure output. Native Apple calls are mocked in these tests.
+
+Required signing secret names: APPLE_CERTIFICATES_P12, APPLE_CERTIFICATES_PASSWORD, APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID. OAuth build inputs: VITE_RAINDROP_CLIENT_ID, RAINDROP_CLIENT_SECRET. Values must never be committed or printed.
+
+## Source identity
+
+CI and signed packaging reject a dirty Git tree. Local unsigned builds can test uncommitted development code, but both ASAR and checksums record that state; the normal release verifier rejects it. A final clean-commit rebuild is required before publication.
+
+## Native update contract
+
+Settings exposes the installed version, check state, available version, download progress, retry and explicit restart. The main process owns one state machine; timers and IPC share its in-flight operation. `autoDownload` and `autoInstallOnAppQuit` are false. Restart requires both enabled UI (no pending work) and the native confirmation; choosing Later keeps the verified download ready. Test and development profiles never contact the update feed. Linux AppImage is updated in-app; deb opens the fixed official package download page and is installed manually.
+
+## Isolated native updater fixture
+
+`apps/desktop/scripts/update-qa.ts` builds two signed QA versions (`0.1.2-qa.<run>.1` → `.2`) under a unique bundle ID, app name and updater cache namespace. It does not edit the production version or publish/tag a release. The fixture requires a packaged QA version, synthetic auth, a marked temporary profile, an app archive inside that fixture, and an explicit `127.0.0.1` HTTP feed. Normal builds and test mode remain unchanged.
+
+The runner tests an actual feed outage/retry, explicit download, native Later confirmation, native installation and the replaced app's code signature, version and preserved Directory/Dock-icon/localStorage settings. Optional `--notarize` also requires successful stapler and Gatekeeper validation. Each run writes `evidence/result.json`, video and screenshots into the private temporary fixture. The first execution stopped at concurrent source type errors before packaging. A later notarized-run launch stopped in the existing 1Password route with an authorization timeout (2026-11-09 22:53 JST), before build execution; no additional authentication attempts or automatic approvals were made. Notarization is pending that external approval. A Developer ID signed-only run is an independent native update test and is recorded with `notarizationRequested: false`; the signed-only run described above passed the native upgrade. Its result explicitly records `realAccountCredentialsTested: false`. Synthetic authentication is explicitly recorded, so this is not a claim that real account credentials survived an update.
+
+The runner supplies deterministic Later/Install responses to Electron's `dialog.showMessageBox` inside the isolated fixture. It verifies both consent branches through the real updater IPC and installer, but does not drive or visually validate the macOS confirmation sheet. The package download, signed bundle replacement, relaunch and profile checks are real native operations.
+
+Run from `apps/desktop` using the existing private Apple environment launcher, followed by `pnpm exec tsx scripts/update-qa.ts --identity '<existing Developer ID Application identity>' --notarize`. The runner rebuilds `dist` once, then snapshots runtime files into its private workspace; neither package build reads repository dist after that snapshot. QA variants retain English/Japanese Electron locale resources to avoid spending the test on hundreds of redundant locale signatures; production packages retain all locales. Coordinate only the initial build/snapshot boundary with other native QA.
+
+Linux PR CI now includes three distinct native smoke runs: unpacked executable, installed deb (`apt-get install` then removal), and the AppImage distribution using its extraction mode. These are configured checks, not a claim that Linux CI has executed successfully yet.
+
+Signed-only run evidence is retained in ignored `apps/desktop/test-results/update-qa/intermediate/`: result JSON, failure/retry and downloaded screenshots, both process recordings, and extracted transition frames. The packaged executable snapshot SHA-256 was `fceffd497900562c6d332f72e20af0cbea113ca2d454005156d59017b48e305b`; final source differs and must be rebuilt.
+
+## Renderer navigation and native IPC validation
+
+Native QA reproduced Electron's long-standing [about: URL navigation event gap](https://github.com/electron/electron/issues/21136): rejecting `window.open` and cancelling `will-navigate` alone did not prevent a same-window `about:blank` replacement. The first recovery attempt also stalled the renderer by stopping/reloading during a navigation event. An isolated Electron experiment recorded the event sequence and verified that deferred recovery after document commit restores the trusted renderer and its loaded library. The rebuilt application (2026-11-10 00:36 JST) subsequently passed the native navigation E2E: popup creation was denied, `about:blank` recovered to the original application URL, and the library breadcrumb/Export action were visible again. The same build passed the delayed-initial-pagination E2E (pages 0 and 1, 60 unique bookmarks). The full 82-test Electron suite also passed on this build. Later collection-color and group-context corrections require their own final rebuild and recheck.
+
+The subsequent 01:09:57 JST build included local collection colors, initial group context, long collection/group menus and nested-collection merge selection. All 86 Electron E2E tests passed against that intermediate build. The nested merge case additionally verified preservation of three bookmark IDs, 18 unique destination rows and source-child removal after reload. Final clean-commit CI remains the source-identity gate for the complete patch.
+
+The shared main-process guard registers the exact application document before loading it. Authentication, external-link, export, appearance and updater IPC require the current window, its main frame and that document URL; another path on the same development origin is rejected. Fragment changes are allowed. Unexpected committed documents are restored to the recorded URL on the next main-process turn, with duplicate recovery suppressed; normal popup and navigational requests are denied. Fourteen guard tests plus the existing native export/updater adapters pass (29 tests together). Synthetic authentication uses the same guard, so native E2E exercises the boundary without real credentials.
+
+## Final verification sequence
+
+Final coverage and health must follow all source/test changes, including the late native navigation, delayed infinite-scroll sentinel and failed bulk-delete fixes. The coverage runner deletes prior provenance before starting and fingerprints source, test inputs, manifests, compiler configuration and the gate scripts themselves. A failed or concurrently changed run cannot certify health.
+
+After the final reports and documentation are committed, CI/package/update QA must reference that clean source SHA. Package output is rebuilt from scratch and the native update runner snapshots its exact runtime inputs. CI retains Electron E2E videos/screenshots and package-smoke evidence even when a check fails. Until that sequence executes, intermediate successes above remain qualified as intermediate.
+
+The final update runner now also writes a synthetic credential through native `safeStorage` in the old signed app and verifies decryption in the replacement app. This added assertion has passed lint/type validation but has not yet executed in the final signed run. It does not read real tokens and does not replace the explicit `realAccountCredentialsTested: false` limitation.

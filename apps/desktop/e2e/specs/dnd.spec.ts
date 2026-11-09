@@ -73,7 +73,7 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
   // @spec:F6.6 - Drop indicator shows insertion point
   test('moves collection across groups with drag preview and drop indicator', async ({
     page,
-  }) => {
+  }, testInfo) => {
     await waitForSidebarReady(page)
 
     await expect
@@ -92,6 +92,13 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
     await expect(
       page.locator('[data-testid^="drop-indicator-"]').first(),
     ).toBeVisible()
+    // Hold only the already-asserted drag state when producing review recordings.
+    if (process.env.LAIN_E2E_RECORD === '1') {
+      await page.waitForTimeout(500)
+      await page.screenshot({
+        path: testInfo.outputPath('collection-drag-preview.png'),
+      })
+    }
 
     await page.mouse.up()
 
@@ -101,6 +108,12 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
     await expect
       .poll(async () => getGroupRootCollectionIds(page, 'group-0'))
       .not.toContain('100')
+    if (process.env.LAIN_E2E_RECORD === '1') {
+      await page.waitForTimeout(500)
+      await page.screenshot({
+        path: testInfo.outputPath('collection-drag-completed.png'),
+      })
+    }
   })
 
   // @spec:F6.2 - Reorder within group works and persists
@@ -239,7 +252,7 @@ const POST_DROP_CLICK_GUARD_MS = 100
  * @param itemCount - Expected "N items" toolbar count once the collection has loaded
  */
 async function openCollection(page: Page, name: string, itemCount?: number) {
-  await page.getByRole('button', { name }).first().click()
+  await page.getByRole('button', { name, exact: true }).click()
   await expect(
     page.locator('[data-slot="breadcrumb-page"]', { hasText: name }),
   ).toBeVisible()
@@ -299,7 +312,7 @@ test.describe('P4 Organization - Bookmark DnD (F6)', () => {
   // @spec:F6.5 - Drag preview shows collection icon + name
   test('drags a bookmark onto a sidebar collection and it moves there', async ({
     page,
-  }) => {
+  }, testInfo) => {
     await waitForSidebarReady(page)
     await openCollection(page, 'Development', DEV_ITEM_COUNT)
     const row = page.getByTestId(`raindrop-drag-${DEV_BOOKMARK_ID}`)
@@ -313,6 +326,12 @@ test.describe('P4 Organization - Bookmark DnD (F6)', () => {
         'React Documentation',
       )
       await expect(target).toHaveAttribute('data-drop-target', 'true')
+      if (process.env.LAIN_E2E_RECORD === '1') {
+        await page.waitForTimeout(500)
+        await page.screenshot({
+          path: testInfo.outputPath('bookmark-drag-preview.png'),
+        })
+      }
     })
 
     await expect(row).toHaveCount(0)
@@ -320,6 +339,12 @@ test.describe('P4 Organization - Bookmark DnD (F6)', () => {
     await expect(
       page.getByTestId(`raindrop-drag-${DEV_BOOKMARK_ID}`),
     ).toBeVisible()
+    if (process.env.LAIN_E2E_RECORD === '1') {
+      await page.waitForTimeout(500)
+      await page.screenshot({
+        path: testInfo.outputPath('bookmark-drag-completed.png'),
+      })
+    }
   })
 
   // @spec:F6.1 - Drag collection between groups updates API

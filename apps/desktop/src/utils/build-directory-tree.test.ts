@@ -166,3 +166,136 @@ describe('buildDirectoryTree', () => {
     expect(tree.raindropsByCollection).toEqual({ unsorted: raindrops })
   })
 })
+
+test('Directory scope keeps empty descendants and the API order within each folder', () => {
+  // Arrange
+  const empty: Collection = {
+    id: '300',
+    name: 'Empty',
+    icon: 'Folder',
+    count: 0,
+    groupId: 'group-0',
+  }
+  const selected: Collection = {
+    ...DEVELOPMENT,
+    children: [{ ...REACT, children: [empty] }],
+  }
+  const raindrops = [
+    makeRaindrop('later', '200'),
+    makeRaindrop('earlier', '200'),
+  ]
+  // Act
+  const tree = buildDirectoryTree({
+    collections: [selected],
+    raindrops,
+    selectedCollectionId: '100',
+    currentCollectionName: 'Development',
+  })
+  // Assert
+  expect(tree.collections[0].children?.[0].children?.[0].name).toBe('Empty')
+  expect(
+    tree.raindropsByCollection['200'].map((bookmark) => bookmark.id),
+  ).toEqual(['later', 'earlier'])
+})
+
+test('global search from Unsorted keeps outside hits under their actual collection', () => {
+  // Arrange
+  const raindrops = [
+    makeRaindrop('unsorted', '-1'),
+    makeRaindrop('development', '100'),
+  ]
+  // Act
+  const tree = buildDirectoryTree({
+    collections: ROOTS,
+    raindrops,
+    selectedCollectionId: 'unsorted',
+    currentCollectionName: 'Unsorted',
+  })
+  // Assert
+  expect(tree.collections.map((collection) => collection.name)).toEqual([
+    'Unsorted',
+    'Development',
+  ])
+  expect(tree.collections.map((collection) => collection.count)).toEqual([1, 1])
+  expect(
+    tree.raindropsByCollection.unsorted.map((bookmark) => bookmark.id),
+  ).toEqual(['unsorted'])
+  expect(
+    tree.raindropsByCollection['100'].map((bookmark) => bookmark.id),
+  ).toEqual(['development'])
+})
+
+test('Directory recovers cyclic and repeated collection edges without modifying API input', () => {
+  // Arrange
+  const root: Collection = { ...DEVELOPMENT, children: [] }
+  const child: Collection = { ...REACT, children: [root] }
+  root.children = [child, child]
+  // Act
+  const tree = buildDirectoryTree({
+    collections: [root],
+    raindrops: [],
+    selectedCollectionId: 'all',
+    currentCollectionName: 'All',
+  })
+  // Assert
+  expect(tree.collections).toHaveLength(1)
+  expect(tree.collections[0].children).toHaveLength(1)
+  expect(tree.collections[0].children?.[0].children).toEqual([])
+  expect(root.children).toHaveLength(2)
+  expect(child.children?.[0]).toBe(root)
+})
+
+test('Directory preserves first-seen orphan folder order for numeric collection IDs', () => {
+  // Arrange
+  const raindrops = [
+    makeRaindrop('first', '999'),
+    makeRaindrop('second', '888'),
+  ]
+  // Act
+  const tree = buildDirectoryTree({
+    collections: [],
+    raindrops,
+    selectedCollectionId: 'all',
+    currentCollectionName: 'All',
+  })
+  // Assert
+  expect(tree.collections.map((collection) => collection.id)).toEqual([
+    '999',
+    '888',
+  ])
+  expect(tree.raindropsByCollection['999'][0].id).toBe('first')
+})
+
+test('Directory supports collection keys that collide with object prototype names', () => {
+  // Arrange
+  const raindrops = [
+    makeRaindrop('one', '__proto__'),
+    makeRaindrop('two', 'constructor'),
+  ]
+  // Act
+  const tree = buildDirectoryTree({
+    collections: [],
+    raindrops,
+    selectedCollectionId: 'all',
+    currentCollectionName: 'All',
+  })
+  // Assert
+  expect(tree.collections.map((collection) => collection.id)).toEqual([
+    '__proto__',
+    'constructor',
+  ])
+  expect(tree.raindropsByCollection.__proto__[0].id).toBe('one')
+  expect(
+    Object.entries(tree.raindropsByCollection).map(([key, items]) => [
+      key,
+      items[0].id,
+    ]),
+  ).toEqual([
+    ['__proto__', 'one'],
+    ['constructor', 'two'],
+  ])
+  expect(tree.collections.map((collection) => collection.name)).toEqual([
+    'Other',
+    'Other',
+  ])
+})

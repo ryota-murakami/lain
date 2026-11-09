@@ -12,6 +12,7 @@
 
 import { readFileSync, readdirSync } from 'node:fs'
 import { join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import {
   specRequirements,
@@ -77,7 +78,7 @@ function scanSpecTags(): TagMatch[] {
  * @param tags - All @spec: tags found in test files
  * @returns Coverage results for each requirement + orphan tags
  */
-function buildCoverage(tags: TagMatch[]): {
+export function buildCoverage(tags: TagMatch[]): {
   results: CoverageResult[]
   orphans: TagMatch[]
 } {
@@ -108,145 +109,152 @@ function buildCoverage(tags: TagMatch[]): {
 
 // ── Report ──────────────────────────────────────────────
 
+/** Format a coverage percentage without producing NaN for an empty category. Called by summary rendering. @example percentage(1, 4) // '25.0' */
+function percentage(covered: number, total: number): string {
+  return total > 0 ? ((covered / total) * 100).toFixed(1) : '0.0'
+}
+
+/** Count requirements with declared E2E tags; this does not claim that tests passed. @example coveredCount(results) */
+function coveredCount(results: CoverageResult[]): number {
+  return results.filter((result) => result.tags.length > 0).length
+}
+
+/** Render category totals and their aggregate for the CLI report. @example summaryLines(results) */
+function summaryLines(results: CoverageResult[]): string[] {
+  const categories = [
+    { label: 'Feature (F1-F8)', category: 'feature' },
+    { label: 'API Endpoints', category: 'api' },
+    { label: 'Keyboard Shortcuts', category: 'keyboard' },
+  ]
+  const rows = categories.map(({ label, category }) => {
+    const filtered = results.filter(
+      (result) => result.requirement.category === category,
+    )
+    const covered = coveredCount(filtered)
+    return `| ${label} | ${filtered.length} | ${covered} | ${percentage(covered, filtered.length)}% |`
+  })
+  const covered = coveredCount(results)
+  return [
+    '## Summary',
+    '',
+    '| Category | Total | Covered | Coverage |',
+    '|----------|-------|---------|----------|',
+    ...rows,
+    `| **Total** | **${results.length}** | **${covered}** | **${percentage(covered, results.length)}%** |`,
+    '',
+  ]
+}
+
+/** Link one declared requirement to its exact test locations, or mark it uncovered. @example requirementLine(result) */
+function requirementLine(result: CoverageResult): string {
+  const label = `**${result.requirement.id}** — ${result.requirement.description}`
+  if (result.tags.length === 0) return `- [ ] ${label}`
+  const locations = result.tags
+    .map((tag) => `\`${tag.file}:${tag.line}\``)
+    .join(', ')
+  return `- [x] ${label} — ${locations}`
+}
+
+/** Render feature/API/keyboard groups from the supplied coverage data. @example detailLines(results) */
+function detailLines(results: CoverageResult[]): string[] {
+  const byId = new Map(results.map((result) => [result.requirement.id, result]))
+  const groups = groupRequirements(results.map((result) => result.requirement))
+  const lines = ['## Coverage Details', '']
+  for (const [label, requirements] of groups) {
+    const group = requirements.map((requirement) => byId.get(requirement.id)!)
+    lines.push(
+      `### ${label} (${coveredCount(group)}/${group.length})`,
+      '',
+      ...group.map(requirementLine),
+      '',
+    )
+  }
+  return lines
+}
+
+/** Render one nonempty implementation phase; empty phases do not imply missing tests. @example phaseLines('P1', uncovered) */
+function phaseLines(
+  phase: SpecRequirement['phase'],
+  uncovered: CoverageResult[],
+): string[] {
+  const results = uncovered.filter(
+    (result) => result.requirement.phase === phase,
+  )
+  if (results.length === 0) return []
+  return [
+    `### ${phase} (${results.length} uncovered)`,
+    '',
+    ...results.map(
+      (result) =>
+        `- ${result.requirement.id} — ${result.requirement.description}`,
+    ),
+    '',
+  ]
+}
+
+/** List uncovered requirements by their planned implementation phase. @example uncoveredLines(results) */
+function uncoveredLines(results: CoverageResult[]): string[] {
+  const uncovered = results.filter((result) => result.tags.length === 0)
+  if (uncovered.length === 0) return []
+  const phases = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7'] as const
+  return [
+    '## Uncovered Requirements by Phase',
+    '',
+    ...phases.flatMap((phase) => phaseLines(phase, uncovered)),
+  ]
+}
+
+/** Keep invalid requirement tags visible so the CLI can fail instead of inflating coverage. @example orphanLines(orphans) */
+function orphanLines(orphans: TagMatch[]): string[] {
+  if (orphans.length === 0) return []
+  return [
+    '## Orphan Tags (invalid requirement IDs)',
+    '',
+    ...orphans.map(
+      (tag) =>
+        `- \`@spec:${tag.id}\` at \`${tag.file}:${tag.line}\` — ID not found in spec-requirements.ts`,
+    ),
+    '',
+  ]
+}
+
 /**
- * Generate the markdown coverage report.
- * @param results - Coverage results
- * @param orphans - Tags referencing non-existent requirements
- * @returns Markdown string
+ * Generate a declared E2E traceability report, independently from test execution results.
+ * The CLI calls this after scanning source tags; sections share the same supplied coverage data.
+ * @returns Markdown with totals, exact test locations, gaps and invalid tags.
+ * @example generateReport(results, orphans)
  */
-function generateReport(
+export function generateReport(
   results: CoverageResult[],
   orphans: TagMatch[],
 ): string {
-  const lines: string[] = []
-  const w = (s: string) => lines.push(s)
-
-  // Header
-  w('# E2E SPEC.md Coverage Report')
-  w('')
-  w(`Generated: ${new Date().toISOString().split('T')[0]}`)
-  w('')
-
-  // Summary table
-  const categories = [
-    {
-      label: 'Feature (F1-F8)',
-      filter: (r: CoverageResult) => r.requirement.category === 'feature',
-    },
-    {
-      label: 'API Endpoints',
-      filter: (r: CoverageResult) => r.requirement.category === 'api',
-    },
-    {
-      label: 'Keyboard Shortcuts',
-      filter: (r: CoverageResult) => r.requirement.category === 'keyboard',
-    },
-  ]
-
-  w('## Summary')
-  w('')
-  w('| Category | Total | Covered | Coverage |')
-  w('|----------|-------|---------|----------|')
-
-  let totalAll = 0
-  let coveredAll = 0
-
-  for (const cat of categories) {
-    const filtered = results.filter(cat.filter)
-    const total = filtered.length
-    const covered = filtered.filter((r) => r.tags.length > 0).length
-    const pct = total > 0 ? ((covered / total) * 100).toFixed(1) : '0.0'
-    w(`| ${cat.label} | ${total} | ${covered} | ${pct}% |`)
-    totalAll += total
-    coveredAll += covered
-  }
-
-  const totalPct =
-    totalAll > 0 ? ((coveredAll / totalAll) * 100).toFixed(1) : '0.0'
-  w(`| **Total** | **${totalAll}** | **${coveredAll}** | **${totalPct}%** |`)
-  w('')
-
-  // Grouped coverage details
-  const groups = groupRequirements(specRequirements)
-
-  w('## Coverage Details')
-  w('')
-
-  for (const [groupLabel, reqs] of groups) {
-    const groupResults = reqs.map(
-      (req) => results.find((r) => r.requirement.id === req.id)!,
-    )
-    const covered = groupResults.filter((r) => r.tags.length > 0).length
-    const total = groupResults.length
-
-    w(`### ${groupLabel} (${covered}/${total})`)
-    w('')
-
-    for (const r of groupResults) {
-      if (r.tags.length > 0) {
-        const locations = r.tags
-          .map((t) => `\`${t.file}:${t.line}\``)
-          .join(', ')
-        w(
-          `- [x] **${r.requirement.id}** — ${r.requirement.description} — ${locations}`,
-        )
-      } else {
-        w(`- [ ] **${r.requirement.id}** — ${r.requirement.description}`)
-      }
-    }
-    w('')
-  }
-
-  // Uncovered by phase (priority)
-  const uncovered = results.filter((r) => r.tags.length === 0)
-  if (uncovered.length > 0) {
-    w('## Uncovered Requirements by Phase')
-    w('')
-
-    const phases = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7'] as const
-    for (const phase of phases) {
-      const phaseUncovered = uncovered.filter(
-        (r) => r.requirement.phase === phase,
-      )
-      if (phaseUncovered.length === 0) continue
-
-      w(`### ${phase} (${phaseUncovered.length} uncovered)`)
-      w('')
-      for (const r of phaseUncovered) {
-        w(`- ${r.requirement.id} — ${r.requirement.description}`)
-      }
-      w('')
-    }
-  }
-
-  // Orphan tags (referencing non-existent IDs)
-  if (orphans.length > 0) {
-    w('## Orphan Tags (invalid requirement IDs)')
-    w('')
-    for (const o of orphans) {
-      w(
-        `- \`@spec:${o.id}\` at \`${o.file}:${o.line}\` — ID not found in spec-requirements.ts`,
-      )
-    }
-    w('')
-  }
-
-  return lines.join('\n')
+  return [
+    '# E2E SPEC.md Coverage Report',
+    '',
+    `Generated: ${new Date().toISOString().split('T')[0]}`,
+    '',
+    ...summaryLines(results),
+    ...detailLines(results),
+    ...uncoveredLines(results),
+    ...orphanLines(orphans),
+  ].join('\n')
 }
 
 // ── Main ────────────────────────────────────────────────
 
-const tags = scanSpecTags()
-const { results, orphans } = buildCoverage(tags)
-const report = generateReport(results, orphans)
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const tags = scanSpecTags()
+  const { results, orphans } = buildCoverage(tags)
+  const report = generateReport(results, orphans)
 
-// Write to stdout
-process.stdout.write(report)
+  // Write to stdout
+  process.stdout.write(report)
 
-// Exit with appropriate code
-if (orphans.length > 0) {
-  console.error(
-    `\n⚠ ${orphans.length} orphan tag(s) found — IDs not in spec-requirements.ts`,
-  )
-  process.exit(1)
+  // Exit with appropriate code
+  if (orphans.length > 0) {
+    console.error(
+      `\n⚠ ${orphans.length} orphan tag(s) found — IDs not in spec-requirements.ts`,
+    )
+    process.exit(1)
+  }
 }

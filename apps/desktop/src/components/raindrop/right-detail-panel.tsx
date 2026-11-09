@@ -1,41 +1,27 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  Globe,
-  FileText,
-  Image as ImageIcon,
-  Video,
-  File,
-  Music,
-  ExternalLink,
-  Copy,
-  Trash2,
-  X,
-  Star,
   Calendar,
+  Check,
   Clock,
-  Tag,
+  Copy,
+  ExternalLink,
+  Highlighter,
   Link,
   PanelRightClose,
   PanelRightOpen,
-  Check,
-  Highlighter,
+  Star,
+  Trash2,
 } from 'lucide-react'
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
+import { TagInput } from '@/components/raindrop/tag-input'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
@@ -45,42 +31,29 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import type { Raindrop, Group, ContentType } from '@/lib/types'
+import { usePendingWork } from '@/hooks/usePendingWork'
+import { bookmarkContentSchema } from '@/lib/bookmark-form-schema'
+import type { ContentType, Group, Raindrop } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import {
-  extractDomain,
-  getFaviconUrl,
-  getDomainColor,
-  getDomainInitial,
-} from '@/utils/favicon'
+import { extractDomain } from '@/utils/favicon'
+import { findCollectionInTree } from '@/utils/find-collection-in-tree'
 
-const raindropSchema = z.object({
+import { ContentTypeIcon } from './content-type-icon'
+import { ContentTypeSelect } from './content-type-select'
+import { FaviconIcon } from './favicon-icon'
+
+const raindropSchema = bookmarkContentSchema.extend({
   title: z.string().min(1, 'Title is required'),
-  url: z.string().url('Please enter a valid URL'),
-  description: z.string().optional(),
-  type: z.enum(['link', 'article', 'image', 'video', 'document', 'audio']),
-  notes: z.string().optional(),
-  isImportant: z.boolean(),
 })
 
 type RaindropFormValues = z.infer<typeof raindropSchema>
 
 /**
- * Type icon mapping.
- */
-const TYPE_ICONS: Record<ContentType, typeof Globe> = {
-  link: Globe,
-  article: FileText,
-  image: ImageIcon,
-  video: Video,
-  document: File,
-  audio: Music,
-}
-
-/**
  * Props for RightDetailPanel component.
  */
 interface RightDetailPanelProps {
+  /** Reopen the retained selection when the navigation owner permits it. */
+  onOpen?: () => void
   /** The currently selected raindrop to display/edit */
   raindrop?: Raindrop
   /** Whether the panel is open */
@@ -92,38 +65,73 @@ interface RightDetailPanelProps {
   /** Existing tag names for autocomplete */
   existingTags: string[]
   /** Callback when user saves changes to the raindrop */
-  onSave: (raindrop: Raindrop) => void
+  onSave: (raindrop: Raindrop) => Promise<void> | void
   /** Callback when user deletes the raindrop */
-  onDelete: (raindropId: string) => void
+  onDelete: (raindropId: string) => Promise<void>
+  onDirtyChange?: (dirty: boolean) => void
 }
 
 /**
- * Sync form values when the selected raindrop changes.
+ * Synchronize remote bookmark data without discarding local edits.
+ * {@link RightDetailPanel} calls this on selection/refetch; explicit reload resolves a conflict.
  * @param raindrop - Selected raindrop data
  * @param reset - react-hook-form reset function
- * @param setTags - Setter for tags state
- * @param setFaviconError - Setter for favicon error state
+ * @param isDirty - Whether a remote update must wait for the user's save/discard decision.
+ * @returns Conflict state, reload action, and a successful-save acknowledgment.
+ * @example
+ * const { conflict, reload, acknowledgeSave } = useRaindropFormSync(raindrop, reset, isDirty)
  */
 function useRaindropFormSync(
   raindrop: Raindrop | undefined,
   reset: (values: RaindropFormValues) => void,
-  setTags: (tags: string[]) => void,
-  setFaviconError: (error: boolean) => void,
+  isDirty: boolean,
 ) {
+  const observed = useRef('')
+  const previousId = useRef<string | undefined>(undefined)
+  const [conflict, setConflict] = useState(false)
+  const acknowledgeSave = useCallback(() => setConflict(false), [])
+  const reload = useCallback(() => {
+    if (!raindrop) return
+    reset({
+      title: raindrop.title,
+      url: raindrop.url,
+      description: raindrop.description ?? '',
+      type: raindrop.type,
+      notes: raindrop.notes ?? '',
+      isImportant: raindrop.isImportant ?? false,
+      tags: raindrop.tags ?? [],
+    })
+    setConflict(false)
+  }, [raindrop, reset])
   useEffect(() => {
-    if (raindrop) {
-      reset({
-        title: raindrop.title,
-        url: raindrop.url,
-        description: raindrop.description || '',
-        type: raindrop.type,
-        notes: raindrop.notes || '',
-        isImportant: raindrop.isImportant || false,
-      })
-      setTags(raindrop.tags || [])
-      setFaviconError(false)
+    const signature = JSON.stringify(raindrop)
+    if (observed.current === signature) return
+    observed.current = signature
+    const sameBookmark = previousId.current === raindrop?.id
+    previousId.current = raindrop?.id
+    // Keep local input when another client changes the same bookmark.
+    if (sameBookmark && isDirty) {
+      setConflict(true)
+      return
     }
-  }, [raindrop, reset, setTags, setFaviconError])
+    reload()
+  }, [raindrop, isDirty, reload])
+  return { conflict, reload, acknowledgeSave }
+}
+
+/**
+ * Notify navigation guards when detail edits or active writes require a discard decision.
+ * {@link RightDetailPanel} calls this whenever its visible dirty/busy state changes.
+ * @example
+ * useDetailDirtyNotification(isOpen && (isDirty || isSubmitting), onDirtyChange)
+ */
+function useDetailDirtyNotification(
+  dirty: boolean,
+  notify?: (dirty: boolean) => void,
+): void {
+  useEffect(() => {
+    notify?.(dirty)
+  }, [dirty, notify])
 }
 
 /**
@@ -150,27 +158,31 @@ function useRaindropFormSync(
  *     onDelete={handleDelete}
  *   />
  */
-const RightDetailPanel = React.memo(function RightDetailPanel({
+/**
+ * Own detail drafts and remote-conflict reconciliation without coupling them to panel presentation.
+ * Called by {@link RightDetailPanel}; successful saves advance defaults while preserving newer input.
+ * @example
+ * const editor = useDetailEditor(props)
+ */
+function useDetailEditor({
   raindrop,
   isOpen,
-  onClose,
-  groups,
-  existingTags,
   onSave,
   onDelete,
+  onDirtyChange,
 }: RightDetailPanelProps) {
-  const [tags, setTags] = useState<string[]>([])
-  const [tagInput, setTagInput] = useState('')
-  const [copied, setCopied] = useState(false)
-  const [faviconError, setFaviconError] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const {
     register,
     handleSubmit,
     reset,
+    resetDefaultValues,
     setValue,
     control,
-    formState: { errors, isDirty },
+    setError,
+    clearErrors,
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<RaindropFormValues>({
     resolver: zodResolver(raindropSchema),
     defaultValues: {
@@ -180,70 +192,100 @@ const RightDetailPanel = React.memo(function RightDetailPanel({
       type: 'link',
       notes: '',
       isImportant: false,
+      tags: [],
     },
   })
 
-  // useWatch (not watch()) keeps the component eligible for React Compiler memoization
-  const selectedType = useWatch({ control, name: 'type' })
-  const isImportant = useWatch({ control, name: 'isImportant' })
-  const currentUrl = useWatch({ control, name: 'url' })
-
-  useRaindropFormSync(raindrop, reset, setTags, setFaviconError)
-
-  const tagSuggestions = useMemo(() => {
-    if (!tagInput) return []
-    const lower = tagInput.toLowerCase()
-    return existingTags
-      .filter(
-        (tag) =>
-          tag.toLowerCase().includes(lower) &&
-          !tags.includes(tag.toLowerCase()),
-      )
-      .slice(0, 5)
-  }, [tagInput, existingTags, tags])
+  const [selectedType, isImportant, currentUrl, tags] = useWatch({
+    control,
+    name: ['type', 'isImportant', 'url', 'tags'] as const,
+  })
+  const handleTagsChange = useCallback(
+    (values: string[]): void => setValue('tags', values, { shouldDirty: true }),
+    [setValue],
+  )
+  const { conflict, reload, acknowledgeSave } = useRaindropFormSync(
+    raindrop,
+    reset,
+    isDirty,
+  )
+  const pendingWork = isOpen && (isDirty || isSubmitting || isDeleting)
+  usePendingWork(pendingWork)
+  useDetailDirtyNotification(pendingWork, onDirtyChange)
 
   const handleTypeChange = useCallback(
-    (val: string) => setValue('type', val as ContentType),
+    (val: string) =>
+      setValue('type', val as ContentType, { shouldDirty: true }),
     [setValue],
   )
   const handleImportantChange = useCallback(
-    (checked: boolean) => setValue('isImportant', checked),
+    (checked: boolean) =>
+      setValue('isImportant', checked, { shouldDirty: true }),
     [setValue],
   )
-  const handleDelete = useCallback(() => {
+  const handleDelete = useCallback(async () => {
+    if (!raindrop || isDeleting || isSubmitting) return
+    clearErrors('root.server')
+    setIsDeleting(true)
+    try {
+      // The navigation owner closes only after the server confirms deletion.
+      await onDelete(raindrop.id)
+    } catch {
+      setError('root.server', {
+        message:
+          'Could not move this bookmark to Trash. Your input is preserved; try again.',
+      })
+    } finally {
+      setIsDeleting(false)
+    }
+  }, [raindrop, isDeleting, isSubmitting, clearErrors, onDelete, setError])
+  const onSubmit = async (data: RaindropFormValues): Promise<void> => {
     if (!raindrop) return
-    onDelete(raindrop.id)
-    onClose()
-  }, [raindrop, onDelete, onClose])
-  const handlePanelOpen = useCallback(() => {
-    /* Panel open is controlled by parent */
-  }, [])
-
-  const addTag = (tag: string) => {
-    const trimmed = tag.trim().toLowerCase()
-    if (trimmed && !tags.includes(trimmed)) {
-      setTags([...tags, trimmed])
-    }
-    setTagInput('')
-  }
-
-  const removeTag = (tagName: string) => {
-    setTags(tags.filter((t) => t !== tagName))
-  }
-
-  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      if (tagSuggestions.length > 0) {
-        addTag(tagSuggestions[0])
-      } else if (tagInput.trim()) {
-        addTag(tagInput)
-      }
-    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {
-      removeTag(tags[tags.length - 1])
+    clearErrors('root.server')
+    try {
+      await onSave({ ...raindrop, ...data })
+      // Advance the saved baseline while preserving any edits typed during the request.
+      resetDefaultValues(data)
+      acknowledgeSave()
+    } catch {
+      setError('root.server', {
+        message: 'Could not save changes. Your input is preserved; try again.',
+      })
     }
   }
 
+  return {
+    register,
+    handleSubmit,
+    errors,
+    isDirty,
+    isSubmitting,
+    isDeleting,
+    selectedType,
+    isImportant,
+    currentUrl,
+    tags,
+    handleTagsChange,
+    conflict,
+    reload,
+    handleTypeChange,
+    handleImportantChange,
+    handleDelete,
+    onSubmit,
+  }
+}
+
+/**
+ * Open or copy the URL currently being edited, with visible clipboard confirmation.
+ * @example
+ * <DetailUrlActions currentUrl="https://example.com" />
+ */
+const DetailUrlActions = React.memo(function DetailUrlActions({
+  currentUrl,
+}: {
+  currentUrl: string
+}) {
+  const [copied, setCopied] = useState(false)
   const handleCopyUrl = useCallback(async () => {
     if (!currentUrl) return
     try {
@@ -260,53 +302,367 @@ const RightDetailPanel = React.memo(function RightDetailPanel({
     window.shell.openExternal(currentUrl)
   }, [currentUrl])
 
-  const onSubmit = (data: RaindropFormValues) => {
-    if (!raindrop) return
-    onSave({
-      ...raindrop,
-      ...data,
-      tags,
+  return (
+    <>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="h-9 w-9 flex-shrink-0"
+              onClick={handleOpenUrl}
+              aria-label="Open in browser"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Open in browser</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="h-9 w-9 flex-shrink-0"
+              onClick={handleCopyUrl}
+              aria-label={copied ? 'Copied URL' : 'Copy URL'}
+            >
+              {copied ? (
+                <Check className="h-3.5 w-3.5 text-green-500" />
+              ) : (
+                <Copy className="h-3.5 w-3.5" />
+              )}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{copied ? 'Copied!' : 'Copy URL'}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </>
+  )
+})
+
+/**
+ * Display the saved cover and current URL identity without retaining stale favicon failure state.
+ * Called by the detail form; {@link FaviconIcon} owns URL-specific fallback behavior.
+ * @example
+ * <DetailBookmarkPreview {...props} />
+ */
+const DetailBookmarkPreview = React.memo(function DetailBookmarkPreview({
+  raindrop,
+  url,
+  groups,
+  isImportant,
+}: {
+  raindrop: Raindrop
+  url: string
+  groups: Group[]
+  isImportant: boolean
+}) {
+  const domain = extractDomain(url)
+  const collectionName =
+    groups
+      .map((group) =>
+        findCollectionInTree(group.collections, raindrop.collectionId),
+      )
+      .find(Boolean)?.name ?? 'Unknown'
+  return (
+    <>
+      {raindrop.coverImage && (
+        <div className="bg-muted relative aspect-video overflow-hidden rounded-lg">
+          <img
+            src={raindrop.coverImage}
+            alt={raindrop.title}
+            className="h-full w-full object-cover"
+            onError={(event) => {
+              event.currentTarget.style.display = 'none'
+            }}
+          />
+          <Badge
+            variant="secondary"
+            className="absolute top-2 right-2 capitalize"
+          >
+            {raindrop.type}
+          </Badge>
+        </div>
+      )}
+      <div className="flex items-center gap-3">
+        <FaviconIcon url={url} type={raindrop.type} size={32} />
+        <div className="min-w-0 flex-1">
+          <p className="text-muted-foreground truncate text-sm">{domain}</p>
+          <p className="text-muted-foreground text-xs">in {collectionName}</p>
+        </div>
+        {isImportant && (
+          <Star
+            aria-label="Important"
+            className="h-4 w-4 shrink-0 fill-yellow-500 text-yellow-500"
+          />
+        )}
+      </div>
+    </>
+  )
+})
+
+/** Format a stored timestamp for the detail metadata section, preserving invalid source text. */
+function formatDetailDate(dateStr: string): string {
+  try {
+    const date = new Date(dateStr)
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     })
+  } catch {
+    return dateStr
   }
+}
 
-  const domain = currentUrl ? extractDomain(currentUrl) : ''
-  const faviconUrl = domain ? getFaviconUrl(domain) : ''
-  const domainColor = domain ? getDomainColor(domain) : 'oklch(0.7 0.15 250)'
-  const domainInitial = domain ? getDomainInitial(domain) : '?'
+/**
+ * Show saved highlights and timestamps independently from the mutable form draft.
+ * @example
+ * <DetailBookmarkMetadata raindrop={bookmark} />
+ */
+const DetailBookmarkMetadata = React.memo(function DetailBookmarkMetadata({
+  raindrop,
+}: {
+  raindrop: Raindrop
+}) {
+  return (
+    <>
+      {' '}
+      {/* Highlights */}
+      {raindrop.highlights && raindrop.highlights.length > 0 && (
+        <div className="grid gap-2">
+          <Label className="flex items-center gap-1.5">
+            <Highlighter className="h-3.5 w-3.5" />
+            Highlights
+          </Label>
+          <div className="space-y-2">
+            {raindrop.highlights.map((highlight, index) => (
+              <div
+                key={index}
+                className="border-primary bg-primary/5 rounded-md border-l-2 px-3 py-2"
+              >
+                <p className="text-foreground/80 text-sm italic">
+                  &ldquo;{highlight}&rdquo;
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <Separator />
+      {/* Metadata */}
+      <div className="text-muted-foreground space-y-2 text-sm">
+        <div className="flex items-center gap-2">
+          <Calendar className="h-3.5 w-3.5" />
+          <span>Created: {formatDetailDate(raindrop.createdAt)}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Clock className="h-3.5 w-3.5" />
+          <span>Updated: {formatDetailDate(raindrop.updatedAt)}</span>
+        </div>
+      </div>
+      <Separator />
+    </>
+  )
+})
 
-  const TypeIcon = selectedType ? TYPE_ICONS[selectedType] : Globe
+/**
+ * Render editable fields from the detail session while saved metadata stays read-only.
+ * @example
+ * <DetailBookmarkForm {...props} />
+ */
+const DetailBookmarkForm = React.memo(function DetailBookmarkForm({
+  editor,
+  raindrop,
+  groups,
+  existingTags,
+}: {
+  editor: ReturnType<typeof useDetailEditor>
+  raindrop: Raindrop
+  groups: Group[]
+  existingTags: string[]
+}) {
+  const {
+    register,
+    handleSubmit,
+    errors,
+    isDirty,
+    isSubmitting,
+    isDeleting,
+    selectedType,
+    isImportant,
+    currentUrl,
+    tags,
+    handleTagsChange,
+    conflict,
+    reload,
+    handleTypeChange,
+    handleImportantChange,
+    handleDelete,
+    onSubmit,
+  } = editor
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">
+      {conflict && (
+        <div
+          role="alert"
+          className="rounded-md border border-amber-500 p-3 text-sm"
+        >
+          <p>
+            This bookmark changed on another device. Your edits are preserved.
+            Saving will replace those fields with your edits.
+          </p>
+          <Button type="button" variant="outline" size="sm" onClick={reload}>
+            Discard edits and load latest
+          </Button>
+        </div>
+      )}
+      <DetailBookmarkPreview
+        raindrop={raindrop}
+        url={currentUrl}
+        groups={groups}
+        isImportant={isImportant}
+      />
+      <Separator />
 
-  const formatDate = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr)
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    } catch {
-      return dateStr
-    }
-  }
+      {/* Title */}
+      <div className="grid gap-2">
+        <Label htmlFor="detail-title">Title</Label>
+        <Input id="detail-title" {...register('title')} />
+        {errors.title && (
+          <p className="text-destructive text-sm">{errors.title.message}</p>
+        )}
+      </div>
 
-  // Find collection name from groups
-  const collectionName = (() => {
-    if (!raindrop) return ''
-    for (const group of groups) {
-      for (const col of group.collections) {
-        if (col.id === raindrop.collectionId) return col.name
-        if (col.children) {
-          for (const child of col.children) {
-            if (child.id === raindrop.collectionId) return child.name
-          }
-        }
-      }
-    }
-    return 'Unknown'
-  })()
+      {/* URL */}
+      <div className="grid gap-2">
+        <Label htmlFor="detail-url">URL</Label>
+        <div className="flex gap-1">
+          <div className="relative flex-1">
+            <Link className="text-muted-foreground absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2" />
+            <Input
+              id="detail-url"
+              className="pl-8 text-xs"
+              {...register('url')}
+            />
+          </div>
+          <DetailUrlActions currentUrl={currentUrl} />
+        </div>
+        {errors.url && (
+          <p className="text-destructive text-sm">{errors.url.message}</p>
+        )}
+      </div>
 
+      {/* Description */}
+      <div className="grid gap-2">
+        <Label htmlFor="detail-description">Description</Label>
+        <Textarea
+          id="detail-description"
+          className="resize-none text-sm"
+          rows={3}
+          placeholder="Add a description..."
+          {...register('description')}
+        />
+      </div>
+
+      {/* Type */}
+      <div className="grid gap-2">
+        <Label htmlFor="detail-type">Type</Label>
+        <ContentTypeSelect
+          id="detail-type"
+          value={selectedType}
+          onValueChange={handleTypeChange}
+        />
+      </div>
+
+      <TagInput
+        value={tags}
+        onChange={handleTagsChange}
+        suggestions={existingTags}
+        label="Tags"
+        placeholder="Add tags..."
+        disabled={isSubmitting}
+      />
+
+      {/* Important toggle */}
+      <div className="flex items-center justify-between gap-2">
+        <Label htmlFor="detail-important" className="flex items-center gap-1.5">
+          <Star className="h-3.5 w-3.5" />
+          Important
+        </Label>
+        <Switch
+          id="detail-important"
+          checked={isImportant}
+          onCheckedChange={handleImportantChange}
+        />
+      </div>
+
+      {/* Notes */}
+      <div className="grid gap-2">
+        <Label htmlFor="detail-notes">Notes</Label>
+        <Textarea
+          id="detail-notes"
+          className="resize-none text-sm"
+          rows={4}
+          placeholder="Personal notes..."
+          {...register('notes')}
+        />
+      </div>
+
+      <DetailBookmarkMetadata raindrop={raindrop} />
+
+      {errors.root?.server && (
+        <p role="alert" className="text-destructive text-sm">
+          {errors.root.server.message}
+        </p>
+      )}
+      {/* Action Buttons */}
+      <div className="flex gap-2">
+        <Button
+          type="submit"
+          className="flex-1"
+          disabled={isSubmitting || isDeleting || !isDirty}
+        >
+          {isSubmitting
+            ? 'Saving...'
+            : conflict
+              ? 'Save my edits'
+              : 'Save Changes'}
+        </Button>
+      </div>
+
+      <Button
+        type="button"
+        variant="destructive"
+        className="w-full"
+        onClick={handleDelete}
+        disabled={isSubmitting || isDeleting}
+      >
+        <Trash2 className="mr-2 h-4 w-4" />
+        {isDeleting ? 'Moving to Trash…' : 'Move to Trash'}
+      </Button>
+    </form>
+  )
+})
+
+/**
+ * Present the selected bookmark editor and expose explicit close/reopen navigation controls.
+ * @example
+ * <RightDetailPanel {...props} />
+ */
+const RightDetailPanel = React.memo(function RightDetailPanel(
+  props: RightDetailPanelProps,
+) {
+  const { raindrop, isOpen, onClose, onOpen, groups, existingTags } = props
+  const editor = useDetailEditor(props)
   return (
     <div
       data-testid="detail-panel"
@@ -319,353 +675,50 @@ const RightDetailPanel = React.memo(function RightDetailPanel({
     >
       {isOpen && raindrop && (
         <>
-          {/* Header */}
-          <div className="flex flex-shrink-0 items-center justify-between border-b p-3">
+          <div className="flex shrink-0 items-center justify-between border-b p-3">
             <div className="flex items-center gap-2">
-              <TypeIcon className="text-muted-foreground h-4 w-4" />
+              <ContentTypeIcon
+                type={editor.selectedType}
+                className="text-muted-foreground h-4 w-4"
+              />
               <span className="max-w-[200px] truncate text-sm font-medium">
                 Details
               </span>
             </div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-7 w-7"
-                    onClick={onClose}
-                  >
-                    <PanelRightClose className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="left">Close panel</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={onClose}
+              aria-label="Close detail panel"
+            >
+              <PanelRightClose className="h-4 w-4" />
+            </Button>
           </div>
-
           <ScrollArea className="min-h-0 flex-1">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">
-              {/* Cover Image */}
-              {raindrop.coverImage && (
-                <div className="bg-muted relative aspect-video overflow-hidden rounded-lg">
-                  <img
-                    src={raindrop.coverImage}
-                    alt={raindrop.title}
-                    className="h-full w-full object-cover"
-                    onError={(e) => {
-                      ;(e.target as HTMLImageElement).style.display = 'none'
-                    }}
-                  />
-                  <Badge
-                    variant="secondary"
-                    className="absolute top-2 right-2 capitalize"
-                  >
-                    {raindrop.type}
-                  </Badge>
-                </div>
-              )}
-
-              {/* Favicon + Domain header */}
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0">
-                  {!faviconError && faviconUrl ? (
-                    <img
-                      src={faviconUrl}
-                      alt=""
-                      className="h-8 w-8 rounded-md"
-                      onError={() => setFaviconError(true)}
-                    />
-                  ) : (
-                    <div
-                      className="flex h-8 w-8 items-center justify-center rounded-md text-sm font-medium text-white"
-                      style={{ backgroundColor: domainColor }}
-                    >
-                      {domainInitial}
-                    </div>
-                  )}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-muted-foreground truncate text-sm">
-                    {domain}
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    in {collectionName}
-                  </p>
-                </div>
-                {isImportant && (
-                  <Star className="h-4 w-4 flex-shrink-0 fill-yellow-500 text-yellow-500" />
-                )}
-              </div>
-
-              <Separator />
-
-              {/* Title */}
-              <div className="grid gap-2">
-                <Label htmlFor="detail-title">Title</Label>
-                <Input id="detail-title" {...register('title')} />
-                {errors.title && (
-                  <p className="text-destructive text-sm">
-                    {errors.title.message}
-                  </p>
-                )}
-              </div>
-
-              {/* URL */}
-              <div className="grid gap-2">
-                <Label htmlFor="detail-url">URL</Label>
-                <div className="flex gap-1">
-                  <div className="relative flex-1">
-                    <Link className="text-muted-foreground absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2" />
-                    <Input
-                      id="detail-url"
-                      className="pl-8 text-xs"
-                      {...register('url')}
-                    />
-                  </div>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="h-9 w-9 flex-shrink-0"
-                          onClick={handleOpenUrl}
-                        >
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>Open in browser</TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="h-9 w-9 flex-shrink-0"
-                          onClick={handleCopyUrl}
-                        >
-                          {copied ? (
-                            <Check className="h-3.5 w-3.5 text-green-500" />
-                          ) : (
-                            <Copy className="h-3.5 w-3.5" />
-                          )}
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        {copied ? 'Copied!' : 'Copy URL'}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-                {errors.url && (
-                  <p className="text-destructive text-sm">
-                    {errors.url.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Description */}
-              <div className="grid gap-2">
-                <Label htmlFor="detail-description">Description</Label>
-                <Textarea
-                  id="detail-description"
-                  className="resize-none text-sm"
-                  rows={3}
-                  placeholder="Add a description..."
-                  {...register('description')}
-                />
-              </div>
-
-              {/* Type */}
-              <div className="grid gap-2">
-                <Label htmlFor="detail-type">Type</Label>
-                <Select value={selectedType} onValueChange={handleTypeChange}>
-                  <SelectTrigger id="detail-type">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {(
-                      Object.entries(TYPE_ICONS) as [
-                        ContentType,
-                        typeof Globe,
-                      ][]
-                    ).map(([type, Icon]) => (
-                      <SelectItem key={type} value={type}>
-                        <div className="flex items-center gap-2">
-                          <Icon className="h-4 w-4" />
-                          <span className="capitalize">{type}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Tags */}
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-1.5">
-                  <Tag className="h-3.5 w-3.5" />
-                  Tags
-                </Label>
-                <div className="flex min-h-[40px] flex-wrap items-center gap-1.5 rounded-md border px-3 py-2">
-                  {tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="gap-1 pr-1">
-                      {tag}
-                      <button
-                        type="button"
-                        onClick={() => removeTag(tag)}
-                        className="hover:bg-muted-foreground/20 ml-0.5 rounded-sm p-0.5"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                  <input
-                    type="text"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyDown={handleTagKeyDown}
-                    placeholder={tags.length === 0 ? 'Add tags...' : ''}
-                    className="placeholder:text-muted-foreground min-w-[60px] flex-1 bg-transparent text-sm outline-none"
-                  />
-                </div>
-                {tagSuggestions.length > 0 && (
-                  <div className="bg-popover rounded-md border p-1 shadow-md">
-                    {tagSuggestions.map((suggestion) => (
-                      <button
-                        key={suggestion}
-                        type="button"
-                        className="hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm"
-                        onClick={() => addTag(suggestion)}
-                      >
-                        {suggestion}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Important toggle */}
-              <div className="flex items-center justify-between gap-2">
-                <Label
-                  htmlFor="detail-important"
-                  className="flex items-center gap-1.5"
-                >
-                  <Star className="h-3.5 w-3.5" />
-                  Important
-                </Label>
-                <Switch
-                  id="detail-important"
-                  checked={isImportant}
-                  onCheckedChange={handleImportantChange}
-                />
-              </div>
-
-              {/* Notes */}
-              <div className="grid gap-2">
-                <Label htmlFor="detail-notes">Notes</Label>
-                <Textarea
-                  id="detail-notes"
-                  className="resize-none text-sm"
-                  rows={4}
-                  placeholder="Personal notes..."
-                  {...register('notes')}
-                />
-              </div>
-
-              {/* Highlights */}
-              {raindrop.highlights && raindrop.highlights.length > 0 && (
-                <div className="grid gap-2">
-                  <Label className="flex items-center gap-1.5">
-                    <Highlighter className="h-3.5 w-3.5" />
-                    Highlights
-                  </Label>
-                  <div className="space-y-2">
-                    {raindrop.highlights.map((highlight, index) => (
-                      <div
-                        key={index}
-                        className="border-primary bg-primary/5 rounded-md border-l-2 px-3 py-2"
-                      >
-                        <p className="text-foreground/80 text-sm italic">
-                          &ldquo;{highlight}&rdquo;
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <Separator />
-
-              {/* Metadata */}
-              <div className="text-muted-foreground space-y-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-3.5 w-3.5" />
-                  <span>Created: {formatDate(raindrop.createdAt)}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-3.5 w-3.5" />
-                  <span>Updated: {formatDate(raindrop.updatedAt)}</span>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Action Buttons */}
-              <div className="flex gap-2">
-                <Button
-                  type="submit"
-                  className="flex-1"
-                  disabled={
-                    !isDirty &&
-                    tags.join(',') === (raindrop.tags || []).join(',')
-                  }
-                >
-                  Save Changes
-                </Button>
-              </div>
-
-              <Button
-                type="button"
-                variant="destructive"
-                className="w-full"
-                onClick={handleDelete}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Move to Trash
-              </Button>
-            </form>
+            <DetailBookmarkForm
+              editor={editor}
+              raindrop={raindrop}
+              groups={groups}
+              existingTags={existingTags}
+            />
           </ScrollArea>
         </>
       )}
-
-      {/* Collapsed toggle button (shown when panel is closed) */}
-      {!isOpen && (
+      {!isOpen && onOpen && (
         <div className="fixed top-1/2 right-0 z-10 -translate-y-1/2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8 rounded-l-md rounded-r-none border-r-0"
-                  onClick={handlePanelOpen}
-                >
-                  <PanelRightOpen className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="left">Open detail panel</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8 rounded-l-md rounded-r-none border-r-0"
+            onClick={onOpen}
+            aria-label="Open detail panel"
+          >
+            <PanelRightOpen className="h-4 w-4" />
+          </Button>
         </div>
       )}
     </div>
   )
 })
 export { RightDetailPanel }
-export default RightDetailPanel

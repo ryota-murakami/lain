@@ -1,10 +1,12 @@
 # Lain — Product & Technical Specification
 
-> Raindrop.io Desktop Client for macOS
+> Raindrop.io Desktop Client for macOS and Linux
 
 **Version:** 0.1.0
-**Date:** 2026-09-23
-**Status:** Alpha (v0.1.1 released 2026-09-28, the first signed + notarized build — phases P1–P7 delivered)
+**Design baseline:** 2026-09-23; implementation revision 2026-11-09
+**Status:** Alpha development. The original design examples below are retained for context and are not proof of released behavior.
+
+The [updated behavior specification](../../docs/functional-spec-ja.md), [acceptance matrix](../../docs/goal-2026-11-09/qa-matrix.md), and [release evidence](../../docs/goal-2026-11-09/release.md) supersede historical implementation/status claims in this document. The current branch adds complete HTML/CSV/JSON export, active synchronization, file uploads, Linux x64 packaging, explicit update controls and 64 selectable icon candidates. Final-source checks and external authorization boundaries are recorded separately.
 
 Desktop file paths in this specification are relative to `apps/desktop/` unless stated otherwise. See the [repository README](../../README.md) for current workspace commands and CI configuration.
 
@@ -53,8 +55,8 @@ Lain is a **macOS-native** Raindrop.io desktop client built for power users who 
 
 | Layer            | Technology                                                     |
 | ---------------- | -------------------------------------------------------------- |
-| Runtime          | Electron 40+ (macOS only)                                      |
-| Renderer         | React 19 + Vite 7                                              |
+| Runtime          | Electron 45 (macOS 13+ arm64/x64; Linux x64)                   |
+| Renderer         | React 19 + Vite 8                                              |
 | UI               | shadcn/ui + Tailwind CSS v4 (OKLCH)                            |
 | State            | Redux Toolkit + RTK Query (axios baseQuery)                    |
 | HTTP             | Axios (interceptor-based error handling)                       |
@@ -193,13 +195,13 @@ lain/
 
 ### 2.3 Security Model
 
-| Concern            | Approach                                                                         |
-| ------------------ | -------------------------------------------------------------------------------- |
-| Token storage      | `electron safeStorage` → OS keychain (not localStorage)                          |
-| Renderer isolation | `contextIsolation: true`, `nodeIntegration: false`, `sandbox: true`              |
-| IPC validation     | `validateSender()` checks `BrowserWindow.fromWebContents()`                      |
-| External URLs      | Protocol validation (`https://` or `http://` only) before `shell.openExternal()` |
-| API auth           | Token injected via axios interceptor, never exposed to renderer globals          |
+| Concern            | Approach                                                                                      |
+| ------------------ | --------------------------------------------------------------------------------------------- |
+| Token storage      | `electron safeStorage` → OS keychain (not localStorage)                                       |
+| Renderer isolation | `contextIsolation: true`, `nodeIntegration: false`, `sandbox: true`                           |
+| IPC validation     | `validateSender()` checks `BrowserWindow.fromWebContents()`                                   |
+| External URLs      | Protocol validation (`https://` or `http://` only) before `shell.openExternal()`              |
+| API auth           | Token returned through sender-validated auth IPC and used by the renderer's axios interceptor |
 
 ---
 
@@ -634,13 +636,13 @@ match(getProblemFromError(error))
 
 ### 4.1 Raindrop.io API Overview
 
-| Property               | Value                                                 |
-| ---------------------- | ----------------------------------------------------- |
-| Base URL               | `https://api.raindrop.io/rest/v1`                     |
-| Auth                   | OAuth 2.0 Bearer Token                                |
-| Rate Limit             | Not officially documented; handle 429 gracefully      |
-| Pagination             | Offset-based: `page` (0-indexed) + `perpage` (max 50) |
-| Special Collection IDs | `0` = All, `-1` = Unsorted, `-99` = Trash             |
+| Property               | Value                                                                      |
+| ---------------------- | -------------------------------------------------------------------------- |
+| Base URL               | `https://api.raindrop.io/rest/v1`                                          |
+| Auth                   | OAuth 2.0 Bearer Token                                                     |
+| Rate Limit             | 120 requests/minute; Lain budgets 90 and honors the server reset after 429 |
+| Pagination             | Offset-based: `page` (0-indexed) + `perpage` (max 50)                      |
+| Special Collection IDs | `0` = All, `-1` = Unsorted, `-99` = Trash                                  |
 
 ### 4.2 Endpoint → Component Matrix
 

@@ -1,0 +1,31 @@
+{
+  "mode": "measured-istanbul",
+  "sourceFingerprint": "b86be5eca77be06035e4300329c6dacf7304bf19e197350f0a4b36bb66223965",
+  "coverageSha256": "226423532db8671a96e142a329410c9c47a615186e21df5d96b042d30e856d5f",
+  "node": "v26.13.0",
+  "completedAt": "2026-11-09T16:18:03.291Z",
+  "baseCommit": "89f5078e7e15a72d7e48dace9ca5ad82f5f57f27",
+  "sourceDirty": true,
+  "note": "Measured source fingerprint is the identity of this pre-commit snapshot. Final clean-commit CI/package evidence is reported separately.",
+  "tests": 531,
+  "files": 58,
+  "findings": {
+    "deadCode": 0,
+    "duplicateGroups": 0,
+    "duplicatedLines": 0,
+    "staticComplexity": 0,
+    "measuredComparable": 3,
+    "measuredExpanded": 0
+  },
+  "audit": {
+    "verdict": "pass",
+    "changedFiles": 799,
+    "summary": {
+      "dead_code_issues": 0,
+      "dead_code_has_errors": false,
+      "complexity_findings": 0,
+      "max_cyclomatic": null,
+      "duplication_clone_groups": 0
+    }
+  }
+}

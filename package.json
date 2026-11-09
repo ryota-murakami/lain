@@ -1,7 +1,7 @@
 {
   "name": "lain-monorepo",
   "private": true,
-  "description": "Lain monorepo: macOS desktop client and landing page",
+  "description": "Lain monorepo: macOS and Linux desktop client and website",
   "author": {
     "name": "Laststance.io",
     "url": "https://laststance.io"
@@ -11,9 +11,9 @@
     "type": "git",
     "url": "https://github.com/ryota-murakami/lain.git"
   },
-  "packageManager": "pnpm@10.29.3",
+  "packageManager": "pnpm@12.18.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=26.13.0 <27"
   },
   "scripts": {
     "dev": "pnpm --filter lain dev",
@@ -23,7 +23,7 @@
     "preview": "pnpm --filter lain preview",
     "test": "pnpm --filter lain test",
     "test:watch": "pnpm --filter lain test:watch",
-    "test:coverage": "pnpm --filter lain test:coverage",
+    "test:coverage": "node scripts/measure-coverage.mjs",
     "test:e2e": "pnpm --filter lain test:e2e",
     "test:e2e:ui": "pnpm --filter lain test:e2e:ui",
     "codegen:api": "pnpm --filter lain codegen:api",
@@ -40,23 +40,27 @@
     "typecheck:web": "pnpm --filter lain-web typecheck",
     "validate:web": "pnpm lint:web && pnpm typecheck:web && pnpm build:web",
     "prettier": "prettier --ignore-unknown --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:release": "node --test scripts/verify-release.test.mjs",
+    "quality:dead-code": "fallow dead-code --fail-on-issues",
+    "quality:dupes": "fallow dupes --fail-on-issues",
+    "quality:architecture": "fallow architecture --fail-on-issues",
+    "quality:health": "node scripts/check-health.mjs",
+    "quality:audit": "fallow audit --max-crap inf --worsened error",
+    "quality": "pnpm quality:dead-code && pnpm quality:dupes && pnpm quality:architecture && pnpm quality:health",
+    "package:mac": "node scripts/package-release.mjs --platform mac",
+    "package:linux": "node scripts/package-release.mjs --platform linux",
+    "verify:release": "node scripts/verify-release.mjs"
   },
   "devDependencies": {
+    "@electron/asar": "4.3.1",
+    "fallow": "3.41.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "prettier-plugin-tailwindcss-canonical-classes": "^0.1.3"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "electron",
-      "electron-winstaller",
-      "esbuild",
-      "msw",
-      "unrs-resolver"
-    ]
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "prettier-plugin-tailwindcss-canonical-classes": "^0.1.6",
+    "yaml": "2.9.1"
   },
   "lint-staged": {
     "*": "prettier --ignore-unknown --write"

@@ -17,6 +17,48 @@ const API_BASE = 'https://api.raindrop.io/rest/v1'
  *   )
  */
 export const handlers = [
+  // happy-dom 21 sends real CORS preflights; keep all traffic within the mock API.
+  http.options(
+    `${API_BASE}/*`,
+    ({ request }) =>
+      new HttpResponse(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': request.headers.get('Origin') ?? '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers':
+            request.headers.get('Access-Control-Request-Headers') ??
+            'authorization, content-type',
+        },
+      }),
+  ),
+
+  http.get(`${API_BASE}/user/stats`, () =>
+    HttpResponse.json({
+      result: true,
+      items: [
+        {
+          _id: 0,
+          count: mockStore.raindrops.filter(
+            (item) => item.collection.$id !== -99,
+          ).length,
+        },
+        {
+          _id: -1,
+          count: mockStore.raindrops.filter(
+            (item) => item.collection.$id === -1,
+          ).length,
+        },
+        {
+          _id: -99,
+          count: mockStore.raindrops.filter(
+            (item) => item.collection.$id === -99,
+          ).length,
+        },
+      ],
+      meta: { changedBookmarksDate: '2026-11-09T00:00:00.000Z' },
+    }),
+  ),
   // --- Raindrops (with pagination + sort) ---
   http.get(`${API_BASE}/raindrops/:collectionId`, ({ params, request }) => {
     const collectionId = Number(params.collectionId)

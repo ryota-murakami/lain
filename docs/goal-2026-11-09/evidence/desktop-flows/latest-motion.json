@@ -1,0 +1,86 @@
+[
+  {
+    "flow": "export-cancel-save",
+    "seconds": 2.84,
+    "frames": 11,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-export--d1fe5-writes-a-verified-JSON-file-electron/flow.webm"
+  },
+  {
+    "flow": "upload-partial-retry",
+    "seconds": 3.92,
+    "frames": 16,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-multi-f-84f43-thout-uploading-a-duplicate-electron/flow.webm"
+  },
+  {
+    "flow": "icon-apply-reset",
+    "seconds": 3.72,
+    "frames": 15,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-icon-pr-b3df5-estores-the-release-default-electron/flow.webm"
+  },
+  {
+    "flow": "grid-hover-menu-actions",
+    "seconds": 8.04,
+    "frames": 32,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-grid-ho-f8a18-tant-move-and-Trash-actions-electron/flow.webm"
+  },
+  {
+    "flow": "list-hover-menu-actions",
+    "seconds": 6.52,
+    "frames": 26,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-list-ho-f04a2-tant-move-and-Trash-actions-electron/flow.webm"
+  },
+  {
+    "flow": "pagination",
+    "seconds": 3.12,
+    "frames": 12,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-scrolli-fc1cc-beyond-the-50-item-boundary-electron/flow.webm"
+  },
+  {
+    "flow": "collection-color-group",
+    "seconds": 4.64,
+    "frames": 19,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-collect-98224-stays-in-its-invoking-group-electron/flow.webm"
+  },
+  {
+    "flow": "large-group-menu",
+    "seconds": 3.76,
+    "frames": 15,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-large-s-0c652-erves-the-move-after-reload-electron/flow.webm"
+  },
+  {
+    "flow": "large-collection-picker",
+    "seconds": 4.64,
+    "frames": 19,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/final-desktop-20261110/export-upload-icon-large-s-95d13-ookmark-to-its-final-option-electron/flow.webm"
+  },
+  {
+    "flow": "collection-drag",
+    "seconds": 2.68,
+    "frames": 11,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/recorded-drag-20261110/dnd-P4-Organization---DnD--ec04c--preview-and-drop-indicator-electron/flow.webm"
+  },
+  {
+    "flow": "bookmark-drag",
+    "seconds": 2.76,
+    "frames": 11,
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "source": "apps/desktop/test-results/recorded-drag-20261110/dnd-P4-Organization---Book-60afd-llection-and-it-moves-there-electron/flow.webm"
+  },
+  {
+    "flow": "nested-collection-merge",
+    "seconds": 4.24,
+    "frames": 17,
+    "buildTimeJst": "2026-11-10T01:09:57+09:00",
+    "source": "apps/desktop/test-results/nested-merge-recheck-20261110/export-upload-icon-nested--c16b6-d-retains-them-after-reload-electron/flow.webm"
+  }
+]

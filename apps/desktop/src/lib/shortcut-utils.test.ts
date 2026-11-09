@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import type { ShortcutBinding, ShortcutMap } from '@/store/slices/settingsSlice'
 
@@ -10,6 +10,58 @@ import {
   isSameBinding,
   matchesBinding,
 } from './shortcut-utils'
+
+afterEach(() => vi.restoreAllMocks())
+
+test('Linux Control activates Command defaults and shares their conflict identity', () => {
+  // Arrange
+  vi.spyOn(navigator, 'platform', 'get').mockReturnValue('Linux x86_64')
+  const defaultBinding: ShortcutBinding = {
+    key: 'k',
+    meta: true,
+    ctrl: false,
+    alt: false,
+    shift: true,
+  }
+  const capturedBinding: ShortcutBinding = {
+    key: 'k',
+    meta: false,
+    ctrl: true,
+    alt: false,
+    shift: true,
+  }
+  // Act / Assert
+  expect(
+    matchesBinding(
+      makeEvent({ key: 'K', ctrlKey: true, shiftKey: true }),
+      defaultBinding,
+    ),
+  ).toBe(true)
+  expect(isSameBinding(defaultBinding, capturedBinding)).toBe(true)
+  expect(formatShortcut(defaultBinding)).toBe('Ctrl+Shift+K')
+  expect(findConflict({ search: defaultBinding }, capturedBinding)).toBe(
+    'search',
+  )
+})
+
+test('Linux Super cannot be saved as a shortcut that later expects Control', () => {
+  // Arrange
+  vi.spyOn(navigator, 'platform', 'get').mockReturnValue('Linux x86_64')
+  // Act / Assert
+  expect(bindingFromKeyboardEvent(makeEvent({ key: 'n', metaKey: true }))).toBe(
+    null,
+  )
+  expect(
+    bindingFromKeyboardEvent(makeEvent({ key: 'n', ctrlKey: true })),
+  ).toEqual({ key: 'n', meta: false, ctrl: true, alt: false, shift: false })
+})
+
+test('native select fields retain their normal keyboard navigation', () => {
+  // Arrange
+  const select = document.createElement('select')
+  // Act / Assert
+  expect(isEditableTarget(select)).toBe(true)
+})
 
 // Helper to create a minimal KeyboardEvent-like object
 function makeEvent(overrides: Partial<KeyboardEvent>): KeyboardEvent {

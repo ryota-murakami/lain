@@ -1,11 +1,18 @@
 import { DndContext } from '@dnd-kit/core'
-import { screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, test, vi } from 'vitest'
+import { toast } from 'sonner'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import { MainContent } from '@/components/raindrop/main-content'
+import { useMainAppBookmarkActions } from '@/hooks/useMainAppBookmarkActions'
+import { PartialBookmarkBatchError } from '@/hooks/useRaindropBatchActions'
 import type { Collection, Raindrop } from '@/lib/types'
-import { renderWithProviders } from '@test/render-with-providers'
+import { setSelectedRaindropIds } from '@/store/slices/uiSlice'
+import {
+  renderHookWithProviders,
+  renderWithProviders,
+} from '@test/render-with-providers'
 
 const REACT: Collection = {
   id: '200',
@@ -55,6 +62,8 @@ const RAINDROPS: Raindrop[] = [
     collectionId: '101',
   },
 ]
+
+afterEach(() => vi.restoreAllMocks())
 
 type MainContentProps = React.ComponentProps<typeof MainContent>
 
@@ -126,10 +135,10 @@ describe('MainContent view modes (F3)', () => {
     // Assert — folders and their bookmarks are visible in one tree
     expect(screen.getByTestId('directory-view')).toBeVisible()
     expect(
-      screen.getByRole('button', { name: /Development\/ \(20\)/ }),
+      screen.getByRole('button', { name: 'Development collection' }),
     ).toBeVisible()
     expect(
-      screen.getByRole('button', { name: /Design\/ \(15\)/ }),
+      screen.getByRole('button', { name: 'Design collection' }),
     ).toBeVisible()
     expect(
       screen.getByRole('button', { name: /React Documentation/ }),
@@ -201,4 +210,270 @@ describe('MainContent view modes (F3)', () => {
       }),
     ).toBeChecked()
   })
+})
+
+describe('MainContent loading and selection', () => {
+  test('search count distinguishes displayed matches from loaded and API total bookmarks', () => {
+    // Arrange + Act
+    renderMainContent({
+      searchQuery: 'React',
+      searchScope: 'title',
+      totalCount: 80,
+    })
+
+    // Assert
+    expect(screen.getByText('1 items shown · 2 loaded of 80')).toBeVisible()
+    expect(screen.getByText('React', { selector: 'mark' })).toBeVisible()
+    expect(screen.queryByText('Figma Best Practices')).not.toBeInTheDocument()
+  })
+
+  test('refresh failure keeps loaded rows available while offering retry and the next page', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderMainContent({
+      isError: true,
+      hasMore: true,
+      onRetry: vi.fn(),
+      onLoadMore: vi.fn(),
+    })
+
+    // Act
+    await user.click(screen.getByRole('button', { name: 'Retry loading' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Load more bookmarks' }),
+    )
+
+    // Assert
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Previously loaded items are kept.',
+    )
+    expect(screen.getByText('React Documentation')).toBeVisible()
+    expect(props.onRetry).toHaveBeenCalledOnce()
+    expect(props.onLoadMore).toHaveBeenCalledOnce()
+  })
+
+  test('modifier click toggles an existing selection without opening bookmark details', () => {
+    // Arrange
+    const { props } = renderMainContent({ selectedRaindropIds: new Set(['1']) })
+
+    // Act
+    fireEvent.click(screen.getByText('Figma Best Practices'), { ctrlKey: true })
+
+    // Assert
+    expect(props.onSelectedRaindropIdsChange).toHaveBeenCalledWith(
+      new Set(['1', '2']),
+    )
+    expect(props.onSelectRaindrop).not.toHaveBeenCalled()
+  })
+
+  test('shift selection follows the visible bookmark order', () => {
+    // Arrange
+    const { props } = renderMainContent({ selectedRaindropId: '1' })
+
+    // Act
+    fireEvent.click(screen.getByText('Figma Best Practices'), {
+      shiftKey: true,
+    })
+
+    // Assert
+    expect(props.onSelectedRaindropIdsChange).toHaveBeenCalledWith(
+      new Set(['1', '2']),
+    )
+    expect(props.onSelectRaindrop).not.toHaveBeenCalled()
+  })
+})
+
+describe.each(['grid', 'list'] as const)('%s bookmark actions', (viewMode) => {
+  test('the row checkbox participates in the main bulk selection', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderMainContent({ viewMode })
+
+    // Act
+    await user.hover(screen.getByText('React Documentation'))
+    await user.click(
+      screen.getByRole('checkbox', { name: 'Select React Documentation' }),
+    )
+
+    // Assert
+    expect(props.onSelectedRaindropIdsChange).toHaveBeenCalledWith(
+      new Set(['1']),
+    )
+    expect(props.onSelectRaindrop).not.toHaveBeenCalled()
+  })
+
+  test('Edit opens the intended bookmark without changing the bulk selection', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderMainContent({ viewMode })
+
+    // Act
+    await user.hover(screen.getByText('React Documentation'))
+    await user.click(
+      screen.getByRole('button', { name: 'Actions for React Documentation' }),
+    )
+    await user.click(screen.getByRole('menuitem', { name: 'Edit' }))
+
+    // Assert
+    expect(props.onSelectRaindrop).toHaveBeenCalledWith(
+      expect.objectContaining({ id: '1', title: 'React Documentation' }),
+    )
+    expect(props.onSelectedRaindropIdsChange).not.toHaveBeenCalled()
+  })
+
+  test('Move to Collection opens a destination dialog and moves only that row', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const onBatchMove = vi.fn(async () => {})
+    renderMainContent({
+      viewMode,
+      onBatchMove,
+      selectedRaindropIds: new Set(['2']),
+    })
+
+    // Act
+    await user.hover(screen.getByText('React Documentation'))
+    await user.click(
+      screen.getByRole('button', { name: 'Actions for React Documentation' }),
+    )
+    await user.click(
+      screen.getByRole('menuitem', { name: 'Move to Collection...' }),
+    )
+    expect(
+      screen.getByRole('heading', { name: 'Move bookmarks' }),
+    ).toBeVisible()
+    await user.click(screen.getByRole('button', { name: 'Apply' }))
+
+    // Assert
+    expect(onBatchMove).toHaveBeenCalledWith(['1'], 'unsorted')
+  })
+
+  test('Important and Trash execute their existing bookmark mutations', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const onBatchDelete = vi.fn(async () => {})
+    const { props } = renderMainContent({ viewMode, onBatchDelete })
+
+    // Act
+    await user.hover(screen.getByText('React Documentation'))
+    await user.click(
+      screen.getByRole('button', { name: 'Actions for React Documentation' }),
+    )
+    await user.click(
+      screen.getByRole('menuitem', { name: 'Mark as Important' }),
+    )
+    await user.hover(screen.getByText('React Documentation'))
+    await user.click(
+      screen.getByRole('button', { name: 'Actions for React Documentation' }),
+    )
+    await user.click(screen.getByRole('menuitem', { name: 'Move to Trash' }))
+
+    // Assert
+    expect(props.onToggleImportant).toHaveBeenCalledWith('1')
+    expect(onBatchDelete).toHaveBeenCalledWith(['1'])
+  })
+})
+
+describe.each(['grid', 'list', 'table', 'directory'] as const)(
+  '%s deletion recovery',
+  (viewMode) => {
+    test('failed bulk deletion keeps the selection and reports a retryable error', async () => {
+      // Arrange
+      const user = userEvent.setup()
+      const errorToast = vi.spyOn(toast, 'error')
+      const onBatchDelete = vi
+        .fn()
+        .mockRejectedValue(
+          new Error('The service did not confirm the bookmark changes.'),
+        )
+      const { props } = renderMainContent({
+        viewMode,
+        onBatchDelete,
+        selectedRaindropIds: new Set(['1', '2']),
+      })
+
+      // Act
+      await user.click(screen.getByRole('button', { name: 'Delete' }))
+
+      // Assert — the view does not discard controlled selection or leak a rejected event promise.
+      await waitFor(() =>
+        expect(errorToast).toHaveBeenCalledWith(
+          'Could not delete the selection. Please retry.',
+        ),
+      )
+      expect(onBatchDelete).toHaveBeenCalledWith(['1', '2'])
+      expect(props.onSelectedRaindropIdsChange).not.toHaveBeenCalled()
+      expect(screen.getByText('2 selected')).toBeVisible()
+    })
+  },
+)
+
+test('partial deletion keeps only the parent-confirmed unfinished IDs and clears them after a successful retry', async () => {
+  // Arrange
+  const user = userEvent.setup()
+  const errorToast = vi.spyOn(toast, 'error')
+  let failFirst: (cause: unknown) => void = () => {}
+  let finishRetry: () => void = () => {}
+  const batchDeleteRaindrops = vi
+    .fn()
+    .mockImplementationOnce(
+      async () =>
+        new Promise<void>((_resolve, reject) => {
+          failFirst = reject
+        }),
+    )
+    .mockImplementationOnce(
+      async () =>
+        new Promise<void>((resolve) => {
+          finishRetry = resolve
+        }),
+    )
+  const { result, store } = renderHookWithProviders(() =>
+    useMainAppBookmarkActions({
+      raindrops: RAINDROPS,
+      createRaindrop: vi.fn(),
+      updateRaindrop: vi.fn(),
+      batchMoveToCollection: vi.fn(),
+      batchAddTag: vi.fn(),
+      batchDeleteRaindrops,
+    }),
+  )
+  act(() => store.dispatch(setSelectedRaindropIds(['1', '2'])))
+  const { props, rerender } = renderMainContent({
+    viewMode: 'table',
+    onBatchDelete: result.current.handleBatchDelete,
+    selectedRaindropIds: new Set(['1', '2']),
+  })
+
+  // Act — hold the request open, then acknowledge only the first source collection.
+  await user.click(screen.getByRole('button', { name: 'Delete' }))
+  expect(store.getState().ui.selectedRaindropIds).toEqual(['1', '2'])
+  expect(screen.getByText('2 selected')).toBeVisible()
+  await act(async () =>
+    failFirst(
+      new PartialBookmarkBatchError(['1'], ['2'], new Error('Offline')),
+    ),
+  )
+
+  // Assert — parent semantics own the partial selection; the view only reports the error.
+  await waitFor(() =>
+    expect(errorToast).toHaveBeenCalledWith(
+      'Completed 1 bookmarks. 1 remain; retry to finish the selection.',
+    ),
+  )
+  expect(store.getState().ui.selectedRaindropIds).toEqual(['2'])
+  expect(props.onSelectedRaindropIdsChange).not.toHaveBeenCalled()
+  rerender(
+    <DndContext>
+      <MainContent {...props} selectedRaindropIds={new Set(['2'])} />
+    </DndContext>,
+  )
+  expect(screen.getByText('1 selected')).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'Delete' }))
+  expect(batchDeleteRaindrops).toHaveBeenNthCalledWith(2, ['2'])
+  expect(store.getState().ui.selectedRaindropIds).toEqual(['2'])
+  await act(async () => finishRetry())
+  await waitFor(() =>
+    expect(store.getState().ui.selectedRaindropIds).toEqual([]),
+  )
 })

@@ -458,9 +458,12 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleDialogOpenChange}>
-      <DialogContent className="sm:max-w-135">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DialogHeader>
+      <DialogContent className="flex max-h-[calc(100dvh-2rem)] flex-col sm:max-w-135">
+        <form
+          className="flex min-h-0 flex-col"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <DialogHeader className="shrink-0 pr-6">
             <DialogTitle className="flex items-center gap-2">
               <Plus className="text-primary h-5 w-5" />
               Add Bookmark
@@ -470,7 +473,8 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4 py-4">
+          {/* Keep the title and actions reachable while long forms scroll within the viewport. */}
+          <div className="-mx-1 grid min-h-0 gap-4 overflow-y-auto overscroll-contain px-1 py-4">
             {/* URL Input */}
             <div className="grid gap-2">
               <Label htmlFor="bookmark-url">URL</Label>
@@ -622,16 +626,18 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
             </Collapsible>
           </div>
 
-          {errors.root?.server && (
-            <p role="alert" className="text-destructive text-sm">
-              {errors.root.server.message}
-            </p>
-          )}
-          <FormDialogActions
-            pending={isSubmitting}
-            onCancel={handleCancel}
-            submitLabel={isSubmitting ? 'Saving...' : 'Save Bookmark'}
-          />
+          <div className="shrink-0">
+            {errors.root?.server && (
+              <p role="alert" className="text-destructive mb-3 text-sm">
+                {errors.root.server.message}
+              </p>
+            )}
+            <FormDialogActions
+              pending={isSubmitting}
+              onCancel={handleCancel}
+              submitLabel={isSubmitting ? 'Saving...' : 'Save Bookmark'}
+            />
+          </div>
         </form>
       </DialogContent>
     </Dialog>

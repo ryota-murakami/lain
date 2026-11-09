@@ -1266,3 +1266,203 @@ test.describe('nested collection merge', () => {
     await capture(page, testInfo, 'nested-merge-reloaded')
   })
 })
+
+test('minimum-height bookmark dialog keeps actions reachable through notes, validation and retry without losing input', async ({
+  page,
+}, testInfo) => {
+  // Arrange — use the supported short viewport and only the isolated stateful API fixture.
+  await page.setViewportSize({ width: 1024, height: 642 })
+  const errors: string[] = []
+  const saves: Array<Record<string, unknown>> = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  await page.route('**/api.raindrop.io/rest/v1/import/url/parse?*', (route) =>
+    route.fulfill({ json: { result: true, item: {} } }),
+  )
+  await page.route('**/api.raindrop.io/rest/v1/raindrop', async (route) => {
+    if (route.request().method() !== 'POST') return route.fallback()
+    saves.push(route.request().postDataJSON() as Record<string, unknown>)
+    if (saves.length === 1) {
+      return route.fulfill({
+        status: 503,
+        json: { result: false, errorMessage: 'Controlled retryable refusal' },
+      })
+    }
+    return route.fallback()
+  })
+  const opener = page.getByRole('button', { name: 'Add Bookmark', exact: true })
+  await opener.click()
+  const dialog = page.getByRole('dialog', { name: 'Add Bookmark', exact: true })
+  const cancel = dialog.getByRole('button', { name: 'Cancel', exact: true })
+  const save = dialog.getByRole('button', {
+    name: 'Save Bookmark',
+    exact: true,
+  })
+  const close = dialog.getByRole('button', { name: 'Close', exact: true })
+  const notes = dialog.getByPlaceholder('Personal notes about this bookmark...')
+  const fields = dialog.locator('form > div').filter({
+    has: page.getByLabel('URL', { exact: true }),
+  })
+  const verifyReachable = async (checkpoint: string) => {
+    const bounds = await readStablePanelBounds(dialog)
+    const controls = await Promise.all(
+      [
+        dialog.getByRole('heading', { name: 'Add Bookmark' }),
+        close,
+        cancel,
+        save,
+      ].map((control) =>
+        control.evaluate((element) => {
+          const rect = element.getBoundingClientRect()
+          const hit = document.elementFromPoint(
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2,
+          )
+          return {
+            text: element.textContent,
+            top: rect.top,
+            right: rect.right,
+            bottom: rect.bottom,
+            left: rect.left,
+            receivesPointer:
+              hit !== null && (element === hit || element.contains(hit)),
+          }
+        }),
+      ),
+    )
+    const scrolling = await page.evaluate(() => ({
+      x: window.scrollX,
+      y: window.scrollY,
+    }))
+    await writeFile(
+      testInfo.outputPath(`${checkpoint}-geometry.json`),
+      JSON.stringify({ bounds, controls, scrolling }, null, 2),
+    )
+    await capture(page, testInfo, checkpoint)
+    expect(bounds.viewportWidth).toBe(1024)
+    expect(bounds.viewportHeight).toBe(642)
+    expect(bounds.top).toBeGreaterThanOrEqual(0)
+    expect(bounds.left).toBeGreaterThanOrEqual(0)
+    expect(bounds.bottom).toBeLessThanOrEqual(642)
+    expect(bounds.right).toBeLessThanOrEqual(1024)
+    expect(scrolling).toEqual({ x: 0, y: 0 })
+    for (const control of controls) {
+      expect(control.top, control.text ?? '').toBeGreaterThanOrEqual(0)
+      expect(control.bottom, control.text ?? '').toBeLessThanOrEqual(642)
+      expect(control.left, control.text ?? '').toBeGreaterThanOrEqual(0)
+      expect(control.right, control.text ?? '').toBeLessThanOrEqual(1024)
+      expect(control.receivesPointer, control.text ?? '').toBe(true)
+    }
+  }
+  await verifyReachable('bookmark-short-collapsed')
+
+  // Act — validation and expanded notes must not push the fixed actions outside the viewport.
+  await save.click()
+  await expect(
+    dialog.getByText('Please enter a valid URL', { exact: true }),
+  ).toBeVisible()
+  await verifyReachable('bookmark-short-validation')
+  await dialog
+    .getByLabel('URL', { exact: true })
+    .fill('https://layout.example.test/notes')
+  await dialog
+    .getByLabel('Title', { exact: true })
+    .fill('Short viewport bookmark')
+  await dialog
+    .getByLabel('Description', { exact: true })
+    .fill('Description retained while scrolling and retrying.')
+  await dialog
+    .getByRole('combobox', { name: 'Tags', exact: true })
+    .fill('layout')
+  await page.keyboard.press('Enter')
+  await dialog
+    .getByRole('button', { name: 'Add notes (optional)', exact: true })
+    .click()
+  await notes.fill('First note line\nSecond note line\nThird note line')
+  await expect
+    .poll(() =>
+      fields.evaluate((element) => element.scrollHeight > element.clientHeight),
+    )
+    .toBe(true)
+  await verifyReachable('bookmark-short-notes-expanded')
+  await save.click()
+
+  // Assert — a refused save preserves all fields and leaves both pointer and keyboard actions usable.
+  await expect(dialog.getByRole('alert')).toHaveText(
+    'Could not save the bookmark. Your input is preserved; try again.',
+  )
+  await expect(dialog.getByRole('alert')).toBeInViewport({ ratio: 1 })
+  await expect(dialog.getByLabel('URL', { exact: true })).toHaveValue(
+    'https://layout.example.test/notes',
+  )
+  await expect(dialog.getByLabel('Title', { exact: true })).toHaveValue(
+    'Short viewport bookmark',
+  )
+  await expect(dialog.getByLabel('Description', { exact: true })).toHaveValue(
+    'Description retained while scrolling and retrying.',
+  )
+  await expect(notes).toHaveValue(
+    'First note line\nSecond note line\nThird note line',
+  )
+  await expect(
+    dialog.getByRole('button', { name: 'Remove layout tag', exact: true }),
+  ).toBeVisible()
+  await verifyReachable('bookmark-short-server-error')
+  await fields.hover()
+  await page.mouse.wheel(0, -2000)
+  await expect
+    .poll(() => fields.evaluate((element) => element.scrollTop))
+    .toBe(0)
+  await expect(dialog.getByLabel('URL', { exact: true })).toBeInViewport({
+    ratio: 1,
+  })
+  await verifyReachable('bookmark-short-scrolled-top')
+  await notes.focus()
+  await page.keyboard.press('Tab')
+  await expect(cancel).toBeFocused()
+  await page.keyboard.press('Tab')
+  await expect(save).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(dialog).toBeHidden()
+  expect(saves).toHaveLength(2)
+  expect(saves[0]).toMatchObject({
+    link: 'https://layout.example.test/notes',
+    title: 'Short viewport bookmark',
+    excerpt: 'Description retained while scrolling and retrying.',
+    note: 'First note line\nSecond note line\nThird note line',
+    tags: ['layout'],
+  })
+  expect(saves[1]).toEqual(saves[0])
+  await expect(
+    page
+      .locator('[data-raindrop-id]')
+      .filter({ hasText: 'Short viewport bookmark' }),
+  ).toHaveCount(1)
+  await capture(page, testInfo, 'bookmark-short-keyboard-save-confirmed')
+
+  // Cancel remains reachable by pointer and keyboard after the body has scrolled to expanded notes.
+  for (const keyboard of [false, true]) {
+    await opener.click()
+    await dialog.getByLabel('Title', { exact: true }).fill('Discarded draft')
+    await dialog
+      .getByRole('button', { name: 'Add notes (optional)', exact: true })
+      .click()
+    await notes.fill('Unsaved note')
+    await verifyReachable(
+      `bookmark-short-${keyboard ? 'keyboard' : 'pointer'}-cancel`,
+    )
+    if (keyboard) {
+      await notes.focus()
+      await page.keyboard.press('Tab')
+      await expect(cancel).toBeFocused()
+      await page.keyboard.press('Enter')
+    } else {
+      await cancel.click()
+    }
+    await expect(dialog).toBeHidden()
+  }
+  await opener.click()
+  await close.click()
+  await expect(dialog).toBeHidden()
+  expect(saves).toHaveLength(2)
+  expect(errors).toEqual([])
+})

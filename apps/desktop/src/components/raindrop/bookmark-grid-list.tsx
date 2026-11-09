@@ -168,7 +168,8 @@ export const BookmarkGridList = React.memo(function BookmarkGridList({
       className={
         mode === 'grid'
           ? 'grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 p-4'
-          : 'divide-y'
+          : // Constrain list intrinsic width so ScrollArea's table wrapper cannot push row actions offscreen.
+            'divide-y [contain:inline-size]'
       }
     >
       <SortableContext

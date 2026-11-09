@@ -1,6 +1,6 @@
 import { test as base, expect, _electron as electron } from '@playwright/test'
 import type { ElectronApplication, Page, TestInfo } from '@playwright/test'
-import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises'
+import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -200,6 +200,12 @@ test('multi-file upload keeps successful files and retries failed metadata witho
     'File uploaded; metadata is not saved yet.',
   )
   await capture(page, testInfo, 'upload-partial-metadata-failure')
+  // Check the rendered checkpoint immediately; polling could wait for an unwanted toast to dismiss.
+  expect(
+    await page
+      .getByText('Server error. Please try again later.', { exact: true })
+      .isVisible(),
+  ).toBe(false)
   await uploader
     .getByRole('button', { name: 'Retry metadata', exact: true })
     .click()
@@ -257,6 +263,11 @@ test('multi-file upload keeps successful files and retries failed metadata witho
     },
   ])
   await capture(page, testInfo, 'upload-both-files-confirmed')
+  expect(
+    await page
+      .getByText('Server error. Please try again later.', { exact: true })
+      .isVisible(),
+  ).toBe(false)
   await uploader
     .locator('[data-slot="dialog-footer"]')
     .getByRole('button', { name: 'Close', exact: true })
@@ -491,6 +502,331 @@ for (const view of ['grid', 'list'] as const) {
     await capture(page, testInfo, `${view}-trash-destination-confirmed`)
   })
 }
+
+test('narrow list menus and detail closure retain the visible title prefix without horizontal scrolling', async ({
+  page,
+}, testInfo) => {
+  // Arrange — match the CI renderer width instead of relying on the host display size.
+  await page.setViewportSize({ width: 1024, height: 640 })
+  await expect
+    .poll(() =>
+      page.evaluate(() => ({ width: innerWidth, height: innerHeight })),
+    )
+    .toEqual({ width: 1024, height: 640 })
+  await page.getByRole('button', { name: 'Development', exact: true }).click()
+  await page.keyboard.press('Meta+2')
+  const list = page.getByTestId('list-view')
+  const row = list.locator('[data-raindrop-id="1"]')
+  const menu = row.getByRole('button', {
+    name: 'Actions for React Documentation',
+    exact: true,
+  })
+  await expect(
+    row.getByRole('heading', { name: 'React Documentation', exact: true }),
+  ).toBeVisible()
+
+  const measure = () =>
+    row.evaluate((element) => {
+      const viewport = element.closest<HTMLElement>(
+        '[data-slot="scroll-area-viewport"]',
+      )!
+      const title = element.querySelector<HTMLElement>('h3')!
+      const favicon = element.querySelector<HTMLElement>(
+        '[data-testid="favicon-1"]',
+      )!
+      const action = element.querySelector<HTMLElement>(
+        'button[aria-label="Actions for React Documentation"]',
+      )!
+      const bounds = viewport.getBoundingClientRect()
+      const titleText = document
+        .createTreeWalker(title, NodeFilter.SHOW_TEXT)
+        .nextNode()!
+      const prefix = document.createRange()
+      prefix.setStart(titleText, 0)
+      prefix.setEnd(titleText, Math.min(5, titleText.textContent!.length))
+      const prefixBounds = prefix.getBoundingClientRect()
+      const ancestors = []
+      // Preserve each sizing boundary so failures identify the overflowing ancestor.
+      for (
+        let current: Element | null = element;
+        current;
+        current = current.parentElement
+      ) {
+        ancestors.push({
+          tag: current.tagName,
+          slot: current.getAttribute('data-slot'),
+          display: getComputedStyle(current).display,
+          width: current.clientWidth,
+          scrollWidth: current.scrollWidth,
+          scrollLeft: current.scrollLeft,
+        })
+      }
+      return {
+        viewportLeft: bounds.left,
+        viewportRight: bounds.right,
+        viewportWidth: viewport.clientWidth,
+        scrollWidth: viewport.scrollWidth,
+        scrollLeft: viewport.scrollLeft,
+        titleLeft: title.getBoundingClientRect().left,
+        titleWidth: title.clientWidth,
+        prefixLeft: prefixBounds.left,
+        prefixRight: prefixBounds.right,
+        faviconLeft: favicon.getBoundingClientRect().left,
+        actionRight: action.getBoundingClientRect().right,
+        title: title.textContent,
+        ancestors,
+      }
+    })
+  const before = await measure()
+
+  // Act — the pointer must not scroll an intrinsically oversized row to reach its menu.
+  await row.hover()
+  await menu.click()
+  await expect(
+    page.getByRole('menuitem', { name: 'Edit', exact: true }),
+  ).toBeVisible()
+  const afterMenu = await measure()
+  const geometryPath = testInfo.outputPath('list-viewport-geometry.json')
+  await writeFile(geometryPath, JSON.stringify({ before, afterMenu }, null, 2))
+  await testInfo.attach('List viewport geometry', {
+    path: geometryPath,
+    contentType: 'application/json',
+  })
+  await capture(page, testInfo, 'narrow-list-menu-title-prefix')
+
+  // Assert — title beginning, favicon and menu all fit; no metadata is removed to obtain this geometry.
+  expect(afterMenu.scrollLeft).toBe(0)
+  expect(afterMenu.scrollWidth).toBe(afterMenu.viewportWidth)
+  expect(afterMenu.title).toBe('React Documentation')
+  expect(afterMenu.titleWidth).toBeGreaterThan(40)
+  expect(afterMenu.titleLeft).toBeGreaterThanOrEqual(afterMenu.viewportLeft)
+  expect(afterMenu.prefixLeft).toBeGreaterThanOrEqual(afterMenu.viewportLeft)
+  expect(afterMenu.prefixRight).toBeLessThanOrEqual(afterMenu.viewportRight)
+  expect(afterMenu.faviconLeft).toBeGreaterThanOrEqual(afterMenu.viewportLeft)
+  expect(afterMenu.actionRight).toBeLessThanOrEqual(afterMenu.viewportRight)
+  await page.getByRole('menuitem', { name: 'Edit', exact: true }).click()
+  const detail = page.getByTestId('detail-panel')
+  await expect(detail.getByLabel('Title', { exact: true })).toHaveValue(
+    'React Documentation',
+  )
+  const withDetail = await measure()
+  await writeFile(
+    testInfo.outputPath('list-viewport-with-detail.json'),
+    JSON.stringify(withDetail, null, 2),
+  )
+  expect(withDetail.scrollLeft).toBe(0)
+  expect(withDetail.titleWidth).toBeGreaterThan(40)
+  expect(withDetail.prefixLeft).toBeGreaterThanOrEqual(withDetail.viewportLeft)
+  expect(withDetail.prefixRight).toBeLessThanOrEqual(withDetail.viewportRight)
+  await capture(page, testInfo, 'narrow-list-detail-open-title-prefix')
+  const taggedRow = list.locator('[data-raindrop-id="2"]')
+  const taggedTitle = await taggedRow.locator('h3').evaluate((title) => {
+    const bounds = title.getBoundingClientRect()
+    const text = document
+      .createTreeWalker(title, NodeFilter.SHOW_TEXT)
+      .nextNode()!
+    const prefix = document.createRange()
+    prefix.setStart(text, 0)
+    prefix.setEnd(text, 10)
+    const prefixBounds = prefix.getBoundingClientRect()
+    return {
+      text: title.textContent,
+      width: bounds.width,
+      left: bounds.left,
+      right: bounds.right,
+      prefixLeft: prefixBounds.left,
+      prefixRight: prefixBounds.right,
+    }
+  })
+  await writeFile(
+    testInfo.outputPath('long-tag-title-geometry.json'),
+    JSON.stringify(taggedTitle, null, 2),
+  )
+  // Long metadata must not consume the title's reading space in a narrow collection pane.
+  expect(taggedTitle.text).toBe('TypeScript Handbook')
+  expect(taggedTitle.width).toBeGreaterThanOrEqual(120)
+  expect(taggedTitle.prefixLeft).toBeGreaterThanOrEqual(taggedTitle.left)
+  expect(taggedTitle.prefixRight).toBeLessThanOrEqual(taggedTitle.right)
+  await expect(taggedRow.getByText('typescript', { exact: true })).toBeVisible()
+  await expect(
+    taggedRow.getByText('documentation', { exact: true }),
+  ).toBeVisible()
+  await expect(taggedRow.getByText('Feb 13', { exact: true })).toBeVisible()
+
+  // Every toolbar control must stay inside the main pane and receive pointer input while detail is open.
+  const main = page.locator('main[data-slot="sidebar-inset"]')
+  const assertToolbarFits = async (checkpoint: string) => {
+    const toolbarGeometry = await main.evaluate((element) => {
+      const pane = element.getBoundingClientRect()
+      const controls = Array.from(
+        element.querySelectorAll<HTMLElement>(
+          'button, input, [role="combobox"]',
+        ),
+      )
+        .filter((control) => !control.closest('[data-slot="scroll-area"]'))
+        .map((control) => {
+          const bounds = control.getBoundingClientRect()
+          const centerHit = document.elementFromPoint(
+            bounds.left + bounds.width / 2,
+            bounds.top + bounds.height / 2,
+          )
+          return {
+            name:
+              control.getAttribute('aria-label') ||
+              control.getAttribute('placeholder') ||
+              control.textContent?.trim(),
+            left: bounds.left,
+            right: bounds.right,
+            top: bounds.top,
+            bottom: bounds.bottom,
+            width: bounds.width,
+            height: bounds.height,
+            receivesPointer: centerHit !== null && control.contains(centerHit),
+          }
+        })
+      return {
+        left: pane.left,
+        right: pane.right,
+        bottom: innerHeight,
+        controls,
+      }
+    })
+    await writeFile(
+      testInfo.outputPath(`${checkpoint}-geometry.json`),
+      JSON.stringify(toolbarGeometry, null, 2),
+    )
+    expect(toolbarGeometry.controls.map((control) => control.name)).toEqual(
+      expect.arrayContaining([
+        'Export',
+        'Upload',
+        'Add',
+        'Search everywhere',
+        'Search options',
+        'View mode',
+        'Newest First',
+      ]),
+    )
+    // Check all controls, including the search input, rather than only the previously overlapping sort trigger.
+    for (const control of toolbarGeometry.controls) {
+      expect(control.left, control.name).toBeGreaterThanOrEqual(
+        toolbarGeometry.left,
+      )
+      expect(control.right, control.name).toBeLessThanOrEqual(
+        toolbarGeometry.right,
+      )
+      expect(control.top, control.name).toBeGreaterThanOrEqual(0)
+      expect(control.bottom, control.name).toBeLessThanOrEqual(
+        toolbarGeometry.bottom,
+      )
+      expect(control.width, control.name).toBeGreaterThan(0)
+      expect(control.height, control.name).toBeGreaterThan(0)
+      expect(control.receivesPointer, control.name).toBe(true)
+    }
+  }
+  await assertToolbarFits('narrow-toolbar')
+  // Trial clicks retain the current detail while verifying all header actions are unobstructed.
+  for (const name of ['Export', 'Upload', 'Add']) {
+    await main.getByRole('button', { name, exact: true }).click({ trial: true })
+  }
+  await main.getByRole('combobox').click()
+  await page.getByRole('option', { name: 'Title A-Z', exact: true }).click()
+  await expect(main.getByRole('combobox')).toContainText('Title A-Z')
+  await capture(page, testInfo, 'narrow-toolbar-sort-confirmed')
+  await main.getByRole('combobox').click()
+  await page.getByRole('option', { name: 'Newest First', exact: true }).click()
+  await main.getByRole('button', { name: 'View mode', exact: true }).click()
+  await page.getByRole('menuitemradio', { name: 'Table', exact: true }).click()
+  await expect(page.getByTestId('table-view')).toBeVisible()
+  await capture(page, testInfo, 'narrow-toolbar-table-confirmed')
+  await main.getByRole('button', { name: 'View mode', exact: true }).click()
+  await page.getByRole('menuitemradio', { name: 'List', exact: true }).click()
+  await expect(list).toBeVisible()
+  const search = main.getByPlaceholder(/^Search bookmarks/)
+  await search.fill('React')
+  await expect(search).toHaveValue('React')
+  await expect(row).toBeVisible()
+  await main.getByRole('button', { name: 'Clear search', exact: true }).click()
+  await expect(search).toHaveValue('')
+  await main
+    .getByRole('button', { name: 'Search everywhere', exact: true })
+    .click()
+  await main
+    .getByRole('button', { name: 'Search in Development', exact: true })
+    .click()
+  await main
+    .getByRole('button', { name: 'Search options', exact: true })
+    .click()
+  // Expanded field scopes must remain clickable in the same narrow pane.
+  for (const name of [
+    'All Fields',
+    'URL Only',
+    'Title Only',
+    'Description Only',
+  ]) {
+    await main.getByRole('button', { name, exact: true }).click({ trial: true })
+  }
+  await main.getByRole('button', { name: 'Title Only', exact: true }).click()
+  await expect(
+    main.getByRole('button', { name: 'Search all fields', exact: true }),
+  ).toBeVisible()
+  await assertToolbarFits('narrow-toolbar-expanded')
+  await main
+    .getByRole('button', { name: 'Search all fields', exact: true })
+    .click()
+  await capture(page, testInfo, 'narrow-toolbar-controls-operable')
+  await main
+    .getByRole('button', { name: 'Search options', exact: true })
+    .click()
+  // Bulk selection adds another toolbar row without covering the open detail or hiding its actions.
+  await row.hover()
+  await list
+    .getByRole('checkbox', { name: 'Select React Documentation', exact: true })
+    .click()
+  await list.locator('[data-raindrop-id="2"]').hover()
+  await list
+    .getByRole('checkbox', { name: 'Select TypeScript Handbook', exact: true })
+    .click()
+  await expect(main.getByText('2 selected', { exact: true })).toBeVisible()
+  await expect(detail.getByLabel('Title', { exact: true })).toBeVisible()
+  await assertToolbarFits('narrow-toolbar-bulk')
+  for (const name of ['Deselect All', 'Move to...', 'Add Tag...', 'Delete']) {
+    await main.getByRole('button', { name, exact: true }).click({ trial: true })
+  }
+  await capture(page, testInfo, 'narrow-toolbar-bulk-operable')
+  await main.getByRole('button', { name: 'Deselect All', exact: true }).click()
+  await expect(main.getByText('2 selected', { exact: true })).toHaveCount(0)
+  await detail.getByRole('button', { name: 'Close detail panel' }).click()
+  await expect.poll(async () => (await measure()).viewportWidth).toBe(768)
+  await assertToolbarFits('narrow-toolbar-detail-closed')
+  const afterClose = await measure()
+  expect(afterClose.scrollLeft).toBe(0)
+  expect(afterClose.titleLeft).toBeGreaterThanOrEqual(afterClose.viewportLeft)
+  expect(afterClose.titleWidth).toBeGreaterThan(40)
+  expect(afterClose.prefixLeft).toBeGreaterThanOrEqual(afterClose.viewportLeft)
+  expect(afterClose.prefixRight).toBeLessThanOrEqual(afterClose.viewportRight)
+  await expect(row.getByText('react', { exact: true })).toBeVisible()
+  await expect(row.getByText('frontend', { exact: true })).toBeVisible()
+  await capture(page, testInfo, 'narrow-list-detail-closed-title-prefix')
+
+  // Keyboard users must still reach the same menu and return focus without a sideways jump.
+  await menu.focus()
+  await page.keyboard.press('Enter')
+  await expect(
+    page.getByRole('menuitem', { name: 'Edit', exact: true }),
+  ).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(menu).toBeFocused()
+  const afterKeyboard = await measure()
+  expect(afterKeyboard.scrollLeft).toBe(0)
+  await writeFile(
+    geometryPath,
+    JSON.stringify(
+      { before, afterMenu, withDetail, afterClose, afterKeyboard },
+      null,
+      2,
+    ),
+  )
+})
 
 test('privileged renderer refuses new windows and same-window navigation', async ({
   page,

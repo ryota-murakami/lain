@@ -4,7 +4,7 @@ Initial revision: 89f5078e7e15a72d7e48dace9ca5ad82f5f57f27 plus the recorded pre
 
 The source request permits local work while account backup is pending; measurements/dependency work started during official export generation. Quality measurements did not mutate the account; the separately owned real-account QA is recorded in [real-account validation](real-account-qa.md).
 
-| Metric                                      |      Initial |        Frozen source result |
+| Metric                                      |      Initial |  First frozen source result |
 | ------------------------------------------- | -----------: | --------------------------: |
 | Dead-code findings                          |          135 |                           0 |
 | Duplicate clone groups                      |           21 |                           0 |
@@ -94,7 +94,7 @@ The provenance rejection was exercised after subsequent source edits: `pnpm qual
 
 The initial generated API exclusion (`ignoreFindings`) did not suppress duplicate-export group findings spanning generated and handwritten files. `ignoreExports` now names only that same generated `raindropApi.ts`, preserving its graph participation. This removes two analyzer-scope false positives (`Collection` and `Raindrop`, distinct API/domain models); count these as a scope correction, not a source cleanup improvement. No handwritten production path, rule or threshold was excluded or weakened.
 
-## Frozen-source verification
+## First frozen-source verification
 
 Desktop lint, TypeScript, Knip, all 531 unit tests, six release-integrity tests, all strict fallow gates and workflow actionlint passed. The changed-code audit returned `pass`, with zero introduced dead-code, complexity, duplication, styling or diff-risk findings. Its two inherited styling advisories remain visible. Website lint, TypeScript and production build passed; Next.js still reports the preexisting unset `metadataBase` warning, which does not affect desktop code.
 
@@ -105,3 +105,13 @@ The final dependency audit records zero critical/high, two moderate and one low 
 The first hosted Ubuntu measured-health run exposed 14 Mac-only assumptions across two keyboard test suites. A local Linux platform fixture reproduced all 14 failures. The corrected tests explicitly execute both macOS and Linux cases for labels, modifiers, capture, conflict exchange, cancellation and reset. Keyboard guards now also include a valid platform-specific event that fires outside an input/dialog/IME context, preventing an invalid modifier from making negative checks pass accidentally. The focused suite passed 80 tests, 35 more than the previous 45, with strict lint and app type checking. Product keyboard behavior and global test setup are unchanged. Final coverage must be regenerated after these test and native-QA harness corrections; the earlier frozen-source measurements remain historical checkpoints.
 
 The combined CI corrections were formatted and remeasured on 2026-11-10 at 02:07 JST: **569 tests in 58 files**, full desktop lint/typecheck/Knip, strict dead code/duplicates/architecture/static complexity/measured health and changed-code audit all pass. A new seven-line duplicated QA assertion was first rejected by the strict gate, then extracted into one reusable Directory verification without relaxing the gate. Temporary diagnostic scripts were moved outside the workspace rather than ignored by lint. The [CI-fix checkpoint](quality-after/ci-fix-checkpoint.json) records fingerprint `bb1056b057b05f4230de9b9cb5e5a897166d7b8a2d81a9b8e079c90c4ba8ce2d`, fresh coverage hashes and zero findings. Renderer coverage is now **86.30 / 79.22 / 80.13 / 88.85%** (statements/branches/functions/lines); expanded coverage is **83.96 / 78.46 / 78.55 / 86.14%**. The earlier table remains the first frozen checkpoint, not a claim that later CI corrections were already included.
+
+## Final visual-correction checkpoint
+
+The complete visual corrections were formatted and remeasured on 2026-11-10: **581 unit tests in 59 files**, desktop lint/typecheck/Knip, six release-integrity regressions, and all strict dead-code/duplication/architecture/static-complexity/measured-health gates pass. The changed-code audit passes with the same two inherited CVA advisories and no introduced findings. No baseline, rule weakening or new production exclusion was added.
+
+The [visual-fix checkpoint](quality-after/visual-fix-checkpoint.json) binds the measurement to source fingerprint `a791af8d9de41f176a49996b333f89d0f14c75d518a064f6b4462b8ca74b1241` and its coverage hash. Same-scope renderer coverage is **86.82 / 79.78 / 80.87 / 89.26%** (statements/branches/functions/lines), against **56.08 / 43.72 / 43.26 / 57.49%** initially. Expanded native/support coverage is **84.41 / 78.96 / 79.20 / 86.50%**. Repeating the original renderer-only health projection still reports exactly three estimated native findings (48 initially); measured expanded health reports zero. The comparable command consequently exits nonzero and is not described as a passing strict gate.
+
+The corrected behavior includes List intrinsic overflow and focus scrolling, readable titles beside long tags in a narrow detail layout, wrapped toolbar/bulk controls, platform-aware customized shortcut hints and upload-owned inline errors without duplicate global notifications. Upload authentication expiry, rate-limit scheduling and promise rejection retain their existing contracts. Regression tests reproduced the prior failures before the fixes. Controlled Electron metadata/sync/recovery recordings and the complete suite are recorded separately from unit coverage.
+
+These are local frozen-source results. Final clean-commit CI, downloaded artifacts and signed update records are linked from the PR and external verification report after execution, avoiding a documentation-only commit that would invalidate the packaged SHA.

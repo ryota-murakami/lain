@@ -60,7 +60,7 @@ export async function fetchUploadQuota(
   const { data } = await lainAxios.get<{
     result: boolean
     user: { pro: boolean; files: { used: number; size: number } }
-  }>('/user', { signal })
+  }>('/user', { signal, errorFeedback: 'inline' })
   if (!data.result || !Number.isFinite(data.user.files?.size))
     throw new Error('Upload quota could not be read. Please retry.')
   return {
@@ -124,7 +124,7 @@ export async function uploadFile(
               : Number(metadata.collectionId),
         },
       },
-      { signal },
+      { signal, errorFeedback: 'inline' },
     )
     if (!data.result) throw new Error('Metadata could not be saved.')
     update({ phase: 'done', error: undefined })
@@ -151,6 +151,7 @@ async function uploadBinary(
     errorMessage?: string
   }>('/raindrop/file', body, {
     signal,
+    errorFeedback: 'inline',
     timeout: 300_000,
     headers: { 'Content-Type': undefined },
     onUploadProgress: (event) =>

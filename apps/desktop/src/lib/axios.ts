@@ -4,11 +4,18 @@ import { toast } from 'sonner'
 
 import { RequestBudget } from './request-budget'
 
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    /** Let a caller with inline recovery own ordinary error feedback; session expiry remains global. */
+    errorFeedback?: 'inline'
+  }
+}
+
 /**
  * Lain axios instance with centralized error handling via interceptors.
  * All Raindrop.io API calls go through this instance.
- * Error toasts and error reporting are handled here — application code
- * only needs to handle the success path.
+ * Requests show global error toasts by default. Upload queue requests opt into
+ * inline feedback while retaining rejection, authentication and rate-limit handling.
  *
  * @example
  *   // Direct usage (rare — prefer RTK Query hooks)
@@ -109,7 +116,21 @@ lainAxios.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     if (originalAxios.isCancel(error)) return Promise.reject(error)
-    switch (getProblemFromError(error)) {
+    const problem = getProblemFromError(error)
+    // Rate limits affect all requests even when a queue owns the visible recovery action.
+    if (problem === RATE_LIMIT_ERROR) {
+      requestBudget.block(
+        Number(error.response?.headers['x-ratelimit-reset']) * 1000 ||
+          Date.now() + 60_000,
+      )
+    }
+    // Session expiry remains global because an inline retry cannot restore authentication.
+    if (
+      error.config?.errorFeedback === 'inline' &&
+      problem !== UNAUTHORIZED_ERROR
+    )
+      return Promise.reject(error)
+    switch (problem) {
       case NETWORK_ERROR:
         toast.error('Network error. Please check your connection.', {
           id: 'network-error',
@@ -128,10 +149,6 @@ lainAxios.interceptors.response.use(
         window.dispatchEvent(new Event('lain-session-expired'))
         break
       case RATE_LIMIT_ERROR:
-        requestBudget.block(
-          Number(error.response?.headers['x-ratelimit-reset']) * 1000 ||
-            Date.now() + 60_000,
-        )
         toast.error(
           'Rate limit reached. Requests will resume after the server reset.',
           { id: 'rate-limit' },

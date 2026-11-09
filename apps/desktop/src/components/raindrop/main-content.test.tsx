@@ -8,6 +8,7 @@ import { MainContent } from '@/components/raindrop/main-content'
 import { useMainAppBookmarkActions } from '@/hooks/useMainAppBookmarkActions'
 import { PartialBookmarkBatchError } from '@/hooks/useRaindropBatchActions'
 import type { Collection, Raindrop } from '@/lib/types'
+import { updateShortcut } from '@/store/slices/settingsSlice'
 import { setSelectedRaindropIds } from '@/store/slices/uiSlice'
 import {
   renderHookWithProviders,
@@ -115,6 +116,77 @@ function renderMainContent(overrides: Partial<MainContentProps> = {}) {
 }
 
 describe('MainContent view modes (F3)', () => {
+  test('scoped toolbar keeps search, sort, scope and add actions available together', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { props } = renderMainContent({
+      selectedCollectionId: '100',
+      breadcrumbs: ['Development'],
+    })
+
+    // Act
+    fireEvent.change(screen.getByPlaceholderText(/^Search bookmarks/), {
+      target: { value: 'React' },
+    })
+    await user.click(screen.getByRole('button', { name: 'Search everywhere' }))
+    await user.click(screen.getByRole('button', { name: 'Search options' }))
+    await user.click(screen.getByRole('button', { name: 'Title Only' }))
+    await user.click(screen.getByRole('combobox'))
+    await user.click(screen.getByRole('option', { name: 'Title A-Z' }))
+    await user.click(screen.getByRole('button', { name: 'Add' }))
+
+    // Assert
+    expect(props.onSearchQueryChange).toHaveBeenCalledExactlyOnceWith('React')
+    expect(props.onSearchModeChange).toHaveBeenCalledExactlyOnceWith('global')
+    expect(props.onSearchScopeChange).toHaveBeenCalledExactlyOnceWith('title')
+    expect(props.onSortChange).toHaveBeenCalledExactlyOnceWith('title-asc')
+    expect(props.onAddBookmark).toHaveBeenCalledTimes(1)
+    expect(screen.getByRole('button', { name: 'Export' })).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Upload' })).toBeVisible()
+    expect(screen.getByRole('button', { name: 'View mode' })).toBeVisible()
+  })
+
+  test.each([
+    {
+      platform: 'MacIntel',
+      defaultLabel: 'Search bookmarks... (⌘K)',
+      customLabel: 'Search bookmarks... (⇧⌘F)',
+    },
+    {
+      platform: 'Linux x86_64',
+      defaultLabel: 'Search bookmarks... (Ctrl+K)',
+      customLabel: 'Search bookmarks... (Ctrl+Shift+F)',
+    },
+  ])(
+    'search hint on $platform follows the current configured shortcut',
+    ({ platform, defaultLabel, customLabel }) => {
+      // Arrange
+      vi.spyOn(navigator, 'platform', 'get').mockReturnValue(platform)
+      const { store } = renderMainContent()
+      expect(screen.getByPlaceholderText(defaultLabel)).toBeVisible()
+
+      // Act
+      act(() => {
+        store.dispatch(
+          updateShortcut({
+            actionId: 'search',
+            binding: {
+              key: 'f',
+              meta: true,
+              shift: true,
+              alt: false,
+              ctrl: false,
+            },
+          }),
+        )
+      })
+
+      // Assert
+      expect(screen.getByPlaceholderText(customLabel)).toBeVisible()
+      expect(screen.queryByPlaceholderText(defaultLabel)).toBeNull()
+    },
+  )
+
   test('table view lists every bookmark as a row with sortable column headers', () => {
     // Arrange + Act
     renderMainContent({ viewMode: 'table' })

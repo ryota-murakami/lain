@@ -86,7 +86,7 @@ const RaindropListItem = React.memo(function RaindropListItem({
       data-raindrop-id={raindrop.id}
       tabIndex={-1}
       className={cn(
-        'group flex h-16 cursor-pointer items-center gap-3 px-4 transition-colors duration-150',
+        'group @container/list-row flex min-h-16 cursor-pointer items-center gap-3 px-4 py-3 transition-colors duration-150',
         'hover:bg-accent/50 focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
         isSelected && 'bg-accent',
       )}
@@ -134,68 +134,72 @@ const RaindropListItem = React.memo(function RaindropListItem({
         data-testid={`favicon-${raindrop.id}`}
       />
 
-      {/* Title + Domain + Description */}
-      <div className="min-w-0 flex-1 space-y-0.5">
-        <div className="flex items-center gap-2">
-          <h3 className="truncate text-sm font-medium">
-            <SearchHighlight
-              enabled={shouldHighlightTitle}
-              text={raindrop.title}
-              query={normalizedSearchQuery}
-            />
-          </h3>
-          {raindrop.isImportant && (
-            <Star
-              data-testid="important-indicator"
-              className="h-3 w-3 flex-shrink-0 fill-yellow-400 text-yellow-400"
-            />
-          )}
+      {/* Stack metadata below the title when the collection pane cannot keep both readable side by side. */}
+      <div className="flex min-w-0 flex-1 flex-col gap-1 @min-[40rem]/list-row:flex-row @min-[40rem]/list-row:items-center @min-[40rem]/list-row:gap-3">
+        {/* Title + Domain + Description */}
+        <div className="min-w-0 flex-1 space-y-0.5">
+          <div className="flex items-center gap-2">
+            <h3 className="truncate text-sm font-medium">
+              <SearchHighlight
+                enabled={shouldHighlightTitle}
+                text={raindrop.title}
+                query={normalizedSearchQuery}
+              />
+            </h3>
+            {raindrop.isImportant && (
+              <Star
+                data-testid="important-indicator"
+                className="h-3 w-3 flex-shrink-0 fill-yellow-400 text-yellow-400"
+              />
+            )}
+          </div>
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="text-muted-foreground truncate text-xs">
+              <SearchHighlight
+                enabled={shouldHighlightUrl}
+                text={domainText}
+                query={normalizedSearchQuery}
+              />
+            </span>
+            {raindrop.description && (
+              <>
+                <span className="text-muted-foreground">·</span>
+                <span className="text-muted-foreground flex-1 truncate text-xs">
+                  <SearchHighlight
+                    enabled={shouldHighlightDescription}
+                    text={raindrop.description}
+                    query={normalizedSearchQuery}
+                  />
+                </span>
+              </>
+            )}
+          </div>
         </div>
-        <div className="flex min-w-0 items-center gap-2">
-          <span className="text-muted-foreground truncate text-xs">
-            <SearchHighlight
-              enabled={shouldHighlightUrl}
-              text={domainText}
-              query={normalizedSearchQuery}
-            />
-          </span>
-          {raindrop.description && (
-            <>
-              <span className="text-muted-foreground">·</span>
-              <span className="text-muted-foreground flex-1 truncate text-xs">
-                <SearchHighlight
-                  enabled={shouldHighlightDescription}
-                  text={raindrop.description}
-                  query={normalizedSearchQuery}
-                />
+        <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 @min-[40rem]/list-row:shrink-0">
+          {/* Tags */}
+          <div className="flex max-w-[200px] min-w-0 flex-wrap items-center gap-1">
+            {visibleTags.map((tag) => (
+              <Badge
+                key={tag}
+                variant="outline"
+                className="h-4 max-w-[70px] truncate px-1.5 py-0 text-[10px]"
+              >
+                {tag}
+              </Badge>
+            ))}
+            {remainingTagCount > 0 && (
+              <span className="text-muted-foreground text-[10px]">
+                +{remainingTagCount}
               </span>
-            </>
-          )}
+            )}
+          </div>
+
+          {/* Date */}
+          <span className="text-muted-foreground ml-auto shrink-0 text-right text-xs whitespace-nowrap tabular-nums @min-[40rem]/list-row:w-16">
+            {formatRelativeDate(raindrop.createdAt)}
+          </span>
         </div>
       </div>
-
-      {/* Tags */}
-      <div className="flex max-w-[200px] flex-shrink-0 items-center gap-1">
-        {visibleTags.map((tag) => (
-          <Badge
-            key={tag}
-            variant="outline"
-            className="h-4 max-w-[70px] truncate px-1.5 py-0 text-[10px]"
-          >
-            {tag}
-          </Badge>
-        ))}
-        {remainingTagCount > 0 && (
-          <span className="text-muted-foreground text-[10px]">
-            +{remainingTagCount}
-          </span>
-        )}
-      </div>
-
-      {/* Date */}
-      <span className="text-muted-foreground w-16 flex-shrink-0 text-right text-xs tabular-nums">
-        {formatRelativeDate(raindrop.createdAt)}
-      </span>
 
       {/* More Menu */}
       <div

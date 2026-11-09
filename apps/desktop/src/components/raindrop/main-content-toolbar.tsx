@@ -44,7 +44,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { formatShortcut } from '@/lib/shortcut-utils'
 import type { ViewMode, SearchScope } from '@/lib/types'
+import { useAppSelector } from '@/store/hooks'
 
 import type { MainContentProps } from './main-content.types'
 
@@ -162,22 +164,25 @@ export const BookmarkHeader = React.memo(function BookmarkHeader({
   return (
     <>
       {/* Top row: Breadcrumb + Actions */}
-      <div className="flex items-center justify-between px-4 py-2">
-        <Breadcrumb>
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2">
+        <Breadcrumb className="max-w-full min-w-0">
           <BreadcrumbList>
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1
               return (
-                <BreadcrumbItem key={`${crumb}-${index}`}>
+                <BreadcrumbItem
+                  key={`${crumb}-${index}`}
+                  className="max-w-full min-w-0"
+                >
                   {!isLast ? (
                     <>
-                      <BreadcrumbLink className="hover:text-foreground cursor-pointer text-sm">
+                      <BreadcrumbLink className="hover:text-foreground min-w-0 cursor-pointer text-sm wrap-anywhere">
                         {crumb}
                       </BreadcrumbLink>
                       <BreadcrumbSeparator />
                     </>
                   ) : (
-                    <BreadcrumbPage className="text-sm font-medium">
+                    <BreadcrumbPage className="min-w-0 text-sm font-medium wrap-anywhere">
                       {crumb}
                     </BreadcrumbPage>
                   )}
@@ -187,14 +192,14 @@ export const BookmarkHeader = React.memo(function BookmarkHeader({
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full min-w-0 flex-wrap items-center gap-2">
           <Button size="sm" variant="outline" onClick={openExport}>
             Export
           </Button>
           <Button size="sm" variant="outline" onClick={openUpload}>
             Upload
           </Button>
-          <span className="text-muted-foreground text-xs tabular-nums">
+          <span className="text-muted-foreground text-xs whitespace-nowrap tabular-nums">
             {shownCount} items shown · {loadedCount} loaded
             {totalCount !== undefined ? ` of ${totalCount}` : ''}
           </span>
@@ -320,9 +325,9 @@ const SearchFieldScopes = React.memo(function SearchFieldScopes({
 >) {
   if (!isAdvancedSearchOpen) return null
   return (
-    <div className="flex items-center gap-2 px-4 pb-2">
+    <div className="flex flex-wrap items-center gap-2 px-4 pb-2">
       <span className="text-muted-foreground text-xs">Search in:</span>
-      <div className="flex gap-1">
+      <div className="flex flex-wrap gap-1">
         {FIELD_SCOPES.map((scope) => (
           <SearchScopeButton
             key={scope.value}
@@ -358,7 +363,7 @@ export const BookmarkBulkBar = React.memo(function BookmarkBulkBar({
     <>
       {/* Bulk Actions Bar — the table view renders its own */}
       {selectedCount > 0 && viewMode !== 'table' && (
-        <div className="bg-muted/30 flex items-center gap-2 border-t px-4 pt-2 pb-2">
+        <div className="bg-muted/30 flex flex-wrap items-center gap-2 border-t px-4 pt-2 pb-2">
           <span className="text-xs font-medium">{selectedCount} selected</span>
           <Button
             variant="ghost"
@@ -405,6 +410,33 @@ export const BookmarkBulkBar = React.memo(function BookmarkBulkBar({
   )
 })
 
+/**
+ * Show the configured search shortcut using the current platform's modifier labels.
+ * {@link BookmarkSearchControls} renders this input; settings changes update its hint immediately.
+ * @example <BookmarkSearchInput searchQuery={query} handleSearchQueryChange={onChange} />
+ */
+const BookmarkSearchInput = React.memo(function BookmarkSearchInput({
+  searchInputRef,
+  searchQuery,
+  handleSearchQueryChange,
+}: Pick<
+  SearchControlProps,
+  'searchInputRef' | 'searchQuery' | 'handleSearchQueryChange'
+>) {
+  const searchBinding = useAppSelector(
+    (state) => state.settings.shortcuts.search,
+  )
+  return (
+    <Input
+      ref={searchInputRef}
+      placeholder={`Search bookmarks... (${formatShortcut(searchBinding)})`}
+      value={searchQuery}
+      onChange={handleSearchQueryChange}
+      className="h-8 pr-8 pl-8 text-sm"
+    />
+  )
+})
+
 export const BookmarkSearchControls = React.memo(
   function BookmarkSearchControls({
     collectionScope,
@@ -425,16 +457,14 @@ export const BookmarkSearchControls = React.memo(
     return (
       <>
         {/* Second row: Search + View Controls */}
-        <div className="flex items-center gap-2 px-4 pb-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-2 px-4 pb-2">
           {/* Search Input */}
-          <div className="relative max-w-md flex-1">
+          <div className="relative max-w-md min-w-0 flex-[1_1_16rem]">
             <Search className="text-muted-foreground absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2" />
-            <Input
-              ref={searchInputRef}
-              placeholder="Search bookmarks... (⌘K)"
-              value={searchQuery}
-              onChange={handleSearchQueryChange}
-              className="h-8 pr-8 pl-8 text-sm"
+            <BookmarkSearchInput
+              searchInputRef={searchInputRef}
+              searchQuery={searchQuery}
+              handleSearchQueryChange={handleSearchQueryChange}
             />
             {searchQuery && (
               <button
@@ -451,7 +481,10 @@ export const BookmarkSearchControls = React.memo(
           {/* Collection Scope Badge + Toggle */}
           {canToggleGlobalSearch && (
             <>
-              <Badge variant={isScopedSearch ? 'secondary' : 'outline'}>
+              <Badge
+                variant={isScopedSearch ? 'secondary' : 'outline'}
+                className="max-w-full truncate"
+              >
                 {isScopedSearch
                   ? `in ${currentCollectionName}`
                   : 'searching everywhere'}
@@ -459,7 +492,7 @@ export const BookmarkSearchControls = React.memo(
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 text-xs"
+                className="h-auto min-h-8 max-w-full text-xs whitespace-normal"
                 onClick={handleToggleSearchMode}
               >
                 {isScopedSearch
@@ -484,26 +517,28 @@ export const BookmarkSearchControls = React.memo(
             </Badge>
           )}
 
-          {/* Advanced Search Toggle */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant={isAdvancedSearchOpen ? 'secondary' : 'ghost'}
-                size="icon"
-                className="h-8 w-8 flex-shrink-0"
-                onClick={handleAdvancedSearchToggle}
-                aria-label="Search options"
-                aria-expanded={isAdvancedSearchOpen}
-              >
-                <SlidersHorizontal className="h-3.5 w-3.5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Search options</TooltipContent>
-          </Tooltip>
+          {/* Keep the fixed-size view/sort controls together while the search row wraps. */}
+          <div className="flex shrink-0 items-center gap-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={isAdvancedSearchOpen ? 'secondary' : 'ghost'}
+                  size="icon"
+                  className="h-8 w-8 flex-shrink-0"
+                  onClick={handleAdvancedSearchToggle}
+                  aria-label="Search options"
+                  aria-expanded={isAdvancedSearchOpen}
+                >
+                  <SlidersHorizontal className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Search options</TooltipContent>
+            </Tooltip>
 
-          <Separator orientation="vertical" className="h-5" />
+            <Separator orientation="vertical" className="h-5" />
 
-          <BookmarkViewControls {...viewControls} />
+            <BookmarkViewControls {...viewControls} />
+          </div>
         </div>
 
         <SearchFieldScopes

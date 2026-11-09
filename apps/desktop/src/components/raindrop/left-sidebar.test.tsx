@@ -1,6 +1,7 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, test, vi } from 'vitest'
+import { toast } from 'sonner'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
 import type { Group } from '@/lib/types'
@@ -48,10 +49,12 @@ const GROUPS: Group[] = [
 ]
 
 /** Render real sidebar primitives with independent callbacks and a small nested collection tree. */
-function renderSidebar() {
+function renderSidebar(onEmptyTrash = vi.fn(async () => {})) {
   const props = {
     groups: GROUPS,
-    systemCollections: [],
+    systemCollections: [
+      { id: 'trash', name: 'Trash', icon: 'Trash2', count: 2 },
+    ],
     selectedCollectionId: 'all',
     onSelectCollection: vi.fn(),
     onAddBookmark: vi.fn(),
@@ -59,7 +62,7 @@ function renderSidebar() {
     onAddGroup: vi.fn(),
     onManageTags: vi.fn(),
     onDeleteCollection: vi.fn(async () => {}),
-    onEmptyTrash: vi.fn(async () => {}),
+    onEmptyTrash,
     onMergeCollections: vi.fn(),
     onPersistGroups: vi.fn(async () => {}),
     onRenameCollection: vi.fn(async () => {}),
@@ -77,6 +80,62 @@ function renderSidebar() {
     ),
   }
 }
+
+afterEach(() => vi.restoreAllMocks())
+
+describe('Empty Trash feedback', () => {
+  test.each([200, 503])(
+    'a rejected menu click reports HTTP %s failure once and keeps Trash available for retry',
+    async (status) => {
+      // Arrange — transport failures already have feedback from the Axios interceptor.
+      const user = userEvent.setup()
+      const errorToast = vi
+        .spyOn(toast, 'error')
+        .mockReturnValue('empty-trash-error')
+      const onEmptyTrash = vi.fn(async () => {
+        if (status === 503) toast.error('Server error. Please try again later.')
+        throw { status, message: 'Controlled refusal' }
+      })
+      renderSidebar(onEmptyTrash)
+      const trash = screen.getByRole('button', { name: 'Trash 2' })
+
+      // Act — use the actual dropdown and click boundary, not the callback directly.
+      await user.click(within(trash).getByRole('button'))
+      await user.click(screen.getByRole('menuitem', { name: 'Empty Trash' }))
+
+      // Assert — an uncaught click rejection also fails the Vitest run as an unhandled error.
+      expect(onEmptyTrash).toHaveBeenCalledOnce()
+      expect(errorToast).toHaveBeenCalledExactlyOnceWith(
+        status === 200
+          ? 'Could not empty Trash. Please retry.'
+          : 'Server error. Please try again later.',
+      )
+      expect(trash).toBeVisible()
+      await user.click(within(trash).getByRole('button'))
+      expect(
+        screen.getByRole('menuitem', { name: 'Empty Trash' }),
+      ).toBeVisible()
+    },
+  )
+
+  test('a successful menu click leaves success feedback to the mutation without adding an error', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const errorToast = vi
+      .spyOn(toast, 'error')
+      .mockReturnValue('unexpected-error')
+    const { props } = renderSidebar()
+    const trash = screen.getByRole('button', { name: 'Trash 2' })
+
+    // Act
+    await user.click(within(trash).getByRole('button'))
+    await user.click(screen.getByRole('menuitem', { name: 'Empty Trash' }))
+
+    // Assert
+    expect(props.onEmptyTrash).toHaveBeenCalledOnce()
+    expect(errorToast).not.toHaveBeenCalled()
+  })
+})
 
 describe('collection sidebar', () => {
   test('creating from a group menu preserves that group as the initial destination', async () => {

@@ -225,6 +225,20 @@ const SystemCollectionItem = React.memo(function SystemCollectionItem({
   const handleClick = useCallback(() => {
     onSelectCollection(collection.id)
   }, [collection.id, onSelectCollection])
+  const handleEmptyTrash = useCallback((): void => {
+    void onEmptyTrash().catch((error: unknown) => {
+      // Axios already reports transport failures; HTTP 200 rejection bodies need feedback here.
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'status' in error &&
+        error.status !== 200
+      ) {
+        return
+      }
+      toast.error('Could not empty Trash. Please retry.')
+    })
+  }, [onEmptyTrash])
 
   // Only Unsorted can receive bookmarks (All is virtual, Trash would mean delete)
   const { setNodeRef, isOver } = useDroppable({
@@ -266,7 +280,7 @@ const SystemCollectionItem = React.memo(function SystemCollectionItem({
               <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem
                   className="text-destructive"
-                  onClick={onEmptyTrash}
+                  onClick={handleEmptyTrash}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
                   Empty Trash

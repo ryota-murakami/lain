@@ -302,7 +302,7 @@ const GlobalSearchCommand = React.memo(function GlobalSearchCommand({
     },
     [dispatch],
   )
-  const toggleSearchMode = () => {
+  const toggleSearchMode = (): void => {
     if (!canToggleGlobalSearch) return
     const nextMode: SearchMode = isScopedSearch ? 'global' : 'scoped'
     dispatch(setSearchModeAction(nextMode))

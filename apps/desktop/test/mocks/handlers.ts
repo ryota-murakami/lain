@@ -17,6 +17,21 @@ const API_BASE = 'https://api.raindrop.io/rest/v1'
  *   )
  */
 export const handlers = [
+  // Happy DOM 21 sends the same CORS preflight as a browser before authenticated API requests.
+  http.options(
+    `${API_BASE}/*`,
+    ({ request }) =>
+      new HttpResponse(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': request.headers.get('origin') ?? '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers':
+            request.headers.get('access-control-request-headers') ??
+            'authorization, content-type',
+        },
+      }),
+  ),
   // --- Raindrops (with pagination + sort) ---
   http.get(`${API_BASE}/raindrops/:collectionId`, ({ params, request }) => {
     const collectionId = Number(params.collectionId)

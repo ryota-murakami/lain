@@ -48,7 +48,7 @@ function flattenCollections(groups: Group[]): FlatCollection[] {
     collections: Collection[],
     groupName: string,
     parentPath: string[],
-  ) => {
+  ): void => {
     for (const col of collections) {
       const currentPath = [...parentPath, col.name]
       result.push({
@@ -167,7 +167,7 @@ const CollectionSearch = React.memo(function CollectionSearch({
    * Handle keyboard navigation within search results.
    * @param e - Keyboard event
    */
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
     const maxIndex = filteredCollections.length - 1
 
     switch (e.key) {

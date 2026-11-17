@@ -131,7 +131,7 @@ function useCollectionFormReset(
   groups: Group[],
   reset: (values: CollectionFormValues) => void,
   setIconSearch: (search: string) => void,
-) {
+): void {
   useEffect(() => {
     if (open) {
       if (collection) {
@@ -229,7 +229,7 @@ const CollectionDialog = React.memo(function CollectionDialog({
     return ICON_OPTIONS.filter((icon) => icon.toLowerCase().includes(lower))
   }, [iconSearch])
 
-  const onSubmit = (data: CollectionFormValues) => {
+  const onSubmit = (data: CollectionFormValues): void => {
     onSave({
       ...data,
       id: collection?.id,

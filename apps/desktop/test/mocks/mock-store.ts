@@ -154,7 +154,7 @@ class MockStore {
     this.raindrops[index] = {
       ...this.raindrops[index],
       ...data,
-    } as MockRaindrop
+    }
     return this.raindrops[index]
   }
 
@@ -318,7 +318,7 @@ class MockStore {
     this.user = {
       ...this.user,
       ...data,
-    } as MockUser
+    }
     return this.user
   }
 }

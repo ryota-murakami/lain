@@ -89,7 +89,7 @@ import { buildDirectoryTree } from '@/utils/build-directory-tree'
  * @param event - Radix `onSelect` custom event
  * @example <DropdownMenuCheckboxItem onSelect={keepMenuOpen} />
  */
-const keepMenuOpen = (event: Event) => event.preventDefault()
+const keepMenuOpen = (event: Event): void => event.preventDefault()
 
 /**
  * Static map of view mode to icon component and label for the toolbar dropdown.
@@ -163,7 +163,7 @@ function useInfiniteScroll({
       { root, rootMargin: '200px' },
     )
     observer.observe(sentinel)
-    return () => observer.disconnect()
+    return (): void => observer.disconnect()
   }, [scrollContainerRef]) // stable ref object — observer created once
 
   return sentinelRef
@@ -506,7 +506,7 @@ const MainContent = React.memo(function MainContent({
     if (!canToggleGlobalSearch) return
     onSearchModeChange(isScopedSearch ? 'global' : 'scoped')
   }, [canToggleGlobalSearch, isScopedSearch, onSearchModeChange])
-  const handleSearchInputClear = () => {
+  const handleSearchInputClear = (): void => {
     onSearchQueryChange('')
     setIsAdvancedSearchOpen(false)
   }

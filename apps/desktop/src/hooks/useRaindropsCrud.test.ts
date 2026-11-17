@@ -29,6 +29,25 @@ describe('useRaindropsCrud', () => {
     expect(first.collectionId).toBe('100') // collection.$id → string
   })
 
+  test('keeps the first page visible when loading the remaining bookmarks', async () => {
+    // Arrange
+    const { result } = renderHookWithProviders(() =>
+      useRaindropsCrud({ collectionId: 'all' }),
+    )
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(50))
+
+    // Act
+    act(() => result.current.loadMore())
+
+    // Assert
+    await waitFor(() => expect(result.current.raindrops).toHaveLength(60))
+    expect(result.current.raindrops[0].id).toBe('1')
+    expect(new Set(result.current.raindrops.map((item) => item.id)).size).toBe(
+      60,
+    )
+    expect(result.current.hasMore).toBe(false)
+  })
+
   test('maps important flag correctly', async () => {
     const { result } = renderHookWithProviders(() =>
       useRaindropsCrud({ collectionId: 'all' }),

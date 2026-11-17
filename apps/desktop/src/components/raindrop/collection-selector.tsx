@@ -61,7 +61,7 @@ function flattenCollections(groups: Group[]): FlatCollectionOption[] {
     collections: Collection[],
     groupName: string,
     parentPath: string[],
-  ) => {
+  ): void => {
     for (const collection of collections) {
       const currentPath = [...parentPath, collection.name]
       result.push({

@@ -38,7 +38,7 @@ Object.defineProperty(window, 'auth', {
       },
     }),
     getToken: async () => 'test-access-token',
-    onAuthStateChanged: () => () => {},
+    onAuthStateChanged: () => (): void => {},
   },
   writable: true,
 })
@@ -51,7 +51,7 @@ Object.defineProperty(window, 'shell', {
   writable: true,
 })
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+beforeAll(() => server.listen({ onUnhandledFrame: 'error' }))
 afterEach(() => {
   cleanup()
   server.resetHandlers()

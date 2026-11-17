@@ -20,10 +20,10 @@ export function startAutoUpdater(): () => void {
     console.error('[updater] update check failed:', error.message)
   })
 
-  const checkForUpdates = () => {
+  const checkForUpdates = (): void => {
     void autoUpdater.checkForUpdatesAndNotify().catch(() => {})
   }
   checkForUpdates()
   const timer = setInterval(checkForUpdates, UPDATE_CHECK_INTERVAL_MS)
-  return () => clearInterval(timer)
+  return (): void => clearInterval(timer)
 }

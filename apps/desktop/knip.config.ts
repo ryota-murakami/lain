@@ -85,6 +85,8 @@ const config: KnipConfig = {
     // DevDeps: peer deps of eslint-config-ts-prefixer
     'globals',
     'typescript-eslint',
+    // Loaded by the shared ESLint preset through its string-based resolver settings.
+    'eslint-import-resolver-node',
   ],
 }
 

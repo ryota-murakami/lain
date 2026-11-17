@@ -82,7 +82,7 @@ const TagInput = React.memo(function TagInput({
     [value, onChange, maxTags],
   )
 
-  const removeTag = (tagToRemove: string) => {
+  const removeTag = (tagToRemove: string): void => {
     onChange(value.filter((t) => t !== tagToRemove))
   }
 

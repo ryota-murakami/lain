@@ -126,7 +126,7 @@ const COLLECTION_COLOR_OPTIONS = [
  * Stable click handler that stops propagation.
  * @param event - Mouse event from nested actions
  */
-function stopPropagation(event: React.MouseEvent) {
+function stopPropagation(event: React.MouseEvent): void {
   event.stopPropagation()
 }
 
@@ -424,12 +424,12 @@ const CollectionRow = React.memo(function CollectionRow({
     onSelectCollection(collection.id)
   }, [collection.id, onSelectCollection])
 
-  function handleToggle(event: React.MouseEvent) {
+  function handleToggle(event: React.MouseEvent): void {
     event.stopPropagation()
     onToggleCollection(collection.id)
   }
 
-  function handleDoubleClick(event: React.MouseEvent) {
+  function handleDoubleClick(event: React.MouseEvent): void {
     if (!isRoot) return
     event.stopPropagation()
     onStartInlineRename(collection)
@@ -450,7 +450,7 @@ const CollectionRow = React.memo(function CollectionRow({
   const moveToGroupHandlers = useMemo(() => {
     return new Map(
       groups.map((group) => {
-        const handler = () => {
+        const handler = (): void => {
           void onMoveCollectionToGroup(collection.id, group.id)
         }
         return [group.id, handler]
@@ -461,7 +461,7 @@ const CollectionRow = React.memo(function CollectionRow({
   const colorHandlers = useMemo(() => {
     return new Map(
       COLLECTION_COLOR_OPTIONS.map(({ value }) => {
-        const handler = () => {
+        const handler = (): void => {
           void onChangeCollectionColor(collection.id, value)
         }
         return [value, handler]

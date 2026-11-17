@@ -143,7 +143,7 @@ const CollectionTreeNode = React.memo(function CollectionTreeNode({
     [collection.color],
   )
 
-  const toggleExpand = () => {
+  const toggleExpand = (): void => {
     setIsExpanded(!isExpanded)
     onSelectCollection?.(collection)
   }

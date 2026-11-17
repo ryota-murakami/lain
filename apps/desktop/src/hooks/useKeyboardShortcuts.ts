@@ -46,7 +46,7 @@ export function useKeyboardShortcuts(
   })
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
       const currentShortcuts = shortcutsRef.current
       const currentHandlers = handlersRef.current
 
@@ -71,6 +71,6 @@ export function useKeyboardShortcuts(
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return (): void => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 }

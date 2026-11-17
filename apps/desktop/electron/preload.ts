@@ -43,10 +43,12 @@ contextBridge.exposeInMainWorld('auth', {
    * @returns Cleanup function to unsubscribe
    */
   onAuthStateChanged: (callback: (state: AuthState) => void) => {
-    const handler = (_event: Electron.IpcRendererEvent, state: AuthState) =>
-      callback(state)
+    const handler = (
+      _event: Electron.IpcRendererEvent,
+      state: AuthState,
+    ): void => callback(state)
     ipcRenderer.on('auth:state-changed', handler)
-    return () => {
+    return (): void => {
       ipcRenderer.removeListener('auth:state-changed', handler)
     }
   },

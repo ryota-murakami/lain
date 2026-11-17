@@ -142,9 +142,9 @@ const RaindropListItem = React.memo(function RaindropListItem({
   searchScope = 'all',
 }: RaindropListItemProps) {
   const [isHovered, setIsHovered] = useState(false)
-  const handleMouseEnter = () => setIsHovered(true)
-  const handleMouseLeave = () => setIsHovered(false)
-  const handleCheckboxWrapperClick = (e: React.MouseEvent) =>
+  const handleMouseEnter = (): void => setIsHovered(true)
+  const handleMouseLeave = (): void => setIsHovered(false)
+  const handleCheckboxWrapperClick = (e: React.MouseEvent): void =>
     e.stopPropagation()
   const TypeIcon = useMemo(
     () => TYPE_ICON_MAP[raindrop.type] || Globe,

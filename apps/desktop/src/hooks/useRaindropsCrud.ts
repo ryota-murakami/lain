@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
 import {
@@ -58,8 +58,8 @@ export function useRaindropsCrud({
   const [hiddenIds, setHiddenIds] = useState<ReadonlySet<string>>(EMPTY_ID_SET)
   const [manualOrderIds, setManualOrderIds] = useState<string[] | null>(null)
 
-  // Per-page data store — avoids effects for accumulation
-  const pagesRef = useRef<Map<number, Raindrop[]>>(new Map())
+  // Rendering reads immutable page state so concurrent renders cannot mutate another render’s cache.
+  const [pages, setPages] = useState<Map<number, Raindrop[]>>(() => new Map())
 
   // Detect filter or reset-key changes → reset pagination during render
   // (Official React pattern: conditional setState during render)
@@ -68,7 +68,7 @@ export function useRaindropsCrud({
   if (prevFilterKey !== filterKey) {
     setPrevFilterKey(filterKey)
     setPage(0)
-    pagesRef.current = new Map()
+    setPages(new Map())
   }
 
   // Leaving the collection / sort / search scope discards optimistic views too
@@ -82,7 +82,11 @@ export function useRaindropsCrud({
 
   const apiCollectionId = collectionIdToApi(collectionId)
 
-  const { data, isLoading, isFetching } = useGetRaindropsByCollectionIdQuery({
+  const {
+    currentData: data,
+    isLoading,
+    isFetching,
+  } = useGetRaindropsByCollectionIdQuery({
     collectionId: apiCollectionId,
     page,
     perpage: PERPAGE,
@@ -90,9 +94,15 @@ export function useRaindropsCrud({
     search: search || undefined,
   })
 
-  // Store current page data in ref (safe during render — idempotent)
-  if (data?.items) {
-    pagesRef.current.set(page, data.items.map(toUiRaindrop))
+  const [storedData, setStoredData] = useState(data)
+  // A query response updates its page once; an empty cache also repopulates after a pagination reset.
+  if (
+    prevFilterKey === filterKey &&
+    data?.items &&
+    (storedData !== data || !pages.has(page))
+  ) {
+    setStoredData(data)
+    setPages(new Map(pages).set(page, data.items.map(toUiRaindrop)))
   }
 
   // Fresh data (refetch after a mutation, next page) supersedes any optimistic view
@@ -107,12 +117,11 @@ export function useRaindropsCrud({
   const fetchedRaindrops = useMemo(() => {
     const result: Raindrop[] = []
     for (let p = 0; p <= page; p++) {
-      const pageData = pagesRef.current.get(p)
+      const pageData = pages.get(p)
       if (pageData) result.push(...pageData)
     }
     return result
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- pagesRef is stable, data triggers recompute
-  }, [data, page, resetKey])
+  }, [pages, page])
 
   // Lay the optimistic views over the fetched pages
   const raindrops = useMemo(() => {

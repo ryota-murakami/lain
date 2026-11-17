@@ -137,7 +137,7 @@ export function toUiRaindrop(api: ApiRaindrop): Raindrop {
     id: String(api._id ?? 0),
     title: api.title ?? '',
     url: api.link ?? '',
-    type: (api.type ?? 'link') as ContentType,
+    type: api.type ?? 'link',
     description: api.excerpt ?? undefined,
     coverImage: api.cover ?? undefined,
     domain: safeDomain(api.link),

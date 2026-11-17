@@ -115,7 +115,7 @@ export function useViewNavigation(options: ViewNavigationOptions): void {
   })
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
       const {
         containerRef,
         selectedRaindropId,
@@ -158,7 +158,7 @@ export function useViewNavigation(options: ViewNavigationOptions): void {
           : null
       const lastIndex = rows.length - 1
 
-      const moveTo = (index: number) => {
+      const moveTo = (index: number): void => {
         event.preventDefault()
         const row = rows[index]
         row.focus({ preventScroll: true })
@@ -188,6 +188,6 @@ export function useViewNavigation(options: ViewNavigationOptions): void {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return (): void => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 }

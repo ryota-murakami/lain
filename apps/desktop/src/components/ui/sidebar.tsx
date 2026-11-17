@@ -52,9 +52,9 @@ function useSidebar() {
   return context
 }
 
-function useSidebarKeyboardShortcut(toggleSidebar: () => void) {
+function useSidebarKeyboardShortcut(toggleSidebar: () => void): void {
   React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
       if (
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
         (event.metaKey || event.ctrlKey)
@@ -65,7 +65,7 @@ function useSidebarKeyboardShortcut(toggleSidebar: () => void) {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return (): void => window.removeEventListener('keydown', handleKeyDown)
   }, [toggleSidebar])
 }
 
@@ -295,7 +295,7 @@ const SidebarRail = React.memo(function SidebarRail({
 }: React.ComponentProps<'button'>) {
   const { toggleSidebar } = useSidebar()
 
-  function handleClick() {
+  function handleClick(): void {
     toggleSidebar()
   }
 

@@ -72,7 +72,7 @@ function groupRaindropsByCollection(
  */
 function collectTreeIds(collections: Collection[]): Set<string> {
   const ids = new Set<string>()
-  const visit = (nodes: Collection[]) => {
+  const visit = (nodes: Collection[]): void => {
     for (const node of nodes) {
       ids.add(node.id)
       visit(node.children ?? [])

@@ -109,7 +109,7 @@ function useRaindropFormSync(
   reset: (values: RaindropFormValues) => void,
   setTags: (tags: string[]) => void,
   setFaviconError: (error: boolean) => void,
-) {
+): void {
   useEffect(() => {
     if (raindrop) {
       reset({
@@ -219,7 +219,7 @@ const RightDetailPanel = React.memo(function RightDetailPanel({
     /* Panel open is controlled by parent */
   }, [])
 
-  const addTag = (tag: string) => {
+  const addTag = (tag: string): void => {
     const trimmed = tag.trim().toLowerCase()
     if (trimmed && !tags.includes(trimmed)) {
       setTags([...tags, trimmed])
@@ -227,11 +227,11 @@ const RightDetailPanel = React.memo(function RightDetailPanel({
     setTagInput('')
   }
 
-  const removeTag = (tagName: string) => {
+  const removeTag = (tagName: string): void => {
     setTags(tags.filter((t) => t !== tagName))
   }
 
-  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') {
       e.preventDefault()
       if (tagSuggestions.length > 0) {
@@ -260,7 +260,7 @@ const RightDetailPanel = React.memo(function RightDetailPanel({
     window.shell.openExternal(currentUrl)
   }, [currentUrl])
 
-  const onSubmit = (data: RaindropFormValues) => {
+  const onSubmit = (data: RaindropFormValues): void => {
     if (!raindrop) return
     onSave({
       ...raindrop,

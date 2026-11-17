@@ -112,7 +112,7 @@ function useBookmarkFormReset(
     setIsNotesOpen: (open: boolean) => void
     setAutoIcon: (auto: boolean) => void
   },
-) {
+): void {
   useEffect(() => {
     if (open) {
       reset({
@@ -142,14 +142,14 @@ function useBookmarkFormReset(
 function useDebouncedUrlParsing(
   url: string,
   parseUrl: (url: string) => Promise<void>,
-) {
+): void {
   useEffect(() => {
     if (!url) return
     const debounce = setTimeout(
       () => void parseUrl(url).catch(() => undefined),
       URL_PARSE_DEBOUNCE_MS,
     )
-    return () => clearTimeout(debounce)
+    return (): void => clearTimeout(debounce)
   }, [url, parseUrl])
 }
 
@@ -165,7 +165,7 @@ function useParsedFaviconReset(
   url: string,
   setParsedFavicon: React.Dispatch<React.SetStateAction<string>>,
   parseUrl: (url: string) => Promise<void>,
-) {
+): void {
   const previousAutoIconRef = useRef(autoIcon)
 
   useEffect(() => {
@@ -333,7 +333,7 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
   )
   const handleCancel = useCallback(() => onOpenChange(false), [onOpenChange])
 
-  const addTag = (tag: string) => {
+  const addTag = (tag: string): void => {
     const trimmed = tag.trim().toLowerCase()
     if (trimmed && !tags.includes(trimmed)) {
       setTags([...tags, trimmed])
@@ -341,11 +341,11 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
     setTagInput('')
   }
 
-  const removeTag = (tag: string) => {
+  const removeTag = (tag: string): void => {
     setTags(tags.filter((t) => t !== tag))
   }
 
-  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') {
       e.preventDefault()
       if (tagSuggestions.length > 0) {
@@ -358,7 +358,7 @@ const AddBookmarkDialog = React.memo(function AddBookmarkDialog({
     }
   }
 
-  const onSubmit = (data: BookmarkFormValues) => {
+  const onSubmit = (data: BookmarkFormValues): void => {
     onSave({ ...data, tags })
     onOpenChange(false)
   }

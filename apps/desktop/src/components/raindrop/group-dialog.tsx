@@ -65,7 +65,7 @@ function useGroupFormReset(
   open: boolean,
   group: Group | undefined,
   reset: (values: GroupFormValues) => void,
-) {
+): void {
   useEffect(() => {
     if (open) {
       if (group) {
@@ -117,7 +117,7 @@ const GroupDialog = React.memo(function GroupDialog({
   )
   const handleCancel = useCallback(() => onOpenChange(false), [onOpenChange])
 
-  const onSubmit = (data: GroupFormValues) => {
+  const onSubmit = (data: GroupFormValues): void => {
     onSave({
       ...data,
       id: group?.id,

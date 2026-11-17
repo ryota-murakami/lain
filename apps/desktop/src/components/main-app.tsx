@@ -526,13 +526,13 @@ export const MainApp = React.memo(function MainApp() {
         search: () => dispatch(setSearchOpen(!isSearchOpen)),
         newBookmark: handleAddBookmark,
         newCollection: handleAddCollection,
-        viewGrid: () => handleViewModeChange('grid'),
-        viewList: () => handleViewModeChange('list'),
-        viewTable: () => handleViewModeChange('table'),
-        viewDirectory: () => handleViewModeChange('directory'),
+        viewGrid: (): void => handleViewModeChange('grid'),
+        viewList: (): void => handleViewModeChange('list'),
+        viewTable: (): void => handleViewModeChange('table'),
+        viewDirectory: (): void => handleViewModeChange('directory'),
         settings: () => dispatch(openSettings()),
         editShortcuts: () => dispatch(openSettings({ tab: 'shortcuts' })),
-        delete: () => {
+        delete: (): void => {
           const ids =
             selectedRaindropIds.length > 0
               ? selectedRaindropIds
@@ -541,16 +541,16 @@ export const MainApp = React.memo(function MainApp() {
                 : []
           if (ids.length > 0) batchDeleteRaindrops(ids)
         },
-        selectAll: () => {
+        selectAll: (): void => {
           const allIds = raindrops.map((r) => r.id)
           dispatch(selectAllRaindrops(allIds))
         },
         searchInView: () => searchInputRef.current?.focus(),
-        searchGlobal: () => {
+        searchGlobal: (): void => {
           dispatch(setSearchMode('global'))
           dispatch(setSearchOpen(true))
         },
-        toggleImportant: () => {
+        toggleImportant: (): void => {
           const targetId =
             selectedRaindropIds.length === 1
               ? selectedRaindropIds[0]

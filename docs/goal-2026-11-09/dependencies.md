@@ -2,7 +2,15 @@
 
 Registry latest stable versions were queried with pnpm and installed with pnpm 12.18.0. Node is pinned to 26.13.0 in `.node-version` and CI; the supported workspace engine is Node 26. The inherited happy-dom/security changes were preserved and advanced where compatible.
 
-## Deliberate exceptions
+## Integration with main on 2026-11-18
+
+PR #37 advanced the shared workspace while the desktop changes were under review. The integrated workspace uses Vite 8.3.8, Electron 45.3.3, Next.js 16.4.6 and ESLint 10.15.0. Type checks use the native TypeScript 7.0.2 CLI. Tools that import the JavaScript compiler API resolve TypeScript 6.0.3 through the compatibility package. The original November 9 measurements and exceptions below are historical.
+
+The workspace keeps the 1,440-minute release-age policy and store integrity checks. The frozen install passed. `pnpm peers check` still reports three sets of declared peer mismatches: the formatter's CSSTools dependencies, the TypeScript compatibility package's published version (6.0.2) versus two lint plugins' `~6.0.3` requirement, and the website's ESLint 10 versus three plugins declaring support through ESLint 9. The desktop and website lint and type checks ran with these versions.
+
+The root ASAR verifier now uses `@electron/asar` 4.3.2, whose dependency ranges include the patched glob 14 and minimatch 11. The Tailwind Vite plugin is a desktop development dependency, matching its only import in `vite.config.ts`. The production dependency audit reported zero advisories. The full workspace audit still reports [picomatch](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) (high, no fix listed) and [minimatch](https://github.com/advisories/GHSA-g3hv-75wg-m249) (moderate, other toolchains still resolve affected versions). No audit finding was suppressed.
+
+## November 9 exceptions
 
 - Vite 8.3.6 is pinned: 8.3.7 requires rolldown ~1.2.18, published 2026-11-09 10:07 UTC, inside the existing 24-hour release-age protection. No age exception was added. Recheck after 2026-11-10 10:08 UTC.
 - TypeScript 6.0.3 is pinned to its supported minor: latest 7.0.2 is outside the declared peer ranges of eslint-config-ts-prefixer 5.1.0 and @laststance/react-next-eslint-plugin 2.4.0. Neither type safety nor lint rules were relaxed.

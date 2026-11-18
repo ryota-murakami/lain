@@ -24,10 +24,10 @@ export const handlers = [
       new HttpResponse(null, {
         status: 204,
         headers: {
-          'Access-Control-Allow-Origin': request.headers.get('Origin') ?? '*',
+          'Access-Control-Allow-Origin': request.headers.get('origin') ?? '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
           'Access-Control-Allow-Headers':
-            request.headers.get('Access-Control-Request-Headers') ??
+            request.headers.get('access-control-request-headers') ??
             'authorization, content-type',
         },
       }),

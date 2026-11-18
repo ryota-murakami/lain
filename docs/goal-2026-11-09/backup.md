@@ -18,3 +18,7 @@ Limitations: uploaded binaries and cached permanent web copies were not download
 Official references: [Backups](https://developer.raindrop.io/v1/backups), [Multiple raindrops](https://developer.raindrop.io/v1/raindrops/multiple).
 
 Account write QA is authorized after this verified snapshot. Root exclusively owns write QA/cleanup; use isolated prefixed objects and record only their IDs privately. Never empty the account trash.
+
+## November 18 location check
+
+The original November 9 directory could no longer be located by its recorded path or timestamp on this Mac. The private backup and its manifest could not be reread on November 18. A separate pre-cleanup JSON file belongs to an earlier snapshot with different counts. The official desktop client opened its sign-in page and the active Chrome profile displayed another account. No account-wide export or real-account write was performed through either session. Before further write QA, locate and verify the original manifest or create and verify a fresh export under the confirmed target account.

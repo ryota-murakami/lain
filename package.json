@@ -53,11 +53,11 @@
     "verify:release": "node scripts/verify-release.mjs"
   },
   "devDependencies": {
-    "@electron/asar": "4.3.1",
+    "@electron/asar": "4.3.2",
     "fallow": "3.41.0",
     "husky": "^9.1.7",
-    "lint-staged": "^17.6.0",
-    "prettier": "^3.9.10",
+    "lint-staged": "^17.6.1",
+    "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "prettier-plugin-tailwindcss-canonical-classes": "^0.1.6",
     "yaml": "2.9.1"

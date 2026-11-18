@@ -1,0 +1,134 @@
+[
+  {
+    "id": "W01",
+    "pairs": [
+      ["--bg", "#f6f5ed"],
+      ["--ink", "#273225"],
+      ["--muted", "#626858"],
+      ["--accent", "#e0ec9a"],
+      ["--accent-ink", "#22271f"],
+      ["--surface", "#eeeee3"]
+    ]
+  },
+  {
+    "id": "W02",
+    "pairs": [
+      ["--bg", "#101713"],
+      ["--ink", "#e4eee6"],
+      ["--muted", "#a1b1a4"],
+      ["--accent", "#b1e7b0"],
+      ["--accent-ink", "#102316"],
+      ["--surface", "#17231b"]
+    ]
+  },
+  {
+    "id": "W03",
+    "pairs": [
+      ["--bg", "#f4e8e2"],
+      ["--ink", "#3b2926"],
+      ["--muted", "#705b54"],
+      ["--accent", "#e7ac99"],
+      ["--accent-ink", "#22271f"],
+      ["--surface", "#faefea"]
+    ]
+  },
+  {
+    "id": "W04",
+    "pairs": [
+      ["--bg", "#111625"],
+      ["--ink", "#eef1fc"],
+      ["--muted", "#abb4d2"],
+      ["--accent", "#c3d2ff"],
+      ["--accent-ink", "#15264c"],
+      ["--surface", "#19223a"]
+    ]
+  },
+  {
+    "id": "W05",
+    "pairs": [
+      ["--bg", "#eeeedf"],
+      ["--ink", "#304130"],
+      ["--muted", "#62715c"],
+      ["--accent", "#ced7b2"],
+      ["--accent-ink", "#22271f"],
+      ["--surface", "#e7e9d8"]
+    ]
+  },
+  {
+    "id": "W06",
+    "pairs": [
+      ["--bg", "#f2efe3"],
+      ["--ink", "#24231f"],
+      ["--muted", "#5d5a50"],
+      ["--accent", "#e54e33"],
+      ["--accent-ink", "#201b17"],
+      ["--surface", "#e5e1d3"]
+    ]
+  },
+  {
+    "id": "W07",
+    "pairs": [
+      ["--bg", "#f6f4fb"],
+      ["--ink", "#343044"],
+      ["--muted", "#70687f"],
+      ["--accent", "#e0daf0"],
+      ["--accent-ink", "#343044"],
+      ["--surface", "#eeebf5"]
+    ]
+  },
+  {
+    "id": "W08",
+    "pairs": [
+      ["--bg", "#f7f7f3"],
+      ["--ink", "#242624"],
+      ["--muted", "#666b62"],
+      ["--accent", "#ed6a37"],
+      ["--accent-ink", "#24231e"],
+      ["--surface", "#eaece5"]
+    ]
+  },
+  {
+    "id": "W09",
+    "pairs": [
+      ["--bg", "#f4f0e5"],
+      ["--ink", "#453b2d"],
+      ["--muted", "#796d59"],
+      ["--accent", "#dcb878"],
+      ["--accent-ink", "#403322"],
+      ["--surface", "#eae1cf"]
+    ]
+  },
+  {
+    "id": "W10",
+    "pairs": [
+      ["--bg", "#18332f"],
+      ["--ink", "#e0ece4"],
+      ["--muted", "#a9c4b8"],
+      ["--accent", "#c3d9ad"],
+      ["--accent-ink", "#1e3c2e"],
+      ["--surface", "#21433a"]
+    ]
+  },
+  {
+    "id": "W11",
+    "pairs": [
+      ["--bg", "#f5f2e9"],
+      ["--ink", "#332942"],
+      ["--muted", "#70657a"],
+      ["--accent", "#d5ec75"],
+      ["--accent-ink", "#332942"],
+      ["--surface", "#eee7f0"]
+    ]
+  },
+  {
+    "id": "W12",
+    "pairs": [
+      ["--bg", "#fafafa"],
+      ["--ink", "#292929"],
+      ["--muted", "#6a6a6a"],
+      ["--accent", "#e9e9e9"],
+      ["--accent-ink", "#292929"],
+      ["--surface", "#f2f2f2"]
+    ]
+  }
+]

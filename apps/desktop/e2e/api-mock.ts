@@ -13,6 +13,25 @@ type MockRaindrop = (typeof mockRaindrops)[number]
 type MockCollection = (typeof mockCollections)[number]
 type MockTag = (typeof mockTags)[number]
 
+interface MockApiOptions {
+  groupCount?: number
+  extraCollections?: number
+  childBookmarkCount?: number
+  /** Reject one metadata write after this synthetic file has already been created. */
+  failUploadMetadataOnceFor?: string
+}
+
+interface MockApiObservations {
+  uploadedFiles: string[]
+  uploadRequests: Array<{
+    filename: string
+    collectionId: number
+    collectionBeforeFile: boolean
+  }>
+  metadataWrites: Array<{ id: number; body: Record<string, unknown> }>
+  collectionMerges: Array<{ to: number; ids: number[] }>
+}
+
 /**
  * Remove optional surrounding quotes from an operator term.
  * @param value - Raw operator value (possibly quoted)
@@ -107,6 +126,7 @@ class E2eMockStore {
   childCollections: MockCollection[]
   user: typeof mockUser
   tags: MockTag[]
+  changedBookmarksDate = '2026-11-09T00:00:00.000Z'
   private nextId = 10000
 
   constructor() {
@@ -134,13 +154,88 @@ class E2eMockStore {
  *   await mockRaindropApi(page)
  *   await page.waitForLoadState('domcontentloaded')
  */
-export async function mockRaindropApi(page: Page): Promise<void> {
+export async function mockRaindropApi(
+  page: Page,
+  options: MockApiOptions = {},
+): Promise<MockApiObservations> {
   const store = new E2eMockStore()
+  // Populate the existing nested React collection only when a merge flow requests child data.
+  const childBookmarks = store.raindrops
+    .filter((bookmark) => bookmark.collection.$id === 100)
+    .slice(0, options.childBookmarkCount ?? 0)
+  for (const bookmark of childBookmarks) bookmark.collection = { $id: 200 }
+  if (options.childBookmarkCount) {
+    store.collections[0].count -= childBookmarks.length
+    store.childCollections[0].count = childBookmarks.length
+  }
+  // Large synthetic accounts exercise real popup geometry without private collection titles.
+  for (
+    let index = store.user.groups.length;
+    index < (options.groupCount ?? 2);
+    index += 1
+  ) {
+    store.user.groups.push({
+      title: `Synthetic group ${index + 1}`,
+      hidden: false,
+      sort: index,
+      collections: [],
+    })
+  }
+  const lastGroup = store.user.groups[store.user.groups.length - 1]
+  for (let index = 0; index < (options.extraCollections ?? 0); index += 1) {
+    const id = 1000 + index
+    store.collections.push({
+      ...structuredClone(mockCollections[0]),
+      _id: id,
+      title: `Synthetic collection ${index + 1}`,
+      count: 0,
+      sort: index + 4,
+    })
+    lastGroup.collections.push(id)
+  }
+  const observations: MockApiObservations = {
+    uploadedFiles: [],
+    uploadRequests: [],
+    metadataWrites: [],
+    collectionMerges: [],
+  }
+  const uploadNames = new Map<number, string>()
+  let metadataFailureSent = false
 
   await page.route('**/api.raindrop.io/rest/v1/**', async (route) => {
     const url = new URL(route.request().url())
     const path = url.pathname.replace('/rest/v1', '')
     const method = route.request().method()
+    if (!['GET', 'OPTIONS'].includes(method))
+      store.changedBookmarksDate = new Date().toISOString()
+    if (method === 'GET' && path === '/user/stats') {
+      return route.fulfill({
+        json: {
+          result: true,
+          items: [
+            {
+              _id: 0,
+              count: store.raindrops.filter(
+                (item) => item.collection.$id !== -99,
+              ).length,
+            },
+            {
+              _id: -1,
+              count: store.raindrops.filter(
+                (item) => item.collection.$id === -1,
+              ).length,
+            },
+            {
+              _id: -99,
+              count: store.raindrops.filter(
+                (item) => item.collection.$id === -99,
+              ).length,
+            },
+          ],
+          meta: { changedBookmarksDate: store.changedBookmarksDate },
+        },
+      })
+    }
 
     // GET /raindrops/:collectionId (with pagination + sort)
     if (method === 'GET' && /^\/raindrops\/(-?\d+)$/.test(path)) {
@@ -152,7 +247,7 @@ export async function mockRaindropApi(page: Page): Promise<void> {
 
       let all =
         collectionId === 0
-          ? store.raindrops
+          ? store.raindrops.filter((item) => item.collection.$id !== -99)
           : store.raindrops.filter((r) => r.collection.$id === collectionId)
 
       all = applySearchFilter(all, search)
@@ -219,7 +314,7 @@ export async function mockRaindropApi(page: Page): Promise<void> {
         lastUpdate: new Date().toISOString(),
         collection: (body.collection as { $id: number }) ?? { $id: 0 },
         media: [],
-        note: '',
+        note: (body.note as string) ?? '',
         highlights: [],
         removed: false,
         sort: 0,
@@ -233,12 +328,64 @@ export async function mockRaindropApi(page: Page): Promise<void> {
       return route.fulfill({ json: { result: true, item: newItem } })
     }
 
+    // Multipart file creation is distinct from the metadata write that follows it.
+    if (method === 'PUT' && path === '/raindrop/file') {
+      const multipart = route.request().postDataBuffer()?.toString('utf8') ?? ''
+      const filename = multipart.match(/filename="([^"]+)"/)?.[1]
+      const collectionId = Number(
+        multipart.match(/name="collectionId"\r\n\r\n(-?\d+)/)?.[1] ?? '-1',
+      )
+      if (!filename)
+        return route.fulfill({
+          status: 400,
+          json: { result: false, errorMessage: 'Missing file' },
+        })
+      const id = store.genId()
+      const item: MockRaindrop = {
+        ...structuredClone(mockRaindrops[0]),
+        _id: id,
+        title: filename,
+        type: 'document',
+        tags: [],
+        note: '',
+        important: false,
+        link: `https://example.com/uploads/${id}`,
+        collection: { $id: collectionId },
+        created: new Date().toISOString(),
+        lastUpdate: new Date().toISOString(),
+      }
+      store.raindrops.unshift(item)
+      uploadNames.set(id, filename)
+      observations.uploadedFiles.push(filename)
+      observations.uploadRequests.push({
+        filename,
+        collectionId,
+        collectionBeforeFile:
+          multipart.indexOf('name="collectionId"') <
+          multipart.indexOf('name="file"'),
+      })
+      return route.fulfill({ json: { result: true, item } })
+    }
+
     // PUT /raindrop/:id (update)
     if (method === 'PUT' && /^\/raindrop\/\d+$/.test(path)) {
       const id = Number(path.split('/').pop())
       const body = JSON.parse(
         (await route.request().postData()) ?? '{}',
       ) as Record<string, unknown>
+      if (uploadNames.has(id)) {
+        observations.metadataWrites.push({ id, body })
+        if (
+          !metadataFailureSent &&
+          uploadNames.get(id) === options.failUploadMetadataOnceFor
+        ) {
+          metadataFailureSent = true
+          return route.fulfill({
+            status: 503,
+            json: { result: false, errorMessage: 'Synthetic metadata outage' },
+          })
+        }
+      }
       const existing = store.raindrops.find((r) => r._id === id)
       if (existing) {
         const { order, ...fields } = body
@@ -265,7 +412,16 @@ export async function mockRaindropApi(page: Page): Promise<void> {
     // DELETE /raindrop/:id
     if (method === 'DELETE' && /^\/raindrop\/\d+$/.test(path)) {
       const id = Number(path.split('/').pop())
-      store.raindrops = store.raindrops.filter((r) => r._id !== id)
+      const item = store.raindrops.find((bookmark) => bookmark._id === id)
+      // Mirror soft deletion so tests must verify the destination Trash, not just a disappearing row.
+      if (item && item.collection.$id !== -99) {
+        item.collection = { $id: -99 }
+        item.removed = true
+      } else {
+        store.raindrops = store.raindrops.filter(
+          (bookmark) => bookmark._id !== id,
+        )
+      }
       return route.fulfill({ json: { result: true } })
     }
 
@@ -293,10 +449,24 @@ export async function mockRaindropApi(page: Page): Promise<void> {
         ids?: number[]
       }
       const deleteIds = new Set(body.ids ?? [])
-      const before = store.raindrops.length
-      store.raindrops = store.raindrops.filter((r) => !deleteIds.has(r._id))
+      const source = Number(path.split('/').pop())
+      const matching = store.raindrops.filter(
+        (bookmark) =>
+          deleteIds.has(bookmark._id) && bookmark.collection.$id === source,
+      )
+      // Active bookmarks enter Trash; only a request against Trash removes them permanently.
+      if (source === -99) {
+        store.raindrops = store.raindrops.filter(
+          (bookmark) => !matching.includes(bookmark),
+        )
+      } else {
+        for (const bookmark of matching) {
+          bookmark.collection = { $id: -99 }
+          bookmark.removed = true
+        }
+      }
       return route.fulfill({
-        json: { result: true, modified: before - store.raindrops.length },
+        json: { result: true, modified: matching.length },
       })
     }
 
@@ -357,7 +527,10 @@ export async function mockRaindropApi(page: Page): Promise<void> {
       const coll = [...store.collections, ...store.childCollections].find(
         (c) => c._id === id,
       )
-      if (coll) Object.assign(coll, body)
+      // The documented API color is derived from cover; arbitrary color writes are ignored by the service.
+      const { color: ignoredColor, ...supportedFields } = body
+      void ignoredColor
+      if (coll) Object.assign(coll, supportedFields)
       return route.fulfill({ json: { result: true, item: coll } })
     }
 
@@ -373,12 +546,46 @@ export async function mockRaindropApi(page: Page): Promise<void> {
 
     // PUT /collections/merge
     if (method === 'PUT' && path === '/collections/merge') {
+      const body = route.request().postDataJSON() as {
+        to: number
+        ids: number[]
+      }
+      observations.collectionMerges.push(structuredClone(body))
+      const sourceIds = new Set(body.ids)
+      // Preserve the bookmark identities while moving them, then remove the source collection records.
+      for (const bookmark of store.raindrops) {
+        if (sourceIds.has(bookmark.collection.$id)) {
+          bookmark.collection = { $id: body.to }
+        }
+      }
+      store.collections = store.collections.filter(
+        (collection) => !sourceIds.has(collection._id),
+      )
+      store.childCollections = store.childCollections.filter(
+        (collection) => !sourceIds.has(collection._id),
+      )
+      for (const group of store.user.groups) {
+        group.collections = group.collections.filter((id) => !sourceIds.has(id))
+      }
+      const target = [...store.collections, ...store.childCollections].find(
+        (collection) => collection._id === body.to,
+      )
+      if (target) {
+        target.count = store.raindrops.filter(
+          (bookmark) => bookmark.collection.$id === body.to,
+        ).length
+      }
       return route.fulfill({ json: { result: true } })
     }
 
     // GET /user
     if (method === 'GET' && path === '/user') {
-      return route.fulfill({ json: { result: true, user: store.user } })
+      return route.fulfill({
+        json: {
+          result: true,
+          user: { ...store.user, files: { used: 0, size: 100_000_000 } },
+        },
+      })
     }
 
     // PUT /user
@@ -390,7 +597,12 @@ export async function mockRaindropApi(page: Page): Promise<void> {
         ...store.user,
         ...body,
       }
-      return route.fulfill({ json: { result: true, user: store.user } })
+      return route.fulfill({
+        json: {
+          result: true,
+          user: { ...store.user, files: { used: 0, size: 100_000_000 } },
+        },
+      })
     }
 
     // GET /tags (with or without collectionId)
@@ -468,4 +680,5 @@ export async function mockRaindropApi(page: Page): Promise<void> {
     // Fallback: return generic success for unhandled mutations
     return route.fulfill({ json: { result: true } })
   })
+  return observations
 }

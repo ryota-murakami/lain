@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
+import axios from 'axios'
 import { afterEach, beforeAll, afterAll } from 'vitest'
 
 import { mockStore } from './mocks/mock-store'
@@ -14,6 +15,9 @@ import { server } from './mocks/server'
  *
  * Also mocks `window.auth` since tests run outside Electron context.
  */
+
+// happy-dom XHR drops DELETE request bodies; exercise Axios' real Node transport under MSW.
+axios.defaults.adapter = 'http'
 
 // Mock window.auth for tests (no Electron IPC in test environment)
 Object.defineProperty(window, 'auth', {
@@ -51,6 +55,7 @@ Object.defineProperty(window, 'shell', {
   writable: true,
 })
 
+// MSW 3 names HTTP requests and WebSocket connections network frames.
 beforeAll(() => server.listen({ onUnhandledFrame: 'error' }))
 afterEach(() => {
   cleanup()

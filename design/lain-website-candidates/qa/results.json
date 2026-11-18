@@ -1,0 +1,603 @@
+{
+  "config": {
+    "argv": [
+      "<home>/.vite-plus/js_runtime/node/26.13.0/bin/node",
+      "<workspace>/apps/desktop/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "playwright.config.mjs",
+      "qa/motion.spec.mjs"
+    ],
+    "configFile": "<workspace>/design/lain-website-candidates/playwright.config.mjs",
+    "rootDir": "<workspace>/design/lain-website-candidates/qa",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "<workspace>/design/lain-website-candidates/qa/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "",
+        "name": "",
+        "testDir": "<workspace>/design/lain-website-candidates/qa",
+        "testIgnore": [],
+        "testMatch": ["*.spec.mjs"],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "<workspace>/design/lain-website-candidates/qa/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "",
+        "testDir": "<workspace>/design/lain-website-candidates/qa",
+        "snapshotDir": "<workspace>/design/lain-website-candidates/qa",
+        "testIgnore": [],
+        "testMatch": "*.spec.mjs",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4317",
+          "browserName": "chromium",
+          "channel": "chrome",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "video": {
+            "mode": "on",
+            "size": {
+              "width": 1280,
+              "height": 900
+            }
+          },
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      ["list", null],
+      [
+        "json",
+        {
+          "outputFile": "./qa/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "motion.spec.mjs",
+      "file": "motion.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "W01 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7047,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:05.062Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W01-recorded-motion-1090c-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-0c077045c1121bb023fc",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W02 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7048,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:05.067Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W02-recorded-motion-ba1a6-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-19fb6937a9564ff239ea",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W03 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6258,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:15.382Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W03-recorded-motion-66187-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-b1f6afcae7349944e6cd",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W04 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:15.384Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W04-recorded-motion-88e4b-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-9230723c8e8df6851a26",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W05 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7731,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:21.668Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W05-recorded-motion-04a85-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-5c9299265b21ff8bf552",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W06 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7953,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:21.671Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W06-recorded-motion-8edeb-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-50d7fb3f30c798b78042",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W07 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6852,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:29.435Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W07-recorded-motion-ce182-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-5a865e30e4967f34e6f6",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W08 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6980,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:29.712Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W08-recorded-motion-43f47-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-9d4f9a5d389f4e4a0d79",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W09 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6693,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:36.317Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W09-recorded-motion-1b7f6-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-6d3c57c539ab4c3068a4",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W10 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:36.742Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W10-recorded-motion-f6c41-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-4008dfd649a11706c7a4",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W11 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:43.047Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W11-recorded-motion-cf275-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-bad37697595a230656d4",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W12 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6310,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:04:43.313Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W12-recorded-motion-7e22f-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-71b29531c2fee70ff40d",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T13:04:04.595Z",
+    "duration": 46861.402,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

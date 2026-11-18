@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 
+import type { ContentType } from '@/lib/types'
 import { raindropApi } from '@/store/api/raindropApi'
 
 /**
@@ -21,6 +22,7 @@ export function useUrlSuggest() {
     async (
       url: string,
     ): Promise<{
+      type?: ContentType
       title?: string
       excerpt?: string
       link?: string
@@ -30,10 +32,19 @@ export function useUrlSuggest() {
         const result = await trigger({ url }).unwrap()
         // The API returns { result: boolean, item: { ... } }
         const item = (result as Record<string, unknown>)?.item as
-          | Record<string, unknown>
-          | undefined
-        if (item) {
+          Record<string, unknown> | undefined
+        if (item && !result.error) {
           return {
+            type: [
+              'link',
+              'article',
+              'image',
+              'video',
+              'document',
+              'audio',
+            ].includes(String(item.type))
+              ? (item.type as ContentType)
+              : undefined,
             title: item.title as string | undefined,
             excerpt: item.excerpt as string | undefined,
             link: item.link as string | undefined,

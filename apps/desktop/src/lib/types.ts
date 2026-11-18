@@ -1,3 +1,5 @@
+import type { DesktopApi } from './desktop-contract'
+import type { UpdateApi } from './update-contract'
 /**
  * Raindrop.io user profile returned from /rest/v1/user endpoint.
  * @example
@@ -50,20 +52,10 @@ export interface RaindropTokens {
 }
 
 /**
- * Stored token data with computed expiration timestamp.
- */
-export interface StoredTokens {
-  access_token: string
-  refresh_token: string
-  /** Epoch milliseconds when the access token expires */
-  expires_at: number
-}
-
-/**
  * Auth API exposed to renderer via contextBridge.
  * All operations delegate to main process via IPC.
  */
-export interface AuthAPI {
+interface AuthAPI {
   login: () => Promise<void>
   logout: () => Promise<void>
   getUser: () => Promise<RaindropUser | null>
@@ -76,19 +68,14 @@ export interface AuthAPI {
 /**
  * Shell API exposed to renderer via contextBridge for safe external URL opening.
  */
-export interface ShellAPI {
+interface ShellAPI {
   openExternal: (url: string) => Promise<void>
 }
 
 // --- Figma Make UI Types ---
 
 export type ContentType =
-  | 'link'
-  | 'article'
-  | 'image'
-  | 'video'
-  | 'document'
-  | 'audio'
+  'link' | 'article' | 'image' | 'video' | 'document' | 'audio'
 
 export type ViewMode = 'grid' | 'list' | 'table' | 'directory'
 
@@ -138,6 +125,7 @@ export type Collection = {
   id: string
   name: string
   icon: string
+  isPublic?: boolean
   color?: string
   faviconUrl?: string
   count: number
@@ -150,6 +138,7 @@ export type Collection = {
  * Top-level group containing collections.
  */
 export type Group = {
+  hidden?: boolean
   id: string
   name: string
   collections: Collection[]
@@ -167,6 +156,8 @@ export type SystemCollection = {
 
 declare global {
   interface Window {
+    desktop: DesktopApi
+    updates?: UpdateApi
     auth: AuthAPI
     shell: ShellAPI
   }

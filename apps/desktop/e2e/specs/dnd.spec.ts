@@ -73,7 +73,7 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
   // @spec:F6.6 - Drop indicator shows insertion point
   test('moves collection across groups with drag preview and drop indicator', async ({
     page,
-  }) => {
+  }, testInfo) => {
     await waitForSidebarReady(page)
 
     await expect
@@ -92,6 +92,13 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
     await expect(
       page.locator('[data-testid^="drop-indicator-"]').first(),
     ).toBeVisible()
+    // Hold only the already-asserted drag state when producing review recordings.
+    if (process.env.LAIN_E2E_RECORD === '1') {
+      await page.waitForTimeout(500)
+      await page.screenshot({
+        path: testInfo.outputPath('collection-drag-preview.png'),
+      })
+    }
 
     await page.mouse.up()
 
@@ -101,6 +108,12 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
     await expect
       .poll(async () => getGroupRootCollectionIds(page, 'group-0'))
       .not.toContain('100')
+    if (process.env.LAIN_E2E_RECORD === '1') {
+      await page.waitForTimeout(500)
+      await page.screenshot({
+        path: testInfo.outputPath('collection-drag-completed.png'),
+      })
+    }
   })
 
   // @spec:F6.2 - Reorder within group works and persists
@@ -152,13 +165,37 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
     await waitForSidebarReady(page)
 
     // Rename
+    const renameRequests: unknown[] = []
+    page.on('request', (request) => {
+      if (
+        request.method() === 'PUT' &&
+        new URL(request.url()).pathname === '/rest/v1/collection/100'
+      ) {
+        renameRequests.push(request.postDataJSON())
+      }
+    })
     await openCollectionContextMenu(page, '100')
     await page.getByRole('menuitem', { name: 'Rename' }).click()
+    await expect(page.getByRole('menu')).toBeHidden()
     const renamedRow = page.getByTestId('sidebar-collection-100')
     const renameInput = renamedRow.locator('input')
-    await renameInput.fill('Context Renamed')
+    await expect(renameInput).toBeFocused()
+    await renameInput.fill('')
+    // Real typing spans the menu close animation; it must not blur-save a partial name.
+    await renameInput.pressSequentially('Context Renamed', { delay: 120 })
+    await renameInput.press('ArrowLeft')
+    await renameInput.press('ArrowRight')
+    await expect(renameInput).toBeFocused()
+    await expect(renameInput).toHaveValue('Context Renamed')
+    await expect(
+      page.getByRole('navigation', { name: 'breadcrumb' }),
+    ).toHaveText('All Bookmarks')
+    expect(renameRequests).toEqual([])
     await renameInput.press('Enter')
     await expect(renamedRow.getByText('Context Renamed')).toBeVisible()
+    await expect
+      .poll(() => renameRequests)
+      .toEqual([{ title: 'Context Renamed' }])
 
     // Move to Group
     await openCollectionContextMenu(page, '100')
@@ -178,6 +215,70 @@ test.describe('P4 Organization - DnD and Context Menu (F6)', () => {
     await openCollectionContextMenu(page, '100')
     await page.getByRole('menuitem', { name: 'Delete' }).click()
     await expect(page.getByTestId('sidebar-collection-100')).not.toBeVisible()
+  })
+
+  // @spec:F6.3 - Editing keys stay inside rename; explicit blur saves and Escape cancels.
+  test('context rename cancels on Escape and saves on blur while row navigation remains available', async ({
+    page,
+  }) => {
+    // Arrange
+    await waitForSidebarReady(page)
+    const renameRequests: unknown[] = []
+    page.on('request', (request) => {
+      if (
+        request.method() === 'PUT' &&
+        new URL(request.url()).pathname === '/rest/v1/collection/100'
+      ) {
+        renameRequests.push(request.postDataJSON())
+      }
+    })
+    const row = page.getByTestId('sidebar-collection-100')
+
+    // Act — cancellation must not persist the typed draft.
+    await openCollectionContextMenu(page, '100')
+    await page.getByRole('menuitem', { name: 'Rename', exact: true }).click()
+    const input = row.locator('input')
+    await expect(input).toBeFocused()
+    await input.fill('')
+    await input.pressSequentially('Discard Draft', { delay: 60 })
+    await expect(
+      page.getByRole('navigation', { name: 'breadcrumb' }),
+    ).toHaveText('All Bookmarks')
+    await input.press('Escape')
+    await expect(
+      row.getByRole('button', { name: 'Development', exact: true }),
+    ).toBeVisible()
+    expect(renameRequests).toEqual([])
+
+    // Assert — the normal row keyboard commands work after editing ends.
+    const rowButton = row.getByRole('button', {
+      name: 'Development',
+      exact: true,
+    })
+    await rowButton.focus()
+    await rowButton.press('ArrowRight')
+    await expect(
+      page.getByRole('button', { name: 'React', exact: true }),
+    ).toBeVisible()
+    await rowButton.press('ArrowLeft')
+    await expect(
+      page.getByRole('button', { name: 'React', exact: true }),
+    ).toBeHidden()
+
+    // Act — moving focus away deliberately saves the complete next draft once.
+    await openCollectionContextMenu(page, '100')
+    await page.getByRole('menuitem', { name: 'Rename', exact: true }).click()
+    await expect(input).toBeFocused()
+    await input.fill('')
+    await input.pressSequentially('Saved after blur', { delay: 60 })
+    expect(renameRequests).toEqual([])
+    await page.getByRole('button', { name: 'Unsorted 0', exact: true }).click()
+    await expect(
+      row.getByText('Saved after blur', { exact: true }),
+    ).toBeVisible()
+    await expect
+      .poll(() => renameRequests)
+      .toEqual([{ title: 'Saved after blur' }])
   })
 
   // @spec:F6.7 - Optimistic updates: UI updates immediately, reverts on error
@@ -239,7 +340,7 @@ const POST_DROP_CLICK_GUARD_MS = 100
  * @param itemCount - Expected "N items" toolbar count once the collection has loaded
  */
 async function openCollection(page: Page, name: string, itemCount?: number) {
-  await page.getByRole('button', { name }).first().click()
+  await page.getByRole('button', { name, exact: true }).click()
   await expect(
     page.locator('[data-slot="breadcrumb-page"]', { hasText: name }),
   ).toBeVisible()
@@ -299,7 +400,7 @@ test.describe('P4 Organization - Bookmark DnD (F6)', () => {
   // @spec:F6.5 - Drag preview shows collection icon + name
   test('drags a bookmark onto a sidebar collection and it moves there', async ({
     page,
-  }) => {
+  }, testInfo) => {
     await waitForSidebarReady(page)
     await openCollection(page, 'Development', DEV_ITEM_COUNT)
     const row = page.getByTestId(`raindrop-drag-${DEV_BOOKMARK_ID}`)
@@ -313,6 +414,12 @@ test.describe('P4 Organization - Bookmark DnD (F6)', () => {
         'React Documentation',
       )
       await expect(target).toHaveAttribute('data-drop-target', 'true')
+      if (process.env.LAIN_E2E_RECORD === '1') {
+        await page.waitForTimeout(500)
+        await page.screenshot({
+          path: testInfo.outputPath('bookmark-drag-preview.png'),
+        })
+      }
     })
 
     await expect(row).toHaveCount(0)
@@ -320,6 +427,12 @@ test.describe('P4 Organization - Bookmark DnD (F6)', () => {
     await expect(
       page.getByTestId(`raindrop-drag-${DEV_BOOKMARK_ID}`),
     ).toBeVisible()
+    if (process.env.LAIN_E2E_RECORD === '1') {
+      await page.waitForTimeout(500)
+      await page.screenshot({
+        path: testInfo.outputPath('bookmark-drag-completed.png'),
+      })
+    }
   })
 
   // @spec:F6.1 - Drag collection between groups updates API

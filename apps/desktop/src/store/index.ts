@@ -1,5 +1,6 @@
 import { createStorageMiddleware } from '@laststance/redux-storage-middleware'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { api } from './api/emptyApi'
 import {
@@ -67,6 +68,8 @@ export const store = configureStore({
       .prepend(listenerMiddleware.middleware)
       .concat(api.middleware, storageMiddleware),
 })
+
+setupListeners(store.dispatch)
 
 // Initialize side effects after store creation (synchronous for theme, async for auth)
 setupThemeListeners(store)

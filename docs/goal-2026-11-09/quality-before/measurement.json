@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "89f5078e7e15a72d7e48dace9ca5ad82f5f57f27",
+  "fallow": "3.41.0",
+  "coverage": "Measured V8/Istanbul output from the initial 22-file, 171-test passing suite; health-measured.json and coverage-summary.json are the recorded evidence.",
+  "scope": "workspace production source; generated API and tests excluded from complexity/duplication, tests remain reachable support entries",
+  "initialDependencyChanges": "preexisting user happy-dom 21 and two security overrides preserved",
+  "coverageScope": "apps/desktop/src/**/*.{ts,tsx}; test files and generated src/store/api/raindropApi.ts excluded. Native Electron and support scripts were not measured in the initial coverage run.",
+  "coverageTool": "Vitest 4.0.18 with V8 provider (before dependency migration)",
+  "metadataCorrection": "The coverage label initially said not yet measured because metadata preceded the run. Corrected after verifying the retained unit log and coverage reports; raw before measurements are unchanged."
+}

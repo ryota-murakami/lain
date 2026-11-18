@@ -1,12 +1,21 @@
-import originalAxios from 'axios'
-import type { AxiosError } from 'axios'
+import originalAxios, { CanceledError } from 'axios'
+import type { AxiosError, GenericAbortSignal } from 'axios'
 import { toast } from 'sonner'
+
+import { RequestBudget } from './request-budget'
+
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    /** Let a caller with inline recovery own ordinary error feedback; session expiry remains global. */
+    errorFeedback?: 'inline'
+  }
+}
 
 /**
  * Lain axios instance with centralized error handling via interceptors.
  * All Raindrop.io API calls go through this instance.
- * Error toasts and error reporting are handled here — application code
- * only needs to handle the success path.
+ * Requests show global error toasts by default. Upload queue requests opt into
+ * inline feedback while retaining rejection, authentication and rate-limit handling.
  *
  * @example
  *   // Direct usage (rare — prefer RTK Query hooks)
@@ -60,10 +69,41 @@ function getProblemFromError(error: AxiosError): ProblemType {
   return UNKNOWN_ERROR
 }
 
+const requestBudget = new RequestBudget()
+
+/**
+ * Wait for API capacity without sending canceled work or ignoring a newer server reset.
+ * The request interceptor calls this before retrieving the current access token.
+ * @example
+ * await waitForRequestSlot(controller.signal)
+ */
+async function waitForRequestSlot(signal?: GenericAbortSignal): Promise<void> {
+  while (true) {
+    // Each wake-up competes for actual capacity; future requests are never replayed automatically.
+    if (signal?.aborted) throw new CanceledError()
+    const delay =
+      import.meta.env.MODE === 'test' ? 0 : requestBudget.reserve(Date.now())
+    if (delay === 0) return
+    await new Promise<void>((resolve, reject) => {
+      const abort = (): void => {
+        clearTimeout(timer)
+        reject(new CanceledError())
+      }
+      const timer = setTimeout(() => {
+        signal?.removeEventListener?.('abort', abort)
+        resolve()
+      }, delay)
+      signal?.addEventListener?.('abort', abort, { once: true })
+    })
+  }
+}
+
 // --- Request Interceptor ---
 // Inject Bearer token from Electron main process on every request
 lainAxios.interceptors.request.use(async (config) => {
+  await waitForRequestSlot(config.signal)
   const token = await window.auth.getToken()
+  if (config.signal?.aborted) throw new CanceledError()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -75,9 +115,26 @@ lainAxios.interceptors.request.use(async (config) => {
 lainAxios.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    switch (getProblemFromError(error)) {
+    if (originalAxios.isCancel(error)) return Promise.reject(error)
+    const problem = getProblemFromError(error)
+    // Rate limits affect all requests even when a queue owns the visible recovery action.
+    if (problem === RATE_LIMIT_ERROR) {
+      requestBudget.block(
+        Number(error.response?.headers['x-ratelimit-reset']) * 1000 ||
+          Date.now() + 60_000,
+      )
+    }
+    // Session expiry remains global because an inline retry cannot restore authentication.
+    if (
+      error.config?.errorFeedback === 'inline' &&
+      problem !== UNAUTHORIZED_ERROR
+    )
+      return Promise.reject(error)
+    switch (problem) {
       case NETWORK_ERROR:
-        toast.error('Network error. Please check your connection.')
+        toast.error('Network error. Please check your connection.', {
+          id: 'network-error',
+        })
         break
       case TIMEOUT_ERROR:
         toast.error('Request timed out. Please try again.')
@@ -89,9 +146,13 @@ lainAxios.interceptors.response.use(
         // Token refresh is handled by RaindropAuth.getValidToken()
         // If we still get 401, the refresh token is also expired
         toast.error('Session expired. Please log in again.')
+        window.dispatchEvent(new Event('lain-session-expired'))
         break
       case RATE_LIMIT_ERROR:
-        toast.error('Too many requests. Please wait a moment.')
+        toast.error(
+          'Rate limit reached. Requests will resume after the server reset.',
+          { id: 'rate-limit' },
+        )
         break
       case UNKNOWN_ERROR:
       default:

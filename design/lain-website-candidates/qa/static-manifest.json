@@ -1,0 +1,97 @@
+[
+  {
+    "path": "dist/W01/index.html",
+    "bytes": 11437,
+    "sha256": "227f67eecd54977de38c4bd8d40f5599979f95b3e6a68029946e0ebb5d6fe447"
+  },
+  {
+    "path": "dist/W02/index.html",
+    "bytes": 11613,
+    "sha256": "e243f76991afad359d1a78f034b8bf5a32007b192a24ad80d04fe85e4585a19e"
+  },
+  {
+    "path": "dist/W03/index.html",
+    "bytes": 11572,
+    "sha256": "382f76b8d009de700447b68503a9218f4a441cee78fd40746b93005c5d0d4df6"
+  },
+  {
+    "path": "dist/W04/index.html",
+    "bytes": 11393,
+    "sha256": "c0d57f15c6346a65bba70003c82101be79e4f003860c6dbd9b931479a07525ee"
+  },
+  {
+    "path": "dist/W05/index.html",
+    "bytes": 11534,
+    "sha256": "bbe7d99638b57ad80f2f152db7e6d7e330f953b559845572d172514788c85539"
+  },
+  {
+    "path": "dist/W06/index.html",
+    "bytes": 11347,
+    "sha256": "4df57371dd44cc95f8fb8f1191c1fb1381dbad1b463f654a55572369a6d65a9a"
+  },
+  {
+    "path": "dist/W07/index.html",
+    "bytes": 11358,
+    "sha256": "d395a96ada60b3d7a7422f2ca367f975828abb66c1110bc840080f014e41ea43"
+  },
+  {
+    "path": "dist/W08/index.html",
+    "bytes": 11395,
+    "sha256": "e0a948e2792b91073aa1c95d6ad8525dc134965e745f8d811df7ad268edb6d17"
+  },
+  {
+    "path": "dist/W09/index.html",
+    "bytes": 11590,
+    "sha256": "c818e192cf05c59efd3c7f60bb0808d2b0af1cde9f9297ffa5ab8eb2c1103f03"
+  },
+  {
+    "path": "dist/W10/index.html",
+    "bytes": 11671,
+    "sha256": "791a1d42cb85e18d99f97ba272dd79de13cfdbc9b719dd16fd52ee049b331d7e"
+  },
+  {
+    "path": "dist/W11/index.html",
+    "bytes": 11402,
+    "sha256": "962eddd407ea271069c09a339da3ece86f3707b59eb2a50269a4a920985893ab"
+  },
+  {
+    "path": "dist/W12/index.html",
+    "bytes": 11224,
+    "sha256": "a970be476abfc9d823ac503054a45340e7860b77853ad34e674b917135bf6277"
+  },
+  {
+    "path": "dist/assets/GEIST-LICENSE.txt",
+    "bytes": 4386,
+    "sha256": "cc27b0f563500a9e0658866241d06d05ef20a9efbf8bac47fe0499a65ede5952"
+  },
+  {
+    "path": "dist/assets/geist.woff2",
+    "bytes": 28400,
+    "sha256": "0cbbe6286a00f356e98980783cc950a9b693751e04aedfb97d9526ff6dc2b316"
+  },
+  {
+    "path": "dist/assets/mark.svg",
+    "bytes": 207,
+    "sha256": "8a835834e46d8256c879dda956743896cade59420aa133ac2543f7f4bbc9dd83"
+  },
+  {
+    "path": "dist/assets/site.css",
+    "bytes": 77711,
+    "sha256": "8af9bd6af66b9cb1b0cfb47a92a44222134111f97adbe24cf8ebab796ebf95e9"
+  },
+  {
+    "path": "dist/assets/site.js",
+    "bytes": 4265,
+    "sha256": "e48c2c25ffeeb8d66de2174e66ec37c4fb0abac7ded92c4ead3cc2ae18e30f7a"
+  },
+  {
+    "path": "dist/directions.json",
+    "bytes": 10382,
+    "sha256": "6d8b86ba4b7227aa9ac2b03aa798a23d4bd77b55f49f6970fd1d675b1f149d28"
+  },
+  {
+    "path": "dist/index.html",
+    "bytes": 19741,
+    "sha256": "9fa238d646e9b6d4b6f1193ca3a9b8006f4da0432376acf371bd41e0b4a498cb"
+  }
+]

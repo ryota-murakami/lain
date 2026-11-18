@@ -1,0 +1,12 @@
+docs/goal-2026-11-09/evidence/desktop-flows/export-cancel-save.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/upload-partial-retry.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/icon-apply-reset.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/grid-hover-menu-actions.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/list-hover-menu-actions.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/pagination.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/collection-color-group.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/large-group-menu.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/large-collection-picker.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/collection-drag.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/bookmark-drag.mp4
+docs/goal-2026-11-09/evidence/desktop-flows/nested-collection-merge.mp4

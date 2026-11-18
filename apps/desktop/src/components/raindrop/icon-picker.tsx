@@ -1,55 +1,4 @@
-import {
-  Folder,
-  Globe,
-  Code2,
-  BookOpen,
-  Music,
-  Video,
-  Image,
-  FileText,
-  Star,
-  Heart,
-  Home,
-  Settings,
-  Mail,
-  Phone,
-  Camera,
-  Bookmark,
-  Tag,
-  Search,
-  Layout,
-  Palette,
-  Brain,
-  Wrench,
-  Component,
-  Sparkles,
-  Plane,
-  CookingPot,
-  ShoppingCart,
-  Gamepad2,
-  GraduationCap,
-  Briefcase,
-  Building2,
-  Newspaper,
-  Podcast,
-  Rss,
-  Database,
-  Server,
-  Cloud,
-  Shield,
-  Lock,
-  Key,
-  Zap,
-  Flame,
-  Trophy,
-  Target,
-  Flag,
-  Map,
-  Compass,
-  Lightbulb,
-  Puzzle,
-} from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { Folder } from 'lucide-react'
 import React, { useState, useMemo, useCallback } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -61,62 +10,16 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { collectionIcons } from '@/lib/collection-icons'
 import { cn } from '@/lib/utils'
 
 /**
  * Available icon entries for the picker grid.
  */
-const ICON_ENTRIES: { name: string; icon: LucideIcon }[] = [
-  { name: 'Folder', icon: Folder },
-  { name: 'Globe', icon: Globe },
-  { name: 'Code2', icon: Code2 },
-  { name: 'BookOpen', icon: BookOpen },
-  { name: 'Music', icon: Music },
-  { name: 'Video', icon: Video },
-  { name: 'Image', icon: Image },
-  { name: 'FileText', icon: FileText },
-  { name: 'Star', icon: Star },
-  { name: 'Heart', icon: Heart },
-  { name: 'Home', icon: Home },
-  { name: 'Settings', icon: Settings },
-  { name: 'Mail', icon: Mail },
-  { name: 'Phone', icon: Phone },
-  { name: 'Camera', icon: Camera },
-  { name: 'Bookmark', icon: Bookmark },
-  { name: 'Tag', icon: Tag },
-  { name: 'Search', icon: Search },
-  { name: 'Layout', icon: Layout },
-  { name: 'Palette', icon: Palette },
-  { name: 'Brain', icon: Brain },
-  { name: 'Wrench', icon: Wrench },
-  { name: 'Component', icon: Component },
-  { name: 'Sparkles', icon: Sparkles },
-  { name: 'Plane', icon: Plane },
-  { name: 'CookingPot', icon: CookingPot },
-  { name: 'ShoppingCart', icon: ShoppingCart },
-  { name: 'Gamepad2', icon: Gamepad2 },
-  { name: 'GraduationCap', icon: GraduationCap },
-  { name: 'Briefcase', icon: Briefcase },
-  { name: 'Building2', icon: Building2 },
-  { name: 'Newspaper', icon: Newspaper },
-  { name: 'Podcast', icon: Podcast },
-  { name: 'Rss', icon: Rss },
-  { name: 'Database', icon: Database },
-  { name: 'Server', icon: Server },
-  { name: 'Cloud', icon: Cloud },
-  { name: 'Shield', icon: Shield },
-  { name: 'Lock', icon: Lock },
-  { name: 'Key', icon: Key },
-  { name: 'Zap', icon: Zap },
-  { name: 'Flame', icon: Flame },
-  { name: 'Trophy', icon: Trophy },
-  { name: 'Target', icon: Target },
-  { name: 'Flag', icon: Flag },
-  { name: 'Map', icon: Map },
-  { name: 'Compass', icon: Compass },
-  { name: 'Lightbulb', icon: Lightbulb },
-  { name: 'Puzzle', icon: Puzzle },
-]
+const ICON_ENTRIES = Object.entries(collectionIcons).map(([name, icon]) => ({
+  name,
+  icon,
+}))
 
 /**
  * Props for the IconPicker component.
@@ -128,6 +31,8 @@ interface IconPickerProps {
   onChange: (iconName: string) => void
   /** Optional label text */
   label?: string
+  /** Lock interaction while the owning form is saving. */
+  disabled?: boolean
 }
 
 /**
@@ -149,6 +54,7 @@ const IconPicker = React.memo(function IconPicker({
   value,
   onChange,
   label,
+  disabled = false,
 }: IconPickerProps) {
   const [open, setOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -177,6 +83,9 @@ const IconPicker = React.memo(function IconPicker({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
+            type="button"
+            aria-label={label || 'Collection icon'}
+            disabled={disabled}
             variant="outline"
             className="w-full justify-start gap-2 font-normal"
           >
@@ -191,6 +100,7 @@ const IconPicker = React.memo(function IconPicker({
         <PopoverContent className="w-[280px] p-3" align="start">
           <div className="space-y-3">
             <Input
+              aria-label="Search icons"
               placeholder="Search icons..."
               value={searchQuery}
               onChange={handleSearchChange}
@@ -215,6 +125,8 @@ const IconPicker = React.memo(function IconPicker({
                         setOpen(false)
                         setSearchQuery('')
                       }}
+                      aria-label={`Select icon ${entry.name}`}
+                      aria-pressed={isSelected}
                       title={entry.name}
                     >
                       <Icon className="h-4 w-4" />
@@ -235,4 +147,3 @@ const IconPicker = React.memo(function IconPicker({
   )
 })
 export { IconPicker }
-export default IconPicker

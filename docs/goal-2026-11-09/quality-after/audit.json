@@ -1,0 +1,1234 @@
+{
+  "kind": "audit",
+  "schema_version": 14,
+  "version": "3.41.0",
+  "command": "audit",
+  "verdict": "pass",
+  "changed_files_count": 799,
+  "base_ref": "HEAD",
+  "head_sha": "89f5078",
+  "elapsed_ms": 458,
+  "summary": {
+    "dead_code_issues": 0,
+    "dead_code_has_errors": false,
+    "complexity_findings": 0,
+    "max_cyclomatic": null,
+    "duplication_clone_groups": 0
+  },
+  "attribution": {
+    "gate": "new-only",
+    "worsened": "error",
+    "dead_code_introduced": 0,
+    "dead_code_inherited": 0,
+    "complexity_introduced": 0,
+    "complexity_inherited": 0,
+    "complexity_worsened": 0,
+    "duplication_introduced": 0,
+    "duplication_inherited": 0,
+    "styling_introduced": 0,
+    "styling_inherited": 2,
+    "duplication_demoted": 0,
+    "diff_risk_introduced": 0
+  },
+  "gate_outcomes": {
+    "audit-verdict": {
+      "status": "pass",
+      "enforced": true
+    }
+  },
+  "dead_code": {
+    "schema_version": 10,
+    "version": "3.41.0",
+    "elapsed_ms": 110,
+    "total_issues": 0,
+    "entry_points": {
+      "total": 102,
+      "sources": {
+        "manual_entry": 3,
+        "package.json": 9,
+        "plugin": 90
+      }
+    },
+    "summary": {
+      "total_issues": 0,
+      "unused_files": 0,
+      "unused_exports": 0,
+      "unused_types": 0,
+      "private_type_leaks": 0,
+      "deprecated_exports_in_use": 0,
+      "unused_dependencies": 0,
+      "unused_enum_members": 0,
+      "unused_class_members": 0,
+      "unused_namespace_members": 0,
+      "unused_store_members": 0,
+      "unprovided_injects": 0,
+      "unrendered_components": 0,
+      "unused_component_props": 0,
+      "absent_component_props": 0,
+      "unused_component_emits": 0,
+      "unused_component_inputs": 0,
+      "unused_component_outputs": 0,
+      "unused_svelte_events": 0,
+      "unused_effect_layers": 0,
+      "unused_tagged_errors": 0,
+      "unproduced_catch_tags": 0,
+      "unused_server_actions": 0,
+      "unused_load_data_keys": 0,
+      "unresolved_imports": 0,
+      "unlisted_dependencies": 0,
+      "unlisted_binaries": 0,
+      "duplicate_exports": 0,
+      "duplicate_export_aliases": 0,
+      "type_only_dependencies": 0,
+      "test_only_dependencies": 0,
+      "dev_dependencies_in_production": 0,
+      "circular_dependencies": 0,
+      "re_export_cycles": 0,
+      "package_cycles": 0,
+      "boundary_violations": 0,
+      "boundary_coverage_violations": 0,
+      "boundary_call_violations": 0,
+      "policy_violations": 0,
+      "stale_suppressions": 0,
+      "unused_catalog_entries": 0,
+      "empty_catalog_groups": 0,
+      "unresolved_catalog_references": 0,
+      "unused_dependency_overrides": 0,
+      "misconfigured_dependency_overrides": 0,
+      "invalid_client_exports": 0,
+      "mixed_client_server_barrels": 0,
+      "misplaced_directives": 0,
+      "route_collisions": 0,
+      "dynamic_segment_name_conflicts": 0
+    },
+    "unused_files": [],
+    "unused_exports": [],
+    "unused_types": [],
+    "private_type_leaks": [],
+    "deprecated_exports_in_use": [],
+    "unused_dependencies": [],
+    "unused_dev_dependencies": [],
+    "unused_optional_dependencies": [],
+    "unused_enum_members": [],
+    "unused_class_members": [],
+    "unresolved_imports": [],
+    "unlisted_dependencies": [],
+    "unlisted_binaries": [],
+    "duplicate_exports": [],
+    "type_only_dependencies": [],
+    "test_only_dependencies": [],
+    "dev_dependencies_in_production": [],
+    "circular_dependencies": [],
+    "re_export_cycles": [],
+    "package_cycles": [],
+    "boundary_violations": [],
+    "boundary_coverage_violations": [],
+    "boundary_call_violations": [],
+    "policy_violations": [],
+    "stale_suppressions": [],
+    "unused_catalog_entries": [],
+    "empty_catalog_groups": [],
+    "unresolved_catalog_references": [],
+    "unused_dependency_overrides": [],
+    "misconfigured_dependency_overrides": [],
+    "invalid_client_exports": [],
+    "mixed_client_server_barrels": [],
+    "misplaced_directives": [],
+    "route_collisions": [],
+    "dynamic_segment_name_conflicts": [],
+    "workspace_diagnostics": [
+      {
+        "path": ".",
+        "kind": "boundaries-not-configured",
+        "message": "No architecture boundaries are configured, so the boundary detector did not run and its violation counts are zero because nothing was measured. Add `boundaries` to the config, or set `boundary-violation` to off to state that the check is not wanted."
+      },
+      {
+        "path": ".",
+        "kind": "rule-packs-not-configured",
+        "message": "No rule packs are configured, so the policy detector did not run and its violation counts are zero because nothing was measured. Add `rulePacks` to the config, or set `policy-violation` to off to state that the check is not wanted."
+      },
+      {
+        "path": ".",
+        "kind": "entry-pattern-redundant",
+        "pattern": "apps/desktop/src/main.tsx",
+        "message": "entry pattern 'apps/desktop/src/main.tsx' matched only files that fallow already detects as entry points in this run, so it has no effect. Remove it from the config."
+      },
+      {
+        "path": ".",
+        "kind": "entry-pattern-redundant",
+        "pattern": "apps/desktop/electron/main.ts",
+        "message": "entry pattern 'apps/desktop/electron/main.ts' matched only files that fallow already detects as entry points in this run, so it has no effect. Remove it from the config."
+      },
+      {
+        "path": ".",
+        "kind": "ignore-patterns-entry-redundant",
+        "pattern": "**/dist/**",
+        "message": "ignorePatterns entry '**/dist/**' excluded no file that fallow would otherwise analyze in this run, so it has no effect. Remove it from the config, unless it is for files that exist only after a build."
+      },
+      {
+        "path": ".",
+        "kind": "ignore-patterns-entry-redundant",
+        "pattern": "**/dist-electron/**",
+        "message": "ignorePatterns entry '**/dist-electron/**' excluded no file that fallow would otherwise analyze in this run, so it has no effect. Remove it from the config, unless it is for files that exist only after a build."
+      },
+      {
+        "path": ".",
+        "kind": "ignore-patterns-entry-redundant",
+        "pattern": "**/release/**",
+        "message": "ignorePatterns entry '**/release/**' excluded no file that fallow would otherwise analyze in this run, so it has no effect. Remove it from the config, unless it is for files that exist only after a build."
+      },
+      {
+        "path": ".",
+        "kind": "ignore-patterns-entry-redundant",
+        "pattern": "**/coverage/**",
+        "message": "ignorePatterns entry '**/coverage/**' excluded no file that fallow would otherwise analyze in this run, so it has no effect. Remove it from the config, unless it is for files that exist only after a build."
+      },
+      {
+        "path": ".",
+        "kind": "ignore-patterns-entry-redundant",
+        "pattern": "**/playwright-report/**",
+        "message": "ignorePatterns entry '**/playwright-report/**' excluded no file that fallow would otherwise analyze in this run, so it has no effect. Remove it from the config, unless it is for files that exist only after a build."
+      },
+      {
+        "path": ".",
+        "kind": "ignore-patterns-entry-redundant",
+        "pattern": "**/test-results/**",
+        "message": "ignorePatterns entry '**/test-results/**' excluded no file that fallow would otherwise analyze in this run, so it has no effect. Remove it from the config, unless it is for files that exist only after a build."
+      }
+    ]
+  },
+  "duplication": {
+    "clone_groups": [],
+    "clone_families": [],
+    "stats": {
+      "total_files": 177,
+      "files_with_clones": 0,
+      "total_lines": 28022,
+      "duplicated_lines": 0,
+      "total_tokens": 95184,
+      "duplicated_tokens": 0,
+      "clone_groups": 0,
+      "clone_families": 0,
+      "clone_instances": 0,
+      "duplication_percentage": 0
+    }
+  },
+  "complexity": {
+    "findings": [],
+    "summary": {
+      "files_analyzed": 161,
+      "functions_analyzed": 1458,
+      "functions_above_threshold": 0,
+      "max_cyclomatic_threshold": 20,
+      "max_cognitive_threshold": 15,
+      "max_crap_threshold": null,
+      "max_unit_size_threshold": 60,
+      "severity_critical_count": 0,
+      "severity_high_count": 0,
+      "severity_moderate_count": 0
+    },
+    "sections": ["complexity", "vital-signs", "css"],
+    "vital_signs": {
+      "dead_file_pct": 0,
+      "dead_export_pct": 0,
+      "avg_cyclomatic": 2.2,
+      "critical_complexity_pct": 0,
+      "p90_cyclomatic": 5,
+      "cyclomatic_population": {
+        "functions": {
+          "count": 1458,
+          "sum": 3185,
+          "max": 19
+        },
+        "modules": {
+          "count": 11,
+          "sum": 68,
+          "max": 15
+        },
+        "templates": {
+          "count": 0,
+          "sum": 0,
+          "max": null
+        }
+      },
+      "maintainability_avg": 91.3,
+      "maintainability_low_pct": 0,
+      "unused_dep_count": 0,
+      "unused_deps_per_k_files": 0,
+      "circular_dep_count": 0,
+      "circular_deps_per_k_files": 0,
+      "counts": {
+        "total_files": 161,
+        "total_exports": 369,
+        "dead_files": 0,
+        "dead_exports": 0,
+        "total_lines": 26203,
+        "files_scored": 150,
+        "total_deps": 0
+      },
+      "unit_size_profile": {
+        "low_risk": 76.2,
+        "medium_risk": 10.3,
+        "high_risk": 6.4,
+        "very_high_risk": 7.1
+      },
+      "functions_over_60_loc_per_k": 70.6,
+      "unit_interfacing_profile": {
+        "low_risk": 96.5,
+        "medium_risk": 3.2,
+        "high_risk": 0.3,
+        "very_high_risk": 0
+      },
+      "p95_fan_in": 8,
+      "coupling_high_pct": 3.3,
+      "p95_render_fan_in": 8,
+      "render_fan_in_high_pct": 4.1,
+      "max_render_fan_in": 49,
+      "top_render_fan_in": [
+        {
+          "component": "Button",
+          "path": "apps/desktop/src/components/ui/button.tsx",
+          "render_sites": 91,
+          "distinct_parents": 49
+        },
+        {
+          "component": "Input",
+          "path": "apps/desktop/src/components/ui/input.tsx",
+          "render_sites": 21,
+          "distinct_parents": 18
+        },
+        {
+          "component": "Label",
+          "path": "apps/desktop/src/components/ui/label.tsx",
+          "render_sites": 31,
+          "distinct_parents": 12
+        },
+        {
+          "component": "Badge",
+          "path": "apps/desktop/src/components/ui/badge.tsx",
+          "render_sites": 13,
+          "distinct_parents": 12
+        },
+        {
+          "component": "Dialog",
+          "path": "apps/desktop/src/components/ui/dialog.tsx",
+          "render_sites": 11,
+          "distinct_parents": 11
+        },
+        {
+          "component": "DialogContent",
+          "path": "apps/desktop/src/components/ui/dialog.tsx",
+          "render_sites": 11,
+          "distinct_parents": 11
+        },
+        {
+          "component": "DialogDescription",
+          "path": "apps/desktop/src/components/ui/dialog.tsx",
+          "render_sites": 11,
+          "distinct_parents": 11
+        },
+        {
+          "component": "DialogHeader",
+          "path": "apps/desktop/src/components/ui/dialog.tsx",
+          "render_sites": 11,
+          "distinct_parents": 11
+        },
+        {
+          "component": "DialogTitle",
+          "path": "apps/desktop/src/components/ui/dialog.tsx",
+          "render_sites": 11,
+          "distinct_parents": 11
+        },
+        {
+          "component": "DialogFooter",
+          "path": "apps/desktop/src/components/ui/dialog.tsx",
+          "render_sites": 8,
+          "distinct_parents": 8
+        },
+        {
+          "component": "DropdownMenu",
+          "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+          "render_sites": 8,
+          "distinct_parents": 8
+        },
+        {
+          "component": "DropdownMenuContent",
+          "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+          "render_sites": 8,
+          "distinct_parents": 8
+        },
+        {
+          "component": "DropdownMenuTrigger",
+          "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+          "render_sites": 8,
+          "distinct_parents": 8
+        },
+        {
+          "component": "ScrollArea",
+          "path": "apps/desktop/src/components/ui/scroll-area.tsx",
+          "render_sites": 8,
+          "distinct_parents": 8
+        },
+        {
+          "component": "Separator",
+          "path": "apps/desktop/src/components/ui/separator.tsx",
+          "render_sites": 9,
+          "distinct_parents": 7
+        },
+        {
+          "component": "Checkbox",
+          "path": "apps/desktop/src/components/ui/checkbox.tsx",
+          "render_sites": 7,
+          "distinct_parents": 7
+        },
+        {
+          "component": "DropdownMenuItem",
+          "path": "apps/desktop/src/components/ui/dropdown-menu.tsx",
+          "render_sites": 23,
+          "distinct_parents": 6
+        },
+        {
+          "component": "Tooltip",
+          "path": "apps/desktop/src/components/ui/tooltip.tsx",
+          "render_sites": 11,
+          "distinct_parents": 6
+        },
+        {
+          "component": "TooltipContent",
+          "path": "apps/desktop/src/components/ui/tooltip.tsx",
+          "render_sites": 11,
+          "distinct_parents": 6
+        },
+        {
+          "component": "TooltipTrigger",
+          "path": "apps/desktop/src/components/ui/tooltip.tsx",
+          "render_sites": 11,
+          "distinct_parents": 6
+        }
+      ],
+      "total_loc": 26203
+    },
+    "large_functions": [
+      {
+        "path": "apps/desktop/src/components/main-app.tsx",
+        "name": "MainApp",
+        "line": 66,
+        "line_count": 311
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/main-content.tsx",
+        "name": "MainContent",
+        "line": 57,
+        "line_count": 262
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+        "name": "AddBookmarkDialog",
+        "line": 418,
+        "line_count": 222
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+        "name": "MergeDialog",
+        "line": 153,
+        "line_count": 203
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+        "name": "TableView",
+        "line": 910,
+        "line_count": 190
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+        "name": "TagManagement",
+        "line": 352,
+        "line_count": 185
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+        "name": "CollectionDialog",
+        "line": 403,
+        "line_count": 183
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "LeftSidebar",
+        "line": 1016,
+        "line_count": 174
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+        "name": "DetailBookmarkForm",
+        "line": 482,
+        "line_count": 173
+      },
+      {
+        "path": "apps/desktop/src/hooks/useSidebarOrganization.ts",
+        "name": "useSidebarOrganization",
+        "line": 31,
+        "line_count": 170
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/collection-search.tsx",
+        "name": "CollectionSearch",
+        "line": 44,
+        "line_count": 158
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+        "name": "RaindropListItem",
+        "line": 60,
+        "line_count": 155
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/upload-dialog.tsx",
+        "name": "UploadDialog",
+        "line": 221,
+        "line_count": 154
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+        "name": "TableRowItem",
+        "line": 368,
+        "line_count": 151
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "GroupSection",
+        "line": 784,
+        "line_count": 147
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/collection-dialog.tsx",
+        "name": "useCollectionEditor",
+        "line": 256,
+        "line_count": 146
+      },
+      {
+        "path": "apps/desktop/src/lib/update-controller.ts",
+        "name": "createUpdateController",
+        "line": 39,
+        "line_count": 140
+      },
+      {
+        "path": "apps/desktop/src/hooks/useSidebarController.ts",
+        "name": "useSidebarController",
+        "line": 25,
+        "line_count": 137
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+        "name": "IconSettings",
+        "line": 95,
+        "line_count": 136
+      },
+      {
+        "path": "apps/desktop/src/hooks/useCollectionsCrud.ts",
+        "name": "useCollectionsCrud",
+        "line": 33,
+        "line_count": 133
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/bookmark-item-menu.tsx",
+        "name": "BookmarkItemMenu",
+        "line": 45,
+        "line_count": 131
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+        "name": "useTagEditor",
+        "line": 64,
+        "line_count": 128
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppCollectionEditor.ts",
+        "name": "useMainAppCollectionEditor",
+        "line": 52,
+        "line_count": 126
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/bookmark-content.tsx",
+        "name": "BookmarkContent",
+        "line": 37,
+        "line_count": 124
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/tag-input.tsx",
+        "name": "TagInput",
+        "line": 193,
+        "line_count": 124
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/group-dialog.tsx",
+        "name": "GroupDialog",
+        "line": 87,
+        "line_count": 122
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/settings-dialog.tsx",
+        "name": "SettingsDialog",
+        "line": 38,
+        "line_count": 122
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+        "name": "useNewBookmarkEditor",
+        "line": 297,
+        "line_count": 120
+      },
+      {
+        "path": "apps/desktop/src/hooks/useBookmarkInteraction.ts",
+        "name": "useBookmarkInteraction",
+        "line": 30,
+        "line_count": 117
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+        "name": "TagMutationDialogs",
+        "line": 235,
+        "line_count": 116
+      },
+      {
+        "path": "apps/desktop/src/hooks/useRaindropBatchActions.ts",
+        "name": "useRaindropBatchActions",
+        "line": 47,
+        "line_count": 116
+      },
+      {
+        "path": "apps/desktop/src/hooks/useSidebarDrag.ts",
+        "name": "useSidebarDrag",
+        "line": 22,
+        "line_count": 115
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/export-dialog.tsx",
+        "name": "ExportDialog",
+        "line": 21,
+        "line_count": 113
+      },
+      {
+        "path": "apps/desktop/src/hooks/useBookmarkExport.ts",
+        "name": "useBookmarkExport",
+        "line": 30,
+        "line_count": 113
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "CollectionRowButton",
+        "line": 535,
+        "line_count": 111
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+        "name": "useDetailEditor",
+        "line": 167,
+        "line_count": 110
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+        "name": "BookmarkSearchControls",
+        "line": 409,
+        "line_count": 108
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+        "name": "CollectionSelector",
+        "line": 53,
+        "line_count": 106
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "CollectionRowMenu",
+        "line": 306,
+        "line_count": 105
+      },
+      {
+        "path": "apps/desktop/src/components/ui/sidebar.tsx",
+        "name": "Sidebar",
+        "line": 152,
+        "line_count": 105
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/color-picker.tsx",
+        "name": "ColorPicker",
+        "line": 63,
+        "line_count": 104
+      },
+      {
+        "path": "apps/desktop/src/hooks/useUploadQueue.ts",
+        "name": "useUploadQueue",
+        "line": 21,
+        "line_count": 104
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+        "name": "useBookmarkMetadata",
+        "line": 187,
+        "line_count": 103
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+        "name": "ShortcutEditor",
+        "line": 71,
+        "line_count": 103
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppBookmarkActions.ts",
+        "name": "useMainAppBookmarkActions",
+        "line": 16,
+        "line_count": 103
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+        "name": "DirectoryView",
+        "line": 313,
+        "line_count": 98
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+        "name": "RaindropCard",
+        "line": 173,
+        "line_count": 98
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+        "name": "TagRowItem",
+        "line": 135,
+        "line_count": 98
+      },
+      {
+        "path": "apps/desktop/src/hooks/useTagsCrud.ts",
+        "name": "useTagsCrud",
+        "line": 24,
+        "line_count": 98
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/icon-picker.tsx",
+        "name": "IconPicker",
+        "line": 53,
+        "line_count": 96
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/global-search-results.tsx",
+        "name": "SearchResultItem",
+        "line": 41,
+        "line_count": 94
+      },
+      {
+        "path": "apps/desktop/src/hooks/useBookmarkDrag.ts",
+        "name": "useBookmarkDrag",
+        "line": 37,
+        "line_count": 94
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppGroupEditor.ts",
+        "name": "useMainAppGroupEditor",
+        "line": 15,
+        "line_count": 92
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppDetail.ts",
+        "name": "useMainAppDetail",
+        "line": 14,
+        "line_count": 91
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+        "name": "BookmarkCardCover",
+        "line": 83,
+        "line_count": 89
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+        "name": "DirectoryBookmarkRow",
+        "line": 86,
+        "line_count": 88
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/global-search-controls.tsx",
+        "name": "GlobalSearchControls",
+        "line": 21,
+        "line_count": 88
+      },
+      {
+        "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+        "name": "useViewNavigation",
+        "line": 106,
+        "line_count": 88
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/global-search-results.tsx",
+        "name": "SearchResultsList",
+        "line": 142,
+        "line_count": 87
+      },
+      {
+        "path": "apps/desktop/src/hooks/useIconCandidates.ts",
+        "name": "useIconCandidates",
+        "line": 58,
+        "line_count": 87
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/shortcut-editor.tsx",
+        "name": "ShortcutRow",
+        "line": 188,
+        "line_count": 83
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+        "name": "GlobalSearchCommand",
+        "line": 112,
+        "line_count": 82
+      },
+      {
+        "path": "apps/desktop/src/components/ui/sidebar.tsx",
+        "name": "SidebarProvider",
+        "line": 69,
+        "line_count": 82
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppView.ts",
+        "name": "useMainAppView",
+        "line": 53,
+        "line_count": 82
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+        "name": "BookmarkTableHeader",
+        "line": 743,
+        "line_count": 81
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "CollectionRow",
+        "line": 647,
+        "line_count": 80
+      },
+      {
+        "path": "apps/desktop/electron/raindrop-auth.ts",
+        "name": "#getAuthorizationCode",
+        "line": 193,
+        "line_count": 79
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/update-settings.tsx",
+        "name": "UpdateSettings",
+        "line": 90,
+        "line_count": 79
+      },
+      {
+        "path": "apps/desktop/electron/raindrop-auth.ts",
+        "name": "<arrow>",
+        "line": 194,
+        "line_count": 77
+      },
+      {
+        "path": "apps/desktop/src/hooks/useCommandSearch.ts",
+        "name": "useCommandSearch",
+        "line": 21,
+        "line_count": 77
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/merge-dialog.tsx",
+        "name": "useCollectionMerge",
+        "line": 59,
+        "line_count": 76
+      },
+      {
+        "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+        "name": "<arrow>",
+        "line": 117,
+        "line_count": 76
+      },
+      {
+        "path": "apps/desktop/src/hooks/useRaindropMutations.ts",
+        "name": "useRaindropMutations",
+        "line": 22,
+        "line_count": 75
+      },
+      {
+        "path": "apps/desktop/src/hooks/useSidebarData.ts",
+        "name": "useSidebarData",
+        "line": 34,
+        "line_count": 75
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppShortcuts.ts",
+        "name": "useMainAppShortcuts",
+        "line": 31,
+        "line_count": 73
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/icon-settings.tsx",
+        "name": "IconCandidatePreview",
+        "line": 14,
+        "line_count": 72
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "SidebarLibrary",
+        "line": 938,
+        "line_count": 72
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+        "name": "BookmarkViewControls",
+        "line": 223,
+        "line_count": 72
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+        "name": "useTableRowActions",
+        "line": 222,
+        "line_count": 72
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+        "name": "SystemCollectionItem",
+        "line": 211,
+        "line_count": 71
+      },
+      {
+        "path": "apps/desktop/src/hooks/useBookmarkToolbar.ts",
+        "name": "useBookmarkToolbar",
+        "line": 13,
+        "line_count": 71
+      },
+      {
+        "path": "apps/desktop/src/hooks/useViewNavigation.ts",
+        "name": "handleKeyDown",
+        "line": 118,
+        "line_count": 71
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/bookmark-grid-list.tsx",
+        "name": "BookmarkGridList",
+        "line": 136,
+        "line_count": 70
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/favicon-icon.tsx",
+        "name": "FaviconIcon",
+        "line": 55,
+        "line_count": 70
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+        "name": "useTableSelection",
+        "line": 671,
+        "line_count": 70
+      },
+      {
+        "path": "apps/desktop/src/hooks/useShortcutEditor.ts",
+        "name": "useShortcutEditor",
+        "line": 63,
+        "line_count": 68
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/table-view.tsx",
+        "name": "TableBookmarkCells",
+        "line": 296,
+        "line_count": 67
+      },
+      {
+        "path": "apps/desktop/src/lib/api-mappers.ts",
+        "name": "toUiGroups",
+        "line": 282,
+        "line_count": 67
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/bulk-action-dialog.tsx",
+        "name": "useBulkActionEditor",
+        "line": 50,
+        "line_count": 66
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/directory-view.tsx",
+        "name": "CollectionTreeNode",
+        "line": 241,
+        "line_count": 66
+      },
+      {
+        "path": "apps/desktop/electron/updater.ts",
+        "name": "getController",
+        "line": 51,
+        "line_count": 65
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+        "name": "DetailUrlActions",
+        "line": 283,
+        "line_count": 65
+      },
+      {
+        "path": "apps/desktop/src/hooks/useRaindropBatchActions.ts",
+        "name": "run",
+        "line": 57,
+        "line_count": 65
+      },
+      {
+        "path": "apps/desktop/src/hooks/useTagManagement.ts",
+        "name": "useTagDelete",
+        "line": 212,
+        "line_count": 65
+      },
+      {
+        "path": "apps/desktop/electron/desktop-operations.ts",
+        "name": "registerDesktopOperations",
+        "line": 62,
+        "line_count": 64
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/bulk-action-dialog.tsx",
+        "name": "BulkActionDialog",
+        "line": 123,
+        "line_count": 64
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+        "name": "BookmarkHeader",
+        "line": 153,
+        "line_count": 63
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+        "name": "RightDetailPanel",
+        "line": 661,
+        "line_count": 63
+      },
+      {
+        "path": "apps/desktop/src/hooks/useBookmarkExport.ts",
+        "name": "save",
+        "line": 47,
+        "line_count": 63
+      },
+      {
+        "path": "apps/desktop/src/hooks/useMainAppDialogs.ts",
+        "name": "useMainAppDialogs",
+        "line": 19,
+        "line_count": 63
+      },
+      {
+        "path": "apps/desktop/scripts/update-qa.ts",
+        "name": "buildVariant",
+        "line": 133,
+        "line_count": 62
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/main-content-toolbar.tsx",
+        "name": "BookmarkBulkBar",
+        "line": 346,
+        "line_count": 61
+      },
+      {
+        "path": "apps/desktop/src/components/raindrop/tag-management.tsx",
+        "name": "TagRenameInput",
+        "line": 73,
+        "line_count": 61
+      }
+    ],
+    "framework_health": {
+      "detected_frameworks": ["next", "react"],
+      "detectors": [
+        {
+          "id": "invalid-client-export",
+          "framework": "next",
+          "status": "active"
+        },
+        {
+          "id": "mixed-client-server-barrel",
+          "framework": "next",
+          "status": "active"
+        },
+        {
+          "id": "misplaced-directive",
+          "framework": "next",
+          "status": "active"
+        },
+        {
+          "id": "route-collision",
+          "framework": "next",
+          "status": "active"
+        },
+        {
+          "id": "dynamic-segment-name-conflict",
+          "framework": "next",
+          "status": "active"
+        },
+        {
+          "id": "unused-server-action",
+          "framework": "next",
+          "status": "active"
+        },
+        {
+          "id": "unused-component-prop",
+          "framework": "react",
+          "status": "active"
+        },
+        {
+          "id": "prop-drilling",
+          "framework": "react",
+          "status": "disabled_by_config",
+          "reason": "disabled_by_config"
+        },
+        {
+          "id": "thin-wrapper",
+          "framework": "react",
+          "status": "disabled_by_config",
+          "reason": "disabled_by_config"
+        },
+        {
+          "id": "duplicate-prop-shape",
+          "framework": "react",
+          "status": "disabled_by_config",
+          "reason": "disabled_by_config"
+        }
+      ]
+    },
+    "css_analytics": {
+      "files": [],
+      "summary": {
+        "files_analyzed": 2,
+        "total_rules": 7,
+        "total_declarations": 72,
+        "important_declarations": 0,
+        "empty_rules": 3,
+        "max_nesting_depth": 0,
+        "unique_colors": 28,
+        "unique_font_sizes": 0,
+        "unique_z_indexes": 0,
+        "unique_box_shadows": 0,
+        "unique_border_radii": 0,
+        "unique_line_heights": 0,
+        "custom_properties_defined": 35,
+        "custom_properties_unreferenced": 3,
+        "custom_properties_undefined": 2,
+        "keyframes_defined": 0,
+        "keyframes_unreferenced": 0,
+        "keyframes_undefined": 0,
+        "keyframes_unchecked": 0,
+        "scoped_unused_classes": 0,
+        "duplicate_declaration_blocks": 0,
+        "duplicate_declarations_total": 0,
+        "tailwind_arbitrary_values": 0,
+        "tailwind_arbitrary_value_uses": 0,
+        "preprocessor_stylesheets": 0,
+        "preprocessor_reachability_abstained": false,
+        "raw_style_values": 0,
+        "unused_property_registrations": 0,
+        "unused_layers": 0,
+        "unresolved_class_references": 0,
+        "unreferenced_css_classes": 0,
+        "unused_font_faces": 0,
+        "unused_theme_tokens": 0,
+        "near_duplicate_theme_tokens": 0,
+        "near_duplicate_css_in_js_tokens": 0,
+        "font_size_units_used": 0,
+        "notable_truncated_files": 0
+      },
+      "cva_duplicate_variant_blocks": [
+        {
+          "value": "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+          "occurrence_count": 2,
+          "occurrences": [
+            {
+              "path": "apps/desktop/src/components/ui/badge.tsx",
+              "line": 12
+            },
+            {
+              "path": "apps/desktop/src/components/ui/button.tsx",
+              "line": 12
+            }
+          ],
+          "actions": [
+            {
+              "type": "consolidate",
+              "auto_fixable": false,
+              "description": "Extract this declaration block into one rule and reference it from all 2 occurrences, unless they are intentionally separate overrides."
+            }
+          ]
+        },
+        {
+          "value": "text-primary underline-offset-4 hover:underline",
+          "occurrence_count": 2,
+          "occurrences": [
+            {
+              "path": "apps/desktop/src/components/ui/badge.tsx",
+              "line": 21
+            },
+            {
+              "path": "apps/desktop/src/components/ui/button.tsx",
+              "line": 21
+            }
+          ],
+          "actions": [
+            {
+              "type": "consolidate",
+              "auto_fixable": false,
+              "description": "Extract this declaration block into one rule and reference it from all 2 occurrences, unless they are intentionally separate overrides."
+            }
+          ]
+        }
+      ]
+    },
+    "styling_health": {
+      "formula_version": 3,
+      "score": 100,
+      "grade": "A",
+      "penalties": {
+        "duplication": 0,
+        "dead_surface": 0,
+        "broken_references": 0,
+        "token_erosion": 0,
+        "structural": 0
+      },
+      "confidence": "high"
+    },
+    "styling_findings": [
+      {
+        "code": "css-duplicate-block",
+        "sub_kind": "cva-duplicate-variant-block",
+        "path": "apps/desktop/src/components/ui/badge.tsx",
+        "line": 12,
+        "value": "CVA variant class block repeated 2 times: bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        "effective_severity": "warn",
+        "confidence": "high",
+        "agent_disposition": "fix-confidently",
+        "fix_hint": "Extract the repeated CVA variant classes into a shared base or compound variant after checking variant semantics.",
+        "actions": [
+          {
+            "type": "consolidate",
+            "auto_fixable": false,
+            "description": "Extract this declaration block into one rule and reference it from all 2 occurrences, unless they are intentionally separate overrides."
+          }
+        ],
+        "introduced": false
+      },
+      {
+        "code": "css-duplicate-block",
+        "sub_kind": "cva-duplicate-variant-block",
+        "path": "apps/desktop/src/components/ui/badge.tsx",
+        "line": 21,
+        "value": "CVA variant class block repeated 2 times: text-primary underline-offset-4 hover:underline",
+        "effective_severity": "warn",
+        "confidence": "high",
+        "agent_disposition": "fix-confidently",
+        "fix_hint": "Extract the repeated CVA variant classes into a shared base or compound variant after checking variant semantics.",
+        "actions": [
+          {
+            "type": "consolidate",
+            "auto_fixable": false,
+            "description": "Extract this declaration block into one rule and reference it from all 2 occurrences, unless they are intentionally separate overrides."
+          }
+        ],
+        "introduced": false
+      }
+    ]
+  },
+  "_meta": {
+    "telemetry": {
+      "analysis_run_id": "run_c060b744e6909b3d"
+    }
+  }
+}

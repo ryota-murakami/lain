@@ -1,0 +1,31 @@
+{
+  "buildTimeJst": "2026-11-10T01:09:57+09:00",
+  "scope": "Local built Electron; isolated synthetic accounts",
+  "suite": {
+    "passed": 86,
+    "failed": 0,
+    "output": "apps/desktop/test-results/final-merge-freeze-20261110",
+    "log": "/tmp/lain-final-86-e2e.log",
+    "durationMinutes": 2.2
+  },
+  "targetedNestedMerge": {
+    "passed": 1,
+    "failed": 0
+  },
+  "recordedDragRecheck": {
+    "buildTimeJst": "2026-11-10T00:58:36+09:00",
+    "passed": 2,
+    "failed": 0
+  },
+  "motionEvidence": {
+    "flows": 12,
+    "framesInspected": 204,
+    "manifest": "latest-motion.json"
+  },
+  "artifactsSha256": {
+    "apps/desktop/dist-electron/main.js": "9250ef14a5511757256b4d8cc98a4769dd28288683ccf76284aa74e628a7b502",
+    "apps/desktop/dist/index.html": "a01405b7eb015de8df4c1ac11845cf63864f53413ceb00cf562e487bc2d2e69e",
+    "apps/desktop/dist/assets/index-Cq045JJz.js": "f08953a5c97e95875226fe3f048833645fc1cbf3af545775824e977ef0498d49"
+  },
+  "ciAcceptance": false
+}

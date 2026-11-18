@@ -1,0 +1,4350 @@
+{
+  "total": {
+    "lines": {
+      "total": 4243,
+      "covered": 3655,
+      "skipped": 0,
+      "pct": 86.14
+    },
+    "statements": {
+      "total": 4693,
+      "covered": 3940,
+      "skipped": 0,
+      "pct": 83.95
+    },
+    "functions": {
+      "total": 1441,
+      "covered": 1132,
+      "skipped": 0,
+      "pct": 78.55
+    },
+    "branches": {
+      "total": 2824,
+      "covered": 2214,
+      "skipped": 0,
+      "pct": 78.39
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/desktop-operations.ts": {
+    "lines": {
+      "total": 38,
+      "covered": 37,
+      "skipped": 0,
+      "pct": 97.36
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 40,
+      "covered": 39,
+      "skipped": 0,
+      "pct": 97.5
+    },
+    "branches": {
+      "total": 32,
+      "covered": 30,
+      "skipped": 0,
+      "pct": 93.75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/main.ts": {
+    "lines": {
+      "total": 66,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 16,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 71,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 38,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/preload.ts": {
+    "lines": {
+      "total": 26,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 19,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 27,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/raindrop-auth.ts": {
+    "lines": {
+      "total": 96,
+      "covered": 80,
+      "skipped": 0,
+      "pct": 83.33
+    },
+    "functions": {
+      "total": 17,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 88.23
+    },
+    "statements": {
+      "total": 98,
+      "covered": 80,
+      "skipped": 0,
+      "pct": 81.63
+    },
+    "branches": {
+      "total": 34,
+      "covered": 25,
+      "skipped": 0,
+      "pct": 73.52
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/renderer-security.ts": {
+    "lines": {
+      "total": 36,
+      "covered": 36,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 14,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 42,
+      "covered": 42,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 18,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/secure-store.ts": {
+    "lines": {
+      "total": 24,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 83.33
+    },
+    "functions": {
+      "total": 6,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 66.66
+    },
+    "statements": {
+      "total": 26,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 80.76
+    },
+    "branches": {
+      "total": 14,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 92.85
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/test-auth.ts": {
+    "lines": {
+      "total": 27,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 8,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 27,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/update-qa.ts": {
+    "lines": {
+      "total": 17,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 94.11
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 18,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 94.44
+    },
+    "branches": {
+      "total": 29,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 89.65
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/electron/updater.ts": {
+    "lines": {
+      "total": 59,
+      "covered": 53,
+      "skipped": 0,
+      "pct": 89.83
+    },
+    "functions": {
+      "total": 20,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 90
+    },
+    "statements": {
+      "total": 65,
+      "covered": 56,
+      "skipped": 0,
+      "pct": 86.15
+    },
+    "branches": {
+      "total": 32,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 68.75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/scripts/e2e-coverage-report.ts": {
+    "lines": {
+      "total": 72,
+      "covered": 53,
+      "skipped": 0,
+      "pct": 73.61
+    },
+    "functions": {
+      "total": 26,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 92.3
+    },
+    "statements": {
+      "total": 85,
+      "covered": 64,
+      "skipped": 0,
+      "pct": 75.29
+    },
+    "branches": {
+      "total": 20,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 85
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/scripts/finalize-mac-release-artifacts.ts": {
+    "lines": {
+      "total": 60,
+      "covered": 51,
+      "skipped": 0,
+      "pct": 85
+    },
+    "functions": {
+      "total": 17,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 88.23
+    },
+    "statements": {
+      "total": 67,
+      "covered": 57,
+      "skipped": 0,
+      "pct": 85.07
+    },
+    "branches": {
+      "total": 33,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 69.69
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/scripts/spec-requirements.ts": {
+    "lines": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/App.tsx": {
+    "lines": {
+      "total": 9,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 2,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 9,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 4,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/main.tsx": {
+    "lines": {
+      "total": 1,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/CredentialStorageNotice.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 25
+    },
+    "functions": {
+      "total": 1,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 5,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 20
+    },
+    "branches": {
+      "total": 2,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/LoginScreen.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 1,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 3,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 2,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/main-app.tsx": {
+    "lines": {
+      "total": 29,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 34,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 91.17
+    },
+    "branches": {
+      "total": 19,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 68.42
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx": {
+    "lines": {
+      "total": 94,
+      "covered": 82,
+      "skipped": 0,
+      "pct": 87.23
+    },
+    "functions": {
+      "total": 26,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 65.38
+    },
+    "statements": {
+      "total": 101,
+      "covered": 85,
+      "skipped": 0,
+      "pct": 84.15
+    },
+    "branches": {
+      "total": 62,
+      "covered": 51,
+      "skipped": 0,
+      "pct": 82.25
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bookmark-content.tsx": {
+    "lines": {
+      "total": 13,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 84.61
+    },
+    "functions": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 13,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 84.61
+    },
+    "branches": {
+      "total": 5,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 60
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bookmark-empty-state.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bookmark-grid-list.tsx": {
+    "lines": {
+      "total": 18,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 94.44
+    },
+    "functions": {
+      "total": 8,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "statements": {
+      "total": 18,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 94.44
+    },
+    "branches": {
+      "total": 10,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 90
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bookmark-item-menu.tsx": {
+    "lines": {
+      "total": 26,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 69.23
+    },
+    "functions": {
+      "total": 11,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 54.54
+    },
+    "statements": {
+      "total": 26,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 69.23
+    },
+    "branches": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bookmark-loading-state.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 6,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 83.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bookmark-operation-dialogs.tsx": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 6,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 66.66
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/bulk-action-dialog.tsx": {
+    "lines": {
+      "total": 29,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 33,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 93.93
+    },
+    "branches": {
+      "total": 24,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 91.66
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-dialog.tsx": {
+    "lines": {
+      "total": 63,
+      "covered": 59,
+      "skipped": 0,
+      "pct": 93.65
+    },
+    "functions": {
+      "total": 28,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 82.14
+    },
+    "statements": {
+      "total": 70,
+      "covered": 64,
+      "skipped": 0,
+      "pct": 91.42
+    },
+    "branches": {
+      "total": 59,
+      "covered": 50,
+      "skipped": 0,
+      "pct": 84.74
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-search.tsx": {
+    "lines": {
+      "total": 33,
+      "covered": 33,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 37,
+      "covered": 37,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-selector-results.tsx": {
+    "lines": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 22,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 21,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-selector.tsx": {
+    "lines": {
+      "total": 19,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 21,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/color-picker.tsx": {
+    "lines": {
+      "total": 17,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 76.47
+    },
+    "functions": {
+      "total": 6,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 66.66
+    },
+    "statements": {
+      "total": 18,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 77.77
+    },
+    "branches": {
+      "total": 23,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 65.21
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/content-type-icon.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/content-type-select.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/directory-view.tsx": {
+    "lines": {
+      "total": 49,
+      "covered": 49,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 53,
+      "covered": 53,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 70,
+      "covered": 62,
+      "skipped": 0,
+      "pct": 88.57
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/drag-preview.tsx": {
+    "lines": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/drop-indicator.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/export-dialog.tsx": {
+    "lines": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 19,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/favicon-icon.tsx": {
+    "lines": {
+      "total": 16,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "functions": {
+      "total": 4,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 75
+    },
+    "statements": {
+      "total": 17,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 88.23
+    },
+    "branches": {
+      "total": 10,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 80
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/form-dialog-actions.tsx": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/global-search-command.tsx": {
+    "lines": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 13,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 92.3
+    },
+    "branches": {
+      "total": 9,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 88.88
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/global-search-controls.tsx": {
+    "lines": {
+      "total": 5,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 80
+    },
+    "functions": {
+      "total": 3,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 66.66
+    },
+    "statements": {
+      "total": 5,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 80
+    },
+    "branches": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/global-search-results.tsx": {
+    "lines": {
+      "total": 15,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 93.33
+    },
+    "functions": {
+      "total": 8,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "statements": {
+      "total": 16,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 93.75
+    },
+    "branches": {
+      "total": 29,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 68.96
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/group-dialog.tsx": {
+    "lines": {
+      "total": 24,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 58.33
+    },
+    "functions": {
+      "total": 7,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 42.85
+    },
+    "statements": {
+      "total": 26,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 53.84
+    },
+    "branches": {
+      "total": 21,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 33.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/icon-picker.tsx": {
+    "lines": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 23,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 15,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 73.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/icon-settings.tsx": {
+    "lines": {
+      "total": 19,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 38,
+      "covered": 37,
+      "skipped": 0,
+      "pct": 97.36
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/indexed-search-highlight.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/left-sidebar.tsx": {
+    "lines": {
+      "total": 132,
+      "covered": 91,
+      "skipped": 0,
+      "pct": 68.93
+    },
+    "functions": {
+      "total": 53,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 60.37
+    },
+    "statements": {
+      "total": 137,
+      "covered": 92,
+      "skipped": 0,
+      "pct": 67.15
+    },
+    "branches": {
+      "total": 91,
+      "covered": 57,
+      "skipped": 0,
+      "pct": 62.63
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/left-sidebar.types.ts": {
+    "lines": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/main-content-toolbar.tsx": {
+    "lines": {
+      "total": 27,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 81.48
+    },
+    "functions": {
+      "total": 14,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 71.42
+    },
+    "statements": {
+      "total": 30,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 80
+    },
+    "branches": {
+      "total": 33,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 69.69
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/main-content.tsx": {
+    "lines": {
+      "total": 27,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 85.18
+    },
+    "functions": {
+      "total": 9,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 77.77
+    },
+    "statements": {
+      "total": 28,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 82.14
+    },
+    "branches": {
+      "total": 13,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 61.53
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/main-content.types.ts": {
+    "lines": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/merge-dialog.tsx": {
+    "lines": {
+      "total": 40,
+      "covered": 39,
+      "skipped": 0,
+      "pct": 97.5
+    },
+    "functions": {
+      "total": 9,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 88.88
+    },
+    "statements": {
+      "total": 42,
+      "covered": 40,
+      "skipped": 0,
+      "pct": 95.23
+    },
+    "branches": {
+      "total": 30,
+      "covered": 27,
+      "skipped": 0,
+      "pct": 90
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/raindrop-card.tsx": {
+    "lines": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 24,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 62.5
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/raindrop-list-item.tsx": {
+    "lines": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 16,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 81.25
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/right-detail-panel.tsx": {
+    "lines": {
+      "total": 84,
+      "covered": 72,
+      "skipped": 0,
+      "pct": 85.71
+    },
+    "functions": {
+      "total": 24,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 70.83
+    },
+    "statements": {
+      "total": 92,
+      "covered": 75,
+      "skipped": 0,
+      "pct": 81.52
+    },
+    "branches": {
+      "total": 73,
+      "covered": 54,
+      "skipped": 0,
+      "pct": 73.97
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/search-highlight.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/settings-dialog.tsx": {
+    "lines": {
+      "total": 13,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 61.53
+    },
+    "functions": {
+      "total": 7,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 42.85
+    },
+    "statements": {
+      "total": 16,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "branches": {
+      "total": 8,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 25
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/shortcut-editor.tsx": {
+    "lines": {
+      "total": 38,
+      "covered": 38,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 40,
+      "covered": 40,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 20,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 95
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/table-view.tsx": {
+    "lines": {
+      "total": 126,
+      "covered": 107,
+      "skipped": 0,
+      "pct": 84.92
+    },
+    "functions": {
+      "total": 53,
+      "covered": 33,
+      "skipped": 0,
+      "pct": 62.26
+    },
+    "statements": {
+      "total": 140,
+      "covered": 113,
+      "skipped": 0,
+      "pct": 80.71
+    },
+    "branches": {
+      "total": 119,
+      "covered": 96,
+      "skipped": 0,
+      "pct": 80.67
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/tag-input.tsx": {
+    "lines": {
+      "total": 65,
+      "covered": 59,
+      "skipped": 0,
+      "pct": 90.76
+    },
+    "functions": {
+      "total": 23,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 95.65
+    },
+    "statements": {
+      "total": 78,
+      "covered": 68,
+      "skipped": 0,
+      "pct": 87.17
+    },
+    "branches": {
+      "total": 74,
+      "covered": 64,
+      "skipped": 0,
+      "pct": 86.48
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/tag-management.tsx": {
+    "lines": {
+      "total": 27,
+      "covered": 27,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 29,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 96.55
+    },
+    "branches": {
+      "total": 51,
+      "covered": 45,
+      "skipped": 0,
+      "pct": 88.23
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/tag-management.types.ts": {
+    "lines": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/theme-toggle.tsx": {
+    "lines": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 4,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 25
+    },
+    "statements": {
+      "total": 9,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 66.66
+    },
+    "branches": {
+      "total": 8,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 62.5
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/update-settings.tsx": {
+    "lines": {
+      "total": 20,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 90
+    },
+    "functions": {
+      "total": 6,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 83.33
+    },
+    "statements": {
+      "total": 21,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 90.47
+    },
+    "branches": {
+      "total": 32,
+      "covered": 30,
+      "skipped": 0,
+      "pct": 93.75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/upload-dialog.tsx": {
+    "lines": {
+      "total": 63,
+      "covered": 61,
+      "skipped": 0,
+      "pct": 96.82
+    },
+    "functions": {
+      "total": 25,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 92
+    },
+    "statements": {
+      "total": 72,
+      "covered": 68,
+      "skipped": 0,
+      "pct": 94.44
+    },
+    "branches": {
+      "total": 45,
+      "covered": 37,
+      "skipped": 0,
+      "pct": 82.22
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/alert-dialog.tsx": {
+    "lines": {
+      "total": 22,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 22,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/badge.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 4,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/breadcrumb.tsx": {
+    "lines": {
+      "total": 13,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 76.92
+    },
+    "functions": {
+      "total": 6,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 66.66
+    },
+    "statements": {
+      "total": 13,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 76.92
+    },
+    "branches": {
+      "total": 4,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/button.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/card.tsx": {
+    "lines": {
+      "total": 10,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 70
+    },
+    "functions": {
+      "total": 5,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 40
+    },
+    "statements": {
+      "total": 10,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 70
+    },
+    "branches": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/checkbox.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/collapsible.tsx": {
+    "lines": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/command.tsx": {
+    "lines": {
+      "total": 14,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 14,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/context-menu.tsx": {
+    "lines": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/dialog.tsx": {
+    "lines": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 6,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 83.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/dropdown-menu.tsx": {
+    "lines": {
+      "total": 18,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 18,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/input-group.tsx": {
+    "lines": {
+      "total": 8,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "functions": {
+      "total": 3,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 66.66
+    },
+    "statements": {
+      "total": 8,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "branches": {
+      "total": 3,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 33.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/input.tsx": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/label.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/popover.tsx": {
+    "lines": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/progress.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/scroll-area.tsx": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/select.tsx": {
+    "lines": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 7,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 71.42
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/separator.tsx": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/sheet.tsx": {
+    "lines": {
+      "total": 15,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 53.33
+    },
+    "functions": {
+      "total": 7,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 15,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 53.33
+    },
+    "branches": {
+      "total": 4,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/sidebar.tsx": {
+    "lines": {
+      "total": 81,
+      "covered": 67,
+      "skipped": 0,
+      "pct": 82.71
+    },
+    "functions": {
+      "total": 25,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 76
+    },
+    "statements": {
+      "total": 84,
+      "covered": 68,
+      "skipped": 0,
+      "pct": 80.95
+    },
+    "branches": {
+      "total": 50,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 56
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/sonner.tsx": {
+    "lines": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/switch.tsx": {
+    "lines": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/table.tsx": {
+    "lines": {
+      "total": 12,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 12,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/tabs.tsx": {
+    "lines": {
+      "total": 9,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 55.55
+    },
+    "functions": {
+      "total": 4,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 9,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 55.55
+    },
+    "branches": {
+      "total": 2,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/textarea.tsx": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/tooltip.tsx": {
+    "lines": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/use-mobile.ts": {
+    "lines": {
+      "total": 7,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 85.71
+    },
+    "functions": {
+      "total": 5,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 80
+    },
+    "statements": {
+      "total": 8,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useAppUpdates.ts": {
+    "lines": {
+      "total": 35,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 91.42
+    },
+    "functions": {
+      "total": 10,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 80
+    },
+    "statements": {
+      "total": 38,
+      "covered": 34,
+      "skipped": 0,
+      "pct": 89.47
+    },
+    "branches": {
+      "total": 18,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 55.55
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useBookmarkDialogs.ts": {
+    "lines": {
+      "total": 17,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 82.35
+    },
+    "functions": {
+      "total": 10,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 30
+    },
+    "statements": {
+      "total": 22,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 68.18
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useBookmarkDrag.ts": {
+    "lines": {
+      "total": 28,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 92.85
+    },
+    "functions": {
+      "total": 10,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 80
+    },
+    "statements": {
+      "total": 30,
+      "covered": 27,
+      "skipped": 0,
+      "pct": 90
+    },
+    "branches": {
+      "total": 15,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 93.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useBookmarkExport.ts": {
+    "lines": {
+      "total": 50,
+      "covered": 49,
+      "skipped": 0,
+      "pct": 98
+    },
+    "functions": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 55,
+      "covered": 51,
+      "skipped": 0,
+      "pct": 92.72
+    },
+    "branches": {
+      "total": 31,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 77.41
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useBookmarkInteraction.ts": {
+    "lines": {
+      "total": 37,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 75.67
+    },
+    "functions": {
+      "total": 14,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 42.85
+    },
+    "statements": {
+      "total": 43,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 65.11
+    },
+    "branches": {
+      "total": 20,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 60
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useBookmarkToolbar.ts": {
+    "lines": {
+      "total": 25,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 56
+    },
+    "functions": {
+      "total": 11,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 9.09
+    },
+    "statements": {
+      "total": 28,
+      "covered": 14,
+      "skipped": 0,
+      "pct": 50
+    },
+    "branches": {
+      "total": 10,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 30
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useCollectionsCrud.ts": {
+    "lines": {
+      "total": 38,
+      "covered": 38,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 38,
+      "covered": 38,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useCommandSearch.ts": {
+    "lines": {
+      "total": 24,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 91.66
+    },
+    "functions": {
+      "total": 8,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 75
+    },
+    "statements": {
+      "total": 25,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 88
+    },
+    "branches": {
+      "total": 6,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 66.66
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useCredentialStorageMode.ts": {
+    "lines": {
+      "total": 8,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 5,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 9,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 2,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useDebouncedSearch.ts": {
+    "lines": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useIconCandidates.ts": {
+    "lines": {
+      "total": 36,
+      "covered": 35,
+      "skipped": 0,
+      "pct": 97.22
+    },
+    "functions": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 46,
+      "covered": 42,
+      "skipped": 0,
+      "pct": 91.3
+    },
+    "branches": {
+      "total": 29,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 82.75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useInfiniteScroll.ts": {
+    "lines": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 22,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 95.45
+    },
+    "branches": {
+      "total": 15,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 86.66
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useKeyboardShortcuts.ts": {
+    "lines": {
+      "total": 28,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 92.85
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 32,
+      "covered": 30,
+      "skipped": 0,
+      "pct": 93.75
+    },
+    "branches": {
+      "total": 22,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 81.81
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppBookmarkActions.ts": {
+    "lines": {
+      "total": 35,
+      "covered": 27,
+      "skipped": 0,
+      "pct": 77.14
+    },
+    "functions": {
+      "total": 19,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 57.89
+    },
+    "statements": {
+      "total": 41,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 75.6
+    },
+    "branches": {
+      "total": 4,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 25
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppCollectionEditor.ts": {
+    "lines": {
+      "total": 44,
+      "covered": 42,
+      "skipped": 0,
+      "pct": 95.45
+    },
+    "functions": {
+      "total": 14,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 92.85
+    },
+    "statements": {
+      "total": 47,
+      "covered": 45,
+      "skipped": 0,
+      "pct": 95.74
+    },
+    "branches": {
+      "total": 18,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 83.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppDetail.ts": {
+    "lines": {
+      "total": 35,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 91.42
+    },
+    "functions": {
+      "total": 11,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 90.9
+    },
+    "statements": {
+      "total": 41,
+      "covered": 36,
+      "skipped": 0,
+      "pct": 87.8
+    },
+    "branches": {
+      "total": 16,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppDialogs.ts": {
+    "lines": {
+      "total": 18,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 61.11
+    },
+    "functions": {
+      "total": 9,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 22.22
+    },
+    "statements": {
+      "total": 23,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 52.17
+    },
+    "branches": {
+      "total": 12,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 8.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppGroupEditor.ts": {
+    "lines": {
+      "total": 33,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 84.84
+    },
+    "functions": {
+      "total": 11,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 81.81
+    },
+    "statements": {
+      "total": 39,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 82.05
+    },
+    "branches": {
+      "total": 18,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 66.66
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppOrganization.ts": {
+    "lines": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppSearch.ts": {
+    "lines": {
+      "total": 16,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 75
+    },
+    "functions": {
+      "total": 6,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 33.33
+    },
+    "statements": {
+      "total": 16,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 75
+    },
+    "branches": {
+      "total": 6,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppShortcuts.ts": {
+    "lines": {
+      "total": 24,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 16.66
+    },
+    "functions": {
+      "total": 17,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 11.76
+    },
+    "statements": {
+      "total": 26,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 15.38
+    },
+    "branches": {
+      "total": 10,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useMainAppView.ts": {
+    "lines": {
+      "total": 41,
+      "covered": 37,
+      "skipped": 0,
+      "pct": 90.24
+    },
+    "functions": {
+      "total": 13,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 92.3
+    },
+    "statements": {
+      "total": 45,
+      "covered": 40,
+      "skipped": 0,
+      "pct": 88.88
+    },
+    "branches": {
+      "total": 12,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 83.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useNetworkStatus.ts": {
+    "lines": {
+      "total": 8,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "functions": {
+      "total": 5,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 80
+    },
+    "statements": {
+      "total": 8,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/usePendingWork.ts": {
+    "lines": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 10,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 90
+    },
+    "statements": {
+      "total": 21,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 95.23
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useRaindropBatchActions.ts": {
+    "lines": {
+      "total": 47,
+      "covered": 47,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 51,
+      "covered": 51,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 20,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 85
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useRaindropMutations.ts": {
+    "lines": {
+      "total": 31,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 33,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 96.96
+    },
+    "branches": {
+      "total": 2,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useRaindropProjection.ts": {
+    "lines": {
+      "total": 18,
+      "covered": 18,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 23,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 10,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 80
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useRaindropsCrud.ts": {
+    "lines": {
+      "total": 18,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 94.44
+    },
+    "functions": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 20,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 95
+    },
+    "branches": {
+      "total": 18,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 83.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSearchState.ts": {
+    "lines": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useShortcutEditor.ts": {
+    "lines": {
+      "total": 31,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 93.54
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 35,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 88.57
+    },
+    "branches": {
+      "total": 12,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSidebarController.ts": {
+    "lines": {
+      "total": 15,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 86.66
+    },
+    "functions": {
+      "total": 5,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 80
+    },
+    "statements": {
+      "total": 15,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 86.66
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSidebarData.ts": {
+    "lines": {
+      "total": 29,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 96.55
+    },
+    "functions": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 33,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 96.96
+    },
+    "branches": {
+      "total": 23,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 73.91
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSidebarDrag.ts": {
+    "lines": {
+      "total": 40,
+      "covered": 39,
+      "skipped": 0,
+      "pct": 97.5
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 45,
+      "covered": 44,
+      "skipped": 0,
+      "pct": 97.77
+    },
+    "branches": {
+      "total": 21,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 95.23
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSidebarExpansion.ts": {
+    "lines": {
+      "total": 23,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 86.95
+    },
+    "functions": {
+      "total": 9,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 77.77
+    },
+    "statements": {
+      "total": 27,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 85.18
+    },
+    "branches": {
+      "total": 8,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 37.5
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSidebarOrganization.ts": {
+    "lines": {
+      "total": 69,
+      "covered": 53,
+      "skipped": 0,
+      "pct": 76.81
+    },
+    "functions": {
+      "total": 16,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "statements": {
+      "total": 71,
+      "covered": 54,
+      "skipped": 0,
+      "pct": 76.05
+    },
+    "branches": {
+      "total": 12,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 75
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useTagManagement.ts": {
+    "lines": {
+      "total": 140,
+      "covered": 128,
+      "skipped": 0,
+      "pct": 91.42
+    },
+    "functions": {
+      "total": 40,
+      "covered": 33,
+      "skipped": 0,
+      "pct": 82.5
+    },
+    "statements": {
+      "total": 158,
+      "covered": 130,
+      "skipped": 0,
+      "pct": 82.27
+    },
+    "branches": {
+      "total": 56,
+      "covered": 34,
+      "skipped": 0,
+      "pct": 60.71
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useTagsCrud.ts": {
+    "lines": {
+      "total": 26,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 92.3
+    },
+    "functions": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 27,
+      "covered": 25,
+      "skipped": 0,
+      "pct": 92.59
+    },
+    "branches": {
+      "total": 18,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 72.22
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useUploadQueue.ts": {
+    "lines": {
+      "total": 63,
+      "covered": 62,
+      "skipped": 0,
+      "pct": 98.41
+    },
+    "functions": {
+      "total": 21,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 72,
+      "covered": 70,
+      "skipped": 0,
+      "pct": 97.22
+    },
+    "branches": {
+      "total": 25,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 84
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useUrlSuggest.ts": {
+    "lines": {
+      "total": 10,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 90
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 10,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 90
+    },
+    "branches": {
+      "total": 6,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 83.33
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useViewNavigation.ts": {
+    "lines": {
+      "total": 57,
+      "covered": 57,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 69,
+      "covered": 66,
+      "skipped": 0,
+      "pct": 95.65
+    },
+    "branches": {
+      "total": 46,
+      "covered": 41,
+      "skipped": 0,
+      "pct": 89.13
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/api-mappers.ts": {
+    "lines": {
+      "total": 65,
+      "covered": 64,
+      "skipped": 0,
+      "pct": 98.46
+    },
+    "functions": {
+      "total": 22,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 77,
+      "covered": 72,
+      "skipped": 0,
+      "pct": 93.5
+    },
+    "branches": {
+      "total": 112,
+      "covered": 99,
+      "skipped": 0,
+      "pct": 88.39
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/axios.ts": {
+    "lines": {
+      "total": 54,
+      "covered": 35,
+      "skipped": 0,
+      "pct": 64.81
+    },
+    "functions": {
+      "total": 8,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "statements": {
+      "total": 64,
+      "covered": 39,
+      "skipped": 0,
+      "pct": 60.93
+    },
+    "branches": {
+      "total": 35,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 54.28
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/axiosBaseQuery.ts": {
+    "lines": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 13,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 76.92
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/bookmark-export.ts": {
+    "lines": {
+      "total": 182,
+      "covered": 177,
+      "skipped": 0,
+      "pct": 97.25
+    },
+    "functions": {
+      "total": 41,
+      "covered": 41,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 200,
+      "covered": 193,
+      "skipped": 0,
+      "pct": 96.5
+    },
+    "branches": {
+      "total": 169,
+      "covered": 155,
+      "skipped": 0,
+      "pct": 91.71
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/bookmark-form-schema.ts": {
+    "lines": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/collection-icons.ts": {
+    "lines": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/collection-organization.ts": {
+    "lines": {
+      "total": 51,
+      "covered": 50,
+      "skipped": 0,
+      "pct": 98.03
+    },
+    "functions": {
+      "total": 24,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 68,
+      "covered": 62,
+      "skipped": 0,
+      "pct": 91.17
+    },
+    "branches": {
+      "total": 38,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 81.57
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/desktop-contract.ts": {
+    "lines": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/file-upload.ts": {
+    "lines": {
+      "total": 39,
+      "covered": 35,
+      "skipped": 0,
+      "pct": 89.74
+    },
+    "functions": {
+      "total": 6,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 83.33
+    },
+    "statements": {
+      "total": 42,
+      "covered": 36,
+      "skipped": 0,
+      "pct": 85.71
+    },
+    "branches": {
+      "total": 47,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 68.08
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/raindrop-organization.ts": {
+    "lines": {
+      "total": 21,
+      "covered": 21,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 27,
+      "covered": 27,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/request-budget.ts": {
+    "lines": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 3,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/search.ts": {
+    "lines": {
+      "total": 90,
+      "covered": 86,
+      "skipped": 0,
+      "pct": 95.55
+    },
+    "functions": {
+      "total": 26,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 102,
+      "covered": 94,
+      "skipped": 0,
+      "pct": 92.15
+    },
+    "branches": {
+      "total": 55,
+      "covered": 46,
+      "skipped": 0,
+      "pct": 83.63
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/searchable-collections.ts": {
+    "lines": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/shortcut-utils.ts": {
+    "lines": {
+      "total": 32,
+      "covered": 31,
+      "skipped": 0,
+      "pct": 96.87
+    },
+    "functions": {
+      "total": 8,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 87.5
+    },
+    "statements": {
+      "total": 42,
+      "covered": 40,
+      "skipped": 0,
+      "pct": 95.23
+    },
+    "branches": {
+      "total": 78,
+      "covered": 71,
+      "skipped": 0,
+      "pct": 91.02
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/sidebar-organization.ts": {
+    "lines": {
+      "total": 15,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 86.66
+    },
+    "functions": {
+      "total": 8,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "statements": {
+      "total": 20,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 85
+    },
+    "branches": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/types.ts": {
+    "lines": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "statements": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 0
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/update-contract.ts": {
+    "lines": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/update-controller.ts": {
+    "lines": {
+      "total": 45,
+      "covered": 44,
+      "skipped": 0,
+      "pct": 97.77
+    },
+    "functions": {
+      "total": 15,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 53,
+      "covered": 49,
+      "skipped": 0,
+      "pct": 92.45
+    },
+    "branches": {
+      "total": 48,
+      "covered": 43,
+      "skipped": 0,
+      "pct": 89.58
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/utils.ts": {
+    "lines": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/hooks.ts": {
+    "lines": {
+      "total": 15,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 46.66
+    },
+    "functions": {
+      "total": 10,
+      "covered": 3,
+      "skipped": 0,
+      "pct": 30
+    },
+    "statements": {
+      "total": 22,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 40.9
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/index.ts": {
+    "lines": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 11,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/listenerMiddleware.ts": {
+    "lines": {
+      "total": 42,
+      "covered": 27,
+      "skipped": 0,
+      "pct": 64.28
+    },
+    "functions": {
+      "total": 14,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 50
+    },
+    "statements": {
+      "total": 43,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 65.11
+    },
+    "branches": {
+      "total": 12,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/persistence.ts": {
+    "lines": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/api/accountApi.ts": {
+    "lines": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 8,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 10,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 70
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/api/emptyApi.ts": {
+    "lines": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 2,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/authSlice.ts": {
+    "lines": {
+      "total": 13,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 61.53
+    },
+    "functions": {
+      "total": 4,
+      "covered": 2,
+      "skipped": 0,
+      "pct": 50
+    },
+    "statements": {
+      "total": 13,
+      "covered": 8,
+      "skipped": 0,
+      "pct": 61.53
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/dialogSlice.ts": {
+    "lines": {
+      "total": 16,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 43.75
+    },
+    "functions": {
+      "total": 13,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 30.76
+    },
+    "statements": {
+      "total": 16,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 43.75
+    },
+    "branches": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/searchSlice.ts": {
+    "lines": {
+      "total": 14,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 78.57
+    },
+    "functions": {
+      "total": 8,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 62.5
+    },
+    "statements": {
+      "total": 15,
+      "covered": 11,
+      "skipped": 0,
+      "pct": 73.33
+    },
+    "branches": {
+      "total": 2,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 50
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/settingsSlice.ts": {
+    "lines": {
+      "total": 18,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 88.88
+    },
+    "functions": {
+      "total": 8,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 75
+    },
+    "statements": {
+      "total": 19,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 89.47
+    },
+    "branches": {
+      "total": 4,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/uiSlice.ts": {
+    "lines": {
+      "total": 31,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 93.54
+    },
+    "functions": {
+      "total": 22,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 90.9
+    },
+    "statements": {
+      "total": 31,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 93.54
+    },
+    "branches": {
+      "total": 6,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 66.66
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/build-directory-tree.ts": {
+    "lines": {
+      "total": 43,
+      "covered": 43,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 47,
+      "covered": 46,
+      "skipped": 0,
+      "pct": 97.87
+    },
+    "branches": {
+      "total": 29,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 89.65
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/favicon.ts": {
+    "lines": {
+      "total": 23,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 28,
+      "covered": 28,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 17,
+      "covered": 15,
+      "skipped": 0,
+      "pct": 88.23
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/find-collection-in-tree.ts": {
+    "lines": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 7,
+      "covered": 7,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/format-relative-date.ts": {
+    "lines": {
+      "total": 10,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 14,
+      "covered": 10,
+      "skipped": 0,
+      "pct": 71.42
+    },
+    "branches": {
+      "total": 8,
+      "covered": 4,
+      "skipped": 0,
+      "pct": 50
+    }
+  }
+}

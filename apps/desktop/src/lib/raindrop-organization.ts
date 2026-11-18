@@ -79,3 +79,30 @@ export function reorderRaindrops<T extends { id: string }>(
   next.splice(toIndex, 0, moved)
   return next
 }
+
+/**
+ * Partition selected IDs by their actual collection for Raindrop batch mutations.
+ * Called by {@link useRaindropsCrud}; the API does not support mutation scope 0.
+ * @throws When a selection is no longer in the loaded snapshot, requiring reselection.
+ * @example
+ * groupSelectedRaindrops([{ id: '1', collectionId: '100' }], ['1'])
+ * // Map { '100' => ['1'] }
+ */
+export function groupSelectedRaindrops(
+  items: readonly { id: string; collectionId: string }[],
+  ids: string[],
+): Map<string, string[]> {
+  const grouped = new Map<string, string[]>()
+  for (const id of new Set(ids)) {
+    const item = items.find((candidate) => candidate.id === id)
+    if (!item)
+      throw new Error(
+        'The selection changed. Refresh and select the bookmarks again.',
+      )
+    grouped.set(item.collectionId, [
+      ...(grouped.get(item.collectionId) ?? []),
+      id,
+    ])
+  }
+  return grouped
+}

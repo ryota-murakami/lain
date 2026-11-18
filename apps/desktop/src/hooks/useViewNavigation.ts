@@ -10,7 +10,7 @@ import type {
 } from '@/store/slices/settingsSlice'
 
 /** Attribute every navigable bookmark row carries; rows are visited in DOM order. */
-export const RAINDROP_ROW_ATTRIBUTE = 'data-raindrop-id'
+const RAINDROP_ROW_ATTRIBUTE = 'data-raindrop-id'
 
 const RAINDROP_ROW_SELECTOR = `[${RAINDROP_ROW_ATTRIBUTE}]`
 

@@ -28,6 +28,7 @@ describe('withEphemeralUiReset', () => {
         viewMode: 'grid',
         sidebarWidth: 320,
         collectionViewModes: { '42': 'table' },
+        collectionColors: { '42': '#06b6d4' },
         selectedCollectionId: 'unsorted',
         selectedRaindropIds: ['1', '2'],
         isDetailPanelOpen: true,
@@ -47,6 +48,7 @@ describe('withEphemeralUiReset', () => {
     expect(next.ui.viewMode).toBe('grid')
     expect(next.ui.sidebarWidth).toBe(320)
     expect(next.ui.collectionViewModes).toEqual({ '42': 'table' })
+    expect(next.ui.collectionColors).toEqual({ '42': '#06b6d4' })
   })
 
   test('keeps the collection the user selects during the session', () => {

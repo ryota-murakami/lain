@@ -1,31 +1,21 @@
-import {
-  Star,
-  MoreHorizontal,
-  ExternalLink,
-  Pencil,
-  FolderInput,
-  Tag,
-  Copy,
-  Trash2,
-} from 'lucide-react'
-import React, { useState, useCallback } from 'react'
+import { Star } from 'lucide-react'
+import React, { useCallback } from 'react'
 
 import { FaviconIcon } from '@/components/raindrop/favicon-icon'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { buildSubstringHighlightSegments } from '@/lib/search'
-import type { Raindrop, ContentType, SearchScope } from '@/lib/types'
+import { getSearchHighlightState } from '@/lib/search'
+import type { ContentType, Raindrop, SearchScope } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import { getDomainColor, extractDomain } from '@/utils/favicon'
+import { extractDomain, getDomainColor } from '@/utils/favicon'
+import { formatRelativeDate } from '@/utils/format-relative-date'
+
+import {
+  BookmarkItemMenu,
+  type BookmarkItemActions,
+} from './bookmark-item-menu'
+import { SearchHighlight } from './search-highlight'
 
 /**
  * Map content type to a display label.
@@ -46,56 +36,11 @@ function getTypeLabel(type: ContentType): string {
 }
 
 /**
- * Format a date string as a relative time or short date.
- * @param dateStr - ISO date string
- * @returns Human-readable relative time string
- * @example formatRelativeDate("2026-02-14T10:00:00Z") // => "2h ago"
- */
-function formatRelativeDate(dateStr: string): string {
-  const date = new Date(dateStr)
-  const now = new Date()
-  const diffMs = now.getTime() - date.getTime()
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-
-  if (diffHours < 1) return 'Just now'
-  if (diffHours < 24) return `${diffHours}h ago`
-  if (diffDays === 1) return 'Yesterday'
-  if (diffDays < 7) return `${diffDays}d ago`
-
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  })
-}
-
-/**
- * Render highlighted text segments for matched search content.
- * @param text - Original text to render
- * @param query - Active search query
- * @returns Text with matching segments wrapped in <mark>
- */
-function renderHighlightedText(text: string, query: string): React.ReactNode {
-  return buildSubstringHighlightSegments(text, query).map((segment, index) =>
-    segment.matched ? (
-      <mark
-        key={`${segment.text}-${index}`}
-        className="bg-primary/20 text-foreground rounded-sm px-0.5"
-      >
-        {segment.text}
-      </mark>
-    ) : (
-      <React.Fragment key={`${segment.text}-${index}`}>
-        {segment.text}
-      </React.Fragment>
-    ),
-  )
-}
-
-/**
  * Props for the RaindropCard component.
  */
 interface RaindropCardProps {
+  onToggleSelect: () => void
+  actions: BookmarkItemActions
   /** The raindrop (bookmark) data to display */
   raindrop: Raindrop
   /** Whether this card is currently selected */
@@ -129,84 +74,28 @@ interface RaindropCardProps {
  *     onDoubleClick={() => openExternal(bookmark.url)}
  *   />
  */
-const RaindropCard = React.memo(function RaindropCard({
+/**
+ * Display a bookmark's cover and keep selection/menu controls independent of row dragging.
+ * Called by {@link RaindropCard}; the menu stays mounted while its portal has focus.
+ * @example
+ * <BookmarkCardCover {...props} />
+ */
+const BookmarkCardCover = React.memo(function BookmarkCardCover({
   raindrop,
+  actions,
   isSelected,
-  onClick,
-  onDoubleClick,
-  searchQuery,
-  searchScope = 'all',
-}: RaindropCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
-
-  const handleMouseEnter = useCallback(() => setIsHovered(true), [])
-  const handleMouseLeave = useCallback(() => setIsHovered(false), [])
-
-  const handleCheckedChange = useCallback(
-    (checked: boolean | 'indeterminate') => setIsChecked(!!checked),
-    [],
-  )
+  onToggleSelect,
+}: Pick<
+  RaindropCardProps,
+  'raindrop' | 'actions' | 'isSelected' | 'onToggleSelect'
+>) {
   const handleCheckboxClick = useCallback(
     (e: React.MouseEvent) => e.stopPropagation(),
     [],
   )
-  const handleMoreClick = useCallback(
-    (e: React.MouseEvent) => e.stopPropagation(),
-    [],
-  )
-  const handleOpenUrl = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      window.shell.openExternal(raindrop.url)
-    },
-    [raindrop.url],
-  )
-  const handleStopPropagation = useCallback(
-    (e: React.MouseEvent) => e.stopPropagation(),
-    [],
-  )
-  const handleCopyUrl = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      navigator.clipboard.writeText(raindrop.url)
-    },
-    [raindrop.url],
-  )
-  const handleDeleteClick = useCallback(
-    (e: React.MouseEvent) => e.stopPropagation(),
-    [],
-  )
-
   const domainColor = getDomainColor(raindrop.domain || '')
-  const visibleTags = raindrop.tags.slice(0, 2)
-  const remainingTagCount = raindrop.tags.length - 2
-  const normalizedSearchQuery = searchQuery?.trim() ?? ''
-  const hasSearchQuery = normalizedSearchQuery.length > 0
-  const shouldHighlightTitle =
-    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')
-  const shouldHighlightUrl =
-    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')
-  const shouldHighlightDescription =
-    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')
-  const descriptionText = raindrop.description ?? raindrop.notes ?? ''
-  const domainText =
-    raindrop.domain || extractDomain(raindrop.url) || raindrop.url
-
   return (
-    <Card
-      data-raindrop-id={raindrop.id}
-      tabIndex={-1}
-      className={cn(
-        'group relative cursor-pointer overflow-hidden transition-all duration-150',
-        'focus-visible:ring-primary hover:scale-[1.01] hover:shadow-md focus-visible:ring-2 focus-visible:outline-none',
-        isSelected && 'ring-primary shadow-md ring-2',
-      )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      onDoubleClick={onDoubleClick}
-    >
+    <>
       {/* Cover Image / Placeholder */}
       <div className="bg-muted relative aspect-video overflow-hidden">
         {raindrop.coverImage ? (
@@ -251,94 +140,104 @@ const RaindropCard = React.memo(function RaindropCard({
           </div>
         )}
 
-        {/* Checkbox (on hover) */}
-        {(isHovered || isSelected) && (
-          <div
-            className="absolute top-2 left-2"
-            style={{ display: raindrop.isImportant ? 'none' : undefined }}
-          >
-            <Checkbox
-              checked={isSelected || isChecked}
-              onCheckedChange={handleCheckedChange}
-              onClick={handleCheckboxClick}
-              className="bg-background/80 backdrop-blur-sm"
-            />
-          </div>
-        )}
+        {/* Keep selection controls mounted as hover/focus moves between cover and checkbox. */}
+        <div
+          className={cn(
+            'absolute top-2 left-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100',
+            isSelected && 'opacity-100',
+          )}
+        >
+          <Checkbox
+            aria-label={`Select ${raindrop.title}`}
+            checked={isSelected}
+            onCheckedChange={onToggleSelect}
+            onClick={handleCheckboxClick}
+            onPointerDown={handleCheckboxClick}
+            className="bg-background/80 backdrop-blur-sm"
+          />
+        </div>
 
-        {/* More menu (on hover) */}
-        {isHovered && (
-          <div className="absolute top-2 right-2" style={{ zIndex: 10 }}>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="bg-background/80 h-6 w-6 backdrop-blur-sm"
-                  onClick={handleMoreClick}
-                >
-                  <MoreHorizontal className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={handleOpenUrl}>
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Open URL
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleStopPropagation}>
-                  <Pencil className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleStopPropagation}>
-                  <FolderInput className="mr-2 h-4 w-4" />
-                  Move to Collection...
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleStopPropagation}>
-                  <Tag className="mr-2 h-4 w-4" />
-                  Add Tags...
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleCopyUrl}>
-                  <Copy className="mr-2 h-4 w-4" />
-                  Copy URL
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleStopPropagation}>
-                  <Star className="mr-2 h-4 w-4" />
-                  {raindrop.isImportant
-                    ? 'Remove Important'
-                    : 'Mark as Important'}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-destructive"
-                  onClick={handleDeleteClick}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Move to Trash
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        )}
+        {/* Keep the menu mounted while the pointer enters its portaled content. */}
+        <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 focus-within:opacity-100">
+          <BookmarkItemMenu
+            raindrop={raindrop}
+            actions={actions}
+            variant="grid"
+          />
+        </div>
       </div>
+    </>
+  )
+})
+
+const RaindropCard = React.memo(function RaindropCard({
+  onToggleSelect,
+  actions,
+  raindrop,
+  isSelected,
+  onClick,
+  onDoubleClick,
+  searchQuery,
+  searchScope = 'all',
+}: RaindropCardProps) {
+  const visibleTags = raindrop.tags.slice(0, 2)
+  const remainingTagCount = raindrop.tags.length - 2
+  const {
+    normalizedSearchQuery,
+    shouldHighlightTitle,
+    shouldHighlightUrl,
+    shouldHighlightDescription,
+  } = getSearchHighlightState(searchQuery, searchScope)
+  const descriptionText = raindrop.description ?? raindrop.notes ?? ''
+  const domainText =
+    raindrop.domain || extractDomain(raindrop.url) || raindrop.url
+
+  return (
+    <Card
+      data-raindrop-id={raindrop.id}
+      tabIndex={-1}
+      className={cn(
+        'group relative cursor-pointer overflow-hidden transition-all duration-150',
+        'focus-visible:ring-primary hover:scale-[1.01] hover:shadow-md focus-visible:ring-2 focus-visible:outline-none',
+        isSelected && 'ring-primary shadow-md ring-2',
+      )}
+      onClick={onClick}
+      onDoubleClick={onDoubleClick}
+    >
+      <BookmarkCardCover
+        raindrop={raindrop}
+        actions={actions}
+        isSelected={isSelected}
+        onToggleSelect={onToggleSelect}
+      />
 
       {/* Card Content */}
       <CardContent className="space-y-1.5 p-3">
         {/* Title */}
         <h3 className="line-clamp-2 text-sm leading-snug font-medium">
-          {shouldHighlightTitle
-            ? renderHighlightedText(raindrop.title, normalizedSearchQuery)
-            : raindrop.title}
+          <SearchHighlight
+            enabled={shouldHighlightTitle}
+            text={raindrop.title}
+            query={normalizedSearchQuery}
+          />
         </h3>
 
         {/* Domain */}
         <p className="text-muted-foreground truncate text-xs">
-          {shouldHighlightUrl
-            ? renderHighlightedText(domainText, normalizedSearchQuery)
-            : domainText}
+          <SearchHighlight
+            enabled={shouldHighlightUrl}
+            text={domainText}
+            query={normalizedSearchQuery}
+          />
         </p>
         {descriptionText && shouldHighlightDescription && (
           <p className="text-muted-foreground line-clamp-2 text-xs">
-            {renderHighlightedText(descriptionText, normalizedSearchQuery)}
+            {
+              <SearchHighlight
+                text={descriptionText}
+                query={normalizedSearchQuery}
+              />
+            }
           </p>
         )}
 
@@ -370,4 +269,3 @@ const RaindropCard = React.memo(function RaindropCard({
   )
 })
 export { RaindropCard }
-export default RaindropCard

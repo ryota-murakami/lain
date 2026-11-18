@@ -1,0 +1,73 @@
+{
+  "mode": "measured-istanbul",
+  "sourceFingerprint": "bb1056b057b05f4230de9b9cb5e5a897166d7b8a2d81a9b8e079c90c4ba8ce2d",
+  "coverageSha256": "7e5053c94225700daca94aca833e9b121837ad9d036d8561c9ff5124ba2b10fb",
+  "node": "v26.13.0",
+  "completedAt": "2026-11-09T17:07:52.892Z",
+  "tests": 569,
+  "testFiles": 58,
+  "rendererCoverage": {
+    "statements": {
+      "covered": 3549,
+      "total": 4112,
+      "pct": 86.3
+    },
+    "branches": {
+      "covered": 2033,
+      "total": 2566,
+      "pct": 79.22
+    },
+    "functions": {
+      "covered": 1033,
+      "total": 1289,
+      "pct": 80.13
+    },
+    "lines": {
+      "covered": 3294,
+      "total": 3707,
+      "pct": 88.85
+    }
+  },
+  "expandedCoverage": {
+    "lines": {
+      "total": 4245,
+      "covered": 3657,
+      "skipped": 0,
+      "pct": 86.14
+    },
+    "statements": {
+      "total": 4695,
+      "covered": 3942,
+      "skipped": 0,
+      "pct": 83.96
+    },
+    "functions": {
+      "total": 1441,
+      "covered": 1132,
+      "skipped": 0,
+      "pct": 78.55
+    },
+    "branches": {
+      "total": 2828,
+      "covered": 2219,
+      "skipped": 0,
+      "pct": 78.46
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "strictFindings": {
+    "deadCode": 0,
+    "duplication": 0,
+    "architecture": 0,
+    "measuredHealth": 0,
+    "staticComplexity": 0
+  },
+  "auditVerdict": "pass",
+  "sourceState": "formatted source before combined CI-fix commit; documentation-only changes excluded from source fingerprint",
+  "nativeEvidence": "separate signed-update and package-run records; no fresh OAuth/notarization claim"
+}

@@ -1,0 +1,602 @@
+{
+  "total": {
+    "lines": { "total": 2849, "covered": 1638, "skipped": 0, "pct": 57.49 },
+    "statements": {
+      "total": 3129,
+      "covered": 1755,
+      "skipped": 0,
+      "pct": 56.08
+    },
+    "functions": { "total": 1040, "covered": 450, "skipped": 0, "pct": 43.26 },
+    "branches": { "total": 1770, "covered": 774, "skipped": 0, "pct": 43.72 },
+    "branchesTrue": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/App.tsx": {
+    "lines": { "total": 9, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 9, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/main.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/LoginScreen.tsx": {
+    "lines": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/main-app.tsx": {
+    "lines": { "total": 188, "covered": 93, "skipped": 0, "pct": 49.46 },
+    "functions": { "total": 82, "covered": 27, "skipped": 0, "pct": 32.92 },
+    "statements": { "total": 219, "covered": 109, "skipped": 0, "pct": 49.77 },
+    "branches": { "total": 67, "covered": 8, "skipped": 0, "pct": 11.94 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx": {
+    "lines": { "total": 108, "covered": 41, "skipped": 0, "pct": 37.96 },
+    "functions": { "total": 29, "covered": 9, "skipped": 0, "pct": 31.03 },
+    "statements": { "total": 115, "covered": 43, "skipped": 0, "pct": 37.39 },
+    "branches": { "total": 74, "covered": 17, "skipped": 0, "pct": 22.97 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-dialog.tsx": {
+    "lines": { "total": 44, "covered": 29, "skipped": 0, "pct": 65.9 },
+    "functions": { "total": 17, "covered": 7, "skipped": 0, "pct": 41.17 },
+    "statements": { "total": 47, "covered": 30, "skipped": 0, "pct": 63.82 },
+    "branches": { "total": 32, "covered": 12, "skipped": 0, "pct": 37.5 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-search.tsx": {
+    "lines": { "total": 45, "covered": 1, "skipped": 0, "pct": 2.22 },
+    "functions": { "total": 15, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 50, "covered": 1, "skipped": 0, "pct": 2 },
+    "branches": { "total": 24, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/collection-selector.tsx": {
+    "lines": { "total": 57, "covered": 1, "skipped": 0, "pct": 1.75 },
+    "functions": { "total": 20, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 62, "covered": 1, "skipped": 0, "pct": 1.61 },
+    "branches": { "total": 48, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/color-picker.tsx": {
+    "lines": { "total": 14, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 14, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 16, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/directory-view.tsx": {
+    "lines": { "total": 36, "covered": 31, "skipped": 0, "pct": 86.11 },
+    "functions": { "total": 13, "covered": 9, "skipped": 0, "pct": 69.23 },
+    "statements": { "total": 36, "covered": 31, "skipped": 0, "pct": 86.11 },
+    "branches": { "total": 40, "covered": 31, "skipped": 0, "pct": 77.5 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/drag-preview.tsx": {
+    "lines": { "total": 5, "covered": 1, "skipped": 0, "pct": 20 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 1, "skipped": 0, "pct": 16.66 },
+    "branches": { "total": 9, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/drop-indicator.tsx": {
+    "lines": { "total": 3, "covered": 1, "skipped": 0, "pct": 33.33 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 1, "skipped": 0, "pct": 25 },
+    "branches": { "total": 10, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/favicon-icon.tsx": {
+    "lines": { "total": 16, "covered": 12, "skipped": 0, "pct": 75 },
+    "functions": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "statements": { "total": 17, "covered": 13, "skipped": 0, "pct": 76.47 },
+    "branches": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/global-search-command.tsx": {
+    "lines": { "total": 63, "covered": 31, "skipped": 0, "pct": 49.2 },
+    "functions": { "total": 26, "covered": 9, "skipped": 0, "pct": 34.61 },
+    "statements": { "total": 73, "covered": 36, "skipped": 0, "pct": 49.31 },
+    "branches": { "total": 75, "covered": 20, "skipped": 0, "pct": 26.66 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/group-dialog.tsx": {
+    "lines": { "total": 18, "covered": 12, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "statements": { "total": 19, "covered": 12, "skipped": 0, "pct": 63.15 },
+    "branches": { "total": 12, "covered": 5, "skipped": 0, "pct": 41.66 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/icon-picker.tsx": {
+    "lines": { "total": 20, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 8, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 22, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 12, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/left-sidebar.tsx": {
+    "lines": { "total": 245, "covered": 92, "skipped": 0, "pct": 37.55 },
+    "functions": { "total": 73, "covered": 22, "skipped": 0, "pct": 30.13 },
+    "statements": { "total": 263, "covered": 96, "skipped": 0, "pct": 36.5 },
+    "branches": { "total": 117, "covered": 36, "skipped": 0, "pct": 30.76 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/main-content.tsx": {
+    "lines": { "total": 164, "covered": 92, "skipped": 0, "pct": 56.09 },
+    "functions": { "total": 65, "covered": 24, "skipped": 0, "pct": 36.92 },
+    "statements": { "total": 179, "covered": 96, "skipped": 0, "pct": 53.63 },
+    "branches": { "total": 119, "covered": 47, "skipped": 0, "pct": 39.49 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/merge-dialog.tsx": {
+    "lines": { "total": 22, "covered": 14, "skipped": 0, "pct": 63.63 },
+    "functions": { "total": 10, "covered": 7, "skipped": 0, "pct": 70 },
+    "statements": { "total": 25, "covered": 16, "skipped": 0, "pct": 64 },
+    "branches": { "total": 14, "covered": 2, "skipped": 0, "pct": 14.28 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/raindrop-card.tsx": {
+    "lines": { "total": 47, "covered": 1, "skipped": 0, "pct": 2.12 },
+    "functions": { "total": 15, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 53, "covered": 1, "skipped": 0, "pct": 1.88 },
+    "branches": { "total": 58, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/raindrop-list-item.tsx": {
+    "lines": { "total": 41, "covered": 32, "skipped": 0, "pct": 78.04 },
+    "functions": { "total": 13, "covered": 5, "skipped": 0, "pct": 38.46 },
+    "statements": { "total": 47, "covered": 33, "skipped": 0, "pct": 70.21 },
+    "branches": { "total": 49, "covered": 29, "skipped": 0, "pct": 59.18 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/right-detail-panel.tsx": {
+    "lines": { "total": 88, "covered": 46, "skipped": 0, "pct": 52.27 },
+    "functions": { "total": 28, "covered": 8, "skipped": 0, "pct": 28.57 },
+    "statements": { "total": 98, "covered": 49, "skipped": 0, "pct": 50 },
+    "branches": { "total": 89, "covered": 46, "skipped": 0, "pct": 51.68 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/settings-dialog.tsx": {
+    "lines": { "total": 9, "covered": 6, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "statements": { "total": 12, "covered": 8, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/shortcut-editor.tsx": {
+    "lines": { "total": 38, "covered": 38, "skipped": 0, "pct": 100 },
+    "functions": { "total": 15, "covered": 15, "skipped": 0, "pct": 100 },
+    "statements": { "total": 40, "covered": 40, "skipped": 0, "pct": 100 },
+    "branches": { "total": 20, "covered": 19, "skipped": 0, "pct": 95 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/table-view.tsx": {
+    "lines": { "total": 113, "covered": 64, "skipped": 0, "pct": 56.63 },
+    "functions": { "total": 45, "covered": 11, "skipped": 0, "pct": 24.44 },
+    "statements": { "total": 125, "covered": 64, "skipped": 0, "pct": 51.2 },
+    "branches": { "total": 95, "covered": 56, "skipped": 0, "pct": 58.94 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/tag-input.tsx": {
+    "lines": { "total": 57, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 18, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 65, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 57, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/tag-management.tsx": {
+    "lines": { "total": 92, "covered": 37, "skipped": 0, "pct": 40.21 },
+    "functions": { "total": 33, "covered": 4, "skipped": 0, "pct": 12.12 },
+    "statements": { "total": 101, "covered": 37, "skipped": 0, "pct": 36.63 },
+    "branches": { "total": 43, "covered": 7, "skipped": 0, "pct": 16.27 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/raindrop/theme-toggle.tsx": {
+    "lines": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "functions": { "total": 4, "covered": 1, "skipped": 0, "pct": 25 },
+    "statements": { "total": 9, "covered": 6, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 8, "covered": 5, "skipped": 0, "pct": 62.5 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/accordion.tsx": {
+    "lines": { "total": 8, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 8, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/alert-dialog.tsx": {
+    "lines": { "total": 24, "covered": 23, "skipped": 0, "pct": 95.83 },
+    "functions": { "total": 12, "covered": 11, "skipped": 0, "pct": 91.66 },
+    "statements": { "total": 24, "covered": 23, "skipped": 0, "pct": 95.83 },
+    "branches": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/avatar.tsx": {
+    "lines": { "total": 12, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 12, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/badge.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/breadcrumb.tsx": {
+    "lines": { "total": 15, "covered": 11, "skipped": 0, "pct": 73.33 },
+    "functions": { "total": 7, "covered": 4, "skipped": 0, "pct": 57.14 },
+    "statements": { "total": 15, "covered": 11, "skipped": 0, "pct": 73.33 },
+    "branches": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/button.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/card.tsx": {
+    "lines": { "total": 14, "covered": 7, "skipped": 0, "pct": 50 },
+    "functions": { "total": 7, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 14, "covered": 7, "skipped": 0, "pct": 50 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/checkbox.tsx": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/collapsible.tsx": {
+    "lines": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/combobox.tsx": {
+    "lines": { "total": 32, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 16, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 32, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 14, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/command.tsx": {
+    "lines": { "total": 18, "covered": 9, "skipped": 0, "pct": 50 },
+    "functions": { "total": 9, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 18, "covered": 9, "skipped": 0, "pct": 50 },
+    "branches": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/context-menu.tsx": {
+    "lines": { "total": 30, "covered": 18, "skipped": 0, "pct": 60 },
+    "functions": { "total": 15, "covered": 3, "skipped": 0, "pct": 20 },
+    "statements": { "total": 30, "covered": 18, "skipped": 0, "pct": 60 },
+    "branches": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/dialog.tsx": {
+    "lines": { "total": 20, "covered": 13, "skipped": 0, "pct": 65 },
+    "functions": { "total": 10, "covered": 3, "skipped": 0, "pct": 30 },
+    "statements": { "total": 20, "covered": 13, "skipped": 0, "pct": 65 },
+    "branches": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/dropdown-menu.tsx": {
+    "lines": { "total": 30, "covered": 23, "skipped": 0, "pct": 76.66 },
+    "functions": { "total": 15, "covered": 8, "skipped": 0, "pct": 53.33 },
+    "statements": { "total": 30, "covered": 23, "skipped": 0, "pct": 76.66 },
+    "branches": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/field.tsx": {
+    "lines": { "total": 34, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 13, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 34, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 14, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/hover-card.tsx": {
+    "lines": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/input-group.tsx": {
+    "lines": { "total": 17, "covered": 8, "skipped": 0, "pct": 47.05 },
+    "functions": { "total": 7, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 17, "covered": 8, "skipped": 0, "pct": 47.05 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/input.tsx": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/label.tsx": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/popover.tsx": {
+    "lines": { "total": 14, "covered": 7, "skipped": 0, "pct": 50 },
+    "functions": { "total": 7, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 14, "covered": 7, "skipped": 0, "pct": 50 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/progress.tsx": {
+    "lines": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/radio-group.tsx": {
+    "lines": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/resizable.tsx": {
+    "lines": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/scroll-area.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/select.tsx": {
+    "lines": { "total": 20, "covered": 17, "skipped": 0, "pct": 85 },
+    "functions": { "total": 10, "covered": 7, "skipped": 0, "pct": 70 },
+    "statements": { "total": 20, "covered": 17, "skipped": 0, "pct": 85 },
+    "branches": { "total": 7, "covered": 5, "skipped": 0, "pct": 71.42 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/separator.tsx": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/sheet.tsx": {
+    "lines": { "total": 20, "covered": 10, "skipped": 0, "pct": 50 },
+    "functions": { "total": 10, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 20, "covered": 10, "skipped": 0, "pct": 50 },
+    "branches": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/sidebar.tsx": {
+    "lines": { "total": 109, "covered": 76, "skipped": 0, "pct": 69.72 },
+    "functions": { "total": 38, "covered": 19, "skipped": 0, "pct": 50 },
+    "statements": { "total": 112, "covered": 77, "skipped": 0, "pct": 68.75 },
+    "branches": { "total": 67, "covered": 28, "skipped": 0, "pct": 41.79 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/skeleton.tsx": {
+    "lines": { "total": 2, "covered": 1, "skipped": 0, "pct": 50 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 2, "covered": 1, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/slider.tsx": {
+    "lines": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/sonner.tsx": {
+    "lines": { "total": 9, "covered": 9, "skipped": 0, "pct": 100 },
+    "functions": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "statements": { "total": 9, "covered": 9, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/switch.tsx": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/table.tsx": {
+    "lines": { "total": 16, "covered": 14, "skipped": 0, "pct": 87.5 },
+    "functions": { "total": 8, "covered": 6, "skipped": 0, "pct": 75 },
+    "statements": { "total": 16, "covered": 14, "skipped": 0, "pct": 87.5 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/tabs.tsx": {
+    "lines": { "total": 9, "covered": 5, "skipped": 0, "pct": 55.55 },
+    "functions": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 9, "covered": 5, "skipped": 0, "pct": 55.55 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/textarea.tsx": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/toggle-group.tsx": {
+    "lines": { "total": 8, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 8, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 12, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/toggle.tsx": {
+    "lines": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/components/ui/tooltip.tsx": {
+    "lines": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "functions": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "statements": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "branches": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/use-mobile.ts": {
+    "lines": { "total": 7, "covered": 6, "skipped": 0, "pct": 85.71 },
+    "functions": { "total": 5, "covered": 4, "skipped": 0, "pct": 80 },
+    "statements": { "total": 8, "covered": 7, "skipped": 0, "pct": 87.5 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useCollectionsCrud.ts": {
+    "lines": { "total": 47, "covered": 39, "skipped": 0, "pct": 82.97 },
+    "functions": { "total": 10, "covered": 10, "skipped": 0, "pct": 100 },
+    "statements": { "total": 47, "covered": 39, "skipped": 0, "pct": 82.97 },
+    "branches": { "total": 18, "covered": 9, "skipped": 0, "pct": 50 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useKeyboardShortcuts.ts": {
+    "lines": { "total": 23, "covered": 23, "skipped": 0, "pct": 100 },
+    "functions": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "statements": { "total": 27, "covered": 27, "skipped": 0, "pct": 100 },
+    "branches": { "total": 12, "covered": 11, "skipped": 0, "pct": 91.66 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useRaindropsCrud.ts": {
+    "lines": { "total": 91, "covered": 89, "skipped": 0, "pct": 97.8 },
+    "functions": { "total": 22, "covered": 20, "skipped": 0, "pct": 90.9 },
+    "statements": { "total": 107, "covered": 100, "skipped": 0, "pct": 93.45 },
+    "branches": { "total": 52, "covered": 38, "skipped": 0, "pct": 73.07 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useShortcutEditor.ts": {
+    "lines": { "total": 31, "covered": 29, "skipped": 0, "pct": 93.54 },
+    "functions": { "total": 7, "covered": 7, "skipped": 0, "pct": 100 },
+    "statements": { "total": 35, "covered": 31, "skipped": 0, "pct": 88.57 },
+    "branches": { "total": 12, "covered": 9, "skipped": 0, "pct": 75 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useSidebarData.ts": {
+    "lines": { "total": 14, "covered": 14, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 15, "covered": 15, "skipped": 0, "pct": 100 },
+    "branches": { "total": 14, "covered": 13, "skipped": 0, "pct": 92.85 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useTagsCrud.ts": {
+    "lines": { "total": 17, "covered": 15, "skipped": 0, "pct": 88.23 },
+    "functions": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "statements": { "total": 17, "covered": 15, "skipped": 0, "pct": 88.23 },
+    "branches": { "total": 12, "covered": 7, "skipped": 0, "pct": 58.33 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useUrlSuggest.ts": {
+    "lines": { "total": 10, "covered": 9, "skipped": 0, "pct": 90 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 10, "covered": 9, "skipped": 0, "pct": 90 },
+    "branches": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/hooks/useViewNavigation.ts": {
+    "lines": { "total": 57, "covered": 57, "skipped": 0, "pct": 100 },
+    "functions": { "total": 16, "covered": 16, "skipped": 0, "pct": 100 },
+    "statements": { "total": 69, "covered": 66, "skipped": 0, "pct": 95.65 },
+    "branches": { "total": 46, "covered": 41, "skipped": 0, "pct": 89.13 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/api-mappers.ts": {
+    "lines": { "total": 52, "covered": 51, "skipped": 0, "pct": 98.07 },
+    "functions": { "total": 19, "covered": 19, "skipped": 0, "pct": 100 },
+    "statements": { "total": 63, "covered": 58, "skipped": 0, "pct": 92.06 },
+    "branches": { "total": 96, "covered": 79, "skipped": 0, "pct": 82.29 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/axios.ts": {
+    "lines": { "total": 36, "covered": 27, "skipped": 0, "pct": 75 },
+    "functions": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "statements": { "total": 42, "covered": 29, "skipped": 0, "pct": 69.04 },
+    "branches": { "total": 23, "covered": 12, "skipped": 0, "pct": 52.17 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/axiosBaseQuery.ts": {
+    "lines": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "branches": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/collection-organization.ts": {
+    "lines": { "total": 49, "covered": 42, "skipped": 0, "pct": 85.71 },
+    "functions": { "total": 21, "covered": 19, "skipped": 0, "pct": 90.47 },
+    "statements": { "total": 64, "covered": 49, "skipped": 0, "pct": 76.56 },
+    "branches": { "total": 32, "covered": 18, "skipped": 0, "pct": 56.25 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/raindrop-organization.ts": {
+    "lines": { "total": 14, "covered": 14, "skipped": 0, "pct": 100 },
+    "functions": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "statements": { "total": 19, "covered": 19, "skipped": 0, "pct": 100 },
+    "branches": { "total": 11, "covered": 11, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/search.ts": {
+    "lines": { "total": 87, "covered": 82, "skipped": 0, "pct": 94.25 },
+    "functions": { "total": 25, "covered": 25, "skipped": 0, "pct": 100 },
+    "statements": { "total": 99, "covered": 89, "skipped": 0, "pct": 89.89 },
+    "branches": { "total": 44, "covered": 33, "skipped": 0, "pct": 75 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/shortcut-utils.ts": {
+    "lines": { "total": 27, "covered": 26, "skipped": 0, "pct": 96.29 },
+    "functions": { "total": 7, "covered": 6, "skipped": 0, "pct": 85.71 },
+    "statements": { "total": 38, "covered": 35, "skipped": 0, "pct": 92.1 },
+    "branches": { "total": 47, "covered": 43, "skipped": 0, "pct": 91.48 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/types.ts": {
+    "lines": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/lib/utils.ts": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/hooks.ts": {
+    "lines": { "total": 15, "covered": 7, "skipped": 0, "pct": 46.66 },
+    "functions": { "total": 10, "covered": 3, "skipped": 0, "pct": 30 },
+    "statements": { "total": 22, "covered": 9, "skipped": 0, "pct": 40.9 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/index.ts": {
+    "lines": { "total": 10, "covered": 10, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 10, "covered": 10, "skipped": 0, "pct": 100 },
+    "branches": { "total": 2, "covered": 1, "skipped": 0, "pct": 50 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/listenerMiddleware.ts": {
+    "lines": { "total": 28, "covered": 16, "skipped": 0, "pct": 57.14 },
+    "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
+    "statements": { "total": 28, "covered": 16, "skipped": 0, "pct": 57.14 },
+    "branches": { "total": 6, "covered": 2, "skipped": 0, "pct": 33.33 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/persistence.ts": {
+    "lines": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "branches": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/api/emptyApi.ts": {
+    "lines": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/authSlice.ts": {
+    "lines": { "total": 13, "covered": 8, "skipped": 0, "pct": 61.53 },
+    "functions": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "statements": { "total": 13, "covered": 8, "skipped": 0, "pct": 61.53 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/dialogSlice.ts": {
+    "lines": { "total": 15, "covered": 3, "skipped": 0, "pct": 20 },
+    "functions": { "total": 12, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 15, "covered": 3, "skipped": 0, "pct": 20 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/searchSlice.ts": {
+    "lines": { "total": 15, "covered": 4, "skipped": 0, "pct": 26.66 },
+    "functions": { "total": 8, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 16, "covered": 4, "skipped": 0, "pct": 25 },
+    "branches": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/settingsSlice.ts": {
+    "lines": { "total": 18, "covered": 16, "skipped": 0, "pct": 88.88 },
+    "functions": { "total": 8, "covered": 6, "skipped": 0, "pct": 75 },
+    "statements": { "total": 19, "covered": 17, "skipped": 0, "pct": 89.47 },
+    "branches": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/store/slices/uiSlice.ts": {
+    "lines": { "total": 25, "covered": 16, "skipped": 0, "pct": 64 },
+    "functions": { "total": 15, "covered": 10, "skipped": 0, "pct": 66.66 },
+    "statements": { "total": 25, "covered": 16, "skipped": 0, "pct": 64 },
+    "branches": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/build-directory-tree.ts": {
+    "lines": { "total": 26, "covered": 26, "skipped": 0, "pct": 100 },
+    "functions": { "total": 8, "covered": 8, "skipped": 0, "pct": 100 },
+    "statements": { "total": 26, "covered": 26, "skipped": 0, "pct": 100 },
+    "branches": { "total": 13, "covered": 12, "skipped": 0, "pct": 92.3 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/dnd-types.ts": {
+    "lines": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/favicon.ts": {
+    "lines": { "total": 25, "covered": 21, "skipped": 0, "pct": 84 },
+    "functions": { "total": 7, "covered": 5, "skipped": 0, "pct": 71.42 },
+    "statements": { "total": 30, "covered": 23, "skipped": 0, "pct": 76.66 },
+    "branches": { "total": 18, "covered": 11, "skipped": 0, "pct": 61.11 }
+  },
+  "/Users/ryotamurakami/laststance/lain/apps/desktop/src/utils/find-collection-in-tree.ts": {
+    "lines": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 7, "covered": 7, "skipped": 0, "pct": 100 },
+    "branches": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 }
+  }
+}

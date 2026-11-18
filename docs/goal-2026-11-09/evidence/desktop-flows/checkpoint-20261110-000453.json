@@ -1,0 +1,19 @@
+{
+  "buildTimeJst": "2026-11-10T00:04:53+09:00",
+  "scope": "Intermediate built Electron, isolated profiles, synthetic API",
+  "suite": {
+    "passed": 80,
+    "failed": 0,
+    "output": "apps/desktop/test-results/combined-20261110"
+  },
+  "subsequentNativeNavigationTest": {
+    "passed": 0,
+    "failed": 1,
+    "reason": "window.location.assign(about:blank) escaped the app document; window.open was denied"
+  },
+  "artifacts": {
+    "apps/desktop/dist-electron/main.js": "af758710ea88fbdaa62972302f2b34fc1794cd025257e50a322f958bc3c3837e",
+    "apps/desktop/dist/index.html": "33870756a88dfdc837589a33f5ae63393bd0970fb3655a30bb4f8d479a02ff97"
+  },
+  "finalSourceAcceptance": false
+}

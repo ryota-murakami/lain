@@ -1,0 +1,1646 @@
+{
+  "config": {
+    "argv": [
+      "<home>/.vite-plus/js_runtime/node/26.13.0/bin/node",
+      "<workspace>/apps/desktop/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "playwright.config.mjs"
+    ],
+    "configFile": "<workspace>/design/lain-website-candidates/playwright.config.mjs",
+    "rootDir": "<workspace>/design/lain-website-candidates/qa",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "<workspace>/design/lain-website-candidates/qa/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "",
+        "name": "",
+        "testDir": "<workspace>/design/lain-website-candidates/qa",
+        "testIgnore": [],
+        "testMatch": ["*.spec.mjs"],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "<workspace>/design/lain-website-candidates/qa/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "",
+        "testDir": "<workspace>/design/lain-website-candidates/qa",
+        "snapshotDir": "<workspace>/design/lain-website-candidates/qa",
+        "testIgnore": [],
+        "testMatch": "*.spec.mjs",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4317",
+          "browserName": "chromium",
+          "channel": "chrome",
+          "headless": true,
+          "video": {
+            "mode": "on",
+            "size": {
+              "width": 1280,
+              "height": 900
+            }
+          },
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      ["list", null],
+      [
+        "json",
+        {
+          "outputFile": "./qa/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "directions.spec.mjs",
+      "file": "directions.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "W01 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:39.923Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W01-desktop-vis-760e8-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-ff97b8749f88b3c43d5a",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W01 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2632,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:39.923Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W01-mobile-visi-bd847-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-f25231137f6d7355c3af",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W02 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1749,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:42.943Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W02-desktop-vis-346e4-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-f95bc2dae16e96e2119a",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W02 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2583,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:42.956Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W02-mobile-visi-2cb7d-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-a203603d44a138b09986",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W03 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2585,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:44.697Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W03-desktop-vis-bd7f7-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-92ea9c40c66aa0dd9c50",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W03 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:45.546Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W03-mobile-visi-993f1-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-5b8db82acab34e0e57fd",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W04 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2600,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:47.288Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W04-desktop-vis-391ba-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-f68bf08f12b00f3bf950",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W04 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:48.118Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W04-mobile-visi-86648-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-08d4213b78aeae75e403",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W05 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3199,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:49.895Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W05-desktop-vis-0fa6f-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-101ed05b1e6a4433f9c7",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W05 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2320,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:50.532Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W05-mobile-visi-7595f-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-c9bab85b8d9a07d4395b",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W06 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:52.857Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W06-desktop-vis-c8580-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-4368c1fc91159ee50dfa",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W06 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2500,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:53.104Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W06-mobile-visi-5ef37-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-5f48fac5f3a67e2678cc",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W07 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:55.036Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W07-desktop-vis-b1b13-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-8a2e7a257e1b7cfa8a8a",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W07 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2861,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:55.611Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W07-mobile-visi-5f90b-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-9c6336aaa4ac328fb99d",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W08 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2012,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:57.430Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W08-desktop-vis-9a800-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-413d6863e9c9823eb5a8",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W08 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:58.480Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W08-mobile-visi-bd4c2-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-482a06afced6170da888",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W09 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2352,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T12:59:59.448Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W09-desktop-vis-13863-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-ddfb219ddca06d8b214b",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W09 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:00.979Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W09-mobile-visi-d9794-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-e956d253422170406d91",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W10 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1982,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:01.807Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W10-desktop-vis-7921b-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-0dc229501c72beb09e55",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W10 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:03.634Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W10-mobile-visi-2c837-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-958fe02220705abb6f2d",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W11 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1995,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:03.795Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W11-desktop-vis-97622-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-a0b6eb9a60fa155ab046",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W11 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:05.795Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W11-mobile-visi-41b71-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-91dc71f90d10dcdee970",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W12 desktop: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2157,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:06.256Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W12-desktop-vis-5f425-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-b09be69d8d71f43747ae",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "W12 mobile: visitors can search examples, change views and reach truthful download information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2297,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:08.396Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-W12-mobile-visi-ecda9-uthful-download-information/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-8dbf7cef56d6a504a05d",
+          "file": "directions.spec.mjs",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "The comparison room opens all twelve candidates and preserves a keyboard-created shortlist",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:08.418Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-The-comparison--63051--keyboard-created-shortlist/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-f189b5dec2e8246519e7",
+          "file": "directions.spec.mjs",
+          "line": 61,
+          "column": 1
+        },
+        {
+          "title": "The mobile comparison room keeps every direction readable and local links resolvable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 632,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:10.542Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/directions-The-mobile-comp-f19ff--and-local-links-resolvable/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ff98f0773ab398c9865-c0d5e741d96ea35a217e",
+          "file": "directions.spec.mjs",
+          "line": 90,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "motion.spec.mjs",
+      "file": "motion.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "W01 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:10.706Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W01-recorded-motion-1090c-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-0c077045c1121bb023fc",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W02 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5666,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:11.185Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W02-recorded-motion-ba1a6-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-19fb6937a9564ff239ea",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W03 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6001,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:16.384Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W03-recorded-motion-66187-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-b1f6afcae7349944e6cd",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W04 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6007,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:16.857Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W04-recorded-motion-88e4b-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-9230723c8e8df6851a26",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W05 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5674,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:22.397Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W05-recorded-motion-04a85-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-5c9299265b21ff8bf552",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W06 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:22.870Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W06-recorded-motion-8edeb-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-50d7fb3f30c798b78042",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W07 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5702,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:28.085Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W07-recorded-motion-ce182-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-5a865e30e4967f34e6f6",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W08 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:28.703Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W08-recorded-motion-43f47-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-9d4f9a5d389f4e4a0d79",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W09 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5736,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:33.795Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W09-recorded-motion-1b7f6-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-6d3c57c539ab4c3068a4",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W10 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5717,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:34.448Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W10-recorded-motion-f6c41-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-4008dfd649a11706c7a4",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W11 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5921,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:39.546Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W11-recorded-motion-cf275-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-bad37697595a230656d4",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "W12 recorded motion: hero, product navigation and demo changes remain coherent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T13:00:40.174Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "<workspace>/design/lain-website-candidates/qa/test-results/motion-W12-recorded-motion-7e22f-emo-changes-remain-coherent/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "59133ce5a074653629bc-71b29531c2fee70ff40d",
+          "file": "motion.spec.mjs",
+          "line": 5,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T12:59:39.719Z",
+    "duration": 68860.292,
+    "expected": 38,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

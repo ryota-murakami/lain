@@ -1,6 +1,12 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
+import type { DesktopApi } from '../src/lib/desktop-contract.ts'
 import type { AuthState } from '../src/lib/types.ts'
+import {
+  UPDATE_CHANNELS,
+  type UpdateApi,
+  type UpdateState,
+} from '../src/lib/update-contract.ts'
 
 /**
  * Preload script that bridges main process auth operations to the renderer.
@@ -53,3 +59,24 @@ contextBridge.exposeInMainWorld('auth', {
     }
   },
 })
+
+contextBridge.exposeInMainWorld('desktop', {
+  getCapabilities: async () => ipcRenderer.invoke('desktop:capabilities'),
+  saveExport: async (data) => ipcRenderer.invoke('desktop:save-export', data),
+  selectIcon: async (id) => ipcRenderer.invoke('desktop:select-icon', id),
+} satisfies DesktopApi)
+
+contextBridge.exposeInMainWorld('updates', {
+  getState: async () => ipcRenderer.invoke(UPDATE_CHANNELS.getState),
+  check: async () => ipcRenderer.invoke(UPDATE_CHANNELS.check),
+  download: async () => ipcRenderer.invoke(UPDATE_CHANNELS.download),
+  install: async () => ipcRenderer.invoke(UPDATE_CHANNELS.install),
+  onStateChanged: (listener) => {
+    const handler = (
+      _event: Electron.IpcRendererEvent,
+      state: UpdateState,
+    ): void => listener(state)
+    ipcRenderer.on(UPDATE_CHANNELS.state, handler)
+    return () => ipcRenderer.removeListener(UPDATE_CHANNELS.state, handler)
+  },
+} satisfies UpdateApi)

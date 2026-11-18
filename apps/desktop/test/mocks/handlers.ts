@@ -17,7 +17,7 @@ const API_BASE = 'https://api.raindrop.io/rest/v1'
  *   )
  */
 export const handlers = [
-  // Happy DOM 21 sends the same CORS preflight as a browser before authenticated API requests.
+  // happy-dom 21 sends real CORS preflights; keep all traffic within the mock API.
   http.options(
     `${API_BASE}/*`,
     ({ request }) =>
@@ -31,6 +31,33 @@ export const handlers = [
             'authorization, content-type',
         },
       }),
+  ),
+
+  http.get(`${API_BASE}/user/stats`, () =>
+    HttpResponse.json({
+      result: true,
+      items: [
+        {
+          _id: 0,
+          count: mockStore.raindrops.filter(
+            (item) => item.collection.$id !== -99,
+          ).length,
+        },
+        {
+          _id: -1,
+          count: mockStore.raindrops.filter(
+            (item) => item.collection.$id === -1,
+          ).length,
+        },
+        {
+          _id: -99,
+          count: mockStore.raindrops.filter(
+            (item) => item.collection.$id === -99,
+          ).length,
+        },
+      ],
+      meta: { changedBookmarksDate: '2026-11-09T00:00:00.000Z' },
+    }),
   ),
   // --- Raindrops (with pagination + sort) ---
   http.get(`${API_BASE}/raindrops/:collectionId`, ({ params, request }) => {

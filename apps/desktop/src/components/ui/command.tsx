@@ -1,14 +1,7 @@
 import { Command as CommandPrimitive } from 'cmdk'
-import { SearchIcon, CheckIcon } from 'lucide-react'
+import { CheckIcon, SearchIcon } from 'lucide-react'
 import React from 'react'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { InputGroup, InputGroupAddon } from '@/components/ui/input-group'
 import { cn } from '@/lib/utils'
 
@@ -25,38 +18,6 @@ const Command = React.memo(function Command({
       )}
       {...props}
     />
-  )
-})
-
-const CommandDialog = React.memo(function CommandDialog({
-  title = 'Command Palette',
-  description = 'Search for a command to run...',
-  children,
-  className,
-  showCloseButton = false,
-  ...props
-}: React.ComponentProps<typeof Dialog> & {
-  title?: string
-  description?: string
-  className?: string
-  showCloseButton?: boolean
-}) {
-  return (
-    <Dialog {...props}>
-      <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
-      <DialogContent
-        className={cn(
-          'top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0',
-          className,
-        )}
-        showCloseButton={showCloseButton}
-      >
-        {children}
-      </DialogContent>
-    </Dialog>
   )
 })
 
@@ -161,30 +122,12 @@ const CommandItem = React.memo(function CommandItem({
   )
 })
 
-const CommandShortcut = React.memo(function CommandShortcut({
-  className,
-  ...props
-}: React.ComponentProps<'span'>) {
-  return (
-    <span
-      data-slot="command-shortcut"
-      className={cn(
-        'text-muted-foreground group-data-selected/command-item:text-foreground ml-auto text-xs tracking-widest',
-        className,
-      )}
-      {...props}
-    />
-  )
-})
-
 export {
   Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
-  CommandShortcut,
+  CommandList,
   CommandSeparator,
 }

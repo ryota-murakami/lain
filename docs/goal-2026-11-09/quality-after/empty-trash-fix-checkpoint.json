@@ -1,0 +1,101 @@
+{
+  "mode": "measured-istanbul",
+  "sourceFingerprint": "7ff1c5789f90c2e219512f7b65b168002c287294bd4cbb5c048f9f173f3213f0",
+  "coverageSha256": "8b2dab498082a5387fe0b44ebad4644946637bde42920af6f216e1ffff1200ff",
+  "node": "v26.13.0",
+  "completedAt": "2026-11-09T19:16:28.988Z",
+  "tests": 584,
+  "testFiles": 59,
+  "electronE2E": {
+    "passed": 93,
+    "retries": 0,
+    "duration": "2.1 minutes"
+  },
+  "rendererCoverage": {
+    "statements": {
+      "total": 4125,
+      "covered": 3584,
+      "pct": 86.88
+    },
+    "branches": {
+      "total": 2578,
+      "covered": 2058,
+      "pct": 79.83
+    },
+    "functions": {
+      "total": 1293,
+      "covered": 1048,
+      "pct": 81.05
+    },
+    "lines": {
+      "total": 3720,
+      "covered": 3323,
+      "pct": 89.33
+    }
+  },
+  "expandedCoverage": {
+    "lines": {
+      "total": 4258,
+      "covered": 3686,
+      "skipped": 0,
+      "pct": 86.56
+    },
+    "statements": {
+      "total": 4708,
+      "covered": 3977,
+      "skipped": 0,
+      "pct": 84.47
+    },
+    "functions": {
+      "total": 1445,
+      "covered": 1147,
+      "skipped": 0,
+      "pct": 79.37
+    },
+    "branches": {
+      "total": 2840,
+      "covered": 2244,
+      "skipped": 0,
+      "pct": 79.01
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "strictFindings": {
+    "deadCode": 0,
+    "duplication": 0,
+    "architecture": 0,
+    "measuredHealth": 0,
+    "staticComplexity": 0
+  },
+  "auditVerdict": "pass",
+  "comparableHealthFindings": 3,
+  "sourceState": "formatted Empty Trash failure-feedback follow-up before clean commit; full hosted CI/package/update gates remain separate",
+  "reproduction": {
+    "oldCompiledSource": "ebd3d8d579511c65853b5ffa38bba76d49a7bd03",
+    "trackedElectronBefore": {
+      "failed": 2,
+      "passed": 1,
+      "retries": 0
+    },
+    "observedBug": "HTTP503 and HTTP200 result:false produced unhandled rejection; semantic refusal lacked visible failure feedback."
+  },
+  "checksPassed": [
+    "unit coverage",
+    "desktop lint",
+    "desktop typecheck",
+    "Knip",
+    "release integrity (6)",
+    "dead code",
+    "duplication",
+    "architecture",
+    "static complexity",
+    "measured health",
+    "changed-code audit",
+    "full Electron suite (93)"
+  ]
+}

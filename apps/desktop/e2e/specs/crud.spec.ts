@@ -687,7 +687,7 @@ test.describe('Detail Panel Layout (addbaa1 regression)', () => {
 
 test.describe('Bulk Operations Bar', () => {
   // @spec:API.12 - PUT /raindrops/{collectionId} (bulk ops bar UI)
-  test('should show disabled Move to... and Add Tag... buttons', async ({
+  test('opens move and tag dialogs for selected bookmarks', async ({
     page,
   }) => {
     await expect(
@@ -708,12 +708,21 @@ test.describe('Bulk Operations Bar', () => {
     await firstItem.locator('[data-slot="checkbox"]').click()
     await expect(page.getByText('1 selected')).toBeVisible()
 
-    // Move to... and Add Tag... should be visible but disabled
+    // Act / Assert: both completed actions open an editable dialog.
     const moveButton = page.getByRole('button', { name: 'Move to...' })
     const tagButton = page.getByRole('button', { name: 'Add Tag...' })
     await expect(moveButton).toBeVisible()
     await expect(tagButton).toBeVisible()
-    await expect(moveButton).toBeDisabled()
-    await expect(tagButton).toBeDisabled()
+    await moveButton.click()
+    await expect(
+      page.getByRole('dialog', { name: 'Move bookmarks' }),
+    ).toBeVisible()
+    await page.getByRole('button', { name: 'Cancel', exact: true }).click()
+    await tagButton.click()
+    await expect(page.getByRole('dialog', { name: 'Add tags' })).toBeVisible()
+    await page.getByLabel('Tags', { exact: true }).fill('qa-tag')
+    await expect(
+      page.getByRole('button', { name: 'Apply', exact: true }),
+    ).toBeEnabled()
   })
 })

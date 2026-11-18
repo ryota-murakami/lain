@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto'
+
 import { BrowserWindow } from 'electron'
 
 import type { RaindropTokens, RaindropUser } from '../src/lib/types.ts'
@@ -32,6 +34,7 @@ export class RaindropAuth {
   #clientId: string
   #clientSecret: string
   #expiresAt = 0
+  #refreshing: Promise<RaindropTokens> | null = null
 
   constructor(clientId: string, clientSecret: string) {
     this.#clientId = clientId
@@ -46,6 +49,8 @@ export class RaindropAuth {
    * @returns Resolves when authentication is complete
    */
   async login(): Promise<void> {
+    if (!this.#clientId || !this.#clientSecret)
+      throw new Error('This build is missing Raindrop.io OAuth configuration.')
     const code = await this.#getAuthorizationCode()
     await this.#exchangeCode(code)
   }
@@ -56,6 +61,15 @@ export class RaindropAuth {
    * @returns New token set
    */
   async refreshTokens(): Promise<RaindropTokens> {
+    // Concurrent renderer requests share one refresh because Raindrop rotates both tokens.
+    this.#refreshing ??= this.#performRefresh().finally(() => {
+      this.#refreshing = null
+    })
+    return this.#refreshing
+  }
+
+  /** Exchange the rotating refresh token once for all waiting API calls. */
+  async #performRefresh(): Promise<RaindropTokens> {
     const refreshToken = secureStore.get('refresh_token')
     if (!refreshToken) {
       throw new Error('No refresh token available')
@@ -73,9 +87,14 @@ export class RaindropAuth {
     })
 
     if (!response.ok) {
-      secureStore.clear()
-      this.#expiresAt = 0
-      throw new Error('Token refresh failed — re-authentication required')
+      if (response.status === 400 || response.status === 401) {
+        secureStore.clear()
+        this.#expiresAt = 0
+        throw new Error('Session expired. Please sign in again.')
+      }
+      throw new Error(
+        'The authentication service is unavailable. Please retry.',
+      )
     }
 
     const tokens = (await response.json()) as RaindropTokens
@@ -158,8 +177,7 @@ export class RaindropAuth {
     })
 
     if (!response.ok) {
-      const error = await response.text()
-      throw new Error(`Token exchange failed: ${error}`)
+      throw new Error('Token exchange failed. Please try signing in again.')
     }
 
     const tokens = (await response.json()) as RaindropTokens
@@ -174,10 +192,13 @@ export class RaindropAuth {
    */
   async #getAuthorizationCode(): Promise<string> {
     return new Promise((resolve, reject) => {
+      const state = randomUUID()
+      let settled = false
       const authUrl = new URL(RAINDROP_AUTH_URL)
       authUrl.searchParams.set('client_id', this.#clientId)
       authUrl.searchParams.set('redirect_uri', REDIRECT_URI)
       authUrl.searchParams.set('response_type', 'code')
+      authUrl.searchParams.set('state', state)
 
       const authWindow = new BrowserWindow({
         width: 800,
@@ -186,38 +207,66 @@ export class RaindropAuth {
         webPreferences: {
           nodeIntegration: false,
           contextIsolation: true,
+          sandbox: true,
+          partition: 'persist:lain-oauth',
         },
       })
 
+      const authSession = authWindow.webContents.session
       const filter = { urls: [`${REDIRECT_URI}*`] }
 
-      authWindow.webContents.session.webRequest.onBeforeRequest(
-        filter,
-        (details, callback) => {
-          const url = new URL(details.url)
-          const code = url.searchParams.get('code')
-          const error = url.searchParams.get('error')
+      authSession.webRequest.onBeforeRequest(filter, (details, callback) => {
+        const url = new URL(details.url)
+        const code = url.searchParams.get('code')
+        const error = url.searchParams.get('error')
 
-          // Cancel the request — we don't need it to actually navigate
-          callback({ cancel: true })
+        // Cancel the request — we don't need it to actually navigate
+        callback({ cancel: true })
 
-          authWindow.close()
-
-          if (error) {
-            reject(new Error(`Authorization denied: ${error}`))
-          } else if (code) {
-            resolve(code)
-          } else {
-            reject(new Error('No authorization code received'))
-          }
-        },
-      )
-
-      authWindow.on('closed', () => {
-        reject(new Error('Authentication window was closed'))
+        settled = true
+        authSession.webRequest.onBeforeRequest(null)
+        if (
+          url.origin + url.pathname !== REDIRECT_URI ||
+          url.searchParams.get('state') !== state
+        ) {
+          reject(
+            new Error(
+              'The authorization response could not be verified. Please retry.',
+            ),
+          )
+        } else if (error) {
+          reject(
+            new Error(
+              'Authorization was denied. Please retry if you want to sign in.',
+            ),
+          )
+        } else if (code) {
+          resolve(code)
+        } else {
+          reject(new Error('No authorization code received'))
+        }
+        authWindow.close()
       })
 
-      authWindow.loadURL(authUrl.toString())
+      authWindow.on('closed', () => {
+        if (!settled) {
+          authSession.webRequest.onBeforeRequest(null)
+          reject(new Error('Authentication window was closed'))
+        }
+      })
+
+      void authWindow.loadURL(authUrl.toString()).catch(() => {
+        // A failed navigation must settle the login request and release the session interceptor.
+        if (settled) return
+        settled = true
+        authSession.webRequest.onBeforeRequest(null)
+        authWindow.close()
+        reject(
+          new Error(
+            'The sign-in page could not be loaded. Check your connection and retry.',
+          ),
+        )
+      })
     })
   }
 

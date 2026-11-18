@@ -2,30 +2,39 @@
 
 [![CI](https://github.com/ryota-murakami/lain/actions/workflows/ci.yml/badge.svg)](https://github.com/ryota-murakami/lain/actions/workflows/ci.yml)
 
-**Lain** is a macOS-native [Raindrop.io](https://raindrop.io) desktop client for power users who manage 1,000+ bookmarks. It focuses on fast, keyboard-driven search and organization that goes beyond the Raindrop.io web app.
+**Lain** is an Electron desktop client for [Raindrop.io](https://raindrop.io), focused on keyboard-driven search and organization for large bookmark libraries. Development targets macOS (Apple silicon and Intel) and Linux x64.
 
-> Status: **Alpha** — [v0.1.1](https://github.com/ryota-murakami/lain/releases/tag/v0.1.1) is available for macOS 12+ (Developer ID signed and notarized); under active development.
+> Status: **Alpha**. The existing [v0.1.1 release](https://github.com/ryota-murakami/lain/releases/tag/v0.1.1) targets macOS 12+. This development branch uses Electron 45 and requires macOS 13+; Linux packages and the new features below are under verification. See the [current acceptance evidence](docs/goal-2026-11-09/PROGRESS.md) before treating development work as a released capability.
 
 Landing page: [lain-web.vercel.app](https://lain-web.vercel.app) ([source](apps/website)).
 
 ## Features
 
-|     | Feature                   | What it does                                                                     |
-| --- | ------------------------- | -------------------------------------------------------------------------------- |
-| F1  | Scoped search             | Search inside the current collection, one click to go global                     |
-| F2  | Field-specific search     | Restrict a query to URL, title, or description; matches are highlighted          |
-| F3  | Multiple view modes       | Grid, List, Table, Directory (⌘1–⌘4), remembered across restarts                 |
-| F4  | Auto icons                | Favicons resolved automatically, with Google Favicon and letter-avatar fallbacks |
-| F5  | Fuzzy collection search   | Type `rct` to jump to "React Resources"                                          |
-| F6  | Drag & drop organization  | Move and reorder collections between groups; drag bookmarks into collections     |
-| F7  | Readability               | Color-coded collections, breadcrumbs, item counts, content-type icons            |
-| F8  | Custom keyboard shortcuts | Every action is rebindable from Settings (⌘⇧K)                                   |
+|     | Feature                   | What it does                                                                      |
+| --- | ------------------------- | --------------------------------------------------------------------------------- |
+| F1  | Scoped search             | Search inside the current collection, one click to go global                      |
+| F2  | Field-specific search     | Restrict a query to URL, title, or description; matches are highlighted           |
+| F3  | Multiple view modes       | Grid, List, Table, Directory (⌘1–⌘4), remembered across restarts                  |
+| F4  | Auto icons                | Favicons resolved automatically, with Google Favicon and letter-avatar fallbacks  |
+| F5  | Fuzzy collection search   | Type `rct` to jump to "React Resources"                                           |
+| F6  | Drag & drop organization  | Move and reorder collections between groups; drag bookmarks into collections      |
+| F7  | Readability               | Color-coded collections, breadcrumbs, item counts, content-type icons             |
+| F8  | Custom keyboard shortcuts | Rebind application actions in Settings; reserved Escape behavior is explained     |
+| F9  | Full-library export       | Retrieve every page and save HTML, CSV or JSON with a native save dialog          |
+| F10 | Live synchronization      | Poll change markers, refresh on focus/reconnect and preserve unsaved edits        |
+| F11 | File uploads              | Pick or drop files, edit metadata, monitor progress and retry individual failures |
+| F12 | Application updates       | Check, choose download, view progress and explicitly restart when ready           |
+| F13 | Icon comparison           | Compare 64 candidates, apply the Dock/window icon and restore the default         |
 
-The full product and technical specification lives in [SPEC.md](apps/desktop/SPEC.md). The generated [E2E requirement coverage report](apps/desktop/docs/e2e-coverage.md) maps the specification to desktop tests.
+Export offers the complete library or the current collection, includes nested and empty collections, and checks page counts and duplicate records before saving. Table sorting applies to the loaded rows; the initial order follows the server. Directory view includes nested collections and selection controls. Collection colors and Lucide icons are display preferences for the current Lain account on this device; API refreshes retain those choices. Remote cover-derived colors remain the fallback. Icon application changes the runtime Dock/window icon and keeps the chosen preference; it does not replace the installed application bundle or Linux launcher icon.
+
+The current behavior and verification boundaries are documented in the [updated Japanese specification](docs/functional-spec-ja.md). [SPEC.md](apps/desktop/SPEC.md) retains the original product and technical design. The generated [E2E requirement coverage report](apps/desktop/docs/e2e-coverage.md) maps test declarations to requirements; it is not a substitute for execution evidence.
+
+Local execution evidence is tracked in the [acceptance matrix](docs/goal-2026-11-09/qa-matrix.md), [export validation](docs/goal-2026-11-09/export-validation.md), and [recorded desktop flows](docs/goal-2026-11-09/desktop-e2e-validation.md). The recordings use synthetic data and cover export cancellation/save, partial upload failure/retry, and icon apply/reset. A scripted native save-picker result exercises real IPC and file writes, but does not establish the operating system save sheet’s visual behavior. Current intermediate results are not final-commit or release acceptance.
 
 ## Tech stack
 
-Electron 40 · React 19 (React Compiler) · Vite 7 · Redux Toolkit + RTK Query · Tailwind CSS v4 + shadcn/ui · React Hook Form + Zod · Vitest + happy-dom + MSW · Playwright (Electron)
+Electron 45 · React 19 (React Compiler) · Vite 8 · Redux Toolkit + RTK Query · Tailwind CSS v4 + shadcn/ui · React Hook Form + Zod · Vitest + happy-dom + MSW · Playwright (Electron). See [dependency versions and justified exceptions](docs/goal-2026-11-09/dependencies.md).
 
 ## Repository layout
 
@@ -44,7 +53,7 @@ Install dependencies once at the root. Each app owns its build configuration and
 
 ## Getting started
 
-Requirements: macOS, Node.js 22+ (24.x on Vercel), [pnpm](https://pnpm.io).
+Desktop development requires macOS 13+ or Linux x64, Node.js 26.13.x and pnpm 12.18.0. The website has its own deployment runtime configuration.
 
 1. Create a Raindrop.io integration at <https://app.raindrop.io/settings/integrations> and copy its client ID and secret.
 2. Copy `apps/desktop/.env.example` to `apps/desktop/.env` and fill in the values:
@@ -64,18 +73,22 @@ Requirements: macOS, Node.js 22+ (24.x on Vercel), [pnpm](https://pnpm.io).
 
 ## Scripts
 
-| Command                  | Purpose                                                              |
-| ------------------------ | -------------------------------------------------------------------- |
-| `pnpm dev`               | Vite dev server + Electron                                           |
-| `pnpm build`             | Type-check and build renderer + main/preload bundles                 |
-| `pnpm lint`              | ESLint (flat config)                                                 |
-| `pnpm typecheck`         | `tsc -b --noEmit`                                                    |
-| `pnpm test`              | Unit tests (Vitest)                                                  |
-| `pnpm test:coverage`     | Unit tests with the V8 coverage gate                                 |
-| `pnpm test:e2e`          | Playwright Electron E2E (headless; `LAIN_E2E_HEADED=1` to watch)     |
-| `pnpm knip`              | Dead code / unused dependency detection                              |
-| `pnpm coverage:e2e-spec` | SPEC.md requirement coverage report for the E2E suite                |
-| `pnpm electron:build`    | Package the macOS app (`.dmg` + `.zip`) into `apps/desktop/release/` |
+| Command                  | Purpose                                                               |
+| ------------------------ | --------------------------------------------------------------------- |
+| `pnpm dev`               | Vite dev server + Electron                                            |
+| `pnpm build`             | Type-check and build renderer + main/preload bundles                  |
+| `pnpm lint`              | ESLint (flat config)                                                  |
+| `pnpm typecheck`         | `tsc -b --noEmit`                                                     |
+| `pnpm test`              | Unit tests (Vitest)                                                   |
+| `pnpm test:coverage`     | Measured Istanbul coverage with source provenance for the health gate |
+| `pnpm test:e2e`          | Playwright Electron E2E (headless; `LAIN_E2E_HEADED=1` to watch)      |
+| `pnpm knip`              | Dead code / unused dependency detection                               |
+| `pnpm coverage:e2e-spec` | SPEC.md requirement coverage report for the E2E suite                 |
+| `pnpm electron:build`    | Package the macOS app (`.dmg` + `.zip`) into `apps/desktop/release/`  |
+| `pnpm quality`           | Strict dead-code, duplication, architecture and measured health gates |
+| `pnpm package:mac`       | Build and verify macOS arm64/x64 packages and matching metadata       |
+| `pnpm package:linux`     | Build and verify Linux x64 AppImage/deb packages on Linux             |
+| `pnpm verify:release`    | Verify artifact hashes, versions, package contents and source mapping |
 
 Additional website commands:
 
@@ -92,20 +105,17 @@ The desktop package keeps the name `lain`, its version, and its release identity
 
 ## Continuous integration
 
-Every push to `main` and every pull request runs `knip`, `lint`, `typecheck`, `test` (with coverage thresholds), `build`, `e2e`, and `e2e-coverage` for the desktop app on macOS runners. The `website` job runs lint, type checking, and a production build on Ubuntu. Coverage artifacts are collected from `apps/desktop/coverage/` and `apps/desktop/docs/`. See [.github/workflows/ci.yml](.github/workflows/ci.yml).
+Every push to `main` and every pull request runs the existing desktop checks and website validation. Dedicated fallow jobs add dead-code, duplication, architecture, measured health and change auditing. Package checks build macOS and Linux artifacts and exercise isolated packaged applications. No CI test requires a personal Raindrop account. Workflow definitions are not proof of a successful run: execution URLs and source commits belong in the [release evidence](docs/goal-2026-11-09/release.md).
 
 ## Release
 
-`pnpm electron:build` packages the app with [electron-builder](https://www.electron.build) using [electron-builder.yml](apps/desktop/electron-builder.yml): a `.dmg` and a `.zip` per architecture land in `apps/desktop/release/`, together with `latest-mac.yml`, the feed that packaged builds poll through electron-updater (checked at startup and every 4 hours, installed on quit).
+`pnpm package:mac` and `pnpm package:linux` use [electron-builder.yml](apps/desktop/electron-builder.yml). macOS produces DMG/ZIP packages for arm64 and x64; Linux produces x64 AppImage/deb packages. Update feeds, blockmaps, checksums and source provenance are checked against the actual artifacts.
 
-Releases are built on a Mac, not in CI:
+The [build-and-release workflow](.github/workflows/build-and-release.yml) supports signed tag releases and manually dispatched QA drafts. A QA draft is excluded from the production update feed. Signed builds require the configured OAuth, signing and notarization credentials; an unsigned packaging run does not establish authentication, Gatekeeper or notarization success.
 
-1. Bump `version` in `apps/desktop/package.json` (via a PR, `main` is protected) and pull `main`.
-2. Export the notarization credentials (`APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`, or `APPLE_KEYCHAIN_PROFILE`) and keep the Raindrop.io OAuth app in `apps/desktop/.env`.
-3. Run `pnpm electron:release:mac`: it builds arm64 + x64, signs with the Developer ID Application identity from your keychain, lets electron-builder notarize the app, then [finalize-mac-release-artifacts.ts](apps/desktop/scripts/finalize-mac-release-artifacts.ts) notarizes + staples both DMGs and rewrites `latest-mac.yml` / `checksums.json`.
-4. Upload `apps/desktop/release/*.dmg`, `apps/desktop/release/*.zip`, `apps/desktop/release/*-mac.zip.blockmap`, `apps/desktop/release/latest-mac.yml` and `apps/desktop/release/checksums.json` with `gh release create vX.Y.Z --target <main sha>`.
+Updates never install merely because the user quits. Settings → Updates offers a check, explicit download, progress, Later, and Restart and install. Pending edits/transfers block restart. AppImage supports the update flow; deb installations show the package-management/download route. See the [release runbook and current limitations](docs/goal-2026-11-09/release.md).
 
-CI runs an unsigned `--dir` package check on pull requests to `main` that touch `apps/desktop/**`, the root package or workspace manifests, the shared lockfile, the prepare action, or the package-check workflow ([.github/workflows/package-check.yml](.github/workflows/package-check.yml)).
+Local signed release preparation remains available through `pnpm electron:release:mac`. Use existing secret references or the documented CI secret configuration; keep credentials out of logs, repository files and PR attachments.
 
 ## Website deployment
 
@@ -113,8 +123,10 @@ The landing page is deployed by the `lain-web` Vercel project in the `laststance
 
 ## Security model
 
-- OAuth tokens are stored with Electron `safeStorage` (macOS Keychain), never in `localStorage`.
+- OAuth tokens use Electron `safeStorage` and never use `localStorage`. When secure encryption is unavailable, including Linux's `basic_text` backend, credentials remain in memory and the UI explains that sign-in lasts only for the current session.
 - The renderer runs with `contextIsolation` and `sandbox` enabled and no Node integration; privileged calls go through a sender-validated IPC bridge.
+- The renderer receives the current access token through the narrow auth IPC to authorize API requests. It is not accurate to claim that tokens never reach the renderer.
+- OAuth callbacks verify the redirect and state value. Concurrent token refreshes share one request; temporary authentication-service failures preserve credentials for retry.
 
 ---
 

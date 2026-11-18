@@ -11,22 +11,10 @@ const Dialog = React.memo(function Dialog({
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 })
 
-const DialogTrigger = React.memo(function DialogTrigger({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
-})
-
 const DialogPortal = React.memo(function DialogPortal({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
-})
-
-const DialogClose = React.memo(function DialogClose({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
-  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 })
 
 const DialogOverlay = React.memo(function DialogOverlay({
@@ -153,13 +141,9 @@ const DialogDescription = React.memo(function DialogDescription({
 
 export {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
-  DialogTrigger,
 }

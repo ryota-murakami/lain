@@ -74,7 +74,7 @@ test.describe('P3 Search - Scoped Search (F1)', () => {
     await resetToAllBookmarks(page)
 
     // Switch to Design collection (does not contain "React Documentation")
-    await page.getByRole('button', { name: 'Design' }).click()
+    await page.getByRole('button', { name: 'Design', exact: true }).click()
     await expect(
       page.locator('[data-slot="breadcrumb-page"]', { hasText: 'Design' }),
     ).toBeVisible()
@@ -115,7 +115,7 @@ test.describe('P3 Search - Scoped Search (F1)', () => {
   }) => {
     await resetToAllBookmarks(page)
 
-    await page.getByRole('button', { name: 'Design' }).click()
+    await page.getByRole('button', { name: 'Design', exact: true }).click()
     await expect(
       page.locator('[data-slot="breadcrumb-page"]', { hasText: 'Design' }),
     ).toBeVisible()
@@ -287,7 +287,7 @@ test.describe('P3 Search - Fuzzy Collection Search (F5)', () => {
     const collections = buildPerfCollections(FUZZY_PERF_COLLECTION_COUNT)
     const query = 'rct'
     const fuseOptions = {
-      keys: ['name'] as const,
+      keys: ['name'],
       threshold: FUZZY_PERF_THRESHOLD,
       includeScore: true,
       includeMatches: true,

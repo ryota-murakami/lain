@@ -1,0 +1,5 @@
+# Exact synthetic rejection fixtures; neither URL contains a real credential.
+# renderer-security.test.ts rejects a deceptive userinfo/host combination.
+http://localhost:5173@evil.invalid
+# update-qa.test.ts rejects credentials in an otherwise loopback-only feed.
+http://user:password@127.0.0.1:4321

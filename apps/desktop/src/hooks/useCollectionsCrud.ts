@@ -16,6 +16,8 @@ import type {
   CollectionCreate,
   CollectionUpdate,
 } from '@/store/api/raindropApi'
+import { useAppDispatch } from '@/store/hooks'
+import { setCollectionColor } from '@/store/slices/uiSlice'
 
 /**
  * Collection CRUD operations with UI-to-API type mapping.
@@ -29,6 +31,7 @@ import type {
  *   await createCollection({ title: 'My Collection', parentId: '100' })
  */
 export function useCollectionsCrud(): UseCollectionsCrudReturn {
+  const dispatch = useAppDispatch()
   const [postCollection] = usePostCollectionMutation()
   const [putCollection] = usePutCollectionByIdMutation()
   const [deleteCollectionMutation] = useDeleteCollectionByIdMutation()
@@ -40,17 +43,17 @@ export function useCollectionsCrud(): UseCollectionsCrudReturn {
     async (data: CreateCollectionFormData) => {
       const apiData: CollectionCreate = {
         title: data.title,
-        view: data.view,
+        public: data.isPublic,
         parent: data.parentId
           ? { $id: collectionIdToApi(data.parentId) }
           : undefined,
       }
-      const result = await postCollection({ collectionCreate: apiData })
-      if ('data' in result) {
-        toast.success('Collection created')
-      } else {
-        toast.error('Failed to create collection')
-      }
+      const result = await postCollection({
+        collectionCreate: apiData,
+      }).unwrap()
+      if (!result.item?._id)
+        throw new Error('The service did not return a collection ID')
+      return String(result.item._id)
     },
     [postCollection],
   )
@@ -61,61 +64,48 @@ export function useCollectionsCrud(): UseCollectionsCrudReturn {
         title: data.title,
         view: data.view,
         expanded: data.expanded,
+        public: data.isPublic,
         parent: data.parentId
           ? { $id: collectionIdToApi(data.parentId) }
-          : undefined,
+          : 'parentId' in data
+            ? {}
+            : undefined,
       }
-      const result = await putCollection({
+      await putCollection({
         id: collectionIdToApi(id),
         collectionUpdate: apiData,
-      })
-      if ('data' in result) {
-        toast.success('Collection updated')
-      } else {
-        toast.error('Failed to update collection')
-      }
+      }).unwrap()
+      // The API exposes cover-derived color but does not accept color writes; preserve the user's local choice.
+      if (data.color !== undefined)
+        dispatch(setCollectionColor({ id, color: data.color }))
     },
-    [putCollection],
+    [dispatch, putCollection],
   )
 
   const deleteCollection = useCallback(
     async (id: string) => {
-      const result = await deleteCollectionMutation({
-        id: collectionIdToApi(id),
-      })
-      if ('data' in result) {
-        toast.success('Collection deleted')
-      } else {
-        toast.error('Failed to delete collection')
-      }
+      await deleteCollectionMutation({ id: collectionIdToApi(id) }).unwrap()
+      toast.success('Collection deleted')
     },
     [deleteCollectionMutation],
   )
 
   const merge = useCallback(
     async (targetId: string, sourceIds: string[]) => {
-      const result = await mergeCollections({
+      await mergeCollections({
         collectionsMergeRequest: {
           to: collectionIdToApi(targetId),
           ids: sourceIds.map((id) => collectionIdToApi(id)),
         },
-      })
-      if ('data' in result) {
-        toast.success('Collections merged')
-      } else {
-        toast.error('Failed to merge collections')
-      }
+      }).unwrap()
+      toast.success('Collections merged')
     },
     [mergeCollections],
   )
 
   const emptyTrash = useCallback(async () => {
-    const result = await deleteCollection99()
-    if ('data' in result) {
-      toast.success('Trash emptied')
-    } else {
-      toast.error('Failed to empty trash')
-    }
+    await deleteCollection99().unwrap()
+    toast.success('Trash emptied')
   }, [deleteCollection99])
 
   /**
@@ -124,15 +114,14 @@ export function useCollectionsCrud(): UseCollectionsCrudReturn {
    */
   const updateUserGroups = useCallback(
     async (groups: Group[]) => {
-      const result = await putUser({
+      await putUser({
         userUpdate: {
-          groups: toUserGroupPayload(groups),
+          // Synthetic visibility groups do not exist in the remote user profile.
+          groups: toUserGroupPayload(
+            groups.filter((group) => group.id !== 'ungrouped'),
+          ),
         },
-      })
-      if (!('data' in result)) {
-        toast.error('Failed to save collection organization')
-        throw new Error('Failed to save collection organization')
-      }
+      }).unwrap()
     },
     [putUser],
   )
@@ -150,23 +139,17 @@ export function useCollectionsCrud(): UseCollectionsCrudReturn {
   )
 
   /**
-   * Update collection color by ID.
+   * Persist an account-local collection color after a sidebar color-menu action.
    * @param id - Collection ID in UI format
    * @param color - Hex color string
    */
   const recolorCollection = useCallback(
-    async (id: string, color: string) => {
-      const result = await putCollection({
-        id: collectionIdToApi(id),
-        collectionUpdate: { color },
-      })
-      if ('data' in result) {
-        toast.success('Collection color updated')
-      } else {
-        toast.error('Failed to update collection color')
-      }
+    async (id: string, color: string): Promise<void> => {
+      dispatch(setCollectionColor({ id, color }))
+      toast.success('Collection color saved on this device')
+      return Promise.resolve()
     },
-    [putCollection],
+    [dispatch],
   )
 
   return {
@@ -184,7 +167,8 @@ export function useCollectionsCrud(): UseCollectionsCrudReturn {
 /**
  * Form data for creating a new collection.
  */
-export interface CreateCollectionFormData {
+interface CreateCollectionFormData {
+  isPublic?: boolean
   /** Collection title (required) */
   title: string
   /** Parent collection ID (UI string). Omit for root-level. */
@@ -197,7 +181,9 @@ export interface CreateCollectionFormData {
  * Form data for updating an existing collection.
  * Only defined fields are sent to the API.
  */
-export interface UpdateCollectionFormData {
+interface UpdateCollectionFormData {
+  isPublic?: boolean
+  color?: string
   title?: string
   parentId?: string
   view?: string
@@ -205,7 +191,7 @@ export interface UpdateCollectionFormData {
 }
 
 interface UseCollectionsCrudReturn {
-  createCollection: (data: CreateCollectionFormData) => Promise<void>
+  createCollection: (data: CreateCollectionFormData) => Promise<string>
   updateCollection: (
     id: string,
     data: UpdateCollectionFormData,
@@ -219,6 +205,6 @@ interface UseCollectionsCrudReturn {
   updateUserGroups: (groups: Group[]) => Promise<void>
   /** Rename collection title */
   renameCollection: (id: string, title: string) => Promise<void>
-  /** Update collection color */
+  /** Save collection color in this account's local display preferences */
   recolorCollection: (id: string, color: string) => Promise<void>
 }

@@ -1,0 +1,108 @@
+{
+  "mode": "measured-istanbul",
+  "sourceFingerprint": "8e2e57b325f4ff4e897debd6d66afaa5c12731da6c3b3c8fd959b812f756156d",
+  "coverageSha256": "505fd84421d7cb14736f6a56153f1c5181f70443e391146a8b0c596c0142d5d2",
+  "node": "v26.13.0",
+  "completedAt": "2026-11-09T20:43:05.865Z",
+  "tests": 588,
+  "testFiles": 59,
+  "electronE2E": {
+    "passed": 95,
+    "retries": 0,
+    "duration": "2.3 minutes"
+  },
+  "focusedElectron": {
+    "distinctCases": 3,
+    "repeatEach": 3,
+    "passed": 9,
+    "retries": 0
+  },
+  "releaseIntegrityTests": 6,
+  "rendererCoverage": {
+    "statements": {
+      "total": 4135,
+      "covered": 3610,
+      "pct": 87.3
+    },
+    "branches": {
+      "total": 2582,
+      "covered": 2068,
+      "pct": 80.09
+    },
+    "functions": {
+      "total": 1295,
+      "covered": 1058,
+      "pct": 81.7
+    },
+    "lines": {
+      "total": 3728,
+      "covered": 3347,
+      "pct": 89.78
+    }
+  },
+  "expandedCoverage": {
+    "lines": {
+      "total": 4266,
+      "covered": 3710,
+      "skipped": 0,
+      "pct": 86.96
+    },
+    "statements": {
+      "total": 4718,
+      "covered": 4003,
+      "skipped": 0,
+      "pct": 84.84
+    },
+    "functions": {
+      "total": 1447,
+      "covered": 1157,
+      "skipped": 0,
+      "pct": 79.95
+    },
+    "branches": {
+      "total": 2844,
+      "covered": 2254,
+      "skipped": 0,
+      "pct": 79.25
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "strictFindings": {
+    "deadCode": 0,
+    "duplication": 0,
+    "architecture": 0,
+    "measuredHealth": 0,
+    "staticComplexity": 0
+  },
+  "comparableHealthFindings": 3,
+  "auditVerdict": "pass",
+  "auditBase": "origin/main",
+  "inheritedStylingAdvisories": 2,
+  "sourceState": "Formatted rename focus/keyboard correction before clean commit; hosted/package/update acceptance remains separate",
+  "priorHostedResult": {
+    "source": "bdacbdb9d7db2952e98835539ee06445f385d889",
+    "initialPassed": 93,
+    "flaky": 1,
+    "actualRetries": 1,
+    "finalFailed": 0
+  },
+  "reproducedCauses": [
+    "Deferred context close autofocus causes premature blur save",
+    "Space keydown bubbles into sortable keyboard sensor",
+    "Space keyup activates containing native button and changes current collection"
+  ],
+  "visualReview": {
+    "publicVideos": 4,
+    "sampleRateFps": 4,
+    "sampledFrames": 55,
+    "contactSheets": 8,
+    "additionalNativeRateSidebarFrames": 33,
+    "allDecodedAndReviewed": true,
+    "qualification": "Double-click clip shows the editor briefly; exact save is asserted by tests rather than inferred solely from its short video."
+  }
+}

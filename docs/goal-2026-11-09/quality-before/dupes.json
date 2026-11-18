@@ -1,0 +1,2050 @@
+{
+  "kind": "dupes",
+  "schema_version": 10,
+  "version": "3.41.0",
+  "elapsed_ms": 17,
+  "clone_groups": [
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+          "start_line": 54,
+          "end_line": 98,
+          "start_col": 0,
+          "end_col": 9,
+          "fragment": "function formatRelativeDate(dateStr: string): string {\n  const date = new Date(dateStr)\n  const now = new Date()\n  const diffMs = now.getTime() - date.getTime()\n  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))\n  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))\n\n  if (diffHours < 1) return 'Just now'\n  if (diffHours < 24) return `${diffHours}h ago`\n  if (diffDays === 1) return 'Yesterday'\n  if (diffDays < 7) return `${diffDays}d ago`\n\n  return date.toLocaleDateString('en-US', {\n    month: 'short',\n    day: 'numeric',\n  })\n}\n\n/**\n * Render highlighted text segments for matched search content.\n * @param text - Original text to render\n * @param query - Active search query\n * @returns Text with matching segments wrapped in <mark>\n */\nfunction renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )\n}\n\n/**\n * Props for the RaindropCard component.\n */\ninterface"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+          "start_line": 55,
+          "end_line": 99,
+          "start_col": 0,
+          "end_col": 9,
+          "fragment": "function formatRelativeDate(dateStr: string): string {\n  const date = new Date(dateStr)\n  const now = new Date()\n  const diffMs = now.getTime() - date.getTime()\n  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))\n  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))\n\n  if (diffHours < 1) return 'Just now'\n  if (diffHours < 24) return `${diffHours}h ago`\n  if (diffDays === 1) return 'Yesterday'\n  if (diffDays < 7) return `${diffDays}d ago`\n\n  return date.toLocaleDateString('en-US', {\n    month: 'short',\n    day: 'numeric',\n  })\n}\n\n/**\n * Render highlighted text segments for matched search content.\n * @param text - Original text to render\n * @param query - Active search query\n * @returns Text with matching segments wrapped in <mark>\n */\nfunction renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )\n}\n\n/**\n * Props for the RaindropListItem component.\n */\ninterface"
+        }
+      ],
+      "token_count": 211,
+      "line_count": 45,
+      "fingerprint": "dup:1e79656c",
+      "spread": 0,
+      "suggested_name": "text",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (45 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+          "start_line": 152,
+          "end_line": 176,
+          "start_col": 5,
+          "end_col": 7,
+          "fragment": "],\n  )\n  const handleMoreClick = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleOpenUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      window.shell.openExternal(raindrop.url)\n    },\n    [raindrop.url],\n  )\n  const handleStopPropagation = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleCopyUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      navigator.clipboard.writeText(raindrop.url)\n    },\n    [raindrop.url],\n  )\n  const"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+          "start_line": 151,
+          "end_line": 177,
+          "start_col": 18,
+          "end_col": 7,
+          "fragment": "],\n  )\n\n  const handleMoreClick = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleOpenUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      window.shell.openExternal(raindrop.url)\n    },\n    [raindrop.url],\n  )\n  const handleStopPropagation = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleCopyUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      navigator.clipboard.writeText(raindrop.url)\n    },\n    [raindrop.url],\n  )\n\n  const"
+        }
+      ],
+      "token_count": 139,
+      "line_count": 27,
+      "fingerprint": "dup:603a5425",
+      "spread": 0,
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (27 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+          "start_line": 377,
+          "end_line": 395,
+          "start_col": 35,
+          "end_col": 49,
+          "fragment": "=> void\n  onDeleteCollection: (collectionId: string) => Promise<void>\n  onMoveCollectionToGroup: (\n    collectionId: string,\n    targetGroupId: string,\n  ) => Promise<void>\n  onChangeCollectionColor: (\n    collectionId: string,\n    color: string,\n  ) => Promise<void>\n  onStartInlineRename: (collection: Collection) => void\n  onSubmitInlineRename: (\n    collectionId: string,\n    nextName: string,\n  ) => Promise<void>\n  onCancelInlineRename: () => void\n  editingCollectionId: string | null\n  editingName: string\n  onEditingNameChange: (nextName: string) => void"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+          "start_line": 667,
+          "end_line": 685,
+          "start_col": 37,
+          "end_col": 51,
+          "fragment": "=> void\n    onDeleteCollection: (collectionId: string) => Promise<void>\n    onMoveCollectionToGroup: (\n      collectionId: string,\n      targetGroupId: string,\n    ) => Promise<void>\n    onChangeCollectionColor: (\n      collectionId: string,\n      color: string,\n    ) => Promise<void>\n    onStartInlineRename: (collection: Collection) => void\n    onSubmitInlineRename: (\n      collectionId: string,\n      nextName: string,\n    ) => Promise<void>\n    onCancelInlineRename: () => void\n    editingCollectionId: string | null\n    editingName: string\n    onEditingNameChange: (nextName: string) => void"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+          "start_line": 782,
+          "end_line": 800,
+          "start_col": 22,
+          "end_col": 49,
+          "fragment": "=> void\n  onDeleteCollection: (collectionId: string) => Promise<void>\n  onMoveCollectionToGroup: (\n    collectionId: string,\n    targetGroupId: string,\n  ) => Promise<void>\n  onChangeCollectionColor: (\n    collectionId: string,\n    color: string,\n  ) => Promise<void>\n  onStartInlineRename: (collection: Collection) => void\n  onSubmitInlineRename: (\n    collectionId: string,\n    nextName: string,\n  ) => Promise<void>\n  onCancelInlineRename: () => void\n  editingCollectionId: string | null\n  editingName: string\n  onEditingNameChange: (nextName: string) => void"
+        }
+      ],
+      "token_count": 78,
+      "line_count": 19,
+      "fingerprint": "dup:d65e31e2",
+      "spread": 2,
+      "suggested_name": "collectionId",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (19 lines, 3 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+          "start_line": 106,
+          "end_line": 120,
+          "start_col": 0,
+          "end_col": 3,
+          "fragment": "function renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+          "start_line": 78,
+          "end_line": 92,
+          "start_col": 0,
+          "end_col": 3,
+          "fragment": "function renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+          "start_line": 79,
+          "end_line": 93,
+          "start_col": 0,
+          "end_col": 3,
+          "fragment": "function renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+        }
+      ],
+      "token_count": 80,
+      "line_count": 15,
+      "fingerprint": "dup:9471482c",
+      "spread": 0,
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (15 lines, 3 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+          "start_line": 373,
+          "end_line": 397,
+          "start_col": 14,
+          "end_col": 56,
+          "fragment": "r\n  selectedCollectionId: string\n  expandedCollections: Set<string>\n  onSelectCollection: (id: string) => void\n  onToggleCollection: (id: string) => void\n  onDeleteCollection: (collectionId: string) => Promise<void>\n  onMoveCollectionToGroup: (\n    collectionId: string,\n    targetGroupId: string,\n  ) => Promise<void>\n  onChangeCollectionColor: (\n    collectionId: string,\n    color: string,\n  ) => Promise<void>\n  onStartInlineRename: (collection: Collection) => void\n  onSubmitInlineRename: (\n    collectionId: string,\n    nextName: string,\n  ) => Promise<void>\n  onCancelInlineRename: () => void\n  editingCollectionId: string | null\n  editingName: string\n  onEditingNameChange: (nextName: string) => void\n  groups: Group[]\n  sidebarMenuButtonStyles: Record<number, CSSProperties>"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+          "start_line": 663,
+          "end_line": 687,
+          "start_col": 25,
+          "end_col": 58,
+          "fragment": "n\n    selectedCollectionId: string\n    expandedCollections: Set<string>\n    onSelectCollection: (id: string) => void\n    onToggleCollection: (id: string) => void\n    onDeleteCollection: (collectionId: string) => Promise<void>\n    onMoveCollectionToGroup: (\n      collectionId: string,\n      targetGroupId: string,\n    ) => Promise<void>\n    onChangeCollectionColor: (\n      collectionId: string,\n      color: string,\n    ) => Promise<void>\n    onStartInlineRename: (collection: Collection) => void\n    onSubmitInlineRename: (\n      collectionId: string,\n      nextName: string,\n    ) => Promise<void>\n    onCancelInlineRename: () => void\n    editingCollectionId: string | null\n    editingName: string\n    onEditingNameChange: (nextName: string) => void\n    groups: Group[]\n    sidebarMenuButtonStyles: Record<number, CSSProperties>"
+        }
+      ],
+      "token_count": 111,
+      "line_count": 25,
+      "fingerprint": "dup:67772490",
+      "spread": 2,
+      "suggested_name": "collectionId",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (25 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+          "start_line": 280,
+          "end_line": 313,
+          "start_col": 55,
+          "end_col": 25,
+          "fragment": ">\n                </Button>\n              </DropdownMenuTrigger>\n              <DropdownMenuContent align=\"end\" className=\"w-48\">\n                <DropdownMenuItem onClick={handleOpenUrl}>\n                  <ExternalLink className=\"mr-2 h-4 w-4\" />\n                  Open URL\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <Pencil className=\"mr-2 h-4 w-4\" />\n                  Edit\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <FolderInput className=\"mr-2 h-4 w-4\" />\n                  Move to Collection...\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <Tag className=\"mr-2 h-4 w-4\" />\n                  Add Tags...\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleCopyUrl}>\n                  <Copy className=\"mr-2 h-4 w-4\" />\n                  Copy URL\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <Star className=\"mr-2 h-4 w-4\" />\n                  {raindrop.isImportant\n                    ? 'Remove Important'\n                    : 'Mark as Important'}\n                </DropdownMenuItem>\n                <DropdownMenuSeparator />\n                <DropdownMenuItem\n                  className=\"text-destructive\"\n                  onClick"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+          "start_line": 309,
+          "end_line": 340,
+          "start_col": 51,
+          "end_col": 21,
+          "fragment": ">\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align=\"end\" className=\"w-48\">\n            <DropdownMenuItem onClick={handleOpenUrl}>\n              <ExternalLink className=\"mr-2 h-4 w-4\" />\n              Open URL\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <Pencil className=\"mr-2 h-4 w-4\" />\n              Edit\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <FolderInput className=\"mr-2 h-4 w-4\" />\n              Move to Collection...\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <Tag className=\"mr-2 h-4 w-4\" />\n              Add Tags...\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleCopyUrl}>\n              <Copy className=\"mr-2 h-4 w-4\" />\n              Copy URL\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <Star className=\"mr-2 h-4 w-4\" />\n              {raindrop.isImportant ? 'Remove Important' : 'Mark as Important'}\n            </DropdownMenuItem>\n            <DropdownMenuSeparator />\n            <DropdownMenuItem\n              className=\"text-destructive\"\n              onClick"
+        }
+      ],
+      "token_count": 107,
+      "line_count": 34,
+      "fingerprint": "dup:1146735d",
+      "spread": 0,
+      "suggested_name": "DropdownMenuItem",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (34 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 345,
+          "end_line": 361,
+          "start_col": 39,
+          "end_col": 7,
+          "fragment": "g))\n  }\n\n  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === 'Enter') {\n      e.preventDefault()\n      if (tagSuggestions.length > 0) {\n        addTag(tagSuggestions[0])\n      } else if (tagInput.trim()) {\n        addTag(tagInput)\n      }\n    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {\n      removeTag(tags[tags.length - 1])\n    }\n  }\n\n  const"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 231,
+          "end_line": 247,
+          "start_col": 43,
+          "end_col": 7,
+          "fragment": "e))\n  }\n\n  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === 'Enter') {\n      e.preventDefault()\n      if (tagSuggestions.length > 0) {\n        addTag(tagSuggestions[0])\n      } else if (tagInput.trim()) {\n        addTag(tagInput)\n      }\n    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {\n      removeTag(tags[tags.length - 1])\n    }\n  }\n\n  const"
+        }
+      ],
+      "token_count": 107,
+      "line_count": 17,
+      "fingerprint": "dup:6b8b1e0e",
+      "spread": 0,
+      "suggested_name": "tagInput",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (17 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 452,
+          "end_line": 471,
+          "start_col": 103,
+          "end_col": 27,
+          "fragment": ">\n                {tags.map((tag) => (\n                  <Badge key={tag} variant=\"secondary\" className=\"gap-1 pr-1\">\n                    {tag}\n                    <button\n                      type=\"button\"\n                      onClick={() => removeTag(tag)}\n                      className=\"hover:bg-muted-foreground/20 ml-0.5 rounded-sm p-0.5\"\n                    >\n                      <X className=\"h-3 w-3\" />\n                    </button>\n                  </Badge>\n                ))}\n                <input\n                  type=\"text\"\n                  value={tagInput}\n                  onChange={(e) => setTagInput(e.target.value)}\n                  onKeyDown={handleTagKeyDown}\n                  placeholder={tags.length === 0 ? 'Add tags...' : ''}\n                  className"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 515,
+          "end_line": 534,
+          "start_col": 109,
+          "end_col": 29,
+          "fragment": ">\n                  {tags.map((tag) => (\n                    <Badge key={tag} variant=\"secondary\" className=\"gap-1 pr-1\">\n                      {tag}\n                      <button\n                        type=\"button\"\n                        onClick={() => removeTag(tag)}\n                        className=\"hover:bg-muted-foreground/20 ml-0.5 rounded-sm p-0.5\"\n                      >\n                        <X className=\"h-3 w-3\" />\n                      </button>\n                    </Badge>\n                  ))}\n                  <input\n                    type=\"text\"\n                    value={tagInput}\n                    onChange={(e) => setTagInput(e.target.value)}\n                    onKeyDown={handleTagKeyDown}\n                    placeholder={tags.length === 0 ? 'Add tags...' : ''}\n                    className"
+        }
+      ],
+      "token_count": 88,
+      "line_count": 20,
+      "fingerprint": "dup:6faa5a1e",
+      "spread": 0,
+      "suggested_name": "className",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (20 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 495,
+          "end_line": 516,
+          "start_col": 51,
+          "end_col": 28,
+          "fragment": ">\n                    <SelectValue />\n                  </SelectTrigger>\n                  <SelectContent>\n                    {(\n                      Object.entries(TYPE_ICONS) as [\n                        ContentType,\n                        typeof Globe,\n                      ][]\n                    ).map(([type, Icon]) => (\n                      <SelectItem key={type} value={type}>\n                        <div className=\"flex items-center gap-2\">\n                          <Icon className=\"h-4 w-4\" />\n                          <span className=\"capitalize\">{type}</span>\n                        </div>\n                      </SelectItem>\n                    ))}\n                  </SelectContent>\n                </Select>\n              </div>\n\n              <div className"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 488,
+          "end_line": 510,
+          "start_col": 49,
+          "end_col": 28,
+          "fragment": ">\n                    <SelectValue />\n                  </SelectTrigger>\n                  <SelectContent>\n                    {(\n                      Object.entries(TYPE_ICONS) as [\n                        ContentType,\n                        typeof Globe,\n                      ][]\n                    ).map(([type, Icon]) => (\n                      <SelectItem key={type} value={type}>\n                        <div className=\"flex items-center gap-2\">\n                          <Icon className=\"h-4 w-4\" />\n                          <span className=\"capitalize\">{type}</span>\n                        </div>\n                      </SelectItem>\n                    ))}\n                  </SelectContent>\n                </Select>\n              </div>\n\n              {/* Tags */}\n              <div className"
+        }
+      ],
+      "token_count": 78,
+      "line_count": 23,
+      "fingerprint": "dup:84a4005e",
+      "spread": 0,
+      "suggested_name": "className",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (23 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+          "start_line": 160,
+          "end_line": 169,
+          "start_col": 49,
+          "end_col": 39,
+          "fragment": ")\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const descriptionText = raindrop.description ?? raindrop.notes ?? ''\n  const domainText = raindrop.domain ||"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+          "start_line": 184,
+          "end_line": 194,
+          "start_col": 56,
+          "end_col": 22,
+          "fragment": "'\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const descriptionText = raindrop.description ?? raindrop.notes ?? ''\n  const domainText =\n    raindrop.domain ||"
+        }
+      ],
+      "token_count": 69,
+      "line_count": 11,
+      "fingerprint": "dup:e4a9f893",
+      "spread": 0,
+      "suggested_name": "searchScope",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (11 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+          "start_line": 77,
+          "end_line": 106,
+          "start_col": 0,
+          "end_col": 8,
+          "fragment": "const TYPE_ICON_MAP: Record<ContentType, typeof Globe> = {\n  link: Globe,\n  article: FileText,\n  image: Image,\n  video: Video,\n  document: File,\n  audio: Music,\n}\n\n/**\n * Render a content type icon.\n */\nconst TypeIconDisplay = React.memo(function TypeIconDisplay({\n  type,\n  className,\n}: {\n  type: ContentType\n  className?: string\n}) {\n  const Icon = TYPE_ICON_MAP[type] || Globe\n  return <Icon className={className} />\n})\n\n/**\n * Render highlighted text segments for matched search content.\n * @param text - Original text to render\n * @param query - Active search query\n * @returns Text with matching segments wrapped in <mark>\n */\nfunction"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/table-view.tsx",
+          "start_line": 58,
+          "end_line": 91,
+          "start_col": 0,
+          "end_col": 8,
+          "fragment": "const TYPE_ICON_MAP: Record<ContentType, typeof Globe> = {\n  link: Globe,\n  article: FileText,\n  image: Image,\n  video: Video,\n  document: File,\n  audio: Music,\n}\n\n/**\n * Render the appropriate content type icon.\n * @param type - The content type\n * @param className - CSS class for the icon\n * @returns JSX element for the icon\n * @example <TypeIconDisplay type=\"article\" className=\"h-3 w-3\" />\n */\nconst TypeIconDisplay = React.memo(function TypeIconDisplay({\n  type,\n  className,\n}: {\n  type: ContentType\n  className?: string\n}) {\n  const Icon = TYPE_ICON_MAP[type] || Globe\n  return <Icon className={className} />\n})\n\n/**\n * Format a date string to a human-readable relative format.\n * @param dateStr - ISO date string\n * @returns Formatted date string\n * @example formatDate(\"2026-02-08T10:00:00Z\") // => \"Feb 8, 2026\"\n */\nfunction"
+        }
+      ],
+      "token_count": 68,
+      "line_count": 34,
+      "fingerprint": "dup:72c54647",
+      "spread": 0,
+      "suggested_name": "className",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (34 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/main-app.tsx",
+          "start_line": 81,
+          "end_line": 85,
+          "start_col": 66,
+          "end_col": 7,
+          "fragment": ")\n  const searchQuery = useAppSelector((s) => s.search.query)\n  const searchScope = useAppSelector((s) => s.search.scope)\n  const searchMode = useAppSelector((s) => s.search.mode)\n  const"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+          "start_line": 272,
+          "end_line": 276,
+          "start_col": 34,
+          "end_col": 7,
+          "fragment": ")\n  const searchQuery = useAppSelector((s) => s.search.query)\n  const searchScope = useAppSelector((s) => s.search.scope)\n  const searchMode = useAppSelector((s) => s.search.mode)\n  const"
+        }
+      ],
+      "token_count": 63,
+      "line_count": 5,
+      "fingerprint": "dup:e7b4aa18",
+      "spread": 1,
+      "suggested_name": "useAppSelector",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (5 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 334,
+          "end_line": 344,
+          "start_col": 75,
+          "end_col": 21,
+          "fragment": "])\n\n  const addTag = (tag: string) => {\n    const trimmed = tag.trim().toLowerCase()\n    if (trimmed && !tags.includes(trimmed)) {\n      setTags([...tags, trimmed])\n    }\n    setTagInput('')\n  }\n\n  const removeTag = ("
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 220,
+          "end_line": 230,
+          "start_col": 6,
+          "end_col": 21,
+          "fragment": "])\n\n  const addTag = (tag: string) => {\n    const trimmed = tag.trim().toLowerCase()\n    if (trimmed && !tags.includes(trimmed)) {\n      setTags([...tags, trimmed])\n    }\n    setTagInput('')\n  }\n\n  const removeTag = ("
+        }
+      ],
+      "token_count": 64,
+      "line_count": 11,
+      "fingerprint": "dup:bebbe7e7",
+      "spread": 0,
+      "suggested_name": "trimmed",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (11 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 324,
+          "end_line": 334,
+          "start_col": 13,
+          "end_col": 7,
+          "fragment": "],\n  )\n  const handleTypeChange = useCallback(\n    (val: string) => setValue('type', val as ContentType),\n    [setValue],\n  )\n  const handleImportantChange = useCallback(\n    (checked: boolean) => setValue('isImportant', checked),\n    [setValue],\n  )\n  const"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 203,
+          "end_line": 213,
+          "start_col": 34,
+          "end_col": 7,
+          "fragment": "])\n\n  const handleTypeChange = useCallback(\n    (val: string) => setValue('type', val as ContentType),\n    [setValue],\n  )\n  const handleImportantChange = useCallback(\n    (checked: boolean) => setValue('isImportant', checked),\n    [setValue],\n  )\n  const"
+        }
+      ],
+      "token_count": 63,
+      "line_count": 11,
+      "fingerprint": "dup:3c04cc7c",
+      "spread": 0,
+      "suggested_name": "setValue",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (11 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/table-view.tsx",
+          "start_line": 687,
+          "end_line": 706,
+          "start_col": 28,
+          "end_col": 13,
+          "fragment": "className=\"h-3.5 w-3.5\" />\n                  )}\n                  Columns\n                </Button>\n              </DropdownMenuTrigger>\n              <DropdownMenuContent align=\"end\">\n                {(\n                  Object.keys(columnVisibility) as (keyof ColumnVisibility)[]\n                ).map((col) => (\n                  <ColumnToggleItem\n                    key={col}\n                    col={col}\n                    checked={columnVisibility[col]}\n                    onToggle={handleColumnVisibilityChange}\n                  />\n                ))}\n              </DropdownMenuContent>\n            </DropdownMenu>\n          </div>\n        </div"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/table-view.tsx",
+          "start_line": 715,
+          "end_line": 736,
+          "start_col": 21,
+          "end_col": 10,
+          "fragment": "className=\"h-3.5 w-3.5\" />\n                Columns\n              </Button>\n            </DropdownMenuTrigger>\n            <DropdownMenuContent align=\"end\">\n              {(\n                Object.keys(columnVisibility) as (keyof ColumnVisibility)[]\n              ).map((col) => (\n                <ColumnToggleItem\n                  key={col}\n                  col={col}\n                  checked={columnVisibility[col]}\n                  onToggle={handleColumnVisibilityChange}\n                />\n              ))}\n            </DropdownMenuContent>\n          </DropdownMenu>\n        </div>\n      )}\n\n      {/* Table */}\n      <div"
+        }
+      ],
+      "token_count": 60,
+      "line_count": 22,
+      "fingerprint": "dup:86bd0fda",
+      "spread": 1,
+      "suggested_name": "col",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (22 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+          "start_line": 183,
+          "end_line": 192,
+          "start_col": 51,
+          "end_col": 7,
+          "fragment": "2\n  const normalizedSearchQuery = searchQuery?.trim() ?? ''\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+          "start_line": 178,
+          "end_line": 187,
+          "start_col": 51,
+          "end_col": 7,
+          "fragment": "3\n  const normalizedSearchQuery = searchQuery?.trim() ?? ''\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const"
+        }
+      ],
+      "token_count": 61,
+      "line_count": 10,
+      "fingerprint": "dup:58761797",
+      "spread": 0,
+      "suggested_name": "searchScope",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 472,
+          "end_line": 491,
+          "start_col": 17,
+          "end_col": 26,
+          "fragment": ">\n              </div>\n              {tagSuggestions.length > 0 && (\n                <div className=\"bg-popover rounded-md border p-1 shadow-md\">\n                  {tagSuggestions.map((suggestion) => (\n                    <button\n                      key={suggestion}\n                      type=\"button\"\n                      className=\"hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm\"\n                      onClick={() => addTag(suggestion)}\n                    >\n                      {suggestion}\n                    </button>\n                  ))}\n                </div>\n              )}\n            </div>\n\n            {/* Type & Important row */}\n            <div className"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 535,
+          "end_line": 554,
+          "start_col": 19,
+          "end_col": 28,
+          "fragment": ">\n                </div>\n                {tagSuggestions.length > 0 && (\n                  <div className=\"bg-popover rounded-md border p-1 shadow-md\">\n                    {tagSuggestions.map((suggestion) => (\n                      <button\n                        key={suggestion}\n                        type=\"button\"\n                        className=\"hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm\"\n                        onClick={() => addTag(suggestion)}\n                      >\n                        {suggestion}\n                      </button>\n                    ))}\n                  </div>\n                )}\n              </div>\n\n              {/* Important toggle */}\n              <div className"
+        }
+      ],
+      "token_count": 60,
+      "line_count": 20,
+      "fingerprint": "dup:9bf22d9d",
+      "spread": 0,
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (20 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/collection-search.tsx",
+          "start_line": 87,
+          "end_line": 100,
+          "start_col": 41,
+          "end_col": 7,
+          "fragment": ", indices).map((segment, index) =>\n        segment.matched ? (\n          <strong\n            key={`${segment.text}-${index}`}\n            className=\"text-primary font-semibold\"\n          >\n            {segment.text}\n          </strong>\n        ) : (\n          <React.Fragment key={`${segment.text}-${index}`}>\n            {segment.text}\n          </React.Fragment>\n        ),\n      )"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+          "start_line": 98,
+          "end_line": 111,
+          "start_col": 43,
+          "end_col": 3,
+          "fragment": ", indices).map((segment, index) =>\n    segment.matched ? (\n      <strong\n        key={`${segment.text}-${index}`}\n        className=\"text-primary font-semibold\"\n      >\n        {segment.text}\n      </strong>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+        }
+      ],
+      "token_count": 58,
+      "line_count": 14,
+      "fingerprint": "dup:06e916f2",
+      "spread": 0,
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (14 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+          "start_line": 312,
+          "end_line": 318,
+          "start_col": 38,
+          "end_col": 78,
+          "fragment": ")\n\n  const tagSuggestions = useMemo(() => {\n    if (!tagInput) return []\n    const lower = tagInput.toLowerCase()\n    return existingTags\n      .filter((tag) => tag.toLowerCase().includes(lower) && !tags.includes(tag"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+          "start_line": 191,
+          "end_line": 200,
+          "start_col": 63,
+          "end_col": 28,
+          "fragment": ")\n\n  const tagSuggestions = useMemo(() => {\n    if (!tagInput) return []\n    const lower = tagInput.toLowerCase()\n    return existingTags\n      .filter(\n        (tag) =>\n          tag.toLowerCase().includes(lower) &&\n          !tags.includes(tag"
+        }
+      ],
+      "token_count": 57,
+      "line_count": 10,
+      "fingerprint": "dup:8f105b2c",
+      "spread": 0,
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/directory-view.tsx",
+          "start_line": 62,
+          "end_line": 71,
+          "start_col": 1,
+          "end_col": 26,
+          "fragment": ": {\n  collection: Collection\n  raindropsByCollection: Record<string, Raindrop[]>\n  selectedRaindropId?: string\n  onSelectRaindrop?: (raindrop: Raindrop) => void\n  onOpenUrl?: (url: string) => void\n  onSelectCollection?: (collection: Collection) => void\n  depth: number\n  isLast: boolean\n  parentPrefixes: string[]"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/directory-view.tsx",
+          "start_line": 124,
+          "end_line": 133,
+          "start_col": 1,
+          "end_col": 26,
+          "fragment": ": {\n  collection: Collection\n  raindropsByCollection: Record<string, Raindrop[]>\n  selectedRaindropId?: string\n  onSelectRaindrop?: (raindrop: Raindrop) => void\n  onOpenUrl?: (url: string) => void\n  onSelectCollection?: (collection: Collection) => void\n  depth: number\n  isLast: boolean\n  parentPrefixes: string[]"
+        }
+      ],
+      "token_count": 51,
+      "line_count": 10,
+      "fingerprint": "dup:d093c026",
+      "spread": 1,
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "instances": [
+        {
+          "file": "apps/desktop/src/components/raindrop/main-content.tsx",
+          "start_line": 336,
+          "end_line": 345,
+          "start_col": 65,
+          "end_col": 7,
+          "fragment": "=> void\n  onRaindropDoubleClick: (raindrop: Raindrop) => void\n  searchQuery?: string\n  searchScope?: SearchScope\n}) {\n  const handleClick = useCallback(\n    (e: React.MouseEvent) => onRaindropClick(raindrop, e),\n    [onRaindropClick, raindrop],\n  )\n  const"
+        },
+        {
+          "file": "apps/desktop/src/components/raindrop/main-content.tsx",
+          "start_line": 376,
+          "end_line": 385,
+          "start_col": 39,
+          "end_col": 7,
+          "fragment": "=> void\n  onRaindropDoubleClick: (raindrop: Raindrop) => void\n  searchQuery?: string\n  searchScope?: SearchScope\n}) {\n  const handleClick = useCallback(\n    (e: React.MouseEvent) => onRaindropClick(raindrop, e),\n    [onRaindropClick, raindrop],\n  )\n  const"
+        }
+      ],
+      "token_count": 50,
+      "line_count": 10,
+      "fingerprint": "dup:b602ce59",
+      "spread": 1,
+      "suggested_name": "raindrop",
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    }
+  ],
+  "clone_families": [
+    {
+      "files": [
+        "apps/desktop/src/components/main-app.tsx",
+        "apps/desktop/src/components/raindrop/global-search-command.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/main-app.tsx",
+              "start_line": 81,
+              "end_line": 85,
+              "start_col": 66,
+              "end_col": 7,
+              "fragment": ")\n  const searchQuery = useAppSelector((s) => s.search.query)\n  const searchScope = useAppSelector((s) => s.search.scope)\n  const searchMode = useAppSelector((s) => s.search.mode)\n  const"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+              "start_line": 272,
+              "end_line": 276,
+              "start_col": 34,
+              "end_col": 7,
+              "fragment": ")\n  const searchQuery = useAppSelector((s) => s.search.query)\n  const searchScope = useAppSelector((s) => s.search.scope)\n  const searchMode = useAppSelector((s) => s.search.mode)\n  const"
+            }
+          ],
+          "token_count": 63,
+          "line_count": 5,
+          "fingerprint": "dup:e7b4aa18",
+          "spread": 1,
+          "suggested_name": "useAppSelector",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (5 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 5,
+      "total_duplicated_tokens": 63,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (5 lines) from main-app.tsx, global-search-command.tsx",
+          "estimated_savings": 5
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (5 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (5 lines) from main-app.tsx, global-search-command.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+        "apps/desktop/src/components/raindrop/right-detail-panel.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 345,
+              "end_line": 361,
+              "start_col": 39,
+              "end_col": 7,
+              "fragment": "g))\n  }\n\n  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === 'Enter') {\n      e.preventDefault()\n      if (tagSuggestions.length > 0) {\n        addTag(tagSuggestions[0])\n      } else if (tagInput.trim()) {\n        addTag(tagInput)\n      }\n    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {\n      removeTag(tags[tags.length - 1])\n    }\n  }\n\n  const"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 231,
+              "end_line": 247,
+              "start_col": 43,
+              "end_col": 7,
+              "fragment": "e))\n  }\n\n  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === 'Enter') {\n      e.preventDefault()\n      if (tagSuggestions.length > 0) {\n        addTag(tagSuggestions[0])\n      } else if (tagInput.trim()) {\n        addTag(tagInput)\n      }\n    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {\n      removeTag(tags[tags.length - 1])\n    }\n  }\n\n  const"
+            }
+          ],
+          "token_count": 107,
+          "line_count": 17,
+          "fingerprint": "dup:6b8b1e0e",
+          "spread": 0,
+          "suggested_name": "tagInput",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (17 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 452,
+              "end_line": 471,
+              "start_col": 103,
+              "end_col": 27,
+              "fragment": ">\n                {tags.map((tag) => (\n                  <Badge key={tag} variant=\"secondary\" className=\"gap-1 pr-1\">\n                    {tag}\n                    <button\n                      type=\"button\"\n                      onClick={() => removeTag(tag)}\n                      className=\"hover:bg-muted-foreground/20 ml-0.5 rounded-sm p-0.5\"\n                    >\n                      <X className=\"h-3 w-3\" />\n                    </button>\n                  </Badge>\n                ))}\n                <input\n                  type=\"text\"\n                  value={tagInput}\n                  onChange={(e) => setTagInput(e.target.value)}\n                  onKeyDown={handleTagKeyDown}\n                  placeholder={tags.length === 0 ? 'Add tags...' : ''}\n                  className"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 515,
+              "end_line": 534,
+              "start_col": 109,
+              "end_col": 29,
+              "fragment": ">\n                  {tags.map((tag) => (\n                    <Badge key={tag} variant=\"secondary\" className=\"gap-1 pr-1\">\n                      {tag}\n                      <button\n                        type=\"button\"\n                        onClick={() => removeTag(tag)}\n                        className=\"hover:bg-muted-foreground/20 ml-0.5 rounded-sm p-0.5\"\n                      >\n                        <X className=\"h-3 w-3\" />\n                      </button>\n                    </Badge>\n                  ))}\n                  <input\n                    type=\"text\"\n                    value={tagInput}\n                    onChange={(e) => setTagInput(e.target.value)}\n                    onKeyDown={handleTagKeyDown}\n                    placeholder={tags.length === 0 ? 'Add tags...' : ''}\n                    className"
+            }
+          ],
+          "token_count": 88,
+          "line_count": 20,
+          "fingerprint": "dup:6faa5a1e",
+          "spread": 0,
+          "suggested_name": "className",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (20 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 495,
+              "end_line": 516,
+              "start_col": 51,
+              "end_col": 28,
+              "fragment": ">\n                    <SelectValue />\n                  </SelectTrigger>\n                  <SelectContent>\n                    {(\n                      Object.entries(TYPE_ICONS) as [\n                        ContentType,\n                        typeof Globe,\n                      ][]\n                    ).map(([type, Icon]) => (\n                      <SelectItem key={type} value={type}>\n                        <div className=\"flex items-center gap-2\">\n                          <Icon className=\"h-4 w-4\" />\n                          <span className=\"capitalize\">{type}</span>\n                        </div>\n                      </SelectItem>\n                    ))}\n                  </SelectContent>\n                </Select>\n              </div>\n\n              <div className"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 488,
+              "end_line": 510,
+              "start_col": 49,
+              "end_col": 28,
+              "fragment": ">\n                    <SelectValue />\n                  </SelectTrigger>\n                  <SelectContent>\n                    {(\n                      Object.entries(TYPE_ICONS) as [\n                        ContentType,\n                        typeof Globe,\n                      ][]\n                    ).map(([type, Icon]) => (\n                      <SelectItem key={type} value={type}>\n                        <div className=\"flex items-center gap-2\">\n                          <Icon className=\"h-4 w-4\" />\n                          <span className=\"capitalize\">{type}</span>\n                        </div>\n                      </SelectItem>\n                    ))}\n                  </SelectContent>\n                </Select>\n              </div>\n\n              {/* Tags */}\n              <div className"
+            }
+          ],
+          "token_count": 78,
+          "line_count": 23,
+          "fingerprint": "dup:84a4005e",
+          "spread": 0,
+          "suggested_name": "className",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (23 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 334,
+              "end_line": 344,
+              "start_col": 75,
+              "end_col": 21,
+              "fragment": "])\n\n  const addTag = (tag: string) => {\n    const trimmed = tag.trim().toLowerCase()\n    if (trimmed && !tags.includes(trimmed)) {\n      setTags([...tags, trimmed])\n    }\n    setTagInput('')\n  }\n\n  const removeTag = ("
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 220,
+              "end_line": 230,
+              "start_col": 6,
+              "end_col": 21,
+              "fragment": "])\n\n  const addTag = (tag: string) => {\n    const trimmed = tag.trim().toLowerCase()\n    if (trimmed && !tags.includes(trimmed)) {\n      setTags([...tags, trimmed])\n    }\n    setTagInput('')\n  }\n\n  const removeTag = ("
+            }
+          ],
+          "token_count": 64,
+          "line_count": 11,
+          "fingerprint": "dup:bebbe7e7",
+          "spread": 0,
+          "suggested_name": "trimmed",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (11 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 324,
+              "end_line": 334,
+              "start_col": 13,
+              "end_col": 7,
+              "fragment": "],\n  )\n  const handleTypeChange = useCallback(\n    (val: string) => setValue('type', val as ContentType),\n    [setValue],\n  )\n  const handleImportantChange = useCallback(\n    (checked: boolean) => setValue('isImportant', checked),\n    [setValue],\n  )\n  const"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 203,
+              "end_line": 213,
+              "start_col": 34,
+              "end_col": 7,
+              "fragment": "])\n\n  const handleTypeChange = useCallback(\n    (val: string) => setValue('type', val as ContentType),\n    [setValue],\n  )\n  const handleImportantChange = useCallback(\n    (checked: boolean) => setValue('isImportant', checked),\n    [setValue],\n  )\n  const"
+            }
+          ],
+          "token_count": 63,
+          "line_count": 11,
+          "fingerprint": "dup:3c04cc7c",
+          "spread": 0,
+          "suggested_name": "setValue",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (11 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 472,
+              "end_line": 491,
+              "start_col": 17,
+              "end_col": 26,
+              "fragment": ">\n              </div>\n              {tagSuggestions.length > 0 && (\n                <div className=\"bg-popover rounded-md border p-1 shadow-md\">\n                  {tagSuggestions.map((suggestion) => (\n                    <button\n                      key={suggestion}\n                      type=\"button\"\n                      className=\"hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm\"\n                      onClick={() => addTag(suggestion)}\n                    >\n                      {suggestion}\n                    </button>\n                  ))}\n                </div>\n              )}\n            </div>\n\n            {/* Type & Important row */}\n            <div className"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 535,
+              "end_line": 554,
+              "start_col": 19,
+              "end_col": 28,
+              "fragment": ">\n                </div>\n                {tagSuggestions.length > 0 && (\n                  <div className=\"bg-popover rounded-md border p-1 shadow-md\">\n                    {tagSuggestions.map((suggestion) => (\n                      <button\n                        key={suggestion}\n                        type=\"button\"\n                        className=\"hover:bg-accent flex w-full items-center rounded-sm px-2 py-1.5 text-sm\"\n                        onClick={() => addTag(suggestion)}\n                      >\n                        {suggestion}\n                      </button>\n                    ))}\n                  </div>\n                )}\n              </div>\n\n              {/* Important toggle */}\n              <div className"
+            }
+          ],
+          "token_count": 60,
+          "line_count": 20,
+          "fingerprint": "dup:9bf22d9d",
+          "spread": 0,
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (20 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/add-bookmark-dialog.tsx",
+              "start_line": 312,
+              "end_line": 318,
+              "start_col": 38,
+              "end_col": 78,
+              "fragment": ")\n\n  const tagSuggestions = useMemo(() => {\n    if (!tagInput) return []\n    const lower = tagInput.toLowerCase()\n    return existingTags\n      .filter((tag) => tag.toLowerCase().includes(lower) && !tags.includes(tag"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/right-detail-panel.tsx",
+              "start_line": 191,
+              "end_line": 200,
+              "start_col": 63,
+              "end_col": 28,
+              "fragment": ")\n\n  const tagSuggestions = useMemo(() => {\n    if (!tagInput) return []\n    const lower = tagInput.toLowerCase()\n    return existingTags\n      .filter(\n        (tag) =>\n          tag.toLowerCase().includes(lower) &&\n          !tags.includes(tag"
+            }
+          ],
+          "token_count": 57,
+          "line_count": 10,
+          "fingerprint": "dup:8f105b2c",
+          "spread": 0,
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 112,
+      "total_duplicated_tokens": 517,
+      "suggestions": [
+        {
+          "kind": "ExtractModule",
+          "description": "Extract 7 shared clone groups (112 lines) from add-bookmark-dialog.tsx, right-detail-panel.tsx into apps/desktop/src/components/raindrop",
+          "estimated_savings": 112
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 7 duplicated code blocks (112 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract 7 shared clone groups (112 lines) from add-bookmark-dialog.tsx, right-detail-panel.tsx into apps/desktop/src/components/raindrop"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "apps/desktop/src/components/raindrop/collection-search.tsx",
+        "apps/desktop/src/components/raindrop/collection-selector.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/collection-search.tsx",
+              "start_line": 87,
+              "end_line": 100,
+              "start_col": 41,
+              "end_col": 7,
+              "fragment": ", indices).map((segment, index) =>\n        segment.matched ? (\n          <strong\n            key={`${segment.text}-${index}`}\n            className=\"text-primary font-semibold\"\n          >\n            {segment.text}\n          </strong>\n        ) : (\n          <React.Fragment key={`${segment.text}-${index}`}>\n            {segment.text}\n          </React.Fragment>\n        ),\n      )"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/collection-selector.tsx",
+              "start_line": 98,
+              "end_line": 111,
+              "start_col": 43,
+              "end_col": 3,
+              "fragment": ", indices).map((segment, index) =>\n    segment.matched ? (\n      <strong\n        key={`${segment.text}-${index}`}\n        className=\"text-primary font-semibold\"\n      >\n        {segment.text}\n      </strong>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+            }
+          ],
+          "token_count": 58,
+          "line_count": 14,
+          "fingerprint": "dup:06e916f2",
+          "spread": 0,
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (14 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 14,
+      "total_duplicated_tokens": 58,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (14 lines) from collection-search.tsx, collection-selector.tsx",
+          "estimated_savings": 14
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (14 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (14 lines) from collection-search.tsx, collection-selector.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": ["apps/desktop/src/components/raindrop/directory-view.tsx"],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/directory-view.tsx",
+              "start_line": 62,
+              "end_line": 71,
+              "start_col": 1,
+              "end_col": 26,
+              "fragment": ": {\n  collection: Collection\n  raindropsByCollection: Record<string, Raindrop[]>\n  selectedRaindropId?: string\n  onSelectRaindrop?: (raindrop: Raindrop) => void\n  onOpenUrl?: (url: string) => void\n  onSelectCollection?: (collection: Collection) => void\n  depth: number\n  isLast: boolean\n  parentPrefixes: string[]"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/directory-view.tsx",
+              "start_line": 124,
+              "end_line": 133,
+              "start_col": 1,
+              "end_col": 26,
+              "fragment": ": {\n  collection: Collection\n  raindropsByCollection: Record<string, Raindrop[]>\n  selectedRaindropId?: string\n  onSelectRaindrop?: (raindrop: Raindrop) => void\n  onOpenUrl?: (url: string) => void\n  onSelectCollection?: (collection: Collection) => void\n  depth: number\n  isLast: boolean\n  parentPrefixes: string[]"
+            }
+          ],
+          "token_count": 51,
+          "line_count": 10,
+          "fingerprint": "dup:d093c026",
+          "spread": 1,
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 10,
+      "total_duplicated_tokens": 51,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (10 lines) from directory-view.tsx, directory-view.tsx",
+          "estimated_savings": 10
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (10 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (10 lines) from directory-view.tsx, directory-view.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "apps/desktop/src/components/raindrop/global-search-command.tsx",
+        "apps/desktop/src/components/raindrop/raindrop-card.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+              "start_line": 160,
+              "end_line": 169,
+              "start_col": 49,
+              "end_col": 39,
+              "fragment": ")\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const descriptionText = raindrop.description ?? raindrop.notes ?? ''\n  const domainText = raindrop.domain ||"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+              "start_line": 184,
+              "end_line": 194,
+              "start_col": 56,
+              "end_col": 22,
+              "fragment": "'\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const descriptionText = raindrop.description ?? raindrop.notes ?? ''\n  const domainText =\n    raindrop.domain ||"
+            }
+          ],
+          "token_count": 69,
+          "line_count": 11,
+          "fingerprint": "dup:e4a9f893",
+          "spread": 0,
+          "suggested_name": "searchScope",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (11 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 11,
+      "total_duplicated_tokens": 69,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (11 lines) from global-search-command.tsx, raindrop-card.tsx",
+          "estimated_savings": 11
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (11 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (11 lines) from global-search-command.tsx, raindrop-card.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "apps/desktop/src/components/raindrop/global-search-command.tsx",
+        "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+        "apps/desktop/src/components/raindrop/raindrop-list-item.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+              "start_line": 106,
+              "end_line": 120,
+              "start_col": 0,
+              "end_col": 3,
+              "fragment": "function renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+              "start_line": 78,
+              "end_line": 92,
+              "start_col": 0,
+              "end_col": 3,
+              "fragment": "function renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+              "start_line": 79,
+              "end_line": 93,
+              "start_col": 0,
+              "end_col": 3,
+              "fragment": "function renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )"
+            }
+          ],
+          "token_count": 80,
+          "line_count": 15,
+          "fingerprint": "dup:9471482c",
+          "spread": 0,
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (15 lines, 3 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 15,
+      "total_duplicated_tokens": 80,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (15 lines) from global-search-command.tsx, raindrop-card.tsx, raindrop-list-item.tsx",
+          "estimated_savings": 30
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (15 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (15 lines) from global-search-command.tsx, raindrop-card.tsx, raindrop-list-item.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "apps/desktop/src/components/raindrop/global-search-command.tsx",
+        "apps/desktop/src/components/raindrop/table-view.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/global-search-command.tsx",
+              "start_line": 77,
+              "end_line": 106,
+              "start_col": 0,
+              "end_col": 8,
+              "fragment": "const TYPE_ICON_MAP: Record<ContentType, typeof Globe> = {\n  link: Globe,\n  article: FileText,\n  image: Image,\n  video: Video,\n  document: File,\n  audio: Music,\n}\n\n/**\n * Render a content type icon.\n */\nconst TypeIconDisplay = React.memo(function TypeIconDisplay({\n  type,\n  className,\n}: {\n  type: ContentType\n  className?: string\n}) {\n  const Icon = TYPE_ICON_MAP[type] || Globe\n  return <Icon className={className} />\n})\n\n/**\n * Render highlighted text segments for matched search content.\n * @param text - Original text to render\n * @param query - Active search query\n * @returns Text with matching segments wrapped in <mark>\n */\nfunction"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/table-view.tsx",
+              "start_line": 58,
+              "end_line": 91,
+              "start_col": 0,
+              "end_col": 8,
+              "fragment": "const TYPE_ICON_MAP: Record<ContentType, typeof Globe> = {\n  link: Globe,\n  article: FileText,\n  image: Image,\n  video: Video,\n  document: File,\n  audio: Music,\n}\n\n/**\n * Render the appropriate content type icon.\n * @param type - The content type\n * @param className - CSS class for the icon\n * @returns JSX element for the icon\n * @example <TypeIconDisplay type=\"article\" className=\"h-3 w-3\" />\n */\nconst TypeIconDisplay = React.memo(function TypeIconDisplay({\n  type,\n  className,\n}: {\n  type: ContentType\n  className?: string\n}) {\n  const Icon = TYPE_ICON_MAP[type] || Globe\n  return <Icon className={className} />\n})\n\n/**\n * Format a date string to a human-readable relative format.\n * @param dateStr - ISO date string\n * @returns Formatted date string\n * @example formatDate(\"2026-02-08T10:00:00Z\") // => \"Feb 8, 2026\"\n */\nfunction"
+            }
+          ],
+          "token_count": 68,
+          "line_count": 34,
+          "fingerprint": "dup:72c54647",
+          "spread": 0,
+          "suggested_name": "className",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (34 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 34,
+      "total_duplicated_tokens": 68,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (34 lines) from global-search-command.tsx, table-view.tsx",
+          "estimated_savings": 34
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (34 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (34 lines) from global-search-command.tsx, table-view.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": ["apps/desktop/src/components/raindrop/left-sidebar.tsx"],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+              "start_line": 377,
+              "end_line": 395,
+              "start_col": 35,
+              "end_col": 49,
+              "fragment": "=> void\n  onDeleteCollection: (collectionId: string) => Promise<void>\n  onMoveCollectionToGroup: (\n    collectionId: string,\n    targetGroupId: string,\n  ) => Promise<void>\n  onChangeCollectionColor: (\n    collectionId: string,\n    color: string,\n  ) => Promise<void>\n  onStartInlineRename: (collection: Collection) => void\n  onSubmitInlineRename: (\n    collectionId: string,\n    nextName: string,\n  ) => Promise<void>\n  onCancelInlineRename: () => void\n  editingCollectionId: string | null\n  editingName: string\n  onEditingNameChange: (nextName: string) => void"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+              "start_line": 667,
+              "end_line": 685,
+              "start_col": 37,
+              "end_col": 51,
+              "fragment": "=> void\n    onDeleteCollection: (collectionId: string) => Promise<void>\n    onMoveCollectionToGroup: (\n      collectionId: string,\n      targetGroupId: string,\n    ) => Promise<void>\n    onChangeCollectionColor: (\n      collectionId: string,\n      color: string,\n    ) => Promise<void>\n    onStartInlineRename: (collection: Collection) => void\n    onSubmitInlineRename: (\n      collectionId: string,\n      nextName: string,\n    ) => Promise<void>\n    onCancelInlineRename: () => void\n    editingCollectionId: string | null\n    editingName: string\n    onEditingNameChange: (nextName: string) => void"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+              "start_line": 782,
+              "end_line": 800,
+              "start_col": 22,
+              "end_col": 49,
+              "fragment": "=> void\n  onDeleteCollection: (collectionId: string) => Promise<void>\n  onMoveCollectionToGroup: (\n    collectionId: string,\n    targetGroupId: string,\n  ) => Promise<void>\n  onChangeCollectionColor: (\n    collectionId: string,\n    color: string,\n  ) => Promise<void>\n  onStartInlineRename: (collection: Collection) => void\n  onSubmitInlineRename: (\n    collectionId: string,\n    nextName: string,\n  ) => Promise<void>\n  onCancelInlineRename: () => void\n  editingCollectionId: string | null\n  editingName: string\n  onEditingNameChange: (nextName: string) => void"
+            }
+          ],
+          "token_count": 78,
+          "line_count": 19,
+          "fingerprint": "dup:d65e31e2",
+          "spread": 2,
+          "suggested_name": "collectionId",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (19 lines, 3 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+              "start_line": 373,
+              "end_line": 397,
+              "start_col": 14,
+              "end_col": 56,
+              "fragment": "r\n  selectedCollectionId: string\n  expandedCollections: Set<string>\n  onSelectCollection: (id: string) => void\n  onToggleCollection: (id: string) => void\n  onDeleteCollection: (collectionId: string) => Promise<void>\n  onMoveCollectionToGroup: (\n    collectionId: string,\n    targetGroupId: string,\n  ) => Promise<void>\n  onChangeCollectionColor: (\n    collectionId: string,\n    color: string,\n  ) => Promise<void>\n  onStartInlineRename: (collection: Collection) => void\n  onSubmitInlineRename: (\n    collectionId: string,\n    nextName: string,\n  ) => Promise<void>\n  onCancelInlineRename: () => void\n  editingCollectionId: string | null\n  editingName: string\n  onEditingNameChange: (nextName: string) => void\n  groups: Group[]\n  sidebarMenuButtonStyles: Record<number, CSSProperties>"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/left-sidebar.tsx",
+              "start_line": 663,
+              "end_line": 687,
+              "start_col": 25,
+              "end_col": 58,
+              "fragment": "n\n    selectedCollectionId: string\n    expandedCollections: Set<string>\n    onSelectCollection: (id: string) => void\n    onToggleCollection: (id: string) => void\n    onDeleteCollection: (collectionId: string) => Promise<void>\n    onMoveCollectionToGroup: (\n      collectionId: string,\n      targetGroupId: string,\n    ) => Promise<void>\n    onChangeCollectionColor: (\n      collectionId: string,\n      color: string,\n    ) => Promise<void>\n    onStartInlineRename: (collection: Collection) => void\n    onSubmitInlineRename: (\n      collectionId: string,\n      nextName: string,\n    ) => Promise<void>\n    onCancelInlineRename: () => void\n    editingCollectionId: string | null\n    editingName: string\n    onEditingNameChange: (nextName: string) => void\n    groups: Group[]\n    sidebarMenuButtonStyles: Record<number, CSSProperties>"
+            }
+          ],
+          "token_count": 111,
+          "line_count": 25,
+          "fingerprint": "dup:67772490",
+          "spread": 2,
+          "suggested_name": "collectionId",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (25 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 44,
+      "total_duplicated_tokens": 189,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (19 lines) from left-sidebar.tsx, left-sidebar.tsx, left-sidebar.tsx",
+          "estimated_savings": 38
+        },
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (25 lines) from left-sidebar.tsx, left-sidebar.tsx",
+          "estimated_savings": 25
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 2 duplicated code blocks (44 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (19 lines) from left-sidebar.tsx, left-sidebar.tsx, left-sidebar.tsx"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (25 lines) from left-sidebar.tsx, left-sidebar.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": ["apps/desktop/src/components/raindrop/main-content.tsx"],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/main-content.tsx",
+              "start_line": 336,
+              "end_line": 345,
+              "start_col": 65,
+              "end_col": 7,
+              "fragment": "=> void\n  onRaindropDoubleClick: (raindrop: Raindrop) => void\n  searchQuery?: string\n  searchScope?: SearchScope\n}) {\n  const handleClick = useCallback(\n    (e: React.MouseEvent) => onRaindropClick(raindrop, e),\n    [onRaindropClick, raindrop],\n  )\n  const"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/main-content.tsx",
+              "start_line": 376,
+              "end_line": 385,
+              "start_col": 39,
+              "end_col": 7,
+              "fragment": "=> void\n  onRaindropDoubleClick: (raindrop: Raindrop) => void\n  searchQuery?: string\n  searchScope?: SearchScope\n}) {\n  const handleClick = useCallback(\n    (e: React.MouseEvent) => onRaindropClick(raindrop, e),\n    [onRaindropClick, raindrop],\n  )\n  const"
+            }
+          ],
+          "token_count": 50,
+          "line_count": 10,
+          "fingerprint": "dup:b602ce59",
+          "spread": 1,
+          "suggested_name": "raindrop",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 10,
+      "total_duplicated_tokens": 50,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (10 lines) from main-content.tsx, main-content.tsx",
+          "estimated_savings": 10
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (10 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (10 lines) from main-content.tsx, main-content.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": [
+        "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+        "apps/desktop/src/components/raindrop/raindrop-list-item.tsx"
+      ],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+              "start_line": 54,
+              "end_line": 98,
+              "start_col": 0,
+              "end_col": 9,
+              "fragment": "function formatRelativeDate(dateStr: string): string {\n  const date = new Date(dateStr)\n  const now = new Date()\n  const diffMs = now.getTime() - date.getTime()\n  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))\n  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))\n\n  if (diffHours < 1) return 'Just now'\n  if (diffHours < 24) return `${diffHours}h ago`\n  if (diffDays === 1) return 'Yesterday'\n  if (diffDays < 7) return `${diffDays}d ago`\n\n  return date.toLocaleDateString('en-US', {\n    month: 'short',\n    day: 'numeric',\n  })\n}\n\n/**\n * Render highlighted text segments for matched search content.\n * @param text - Original text to render\n * @param query - Active search query\n * @returns Text with matching segments wrapped in <mark>\n */\nfunction renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )\n}\n\n/**\n * Props for the RaindropCard component.\n */\ninterface"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+              "start_line": 55,
+              "end_line": 99,
+              "start_col": 0,
+              "end_col": 9,
+              "fragment": "function formatRelativeDate(dateStr: string): string {\n  const date = new Date(dateStr)\n  const now = new Date()\n  const diffMs = now.getTime() - date.getTime()\n  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))\n  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))\n\n  if (diffHours < 1) return 'Just now'\n  if (diffHours < 24) return `${diffHours}h ago`\n  if (diffDays === 1) return 'Yesterday'\n  if (diffDays < 7) return `${diffDays}d ago`\n\n  return date.toLocaleDateString('en-US', {\n    month: 'short',\n    day: 'numeric',\n  })\n}\n\n/**\n * Render highlighted text segments for matched search content.\n * @param text - Original text to render\n * @param query - Active search query\n * @returns Text with matching segments wrapped in <mark>\n */\nfunction renderHighlightedText(text: string, query: string): React.ReactNode {\n  return buildSubstringHighlightSegments(text, query).map((segment, index) =>\n    segment.matched ? (\n      <mark\n        key={`${segment.text}-${index}`}\n        className=\"bg-primary/20 text-foreground rounded-sm px-0.5\"\n      >\n        {segment.text}\n      </mark>\n    ) : (\n      <React.Fragment key={`${segment.text}-${index}`}>\n        {segment.text}\n      </React.Fragment>\n    ),\n  )\n}\n\n/**\n * Props for the RaindropListItem component.\n */\ninterface"
+            }
+          ],
+          "token_count": 211,
+          "line_count": 45,
+          "fingerprint": "dup:1e79656c",
+          "spread": 0,
+          "suggested_name": "text",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (45 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+              "start_line": 152,
+              "end_line": 176,
+              "start_col": 5,
+              "end_col": 7,
+              "fragment": "],\n  )\n  const handleMoreClick = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleOpenUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      window.shell.openExternal(raindrop.url)\n    },\n    [raindrop.url],\n  )\n  const handleStopPropagation = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleCopyUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      navigator.clipboard.writeText(raindrop.url)\n    },\n    [raindrop.url],\n  )\n  const"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+              "start_line": 151,
+              "end_line": 177,
+              "start_col": 18,
+              "end_col": 7,
+              "fragment": "],\n  )\n\n  const handleMoreClick = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleOpenUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      window.shell.openExternal(raindrop.url)\n    },\n    [raindrop.url],\n  )\n  const handleStopPropagation = useCallback(\n    (e: React.MouseEvent) => e.stopPropagation(),\n    [],\n  )\n  const handleCopyUrl = useCallback(\n    (e: React.MouseEvent) => {\n      e.stopPropagation()\n      navigator.clipboard.writeText(raindrop.url)\n    },\n    [raindrop.url],\n  )\n\n  const"
+            }
+          ],
+          "token_count": 139,
+          "line_count": 27,
+          "fingerprint": "dup:603a5425",
+          "spread": 0,
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (27 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+              "start_line": 280,
+              "end_line": 313,
+              "start_col": 55,
+              "end_col": 25,
+              "fragment": ">\n                </Button>\n              </DropdownMenuTrigger>\n              <DropdownMenuContent align=\"end\" className=\"w-48\">\n                <DropdownMenuItem onClick={handleOpenUrl}>\n                  <ExternalLink className=\"mr-2 h-4 w-4\" />\n                  Open URL\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <Pencil className=\"mr-2 h-4 w-4\" />\n                  Edit\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <FolderInput className=\"mr-2 h-4 w-4\" />\n                  Move to Collection...\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <Tag className=\"mr-2 h-4 w-4\" />\n                  Add Tags...\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleCopyUrl}>\n                  <Copy className=\"mr-2 h-4 w-4\" />\n                  Copy URL\n                </DropdownMenuItem>\n                <DropdownMenuItem onClick={handleStopPropagation}>\n                  <Star className=\"mr-2 h-4 w-4\" />\n                  {raindrop.isImportant\n                    ? 'Remove Important'\n                    : 'Mark as Important'}\n                </DropdownMenuItem>\n                <DropdownMenuSeparator />\n                <DropdownMenuItem\n                  className=\"text-destructive\"\n                  onClick"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+              "start_line": 309,
+              "end_line": 340,
+              "start_col": 51,
+              "end_col": 21,
+              "fragment": ">\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align=\"end\" className=\"w-48\">\n            <DropdownMenuItem onClick={handleOpenUrl}>\n              <ExternalLink className=\"mr-2 h-4 w-4\" />\n              Open URL\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <Pencil className=\"mr-2 h-4 w-4\" />\n              Edit\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <FolderInput className=\"mr-2 h-4 w-4\" />\n              Move to Collection...\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <Tag className=\"mr-2 h-4 w-4\" />\n              Add Tags...\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleCopyUrl}>\n              <Copy className=\"mr-2 h-4 w-4\" />\n              Copy URL\n            </DropdownMenuItem>\n            <DropdownMenuItem onClick={handleStopPropagation}>\n              <Star className=\"mr-2 h-4 w-4\" />\n              {raindrop.isImportant ? 'Remove Important' : 'Mark as Important'}\n            </DropdownMenuItem>\n            <DropdownMenuSeparator />\n            <DropdownMenuItem\n              className=\"text-destructive\"\n              onClick"
+            }
+          ],
+          "token_count": 107,
+          "line_count": 34,
+          "fingerprint": "dup:1146735d",
+          "spread": 0,
+          "suggested_name": "DropdownMenuItem",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (34 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        },
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-card.tsx",
+              "start_line": 183,
+              "end_line": 192,
+              "start_col": 51,
+              "end_col": 7,
+              "fragment": "2\n  const normalizedSearchQuery = searchQuery?.trim() ?? ''\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/raindrop-list-item.tsx",
+              "start_line": 178,
+              "end_line": 187,
+              "start_col": 51,
+              "end_col": 7,
+              "fragment": "3\n  const normalizedSearchQuery = searchQuery?.trim() ?? ''\n  const hasSearchQuery = normalizedSearchQuery.length > 0\n  const shouldHighlightTitle =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'title')\n  const shouldHighlightUrl =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'url')\n  const shouldHighlightDescription =\n    hasSearchQuery && (searchScope === 'all' || searchScope === 'description')\n  const"
+            }
+          ],
+          "token_count": 61,
+          "line_count": 10,
+          "fingerprint": "dup:58761797",
+          "spread": 0,
+          "suggested_name": "searchScope",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (10 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 116,
+      "total_duplicated_tokens": 518,
+      "suggestions": [
+        {
+          "kind": "ExtractModule",
+          "description": "Extract 4 shared clone groups (116 lines) from raindrop-card.tsx, raindrop-list-item.tsx into apps/desktop/src/components/raindrop",
+          "estimated_savings": 116
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 4 duplicated code blocks (116 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract 4 shared clone groups (116 lines) from raindrop-card.tsx, raindrop-list-item.tsx into apps/desktop/src/components/raindrop"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    },
+    {
+      "files": ["apps/desktop/src/components/raindrop/table-view.tsx"],
+      "groups": [
+        {
+          "instances": [
+            {
+              "file": "apps/desktop/src/components/raindrop/table-view.tsx",
+              "start_line": 687,
+              "end_line": 706,
+              "start_col": 28,
+              "end_col": 13,
+              "fragment": "className=\"h-3.5 w-3.5\" />\n                  )}\n                  Columns\n                </Button>\n              </DropdownMenuTrigger>\n              <DropdownMenuContent align=\"end\">\n                {(\n                  Object.keys(columnVisibility) as (keyof ColumnVisibility)[]\n                ).map((col) => (\n                  <ColumnToggleItem\n                    key={col}\n                    col={col}\n                    checked={columnVisibility[col]}\n                    onToggle={handleColumnVisibilityChange}\n                  />\n                ))}\n              </DropdownMenuContent>\n            </DropdownMenu>\n          </div>\n        </div"
+            },
+            {
+              "file": "apps/desktop/src/components/raindrop/table-view.tsx",
+              "start_line": 715,
+              "end_line": 736,
+              "start_col": 21,
+              "end_col": 10,
+              "fragment": "className=\"h-3.5 w-3.5\" />\n                Columns\n              </Button>\n            </DropdownMenuTrigger>\n            <DropdownMenuContent align=\"end\">\n              {(\n                Object.keys(columnVisibility) as (keyof ColumnVisibility)[]\n              ).map((col) => (\n                <ColumnToggleItem\n                  key={col}\n                  col={col}\n                  checked={columnVisibility[col]}\n                  onToggle={handleColumnVisibilityChange}\n                />\n              ))}\n            </DropdownMenuContent>\n          </DropdownMenu>\n        </div>\n      )}\n\n      {/* Table */}\n      <div"
+            }
+          ],
+          "token_count": 60,
+          "line_count": 22,
+          "fingerprint": "dup:86bd0fda",
+          "spread": 1,
+          "suggested_name": "col",
+          "actions": [
+            {
+              "type": "extract-shared",
+              "auto_fixable": false,
+              "description": "Extract duplicated code (22 lines, 2 instances) into a shared function"
+            },
+            {
+              "type": "suppress-line",
+              "auto_fixable": false,
+              "description": "Suppress with an inline comment above the duplicated code",
+              "comment": "// fallow-ignore-next-line code-duplication"
+            }
+          ]
+        }
+      ],
+      "total_duplicated_lines": 22,
+      "total_duplicated_tokens": 60,
+      "suggestions": [
+        {
+          "kind": "ExtractFunction",
+          "description": "Extract shared function (22 lines) from table-view.tsx, table-view.tsx",
+          "estimated_savings": 22
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract-shared",
+          "auto_fixable": false,
+          "description": "Extract 1 duplicated code block (22 lines) into a shared module",
+          "note": "These clone groups share the same files, indicating a structural relationship; refactor together"
+        },
+        {
+          "type": "apply-suggestion",
+          "auto_fixable": false,
+          "description": "Extract shared function (22 lines) from table-view.tsx, table-view.tsx"
+        },
+        {
+          "type": "suppress-line",
+          "auto_fixable": false,
+          "description": "Suppress with an inline comment above the duplicated code",
+          "comment": "// fallow-ignore-next-line code-duplication"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "total_files": 113,
+    "files_with_clones": 12,
+    "total_lines": 21762,
+    "duplicated_lines": 726,
+    "total_tokens": 69404,
+    "duplicated_tokens": 1881,
+    "clone_groups": 21,
+    "clone_families": 11,
+    "clone_instances": 44,
+    "duplication_percentage": 3.336090432864627
+  },
+  "clone_groups_shown": 21,
+  "clone_groups_omitted": 0,
+  "clone_families_shown": 11,
+  "clone_families_omitted": 0,
+  "next_steps": [
+    {
+      "id": "trace-clone",
+      "command": "fallow dupes --trace dup:06e916f2",
+      "reason": "see sibling locations and an extract-function suggestion"
+    },
+    {
+      "id": "audit-changed",
+      "command": "fallow audit",
+      "reason": "gate only the files your branch changed (auto-detects the base)"
+    }
+  ],
+  "_meta": { "telemetry": { "analysis_run_id": "run_e3e5d1d3927c4daf" } }
+}

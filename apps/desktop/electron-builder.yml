@@ -1,6 +1,6 @@
-# electron-builder configuration — macOS only (SPEC.md §8.2)
+# electron-builder configuration — macOS arm64/x64 and Linux x64
 # Build locally:  pnpm electron:build            (unsigned unless CSC_* / APPLE_* env vars are set)
-# CI:             ../../.github/workflows/package-check.yml (unsigned directory build)
+# CI:             ../../.github/workflows/package-check.yml (unsigned distributables and smoke)
 appId: io.laststance.lain
 productName: Lain
 copyright: Copyright © 2026 Laststance.io
@@ -14,6 +14,8 @@ directories:
 files:
   - dist/**
   - dist-electron/**
+  # The persisted Dock icon preference can always return to the shipped default.
+  - build/icons/icon.png
   - package.json
   - '!node_modules/**'
 asar: true
@@ -21,7 +23,8 @@ asar: true
 mac:
   category: public.app-category.productivity
   icon: build/icons/icon.icns
-  minimumSystemVersion: '12.0'
+  # Electron 44+ follows Chromium's macOS 13 minimum.
+  minimumSystemVersion: '13.0'
   darkModeSupport: true
   target:
     - target: dmg
@@ -62,3 +65,33 @@ publish:
   owner: ryota-murakami
   repo: lain
   releaseType: draft
+
+# AppImage uses electron-updater; deb users install the next package explicitly.
+linux:
+  category: Utility
+  # Debian requires attribution; use the owner's public GitHub address.
+  maintainer: 'Laststance.io <5501268+ryota-murakami@users.noreply.github.com>'
+  icon: build/icons/icon.png
+  executableName: lain
+  artifactName: 'Lain-${version}-${arch}.${ext}'
+  target:
+    - target: AppImage
+      arch: [x64]
+    - target: deb
+      arch: [x64]
+  desktop:
+    entry:
+      StartupWMClass: Lain
+      Comment: Search and organize your Raindrop.io bookmarks
+
+deb:
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0

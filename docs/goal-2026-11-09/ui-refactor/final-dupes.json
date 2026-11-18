@@ -1,0 +1,25 @@
+{
+  "kind": "dupes",
+  "schema_version": 10,
+  "version": "3.41.0",
+  "elapsed_ms": 17,
+  "clone_groups": [],
+  "clone_families": [],
+  "stats": {
+    "total_files": 176,
+    "files_with_clones": 0,
+    "total_lines": 26850,
+    "duplicated_lines": 0,
+    "total_tokens": 93933,
+    "duplicated_tokens": 0,
+    "clone_groups": 0,
+    "clone_families": 0,
+    "clone_instances": 0,
+    "duplication_percentage": 0.0
+  },
+  "clone_groups_shown": 0,
+  "clone_groups_omitted": 0,
+  "clone_families_shown": 0,
+  "clone_families_omitted": 0,
+  "_meta": { "telemetry": { "analysis_run_id": "run_857cde33f75e3a88" } }
+}

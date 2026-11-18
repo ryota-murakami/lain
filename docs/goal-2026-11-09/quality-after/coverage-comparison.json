@@ -1,0 +1,79 @@
+{
+  "scope": "Renderer src/**; tests and generated Raindrop API excluded in both runs",
+  "before": {
+    "statements": {
+      "covered": 1755,
+      "total": 3129,
+      "pct": 56.08
+    },
+    "branches": {
+      "covered": 774,
+      "total": 1770,
+      "pct": 43.72
+    },
+    "functions": {
+      "covered": 450,
+      "total": 1040,
+      "pct": 43.26
+    },
+    "lines": {
+      "covered": 1638,
+      "total": 2849,
+      "pct": 57.49
+    }
+  },
+  "after": {
+    "statements": {
+      "covered": 3549,
+      "total": 4112,
+      "pct": 86.3
+    },
+    "branches": {
+      "covered": 2032,
+      "total": 2566,
+      "pct": 79.18
+    },
+    "functions": {
+      "covered": 1033,
+      "total": 1289,
+      "pct": 80.13
+    },
+    "lines": {
+      "covered": 3294,
+      "total": 3707,
+      "pct": 88.85
+    }
+  },
+  "expandedAfter": {
+    "lines": {
+      "total": 4243,
+      "covered": 3655,
+      "skipped": 0,
+      "pct": 86.14
+    },
+    "statements": {
+      "total": 4693,
+      "covered": 3940,
+      "skipped": 0,
+      "pct": 83.95
+    },
+    "functions": {
+      "total": 1441,
+      "covered": 1132,
+      "skipped": 0,
+      "pct": 78.55
+    },
+    "branches": {
+      "total": 2824,
+      "covered": 2214,
+      "skipped": 0,
+      "pct": 78.39
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  }
+}

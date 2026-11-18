@@ -1,29 +1,50 @@
 import path from 'path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, pathToFileURL } from 'url'
 
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
 
 import type { AuthState } from '../src/lib/types.ts'
 
+import {
+  applySelectedIcon,
+  registerDesktopOperations,
+} from './desktop-operations.ts'
 import { RaindropAuth } from './raindrop-auth.ts'
-import { startAutoUpdater } from './updater.ts'
+import {
+  assertTrustedRenderer,
+  protectRendererNavigation,
+} from './renderer-security.ts'
+import { readUpdateQAFixture } from './update-qa.ts'
+import { startAutoUpdater, registerUpdateIPC } from './updater.ts'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const isTestMode = process.env.LAIN_TEST_MODE === '1'
+// QA update fixtures must validate their temporary profile before any native store initializes.
+const updateQAFixture = readUpdateQAFixture(process.env, {
+  packaged: app.isPackaged,
+  version: app.getVersion(),
+  appPath: app.getAppPath(),
+})
 // E2E runs headless by default; LAIN_E2E_HEADED=1 shows the window for debugging.
 const isHeadless = isTestMode && process.env.LAIN_E2E_HEADED !== '1'
 
 const clientId = process.env.VITE_RAINDROP_CLIENT_ID ?? ''
 const clientSecret = process.env.RAINDROP_CLIENT_SECRET ?? ''
-const auth = isTestMode ? null : new RaindropAuth(clientId, clientSecret)
+let auth: RaindropAuth | null = null
 
 // E2E isolation: each Playwright launch gets its own userData so persisted Redux
 // state (localStorage: selected collection, view mode, ...) never leaks between
 // tests or from the developer's real profile. Must run before app 'ready'.
-if (isTestMode && process.env.LAIN_USER_DATA_DIR) {
-  app.setPath('userData', process.env.LAIN_USER_DATA_DIR)
-  app.setPath('sessionData', process.env.LAIN_USER_DATA_DIR)
+if ((isTestMode || !app.isPackaged) && process.env.LAIN_USER_DATA_DIR) {
+  app.setPath(
+    'userData',
+    updateQAFixture?.profile ?? process.env.LAIN_USER_DATA_DIR,
+  )
+  app.setPath(
+    'sessionData',
+    updateQAFixture?.profile ?? process.env.LAIN_USER_DATA_DIR,
+  )
 }
 
 let mainWindow: BrowserWindow | null = null
@@ -50,11 +71,17 @@ function createWindow(): void {
     },
   })
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
-  } else {
-    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
+  const rendererURL =
+    process.env.VITE_DEV_SERVER_URL ??
+    pathToFileURL(path.join(__dirname, '../dist/index.html')).href
+  protectRendererNavigation(mainWindow, rendererURL)
+  try {
+    applySelectedIcon(mainWindow)
+  } catch {
+    /* A missing optional candidate must not prevent launch. */
   }
+
+  void mainWindow.loadURL(rendererURL)
 }
 
 /**
@@ -100,15 +127,12 @@ function registerAuthIPC(auth: RaindropAuth): void {
 }
 
 /**
- * Validate that the IPC message comes from a known BrowserWindow.
+ * Validate that the IPC message comes from the application's current main frame.
  * @param event - IPC invoke event
- * @throws If sender is not from a recognized window
+ * @throws If another window or subframe attempts a privileged operation
  */
 function validateSender(event: Electron.IpcMainInvokeEvent): void {
-  const sender = BrowserWindow.fromWebContents(event.sender)
-  if (!sender) {
-    throw new Error('Unauthorized IPC sender')
-  }
+  assertTrustedRenderer(event, mainWindow)
 }
 
 // --- App Lifecycle ---
@@ -118,29 +142,35 @@ function validateSender(event: Electron.IpcMainInvokeEvent): void {
  * Validates the URL protocol to prevent arbitrary command execution.
  */
 function registerShellIPC(): void {
-  ipcMain.handle('shell:open-external', async (event, url: string) => {
+  ipcMain.handle('shell:open-external', async (event, url: unknown) => {
     validateSender(event)
-    if (url.startsWith('https://') || url.startsWith('http://')) {
+    if (
+      typeof url === 'string' &&
+      (url.startsWith('https://') || url.startsWith('http://'))
+    ) {
       await shell.openExternal(url)
     }
   })
 }
 
 // Enable remote debugging for Electron MCP integration (dev only)
-if (!isTestMode) {
+if (!isTestMode && !app.isPackaged) {
   app.commandLine.appendSwitch('remote-debugging-port', '9222')
 }
 
 app.whenReady().then(async () => {
+  registerDesktopOperations(() => mainWindow)
+  registerUpdateIPC(() => mainWindow)
   if (isTestMode) {
     // Headless E2E: no Dock icon, no focus stealing, no browser opened for links
     if (isHeadless) app.dock?.hide()
     const { registerTestAuthIPC, registerTestShellIPC } =
       await import('./test-auth.ts')
-    registerTestAuthIPC(() => mainWindow)
-    registerTestShellIPC()
+    registerTestAuthIPC(() => mainWindow, validateSender)
+    registerTestShellIPC(validateSender)
   } else {
-    if (!auth) throw new Error('auth must be initialized in non-test mode')
+    // safeStorage is ready and the isolated profile path is configured before restoring tokens.
+    auth = new RaindropAuth(clientId, clientSecret)
     registerShellIPC()
     registerAuthIPC(auth)
     // Release builds update themselves from GitHub Releases (see electron-builder.yml)

@@ -1,10 +1,40 @@
-import { waitFor } from '@testing-library/react'
+import { act, waitFor } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 
 import { useSidebarData } from '@/hooks/useSidebarData'
+import { setCollectionColor, resetAccountUi } from '@/store/slices/uiSlice'
 import { renderHookWithProviders } from '@test/render-with-providers'
 
 describe('useSidebarData', () => {
+  test('preserves local root and child colors across refresh and clears them when the account is reset', async () => {
+    // Arrange
+    const { result, store } = renderHookWithProviders(() => useSidebarData())
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    expect(result.current.groups[0].collections[0].color).toBe('#4a9eff')
+
+    // Act — remote collection responses retain their cover-derived color after local preferences change.
+    act(() => {
+      store.dispatch(setCollectionColor({ id: '100', color: '#06b6d4' }))
+      store.dispatch(setCollectionColor({ id: '200', color: '#123456' }))
+      result.current.refresh()
+    })
+    await waitFor(() => expect(result.current.isSyncing).toBe(false))
+
+    // Assert — nested colors are overlaid consistently and cannot leak to another account.
+    expect(result.current.groups[0].collections[0].color).toBe('#06b6d4')
+    expect(result.current.groups[0].collections[0].children?.[0].color).toBe(
+      '#123456',
+    )
+    act(() => {
+      store.dispatch(resetAccountUi())
+    })
+    expect(result.current.groups[0].collections[0].color).toBe('#4a9eff')
+    expect(result.current.groups[0].collections[0].children?.[0].color).toBe(
+      '#61dafb',
+    )
+    expect(store.getState().ui.collectionColors).toEqual({})
+  })
+
   test('loads and reconstructs sidebar groups from API', async () => {
     const { result } = renderHookWithProviders(() => useSidebarData())
 

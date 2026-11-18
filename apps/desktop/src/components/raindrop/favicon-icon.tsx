@@ -123,4 +123,3 @@ const FaviconIcon = React.memo(function FaviconIcon({
   )
 })
 export { FaviconIcon }
-export default FaviconIcon

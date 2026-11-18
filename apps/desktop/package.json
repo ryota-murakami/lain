@@ -1,7 +1,7 @@
 {
   "name": "lain",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Raindrop.io desktop client for macOS and Linux",
   "author": {
     "name": "Laststance.io",

@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/ryota-murakami/lain.git"
   },
-  "packageManager": "pnpm@12.18.0",
+  "packageManager": "pnpm@12.23.0",
   "engines": {
     "node": ">=26.13.0 <27"
   },
@@ -54,9 +54,9 @@
   },
   "devDependencies": {
     "@electron/asar": "4.3.2",
-    "fallow": "3.41.0",
+    "fallow": "3.47.0",
     "husky": "^9.1.7",
-    "lint-staged": "^17.6.1",
+    "lint-staged": "^17.6.2",
     "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "prettier-plugin-tailwindcss-canonical-classes": "^0.1.6",
